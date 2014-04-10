@@ -1,0 +1,94 @@
+# files to globally ignore from git repos
+# For files specific to a repo(s), create a separate .gitignore file
+
+# Compiled source # C code specific
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.out
+*.so
+*.a
+*.ko
+*.obj
+*.elf
+*.lib
+*.exe
+*.out
+*.app
+*.hex
+
+# the billions of extraneous PLD IDE files
+############
+*.b[lt]?
+*.cif
+*.eq?
+*.err
+*.esp
+*.exf
+*.fit
+*.j?d
+*.log
+*.lc?
+*.rev
+*.s[rv]?
+*.STY
+*.tfi
+*.tlg
+*.tim
+*.tt?
+*.v[ht]*
+*.xrf
+!*.syn
+!*.edf
+!*.rpt
+!*.jed
+
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.bz2
+*.bzip
+
+# These are LaTeX non-source files #
+####################################
+*.aux
+*.log
+*.lof
+*.lot
+*.toc
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# temporary files #
+###################
+*.*~
+*.~*
+*~
+*.swp
