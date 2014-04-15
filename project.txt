@@ -1,0 +1,40 @@
+Software:
+
+	Game / Controls
+	Software database / game state
+	
+Hardware:
+
+	RFID Structure
+	Reader / Writer Device
+	Communication Signals (Wireless / Xbee?)
+	Peripherals - LCD, Touchscreen (?), buttons, lights
+	
+Budget:
+	
+	RFID Tags
+	RFID Readres
+	Screens
+	Misc
+	
+Phase I:
+
+	Design System / Spec
+	Order RFID Readers / Tags and experiment
+	Test Plan - create simple game
+	Schematics
+
+Phase II:
+
+	Build Controls
+	Build Communication
+	Modify Game
+	LCD / Touchscreen system
+	Test and Debug
+
+Phase III:
+
+	Put all together
+	Physical system buildt
+	Test / Debug
+	
