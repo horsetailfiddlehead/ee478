@@ -1,3 +1,5 @@
+Final project outline
+
 Software:
 
 	Game / Controls
@@ -17,6 +19,8 @@ Budget:
 	Screens
 	Misc
 	
+Preliminary Schedule
+
 Phase I:
 
 	Design System / Spec
