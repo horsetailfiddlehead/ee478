@@ -1,0 +1,82 @@
+--------------------------------------------------
+Remote Surgery Use Cases
+--------------------------------------------------
+
+Use Case #1: Set motor speed
+
+	User Actions:
+		- enters command to set motor speed
+		- enters a speed value
+
+	System:
+		Normal Operation:
+		- Processor converts user value to motor-relevant value
+		- Processor stores motor-relevant value to memory
+		- Processor/controller operate motor at set speed
+
+		Exception operation:
+		- user inputs inappropriate speed
+			- Stop motor
+			- indicate to user speed is not appropriate
+		- motor speed increases or decreases significantly
+			- see ERRORS
+
+Use Case #2: Change speed
+	User Actions:
+		- enters command to increment or decrement speed
+
+	System:
+		Normal Operation:
+		- Processor calculates new speed
+		- New speed stored in memory
+		- processor operates motor at new speed (see normal operation of Use Case
+		  #1)
+		
+		Exception Operation:
+		- Changing speed would put motor speed beyond acceptable range
+			- Do not change speed
+			- Inform user that system is at max or min of range
+		- Speed change causes motor to enter error range
+			- see ERRORS
+		
+Use Case #3: Start motor
+	User Actions:
+		- enters command to start motor
+
+	System:
+		Normal Operation:
+		- Processor calculates motor control values based on speed value stored in
+		  memory
+		- Processor sets motor status to "running"
+		- Controller determines motor feedback
+		- Processor calculates error, updates motor control value
+
+		Exception Operation:
+		- User has not defined a speed
+			- Alert user speed is not defined
+			- Stop motor
+		- Old speed in memory from previous useage; not intended user speed
+			- At system start up or reset, set initial speed to zero
+			- Between resets, assume input value is intended by user, continues as
+			  normal
+
+Use Case #4: Stop Motor
+	User Action: 
+		- enters command to stop motor
+
+	System:
+		Normal Operation:
+		- Processor sets motor status to "stopped"
+		- Processor turns off motor
+
+		Exception Operation:
+			- Sudden decrease in speed triggers ERROR situation
+				- ignore error, consider error normal
+
+ERRORS:
+	- Level 0: +\- 5.0% difference between expected and actual motor speed
+	  (severe)
+	- Level 0: +\- 2.0% difference between expected and actual motor speed
+	  (moderate)
+	- Level 0: +\- 1.0% difference between expected and actual motor speed
+	  (mild)
