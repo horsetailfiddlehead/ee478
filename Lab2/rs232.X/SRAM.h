@@ -12,7 +12,11 @@
 extern "C" {
 #endif
 
-
+void SRAMsetUp();
+void setUpIn();
+void setUpOut();
+int readData(int adx);
+void writeData(int adx, int data);
 
 
 #ifdef	__cplusplus
@@ -21,8 +25,4 @@ extern "C" {
 
 #endif	/* SRAM_H */
 
-void SRAMsetUp();
-void setUpIn();
-void setUpOut();
-int readData(int adx);
-void writeData(int adx, int data);
+
