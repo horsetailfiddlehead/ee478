@@ -31,37 +31,53 @@
 
 #pragma PBADEN = OFF;   // turn off bank B ADCs
 
+/*
+ * Simple test case, just try to write a char
+ */
+int writeChar(char *c) {
+    IdleI2C1();
+    WriteI2C1(*c); // just write a char
+}
 
+/*
+ * sends a start and writes a char
+ */
+int startAndWrite(char *c) {
+    char data = 0x9A; //0b10011010;
+    IdleI2C1();
+    StartI2C1();
+    WriteI2C1(*c); // just write a char
+    WriteI2C1(data);
+    StopI2C1();
+}
 
 /*
  * 
  */
 int main(int argc, char** argv) {
-    char test = "I";
+    char test = 0x51; //0x96;
 
-    // set the MSSP1 SCL1 for output?
+//    // set the MSSP1 SCL1 for output?
+//
+//
+//    // set pins RC14, RC15 as inputs
+//    TRISCbits.TRISC3 = 1; // SCL1
+//    ANSELCbits.ANSC3 = 0;
+//
+//    TRISCbits.TRISC4 = 1; // SDA1
+//    ANSELCbits.ANSC4 = 0;
+//
+//    // configure i2c1 for master mode @ 100 kHz
+//    CloseI2C1();
+//    OpenI2C1(MASTER, SLEW_OFF);
+//    SSPADD = BD_RT;
+    setupOutgoing(); // enable MSSP1
 
+    while (1) {
 
-    // set pins RC14, RC15 as inputs
-    TRISCbits.TRISC3 = 1; // SCL1
-    ANSELCbits.ANSC3 = 0;
-
-    TRISCbits.TRISC4 = 1; // SDA1
-    ANSELCbits.ANSC4 = 0;
-
-    // configure i2c1 for master mode @ 100 kHz
-    CloseI2C1();
-    OpenI2C1(MASTER, SLEW_OFF);
-    SSPADD = BD_RT;
-
-    while(1) {
-//        IdleI2C1();
-//        WriteI2C1(test);    // just write a char
-        Delay10TCYx(40);
-        StartI2C1();
+        startAndWrite(&test);
         Delay10TCYx(20);
-        WriteI2C1(test);
-        
+
     }
 
     return (1);
