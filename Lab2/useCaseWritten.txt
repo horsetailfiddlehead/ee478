@@ -73,6 +73,17 @@ Use Case #4: Stop Motor
 			- Sudden decrease in speed triggers ERROR situation
 				- ignore error, consider error normal
 
+Use Case #5: View status
+	User Action:
+		- enters command to view motor and system status
+
+	System:
+		Normal Operation:
+		- Processor display motor set speed, curent status and error state
+
+		Exception Operation:
+		- ?
+
 ERRORS:
 	- Level 0: +\- 5.0% difference between expected and actual motor speed
 	  (severe)
