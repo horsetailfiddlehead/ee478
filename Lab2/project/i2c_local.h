@@ -1,6 +1,6 @@
 /* 
  * File:   i2c_local.h
- * Author: rynmcd
+ * Author: Patrick
  *
  * Created on April 23, 2014, 8:20 PM
  */

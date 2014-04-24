@@ -15,6 +15,26 @@
 extern "C" {
 #endif
 
+    /* includes for the whole project*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <p18f25k22.h>
+#include <delays.h>
+    
+    /* DEFINES for the whole project */
+#define USE_AND_OR  // allows use of compiler libs
+
+
+    /***************Clocking set up *********************/
+#pragma WDTEN = OFF;    // turn off watch dog timer
+#pragma FOSC = ECHP;    // Ext. Clk, Hi Pwr
+    //#pragma PRICLKEN = OFF; // disable primary clock
+    /****************************************************/
+
+    /* Global Controls for I/O banks*/
+    #pragma PBADEN = OFF;   // turn off bank B ADCs
+
+    /* Global variables */
     extern unsigned int setSpeed;   // the user defined motor speed
     extern unsigned int motorSpeed; // The actual speed of the motor
     extern unsigned int errorState; // The current motor state
