@@ -9,6 +9,11 @@
                    displayName="Linker Files"
                    projectFiles="true">
     </logicalFolder>
+    <logicalFolder name="project" displayName="project" projectFiles="true">
+      <itemPath>../project/globals.h</itemPath>
+      <itemPath>../project/i2c_local.c</itemPath>
+      <itemPath>../project/i2c_local.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
@@ -20,6 +25,9 @@
     </logicalFolder>
     <itemPath>i2c_test.c</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>../project</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
@@ -60,8 +68,8 @@
       </C18-LD>
       <C18LanguageToolchain>
       </C18LanguageToolchain>
-      <ICD3PlatformTool>
-      </ICD3PlatformTool>
+      <PICkit3PlatformTool>
+      </PICkit3PlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>

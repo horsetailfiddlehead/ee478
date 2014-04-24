@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=i2c_test.c
+SOURCEFILES_QUOTED_IF_SPACED=../project/i2c_local.c i2c_test.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/i2c_test.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/i2c_test.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1989816886/i2c_local.o ${OBJECTDIR}/i2c_test.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1989816886/i2c_local.o.d ${OBJECTDIR}/i2c_test.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/i2c_test.o
+OBJECTFILES=${OBJECTDIR}/_ext/1989816886/i2c_local.o ${OBJECTDIR}/i2c_test.o
 
 # Source Files
-SOURCEFILES=i2c_test.c
+SOURCEFILES=../project/i2c_local.c i2c_test.c
 
 
 CFLAGS=
@@ -86,6 +86,13 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/_ext/1989816886/i2c_local.o: ../project/i2c_local.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1989816886 
+	@${RM} ${OBJECTDIR}/_ext/1989816886/i2c_local.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/_ext/1989816886/i2c_local.o   ../project/i2c_local.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/_ext/1989816886/i2c_local.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1989816886/i2c_local.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
 ${OBJECTDIR}/i2c_test.o: i2c_test.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/i2c_test.o.d 
@@ -94,6 +101,13 @@ ${OBJECTDIR}/i2c_test.o: i2c_test.c  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} "${OBJECTDIR}/i2c_test.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
 else
+${OBJECTDIR}/_ext/1989816886/i2c_local.o: ../project/i2c_local.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1989816886 
+	@${RM} ${OBJECTDIR}/_ext/1989816886/i2c_local.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/_ext/1989816886/i2c_local.o   ../project/i2c_local.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/_ext/1989816886/i2c_local.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1989816886/i2c_local.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
 ${OBJECTDIR}/i2c_test.o: i2c_test.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/i2c_test.o.d 

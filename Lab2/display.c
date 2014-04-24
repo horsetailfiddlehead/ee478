@@ -4,6 +4,7 @@
 #include <usart.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "GLOBALS_H"
  
 /*  PIC Configuratings */
 #pragma config OSC = HS
@@ -13,11 +14,6 @@
 #pragma config PWRT = ON
 #pragma config DEBUG= OFF
  
-/* UART Global variables */
-int speed;                       //  Used for receiving commands from the computer
-int error = 4; // Default set to '4' for no error mode
-int aSpeed = 0; // Actual speed retrieved from motor
-
 void main(void)
 {
     //  Set all of PORTC as outputs. TX and RX must be set as outputs first
@@ -30,16 +26,31 @@ void main(void)
         {
             while(!DataRdyUSART());
             putsUSART("Enter motor speed:		");
-			speed=ReadUSART();
+			setSpeed=ReadUSART();
             Delay1KTCYx(4);
 			
-			putsUSART("Entered Motor Speed:		%s",speed);
-			putsUSART("Actual Motor Speed:		%s",aSpeed);
-			putsUSART("Current Warning Level:	%s", "NONE");
-            Delay1KTCYx(4);
+			// Display to terminal the speed of the motor
+			sprintf("Entered Motor Speed:		%s",setSpeed);
+			sprintf("Actual Motor Speed:		%s",motorSpeed);	
+			
+			// Display current state of system
+				switch(errorState) {
+				case 0:
+					putrs1USART((const far rom char *)"\nCritical!!!\n");
+					break;
+				case 1:
+					putrs1USART((const far rom char *)"\nModerate Warning.\n");
+					break;
+				case 2:
+					putrs1USART((const far rom char *)"\nOf concern.\n");
+					break;
+				case 3:
+					putrs1USART((const far rom char *)"\nAll systems running.\n");
+					break;
+				case 4:
+					putrs1USART((const far rom char *)"\nMotor currently turned off.\n");
+					break;
+			}		
+			Delay1KTCYx(4);
         }
-}
-
-void enterSpeed () {
-	
 }
