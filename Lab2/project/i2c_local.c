@@ -28,15 +28,16 @@ unsigned char data, addr, status;
 
 /* method declarations*/
 int setupOutgoing();
-int sendSpeed(unsigned int *speed);
+int sendSpeed(unsigned int *slaveAddr, unsigned int *speed);
 int getRemoteData();
 
 /* TX & RX interrupt handlers*/
 
 /*
  * configures and starts outgoing data communication
+ * The outgoing I2C uses MSSP1
  */
-void setupOutgoing() {
+int setupOutgoing(){
     // set pins RC14, RC15 as inputs
     TRISCbits.TRISC3 = 1; // SCL1
     ANSELCbits.ANSC3 = 0;
@@ -49,31 +50,32 @@ void setupOutgoing() {
     OpenI2C1(MASTER, SLEW_OFF);
     SSPADD = BD_RT;
 
-		return;
+    return (1);
 }
 
-/* send data to a slave device
+/*
+ * send data to a slave device
  * takes the slave address, writes the given data byte
  */
 int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
-	// get the data from global variable
-	char newSpeed[2] = [*speed, '\0'];
-	// wait until idle - not actually needed for single-master bus
-	IdleI2C1();
-	StartI2C1();		// send start
-	data = SSPBUf;
-	do {	// send address until ack'd
-		status = WriteI2C1(*slaveAddr || 0x00);
-		if (!status) {	// write collision
-			data = SSPBUF;
-			SSPCONbits.WCOL = 0;
-		}
-	} while (!status);
+    // get the data from global variable
+    char newSpeed[2] = {*speed, '\0'};
+    // wait until idle - not actually needed for single-master bus
+    IdleI2C1();
+    StartI2C1(); // send start
+    data = SSP1BUF;
+    do { // send address until ack'd
+        status = WriteI2C1(*slaveAddr || 0x00);
+        if (!status) { // write collision
+            data = SSP1BUF;
+            SSP1CON1bits.WCOL = 0;
+        }
+    } while (!status);
 
-	while (putsI2C1(newSpeed) != 0);		// 	send byte
-	StopI2C1(); // stop transmission
+    while (putsI2C1(newSpeed) != 0); // 	send bytes
+    StopI2C1(); // stop transmission
 
-	return 1;
+    return 1;
 }
 
 // read data
@@ -82,27 +84,3 @@ int getRemoteData() {
     // run any processes
 }
 
-
-/*
- *
- */
-int main(int argc, char** argv) {
-    char test = "I";
-
-    // set the MSSP1 SCL1 for output?
-
-setupOutgoing();
-
-
-    while(1) {
-//        IdleI2C1();
-//        WriteI2C1(test);    // just write a char
-        Delay10TCYx(40);
-        StartI2C1();
-        Delay10TCYx(20);
-        WriteI2C1(test);
-
-    }
-
-    return (1);
-}
