@@ -40,13 +40,14 @@ int main(int argc, char** argv) {
     char test[2] = "I";
 
     // set the MSSP1 SCL1 for output?
-    ANSELCbits.ANSC3 = 0;
-    TRISCbits.TRISC3 = 0;
+
 
     // set pins RC14, RC15 as inputs
-    TRISCbits.TRISC3 = 1;   // SCL1
-    TRISCbits.TRISC4 = 1;   // SDA1
+    TRISCbits.TRISC3 = 1; // SCL1
+    ANSELCbits.ANSC3 = 0;
 
+    TRISCbits.TRISC4 = 1; // SDA1
+    ANSELCbits.ANSC4 = 0;
 
     // configure i2c1 for master mode @ 100 kHz
     OpenI2C1(MASTER, SLEW_OFF);
