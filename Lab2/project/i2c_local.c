@@ -27,9 +27,7 @@
 unsigned char data, addr, status;
 
 /* method declarations*/
-int setupOutgoing();
-int sendSpeed(unsigned int *slaveAddr, unsigned int *speed);
-int getRemoteData();
+// See header file
 
 /* TX & RX interrupt handlers*/
 

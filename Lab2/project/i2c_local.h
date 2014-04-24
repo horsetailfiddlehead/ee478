@@ -12,7 +12,9 @@
 extern "C" {
 #endif
 
-
+int setupOutgoing();
+int sendSpeed(unsigned int *slaveAddr, unsigned int *speed);
+int getRemoteData();
 
 
 #ifdef	__cplusplus
