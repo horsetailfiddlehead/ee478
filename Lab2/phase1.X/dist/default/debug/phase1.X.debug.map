@@ -1,5 +1,5 @@
 MPLINK 4.48, Linker
-Linker Map File - Created Fri Apr 25 02:51:58 2014
+Linker Map File - Created Fri Apr 25 03:10:04 2014
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -9,58 +9,57 @@ Linker Map File - Created Fri Apr 25 02:51:58 2014
               high_vector       code   0x000008    program   0x000006
                    .cinit    romdata   0x00000e    program   0x00000e
              .code_SRAM.o       code   0x00001c    program   0x0003e4
-          .code_process.o       code   0x000400    program   0x0002e6
-             .code_main.o       code   0x0006e6    program   0x000252
-          .code_display.o       code   0x000938    program   0x00019e
-        .code_i2c_local.o       code   0x000ad6    program   0x000146
-                   STDLIB       code   0x000c1c    program   0x0000ea
-            .code_rs232.o       code   0x000d06    program   0x0000ea
-               _cinit_scn       code   0x000df0    program   0x00009e
-         .code_i2c1writ.o       code   0x000e8e    program   0x000080
-           .code_u1open.o       code   0x000f0e    program   0x000072
-           .code_u1puts.o       code   0x000f80    program   0x00004c
-           .code_u1read.o       code   0x000fcc    program   0x00003e
-         .code_i2c2open.o       code   0x00100a    program   0x000032
-         .code_i2c1open.o       code   0x00103c    program   0x000032
-          .code_u1write.o       code   0x00106e    program   0x00002e
-              D1KTCYXCODE       code   0x00109c    program   0x000020
-                    .code       code   0x0010bc    program   0x000020
-             _startup_scn       code   0x0010dc    program   0x00001c
-      .romdata_i2c2open.o    romdata   0x0010f8    program   0x000000
-          .romdata_main.o    romdata   0x0010f8    program   0x000000
-        .idata_u1read.o_i    romdata   0x0010f8    program   0x000000
-        .romdata_u1read.o    romdata   0x0010f8    program   0x000000
-          .idata_main.o_i    romdata   0x0010f8    program   0x00002e
-        .idata_u1defs.o_i    romdata   0x0010f8    program   0x000000
-        .romdata_u1defs.o    romdata   0x0010f8    program   0x000000
-       .idata_u1write.o_i    romdata   0x0010f8    program   0x000000
-       .romdata_u1write.o    romdata   0x0010f8    program   0x000000
-     .romdata_i2c_local.o    romdata   0x0010f8    program   0x000000
-      .romdata_i2c1writ.o    romdata   0x0010f8    program   0x000000
-        .romdata___init.o    romdata   0x0010f8    program   0x000000
-        .idata_u1puts.o_i    romdata   0x0010f8    program   0x000000
-        .romdata_u1puts.o    romdata   0x0010f8    program   0x000000
-         .romdata_c018i.o    romdata   0x0010f8    program   0x000000
-         .romdata_rs232.o    romdata   0x0010f8    program   0x000000
-      .romdata_i2c1open.o    romdata   0x0010f8    program   0x000000
-         .idata_rs232.o_i    romdata   0x0010f8    program   0x000000
-        .romdata_u1open.o    romdata   0x0010f8    program   0x000000
-        .idata_u1open.o_i    romdata   0x0010f8    program   0x000000
-       .romdata_display.o    romdata   0x0010f8    program   0x000000
-          .romdata_SRAM.o    romdata   0x0010f8    program   0x000000
-       .romdata_process.o    romdata   0x0010f8    program   0x000000
-       .idata_process.o_i    romdata   0x0010f8    program   0x000000
-             .stringtable    romdata   0x0010f8    program   0x000000
-         .idata_c018i.o_i    romdata   0x001126    program   0x000000
-       .idata_display.o_i    romdata   0x001126    program   0x000000
-            .code_c018i.o       code   0x001126    program   0x000000
-        .idata___init.o_i    romdata   0x001126    program   0x000000
-     .idata_i2c_local.o_i    romdata   0x001126    program   0x000000
-      .idata_i2c1writ.o_i    romdata   0x001126    program   0x000000
-          .idata_SRAM.o_i    romdata   0x001126    program   0x000000
-           .code_u1defs.o       code   0x001126    program   0x000000
-      .idata_i2c1open.o_i    romdata   0x001126    program   0x000000
-      .idata_i2c2open.o_i    romdata   0x001126    program   0x000000
+          .code_process.o       code   0x000400    program   0x0002e4
+             .code_main.o       code   0x0006e4    program   0x0002c8
+          .code_display.o       code   0x0009ac    program   0x00019e
+        .code_i2c_local.o       code   0x000b4a    program   0x000146
+            .code_rs232.o       code   0x000c90    program   0x0000ea
+               _cinit_scn       code   0x000d7a    program   0x00009e
+         .code_i2c1writ.o       code   0x000e18    program   0x000080
+           .code_u1open.o       code   0x000e98    program   0x000072
+           .code_u1puts.o       code   0x000f0a    program   0x00004c
+           .code_u1read.o       code   0x000f56    program   0x00003e
+         .code_i2c2open.o       code   0x000f94    program   0x000032
+         .code_i2c1open.o       code   0x000fc6    program   0x000032
+          .code_u1write.o       code   0x000ff8    program   0x00002e
+              D1KTCYXCODE       code   0x001026    program   0x000020
+                    .code       code   0x001046    program   0x000020
+             _startup_scn       code   0x001066    program   0x00001c
+         .romdata_c018i.o    romdata   0x001082    program   0x000000
+        .romdata_u1puts.o    romdata   0x001082    program   0x000000
+        .idata_u1puts.o_i    romdata   0x001082    program   0x000000
+        .romdata___init.o    romdata   0x001082    program   0x000000
+      .romdata_i2c1writ.o    romdata   0x001082    program   0x000000
+       .romdata_u1write.o    romdata   0x001082    program   0x000000
+       .idata_u1write.o_i    romdata   0x001082    program   0x000000
+        .romdata_u1defs.o    romdata   0x001082    program   0x000000
+        .idata_u1defs.o_i    romdata   0x001082    program   0x000000
+     .romdata_i2c_local.o    romdata   0x001082    program   0x000000
+        .romdata_u1read.o    romdata   0x001082    program   0x000000
+        .idata_u1read.o_i    romdata   0x001082    program   0x000000
+          .idata_main.o_i    romdata   0x001082    program   0x00002e
+      .romdata_i2c2open.o    romdata   0x001082    program   0x000000
+          .romdata_main.o    romdata   0x001082    program   0x000000
+         .romdata_rs232.o    romdata   0x001082    program   0x000000
+         .idata_rs232.o_i    romdata   0x001082    program   0x000000
+       .romdata_display.o    romdata   0x001082    program   0x000000
+          .romdata_SRAM.o    romdata   0x001082    program   0x000000
+             .stringtable    romdata   0x001082    program   0x000000
+       .idata_process.o_i    romdata   0x001082    program   0x000000
+       .romdata_process.o    romdata   0x001082    program   0x000000
+        .idata_u1open.o_i    romdata   0x001082    program   0x000000
+        .romdata_u1open.o    romdata   0x001082    program   0x000000
+      .romdata_i2c1open.o    romdata   0x001082    program   0x000000
+          .idata_SRAM.o_i    romdata   0x0010b0    program   0x000000
+           .code_u1defs.o       code   0x0010b0    program   0x000000
+     .idata_i2c_local.o_i    romdata   0x0010b0    program   0x000000
+      .idata_i2c1writ.o_i    romdata   0x0010b0    program   0x000000
+        .idata___init.o_i    romdata   0x0010b0    program   0x000000
+      .idata_i2c1open.o_i    romdata   0x0010b0    program   0x000000
+            .code_c018i.o       code   0x0010b0    program   0x000000
+       .idata_display.o_i    romdata   0x0010b0    program   0x000000
+      .idata_i2c2open.o_i    romdata   0x0010b0    program   0x000000
+         .idata_c018i.o_i    romdata   0x0010b0    program   0x000000
     .config_300001_main.o    romdata   0x300001    program   0x000001
     .config_300003_main.o    romdata   0x300003    program   0x000001
     .config_300005_main.o    romdata   0x300005    program   0x000001
@@ -109,81 +108,71 @@ Linker Map File - Created Fri Apr 25 02:51:58 2014
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x001125      
+                            0x000000    0x0010af      
                             0x300001    0x300001      
                             0x300003    0x300003      
                             0x300005    0x300005      
-            4393 out of 33048 program addresses used, program memory utilization is 13%
+            4275 out of 33048 program addresses used, program memory utilization is 12%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                    D1K_1   0x0010a8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-                     D1Kx   0x0010a6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-              Delay1KTCYx   0x00109c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-               Open1USART   0x000f0e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
-                 OpenI2C1   0x00103c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1open.c
-                 OpenI2C2   0x00100a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c2open.c
-               Read1USART   0x000fcc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
+                    D1K_1   0x001032    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+                     D1Kx   0x001030    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+              Delay1KTCYx   0x001026    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+               Open1USART   0x000e98    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
+                 OpenI2C1   0x000fc6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1open.c
+                 OpenI2C2   0x000f94    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c2open.c
+               Read1USART   0x000f56    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
                 SRAMsetUp   0x00001c    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\SRAM.c
-              Write1USART   0x00106e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
-                WriteI2C1   0x000e8e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1writ.c
-        _D1KTCYXCODE_0010   0x0010ac    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-        _D1KTCYXCODE_0016   0x0010b2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+              Write1USART   0x000ff8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
+                WriteI2C1   0x000e18    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1writ.c
+        _D1KTCYXCODE_0010   0x001036    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0016   0x00103c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
        ___return_lbl00000   0x000004    program     static                          
        ___return_lbl00000   0x00000c    program     static                          
-       ___return_lbl00001   0x0010f6    program     static                          
-       ___return_lbl00002   0x000e8c    program     static                          
+       ___return_lbl00001   0x001080    program     static                          
+       ___return_lbl00002   0x000e16    program     static                          
                __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
                __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
                __config_2   0x300005    program     static C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
                    __init   0x000006    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
-            __zero_memory   0x0010bc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                _do_cinit   0x000df0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+            __zero_memory   0x001046    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                _do_cinit   0x000d7a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                    _entry   0x000000    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                 _startup   0x0010dc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     atoi   0x000c1c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                compare_l   0x0010d2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                copy_loop   0x000e62    program     static                          
-            copy_one_byte   0x000e68    program     static                          
+                 _startup   0x001066    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                compare_l   0x00105c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                copy_loop   0x000dec    program     static                          
+            copy_one_byte   0x000df2    program     static                          
               dataProcess   0x000400    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\process.c
-        displayFrontPanel   0x000938    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\display.c
-                     done   0x000e8c    program     static                          
-             done_copying   0x000e76    program     static                          
+        displayFrontPanel   0x0009ac    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\display.c
+                     done   0x000e16    program     static                          
+             done_copying   0x000e00    program     static                          
  interrupt_at_high_vector   0x000008    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
-                     jEnd   0x000cda    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                 jEndLoop   0x000cc2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                    jLoop   0x000c74    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                  jSkipWS   0x000c4a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                 jSkipWS1   0x000c5c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                 jTstSign   0x000c60    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                jTstSign1   0x000c6c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                jTstSign2   0x000c72    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                jTstSign3   0x000c74    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                     loop   0x0010ec    program     static                          
-                   loop_h   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                   loop_l   0x0010d4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                     main   0x00081c    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
-               puts1USART   0x000f80    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1puts.c
-                    rcISR   0x0006e6    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
-           readBytesUntil   0x000d2a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
+                     loop   0x001076    program     static                          
+                   loop_h   0x001054    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                   loop_l   0x00105e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                     main   0x00081a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
+               puts1USART   0x000f0a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1puts.c
+                    rcISR   0x0006e4    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
+           readBytesUntil   0x000cb4    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
                  readData   0x00005a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\SRAM.c
-              receiveData   0x000c1a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-               rs232Setup   0x000d06    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
-              runLocalI2C   0x000b4a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-             runRemoteI2C   0x000b7e    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-                sendSpeed   0x000b90    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+              receiveData   0x000c8e    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+               rs232Setup   0x000c90    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
+              runLocalI2C   0x000bbe    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+             runRemoteI2C   0x000bf2    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+                sendSpeed   0x000c04    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
                   setUpIn   0x000048    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\SRAM.c
                  setUpOut   0x000036    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\SRAM.c
-            setupIncoming   0x000afe    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-            setupOutgoing   0x000ad6    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-            startAndWrite   0x0008e2    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
-              stringToNum   0x000632    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\process.c
-                     test   0x000e0a    program     static                          
+            setupIncoming   0x000b72    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+            setupOutgoing   0x000b4a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+            startAndWrite   0x000956    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
+              stringToNum   0x000630    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\process.c
+                     test   0x000d94    program     static                          
                 writeData   0x0001c0    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\SRAM.c
-               zero_block   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+               zero_block   0x001054    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    ADCON0   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                ADCON0bits   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    ADCON1   0x000fc1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
@@ -631,56 +620,46 @@ Linker Map File - Created Fri Apr 25 02:51:58 2014
                  readData   0x00005a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\SRAM.c
                 writeData   0x0001c0    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\SRAM.c
               dataProcess   0x000400    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\process.c
-              stringToNum   0x000632    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\process.c
-                    rcISR   0x0006e6    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
-                     main   0x00081c    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
-            startAndWrite   0x0008e2    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
-        displayFrontPanel   0x000938    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\display.c
-            setupOutgoing   0x000ad6    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-            setupIncoming   0x000afe    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-              runLocalI2C   0x000b4a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-             runRemoteI2C   0x000b7e    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-                sendSpeed   0x000b90    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-              receiveData   0x000c1a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
-                     atoi   0x000c1c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                  jSkipWS   0x000c4a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                 jSkipWS1   0x000c5c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                 jTstSign   0x000c60    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                jTstSign1   0x000c6c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                jTstSign2   0x000c72    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                jTstSign3   0x000c74    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                    jLoop   0x000c74    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                 jEndLoop   0x000cc2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-                     jEnd   0x000cda    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\atoi.asm
-               rs232Setup   0x000d06    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
-           readBytesUntil   0x000d2a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
-                _do_cinit   0x000df0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     test   0x000e0a    program     static                          
-                copy_loop   0x000e62    program     static                          
-            copy_one_byte   0x000e68    program     static                          
-             done_copying   0x000e76    program     static                          
-                     done   0x000e8c    program     static                          
-       ___return_lbl00002   0x000e8c    program     static                          
-                WriteI2C1   0x000e8e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1writ.c
-               Open1USART   0x000f0e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
-               puts1USART   0x000f80    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1puts.c
-               Read1USART   0x000fcc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
-                 OpenI2C2   0x00100a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c2open.c
-                 OpenI2C1   0x00103c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1open.c
-              Write1USART   0x00106e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
-              Delay1KTCYx   0x00109c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-                     D1Kx   0x0010a6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-                    D1K_1   0x0010a8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-        _D1KTCYXCODE_0010   0x0010ac    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-        _D1KTCYXCODE_0016   0x0010b2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
-            __zero_memory   0x0010bc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                   loop_h   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-               zero_block   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                compare_l   0x0010d2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                   loop_l   0x0010d4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 _startup   0x0010dc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     loop   0x0010ec    program     static                          
-       ___return_lbl00001   0x0010f6    program     static                          
+              stringToNum   0x000630    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\process.c
+                    rcISR   0x0006e4    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
+                     main   0x00081a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
+            startAndWrite   0x000956    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
+        displayFrontPanel   0x0009ac    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\display.c
+            setupOutgoing   0x000b4a    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+            setupIncoming   0x000b72    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+              runLocalI2C   0x000bbe    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+             runRemoteI2C   0x000bf2    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+                sendSpeed   0x000c04    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+              receiveData   0x000c8e    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\i2c_local.c
+               rs232Setup   0x000c90    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
+           readBytesUntil   0x000cb4    program     extern C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\rs232.c
+                _do_cinit   0x000d7a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     test   0x000d94    program     static                          
+                copy_loop   0x000dec    program     static                          
+            copy_one_byte   0x000df2    program     static                          
+             done_copying   0x000e00    program     static                          
+       ___return_lbl00002   0x000e16    program     static                          
+                     done   0x000e16    program     static                          
+                WriteI2C1   0x000e18    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1writ.c
+               Open1USART   0x000e98    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
+               puts1USART   0x000f0a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1puts.c
+               Read1USART   0x000f56    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
+                 OpenI2C2   0x000f94    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c2open.c
+                 OpenI2C1   0x000fc6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\i2c\i2c1open.c
+              Write1USART   0x000ff8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
+              Delay1KTCYx   0x001026    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+                     D1Kx   0x001030    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+                    D1K_1   0x001032    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0010   0x001036    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0016   0x00103c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+            __zero_memory   0x001046    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                   loop_h   0x001054    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+               zero_block   0x001054    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                compare_l   0x00105c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                   loop_l   0x00105e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 _startup   0x001066    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     loop   0x001076    program     static                          
+       ___return_lbl00001   0x001080    program     static                          
                __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
                __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
                __config_2   0x300005    program     static C:\Users\castia\Documents\GitHub\ee478\Lab2\phase1.X\main.c
