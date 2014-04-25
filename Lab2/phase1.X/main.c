@@ -27,6 +27,7 @@
 #pragma config PRICLKEN = OFF // disable primary clock
 /****************************************************/
 #define IN_BUF_SZ 64
+#define DEF_PWM 20
 /***********************Global Setup*****************/
 unsigned int setSpeed = 0;
 unsigned int motorSpeed = 0; // The actual speed of the motor
@@ -40,7 +41,7 @@ short SRAMflag = 0;
 short i2cFlag = 0;
 short processFlag = 0;
 int myCommand = 0;
-int myOp = 0;
+int myOp = DEF_PWM;
 
 Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, &myInput, &inputSpot, &inputFinished, &displayFlag, &SRAMflag, &i2cFlag, &processFlag, &myCommand, &myOp};
 
@@ -103,14 +104,14 @@ void main() {
     // I2c Setup
 
     unsigned int setSpeed = 0x52;
-
+    char errorMsg[] = "Error: Input again.\n\r";
     if (LOCAL) {
         setupOutgoing();
     } else {
         setupIncoming();
     }
-/*
-     // pwm GO!
+    /*
+         // pwm GO!
      * Disable CCp4
      * select timer2
      * load reg p4 with timer value
@@ -123,35 +124,55 @@ void main() {
      * enambe PWM ->clearing TRIS
      *
      */
-    TRISBbits.RB0 = 1;  // disable PWM output
+    TRISBbits.RB0 = 1; // disable PWM output
     CCPTMRS1 = 0b00000001; // set C4TSEL = 0b01
     PR4 = 0xF9; // PR = 2 for 20kHz
-    T4CON = 0b00000101; // set timer prescale 1:1, turn on timer4
+    T4CON = 0b00000100; // set timer prescale 1:1, turn on timer4
 
     CCP4CON = 0b00011100; // set LSB of duty cyle, select pwm mode
     CCPR4L = 0x3E; // set MSB of duty cycle
-    PIR5 = 0b00000000;  // clear timer interrupt flag
-    TRISBbits.RB0 = 0;  //enable PWM output
-
-
+    PIR5 = 0b00000000; // clear timer interrupt flag
+    TRISBbits.RB0 = 0; //enable PWM output
     // Rs232 setup and interrupt
     rs232Setup();
 
     // Enable SRAM pins correctly
     SRAMsetUp();
 
+    // Set Default PWM
+    SetDCPWM4(5*(*ourGlobal.myOp));
+    writeData(1, *ourGlobal.myOp);
+
     while (1) {
         displayFrontPanel(&ourGlobal);
         dataProcess(&ourGlobal);
         if (*ourGlobal.SRAMflag == 1) {
             writeData(0, *ourGlobal.myCommand);
-            writeData(1, *ourGlobal.myOp);
+            switch (*ourGlobal.myCommand) {
+                case 1:
+                    writeData(1, *ourGlobal.myOp);
+                    *ourGlobal.i2cFlag = 1;
+                    break;
+                case 2:
+                    writeData(1, readData(1) + 1);
+                    *ourGlobal.i2cFlag = 1;
+                    break;
+                case 3:
+                    writeData(1, readData(1) - 1);
+                    *ourGlobal.i2cFlag = 1;
+                    break;
+                case 4:
+                    puts1USART(errorMsg);
+                    *ourGlobal.displayFlag = 1;
+                    break;
+            }
             *ourGlobal.SRAMflag = 0;
-            *ourGlobal.i2cFlag = 1;
+
         }
         if (*ourGlobal.i2cFlag == 1) {
             *ourGlobal.setSpeed = readData(1);
-            runLocalI2C(ourGlobal.setSpeed);
+            SetDCPWM4(5*(*ourGlobal.setSpeed));
+            runLocalI2C(*ourGlobal.setSpeed);
             *ourGlobal.i2cFlag = 0;
             *ourGlobal.displayFlag = 1;
         }

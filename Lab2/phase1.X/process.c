@@ -13,7 +13,7 @@ void dataProcess(Global* globalData) {
     if (*globalData->processFlag == 1) {
         if (globalData->myInput[0] == 's') {
             *globalData->myCommand = 1;
-            *globalData->myOp = stringToNum((char*) &globalData->myInput[2]);
+            *globalData->myOp = 2*stringToNum((char*) &globalData->myInput[2]);
             *globalData->processFlag == 0;
         } else if (globalData->myInput[0] == 'i') {
             *globalData->myCommand = 2;
