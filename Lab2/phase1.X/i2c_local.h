@@ -8,18 +8,12 @@
 #ifndef I2C_LOCAL_H
 #define	I2C_LOCAL_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
 
 int setupOutgoing();
 int sendSpeed(unsigned int *slaveAddr, unsigned int *speed);
 int getRemoteData();
 
 
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* I2C_LOCAL_H */
 

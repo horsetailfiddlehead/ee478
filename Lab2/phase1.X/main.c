@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "globals.h"
 #include "i2c_local.h"
+#include <i2c.h> // i2c library
 
     /***************Clocking set up *********************/
 #pragma config WDTEN = OFF    // turn off watch dog timer
@@ -23,9 +24,24 @@
  * 
  */
 void main() {
+    char test = 0x51;
+
     setupOutgoing();
 
+    while (1) {
 
+        startAndWrite(&test);
+        Delay10TCYx(20);
+
+    }
     return;
 }
 
+int startAndWrite(char *c) {
+    char data = 0x9A; 
+    IdleI2C1();
+    StartI2C1();
+    WriteI2C1(*c); // just write a char
+    WriteI2C1(data);
+    StopI2C1();
+}
