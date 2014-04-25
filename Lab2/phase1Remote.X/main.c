@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   main.c
  * Author: castia
  *
@@ -10,7 +10,6 @@
 #include "globals.h"
 #include "i2c_local.h"
 #include "SRAM.h"
-#include "rs232.h"
 
 //#include "display.h"
 
@@ -36,7 +35,7 @@ char myInput[IN_BUF_SZ];
 int inputSpot = 0;
 short inputFinished = 0;
 
-short displayFlag = 1;
+short displayFlag = 0;
 short SRAMflag = 0;
 short i2cFlag = 0;
 short processFlag = 0;
@@ -55,61 +54,36 @@ Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, &myInput, &inputSpot, &
 #pragma code high_vector=0x08
 
 void interrupt_at_high_vector(void) {
-    _asm GOTO rcISR _endasm
+    _asm GOTO i2cISR _endasm
 }
 #pragma code
 
-#pragma interrupt rcISR
-
-void rcISR(void) {
-    unsigned char input;
-    // Don't have to wait for data available if we are in ISR
-    input = getc1USART();
-
-    // Terminate string on enter or max size
-    if (input >= ' ' && input <= 'z' || input == '\r' || input == '\n') {
-        if (input == '\r' || input == '\n' || inputSpot == (IN_BUF_SZ - 1)) {
-            myInput[inputSpot] = '\0';
-
-            // Reset input, declare finished
-            inputSpot = 0;
-            inputFinished = 1;
-            *ourGlobal.processFlag = 1;
-        } else {
-            // Put character in the input buffer
-            myInput[inputSpot] = input;
-            inputSpot++;
-
-            // Print current character
-            putc1USART(input);
-            inputFinished = 0;
-        }
-    } else {
-        putc1USART(input);
+#pragma interrupt i2cISR
+void i2cISR(void) {
+    int temp = 0;
+    if (SSP2STATbits.D_A == 0 && SSP2STATbits.BF == 1) {
+        temp = SSP2BUF;
+    }
+    if (SSP2STATbits.D_A == 1 && SSP2STATbits.BF == 1) {
+        *ourGlobal.setSpeed = SSP2BUF;
     }
 
-    // Clear interrupt
-    PIR1bits.RCIF = 0;
+    PIR3bits.SSP2IF = 0;
+    *ourGlobal.SRAMflag = 1;
 }
-/****************************************************/
+///****************************************************/
 
-#define LOCAL 1
 
 /*
- * 
+ *
  */
 void main() {
 
 
     // I2c Setup
 
-    unsigned int setSpeed = 0x52;
-    char errorMsg[] = "Error: Input again.\n\r";
-    if (LOCAL) {
-        setupOutgoing();
-    } else {
+
         setupIncoming();
-    }
     /*
          // pwm GO!
      * Disable CCp4
@@ -134,7 +108,6 @@ void main() {
     PIR5 = 0b00000000; // clear timer interrupt flag
     TRISBbits.RB0 = 0; //enable PWM output
     // Rs232 setup and interrupt
-    rs232Setup();
 
     // Enable SRAM pins correctly
     SRAMsetUp();
@@ -144,47 +117,15 @@ void main() {
     writeData(1, *ourGlobal.myOp);
 
     while (1) {
-        displayFrontPanel(&ourGlobal);
-        dataProcess(&ourGlobal);
         if (*ourGlobal.SRAMflag == 1) {
-            writeData(0, *ourGlobal.myCommand);
-            switch (*ourGlobal.myCommand) {
-                case 1:
-                    writeData(1, *ourGlobal.myOp);
-                    *ourGlobal.i2cFlag = 1;
-                    break;
-                case 2:
-                    writeData(1, readData(1) + 1);
-                    *ourGlobal.i2cFlag = 1;
-                    break;
-                case 3:
-                    writeData(1, readData(1) - 1);
-                    *ourGlobal.i2cFlag = 1;
-                    break;
-                case 4:
-                    puts1USART(errorMsg);
-                    *ourGlobal.displayFlag = 1;
-                    break;
-            }
+            writeData(1, *ourGlobal.setSpeed);
+            *ourGlobal.processFlag = 1;
             *ourGlobal.SRAMflag = 0;
-
         }
-        if (*ourGlobal.i2cFlag == 1) {
-            *ourGlobal.setSpeed = readData(1);
+        if (*ourGlobal.processFlag == 1) {
             SetDCPWM4(5*(*ourGlobal.setSpeed));
-            runLocalI2C(ourGlobal.setSpeed);
-            *ourGlobal.i2cFlag = 0;
-            *ourGlobal.displayFlag = 1;
+            *ourGlobal.processFlag = 0;
         }
-        Delay1KTCYx(1);
+       //receiveData();
     }
-}
-
-int startAndWrite(char *c) {
-    char data = 0x9A;
-    IdleI2C1();
-    StartI2C1();
-    WriteI2C1(*c); // just write a char
-    WriteI2C1(data);
-    StopI2C1();
 }

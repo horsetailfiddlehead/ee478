@@ -74,13 +74,13 @@ int setupIncoming() {
 
 /* Task to send the current setpoint to a remote node*/
 void runLocalI2C(unsigned int *setSpeed) {
-    addr = 0x0;
+    addr = 0x29;
     sendSpeed(&addr, setSpeed);
     //    Delay10TCYx(20);
 }
 
 /* Task to read from the bus*/
-void runReceiveI2C(unsigned int *setSpeed) {
+void runRemoteI2C(unsigned int *setSpeed) {
     receiveData();
 }
 
