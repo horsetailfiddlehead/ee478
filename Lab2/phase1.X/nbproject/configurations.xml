@@ -73,8 +73,6 @@
       </C18-LD>
       <C18LanguageToolchain>
       </C18LanguageToolchain>
-      <PICkit3PlatformTool>
-      </PICkit3PlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>

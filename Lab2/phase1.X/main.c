@@ -172,7 +172,7 @@ void main() {
         if (*ourGlobal.i2cFlag == 1) {
             *ourGlobal.setSpeed = readData(1);
             SetDCPWM4(5*(*ourGlobal.setSpeed));
-            runLocalI2C(*ourGlobal.setSpeed);
+            runLocalI2C(ourGlobal.setSpeed);
             *ourGlobal.i2cFlag = 0;
             *ourGlobal.displayFlag = 1;
         }
