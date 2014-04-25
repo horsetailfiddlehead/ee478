@@ -11,7 +11,7 @@
 #include "i2c_local.h"
 #include "SRAM.h"
 #include "rs232.h"
-#include "display.h"
+//#include "display.h"
 #include <i2c.h> // i2c library
 
 /***************USART set up *********************/
@@ -46,15 +46,15 @@ Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, myInput, &inputSpot, &i
 
 /* Global Controls for I/O banks*/
 #pragma config PBADEN = OFF   // turn off bank B ADCs
-
-<<<<<<< HEAD
 #pragma code high_vector=0x08
+
 void interrupt_at_high_vector(void) {
     _asm GOTO rcISR _endasm
 }
 #pragma code
 
 #pragma interrupt rcISR
+
 void rcISR(void) {
     unsigned char input;
 
@@ -84,17 +84,27 @@ void rcISR(void) {
 }
 /****************************************************/
 
-=======
+
 #define LOCAL 0
->>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
+
 /*
  * 
  */
 void main() {
-<<<<<<< HEAD
+
+    // I2c Setup
+
+    unsigned int setSpeed = 0x52;
+
+    if (LOCAL) {
+        setupOutgoing();
+    } else {
+        setupIncoming();
+    }
+
     /*
      // pwm GO!
-     Disable CCp4
+     * Disable CCp4
      * select timer2
      * load reg p4 with timer value
      * configure ccp4con
@@ -107,19 +117,17 @@ void main() {
      *
      */
 
+    TRISBbits.RB0 = 1;  // disable PWM output
+    CCPTMRS1 = 0b00000001; // set C4TSEL = 0b01
+    PR4 = 0xF9; // PR = 2 for 20kHz
+    T4CON = 0b00000101; // set timer prescale 1:1, turn on timer4
 
-    // I2c Setup
-=======
-    unsigned int setSpeed = 0x52;
+    CCP4CON = 0b00011100; // set LSB of duty cyle, select pwm mode
+    CCPR4L = 0x3E; // set MSB of duty cycle
+    PIR5 = 0b00000000;  // clear timer interrupt flag
+    TRISBbits.RB0 = 0;  //enable PWM output
 
-if(LOCAL) {
->>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
-    setupOutgoing();
-} else {
-    setupIncoming();
-}
 
-<<<<<<< HEAD
     // Rs232 setup and interrupt
     rs232Setup();
 
@@ -131,15 +139,14 @@ if(LOCAL) {
         displayFrontPanel(&ourGlobal);
         runLocalI2C(ourGlobal.setSpeed);
         Delay1KTCYx(1);
-=======
-    while (1) {
+        
         if (LOCAL) {
             runLocalI2C(&setSpeed);
             Delay10TCYx(1);
         } else {
             runRemoteI2C(&setSpeed);
         }
->>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
+
     }
     return;
 }
