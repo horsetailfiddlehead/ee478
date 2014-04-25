@@ -8,7 +8,7 @@
 #ifndef I2C_LOCAL_H
 #define	I2C_LOCAL_H
 
-
+void runLocalI2C(unsigned int *setSpeed);
 int setupOutgoing();
 int sendSpeed(unsigned int *slaveAddr, unsigned int *speed);
 int getRemoteData();

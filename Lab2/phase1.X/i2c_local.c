@@ -21,7 +21,6 @@
 /*****************************************************/
 
 
-
 /* local variables*/
 
 unsigned char data, addr, status;
@@ -35,7 +34,7 @@ unsigned char data, addr, status;
  * configures and starts outgoing data communication
  * The outgoing I2C uses MSSP1
  */
-int setupOutgoing(){
+int setupOutgoing() {
     // set pins RC14, RC15 as inputs
     TRISCbits.TRISC3 = 1; // SCL1
     ANSELCbits.ANSC3 = 0;
@@ -51,6 +50,13 @@ int setupOutgoing(){
     return (1);
 }
 
+/* Task to send the current setpoint to a remote node*/
+void runLocalI2C(unsigned int *setSpeed) {
+    addr = 0x29;
+    sendSpeed(&addr, setSpeed);
+    Delay10TCYx(20);
+}
+
 /*
  * send data to a slave device
  * takes the slave address, writes the given data byte
@@ -58,25 +64,30 @@ int setupOutgoing(){
 int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     // get the data from global variable
     char newSpeed[2] = {*speed, '\0'};
+
     // wait until idle - not actually needed for single-master bus
     IdleI2C1();
     StartI2C1(); // send start
     data = SSP1BUF;
-    do { // send address until ack'd
-        status = WriteI2C1(*slaveAddr || 0x00);
-        if (!status) { // write collision
-            data = SSP1BUF;
-            SSP1CON1bits.WCOL = 0;
-        }
-    } while (!status);
 
-    while (putsI2C1(newSpeed) != 0); // 	send bytes
+    WriteI2C1(*slaveAddr & 0xFE);
+//    do { // send address until ack'd
+//        status = WriteI2C1(*slaveAddr || 0x00);
+//        if (!status) { // write collision
+//            data = SSP1BUF;
+//            SSP1CON1bits.WCOL = 0;
+//        }
+//    } while (!status);
+
+//    while (putsI2C1(&newSpeed) != 0); // 	send bytes
+    WriteI2C1(newSpeed[0]);
     StopI2C1(); // stop transmission
 
     return 1;
 }
 
 // read data
+
 int getRemoteData() {
     // get and store data from remote
     // run any processes
