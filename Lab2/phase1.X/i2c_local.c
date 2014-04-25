@@ -23,7 +23,8 @@
 
 /* local variables*/
 
-unsigned char data, addr, status;
+unsigned char data, addr;
+int status, index;
 
 /* method declarations*/
 // See header file
@@ -63,7 +64,7 @@ void runLocalI2C(unsigned int *setSpeed) {
  */
 int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     // get the data from global variable
-    char newSpeed[2] = {*speed, '\0'};
+    char newSpeed[3] = {*speed, 'X', '\0'};
 
     // wait until idle - not actually needed for single-master bus
     IdleI2C1();
@@ -73,14 +74,21 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     WriteI2C1(*slaveAddr & 0xFE);
 //    do { // send address until ack'd
 //        status = WriteI2C1(*slaveAddr || 0x00);
-//        if (!status) { // write collision
+//        if (!(0 == status)) { // write collision
 //            data = SSP1BUF;
 //            SSP1CON1bits.WCOL = 0;
 //        }
-//    } while (!status);
+//    } while (!(0 == status));
 
 //    while (putsI2C1(&newSpeed) != 0); // 	send bytes
     WriteI2C1(newSpeed[0]);
+//    index = 0;
+//    char nextByte = *speed;
+//    while ('\0' != nextByte) {
+//        WriteI2C1(nextByte);
+//        index++;
+//        nextByte = *(speed + index);
+//    }
     StopI2C1(); // stop transmission
 
     return 1;
