@@ -31,7 +31,7 @@ void main() {
     while (1) {
 
         runLocalI2C(&setSpeed);
-
+        Delay1KTCYx(1);
     }
     return;
 }

@@ -54,7 +54,7 @@ int setupOutgoing() {
 void runLocalI2C(unsigned int *setSpeed) {
     addr = 0x29;
     sendSpeed(&addr, setSpeed);
-    Delay10TCYx(20);
+//    Delay10TCYx(20);
 }
 
 /*
