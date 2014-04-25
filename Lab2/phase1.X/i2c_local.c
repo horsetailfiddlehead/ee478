@@ -51,11 +51,37 @@ int setupOutgoing() {
     return (1);
 }
 
+/*
+ * configures and starts incoming data communication
+ * The incoming I2C uses MSSP2
+ */
+int setupIncoming() {
+
+    int SLAVE_ADDRESS = 0x28; // the slave address
+    // set pins RC14, RC15 as inputs
+    TRISCbits.TRISC3 = 1; // SCL1
+    ANSELCbits.ANSC3 = 0;
+
+    TRISCbits.TRISC4 = 1; // SDA1
+    ANSELCbits.ANSC4 = 0;
+
+    // configure MSSP2 for i2c slave operation.
+    CloseI2C2();
+    OpenI2C2(SLAVE_7, SLEW_OFF);
+    SSPADD = SLAVE_ADDRESS;
+    return (1);
+}
+
 /* Task to send the current setpoint to a remote node*/
 void runLocalI2C(unsigned int *setSpeed) {
     addr = 0x29;
     sendSpeed(&addr, setSpeed);
-//    Delay10TCYx(20);
+    //    Delay10TCYx(20);
+}
+
+/* Task to read from the bus*/
+void runRemoteI2C(unsigned int *setSpeed) {
+    receiveData();
 }
 
 /*
@@ -72,23 +98,17 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     data = SSP1BUF;
 
     WriteI2C1(*slaveAddr & 0xFE);
-//    do { // send address until ack'd
-//        status = WriteI2C1(*slaveAddr || 0x00);
-//        if (!(0 == status)) { // write collision
-//            data = SSP1BUF;
-//            SSP1CON1bits.WCOL = 0;
-//        }
-//    } while (!(0 == status));
+    //    do { // send address until ack'd
+    //        status = WriteI2C1(*slaveAddr || 0x00);
+    //        if (!(0 == status)) { // write collision
+    //            data = SSP1BUF;
+    //            SSP1CON1bits.WCOL = 0;
+    //        }
+    //    } while (!(0 == status));
 
-//    while (putsI2C1(&newSpeed) != 0); // 	send bytes
-    WriteI2C1(newSpeed[0]);
-//    index = 0;
-//    char nextByte = *speed;
-//    while ('\0' != nextByte) {
-//        WriteI2C1(nextByte);
-//        index++;
-//        nextByte = *(speed + index);
-//    }
+    // 	send bytes
+    WriteI2C1(newSpeed[0]); // TODO: send multiple bytes
+
     StopI2C1(); // stop transmission
 
     return 1;
@@ -96,8 +116,15 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
 
 // read data
 
-int getRemoteData() {
-    // get and store data from remote
-    // run any processes
+int receiveData() {
+    // get here after interrupt
+    // dumb remote just waits for a call
+//    while (0 == DataRdyI2C2());
+//    AckI2C2(); // do we need to ack?
+//    data = SSPBUF; // clear buffer
+//    while (0 == DataRdyI2C2()); // wait for next byte
+//    data = getcI2C2(); // store buffer value to memory
+//    Delay10TCYx(1);
+
 }
 

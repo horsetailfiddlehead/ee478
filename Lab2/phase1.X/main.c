@@ -20,18 +20,26 @@
 /* Global Controls for I/O banks*/
 #pragma config PBADEN = OFF   // turn off bank B ADCs
 
+#define LOCAL 0
 /*
  * 
  */
 void main() {
-   unsigned int setSpeed = 0x52;
+    unsigned int setSpeed = 0x52;
 
+if(LOCAL) {
     setupOutgoing();
+} else {
+    setupIncoming();
+}
 
     while (1) {
-
-        runLocalI2C(&setSpeed);
-        Delay1KTCYx(1);
+        if (LOCAL) {
+            runLocalI2C(&setSpeed);
+            Delay10TCYx(1);
+        } else {
+            runRemoteI2C(&setSpeed);
+        }
     }
     return;
 }
