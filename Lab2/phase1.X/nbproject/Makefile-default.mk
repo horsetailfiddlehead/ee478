@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=i2c_local.c main.c
+SOURCEFILES_QUOTED_IF_SPACED=i2c_local.c main.c SRAM.c rs232.c display.c process.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/i2c_local.o ${OBJECTDIR}/main.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/i2c_local.o.d ${OBJECTDIR}/main.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/i2c_local.o ${OBJECTDIR}/main.o ${OBJECTDIR}/SRAM.o ${OBJECTDIR}/rs232.o ${OBJECTDIR}/display.o ${OBJECTDIR}/process.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/i2c_local.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/SRAM.o.d ${OBJECTDIR}/rs232.o.d ${OBJECTDIR}/display.o.d ${OBJECTDIR}/process.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/i2c_local.o ${OBJECTDIR}/main.o
+OBJECTFILES=${OBJECTDIR}/i2c_local.o ${OBJECTDIR}/main.o ${OBJECTDIR}/SRAM.o ${OBJECTDIR}/rs232.o ${OBJECTDIR}/display.o ${OBJECTDIR}/process.o
 
 # Source Files
-SOURCEFILES=i2c_local.c main.c
+SOURCEFILES=i2c_local.c main.c SRAM.c rs232.c display.c process.c
 
 
 CFLAGS=
@@ -100,6 +100,34 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d ${OBJECTDIR}/main.o 
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
+${OBJECTDIR}/SRAM.o: SRAM.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/SRAM.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/SRAM.o   SRAM.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/SRAM.o 
+	@${FIXDEPS} "${OBJECTDIR}/SRAM.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/rs232.o: rs232.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/rs232.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/rs232.o   rs232.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/rs232.o 
+	@${FIXDEPS} "${OBJECTDIR}/rs232.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/display.o: display.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/display.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/display.o   display.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/display.o 
+	@${FIXDEPS} "${OBJECTDIR}/display.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/process.o: process.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/process.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/process.o   process.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/process.o 
+	@${FIXDEPS} "${OBJECTDIR}/process.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
 else
 ${OBJECTDIR}/i2c_local.o: i2c_local.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
@@ -114,6 +142,34 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/main.o   main.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/main.o 
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/SRAM.o: SRAM.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/SRAM.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/SRAM.o   SRAM.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/SRAM.o 
+	@${FIXDEPS} "${OBJECTDIR}/SRAM.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/rs232.o: rs232.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/rs232.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/rs232.o   rs232.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/rs232.o 
+	@${FIXDEPS} "${OBJECTDIR}/rs232.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/display.o: display.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/display.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/display.o   display.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/display.o 
+	@${FIXDEPS} "${OBJECTDIR}/display.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/process.o: process.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/process.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/process.o   process.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/process.o 
+	@${FIXDEPS} "${OBJECTDIR}/process.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
 endif
 
