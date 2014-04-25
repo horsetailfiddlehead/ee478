@@ -11,7 +11,6 @@
 #include "i2c_local.h"
 #include "SRAM.h"
 #include "rs232.h"
-#include "display.h"
 #include <i2c.h> // i2c library
 
 /***************USART set up *********************/
@@ -29,16 +28,18 @@
 unsigned int setSpeed = 0;
 unsigned int motorSpeed = 0; // The actual speed of the motor
 unsigned int errorState = 5; // The current motor state is off
-unsigned char myInput[IN_BUF_SZ];
+char myInput[IN_BUF_SZ];
 int inputSpot = 0;
 short inputFinished = 0;
 
-short displayFlag = 0;
+short displayFlag = 1;
 short SRAMflag = 0;
 short i2cFlag = 0;
 short processFlag = 0;
+int myCommand = 0;
+int myOp = 0;
 
-Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, myInput, &inputSpot, &inputFinished, &displayFlag, &SRAMflag, &i2cFlag, &processFlag};
+Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, &myInput, &inputSpot, &inputFinished, &displayFlag, &SRAMflag, &i2cFlag, &processFlag, &myCommand, &myOp};
 
 /****************************************************/
 
@@ -47,7 +48,6 @@ Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, myInput, &inputSpot, &i
 /* Global Controls for I/O banks*/
 #pragma config PBADEN = OFF   // turn off bank B ADCs
 
-<<<<<<< HEAD
 #pragma code high_vector=0x08
 void interrupt_at_high_vector(void) {
     _asm GOTO rcISR _endasm
@@ -57,26 +57,29 @@ void interrupt_at_high_vector(void) {
 #pragma interrupt rcISR
 void rcISR(void) {
     unsigned char input;
-
     // Don't have to wait for data available if we are in ISR
     input = getc1USART();
 
     // Terminate string on enter or max size
-    if (input == '\r' || input == '\n' || inputSpot == (IN_BUF_SZ - 1)) {
-        myInput[inputSpot] = '\0';
+    if (input >= ' ' && input <= 'z' || input == '\r' || input == '\n') {
+        if (input == '\r' || input == '\n' || inputSpot == (IN_BUF_SZ - 1)) {
+            myInput[inputSpot] = '\0';
 
-        // Reset input, declare finished
-        inputSpot = 0;
-        inputFinished = 1;
-        *ourGlobal.processFlag = 1;
+            // Reset input, declare finished
+            inputSpot = 0;
+            inputFinished = 1;
+            *ourGlobal.processFlag = 1;
+        } else {
+            // Put character in the input buffer
+            myInput[inputSpot] = input;
+            inputSpot++;
+
+            // Print current character
+            putc1USART(input);
+            inputFinished = 0;
+        }
     } else {
-        // Put character in the input buffer
-        myInput[inputSpot] = input;
-        inputSpot++;
-
-        // Print current character
         putc1USART(input);
-        inputFinished = 0;
     }
 
     // Clear interrupt
@@ -84,14 +87,11 @@ void rcISR(void) {
 }
 /****************************************************/
 
-=======
 #define LOCAL 0
->>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
 /*
  * 
  */
 void main() {
-<<<<<<< HEAD
     /*
      // pwm GO!
      Disable CCp4
@@ -107,41 +107,33 @@ void main() {
      *
      */
 
-
-    // I2c Setup
-=======
-    unsigned int setSpeed = 0x52;
-
-if(LOCAL) {
->>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
+     // I2c
     setupOutgoing();
-} else {
-    setupIncoming();
-}
 
-<<<<<<< HEAD
     // Rs232 setup and interrupt
     rs232Setup();
 
     // Enable SRAM pins correctly
     SRAMsetUp();
 
-
     while (1) {
         displayFrontPanel(&ourGlobal);
+        dataProcess(&ourGlobal);
+        if (*ourGlobal.SRAMflag == 1) {
+            writeData(0, *ourGlobal.myCommand);
+            writeData(1, *ourGlobal.myOp);
+            *ourGlobal.SRAMflag = 0;
+            *ourGlobal.i2cFlag = 1;
+        }
+        if (*ourGlobal.i2cFlag == 1) {
+            ourGlobal.setSpeed = readData(1);
+            runLocalI2C(ourGlobal.setSpeed);
+            *ourGlobal.i2cFlag = 0;
+            *ourGlobal.displayFlag = 1;
+        }
         runLocalI2C(ourGlobal.setSpeed);
         Delay1KTCYx(1);
-=======
-    while (1) {
-        if (LOCAL) {
-            runLocalI2C(&setSpeed);
-            Delay10TCYx(1);
-        } else {
-            runRemoteI2C(&setSpeed);
-        }
->>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
     }
-    return;
 }
 
 int startAndWrite(char *c) {

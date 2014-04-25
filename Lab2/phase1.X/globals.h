@@ -37,9 +37,12 @@ typedef struct globalStruct {
     short* SRAMflag;
     short* i2cFlag;
     short* processFlag;
+    int* myCommand;
+    int* myOp;
+
 } Global;
 
-int displayFrontPanel(Global* globalData);
-int dataProcess(Global* globalData);
+void displayFrontPanel(Global* globalData);
+void dataProcess(Global* globalData);
 
 #endif	/* GLOBALS_H */
