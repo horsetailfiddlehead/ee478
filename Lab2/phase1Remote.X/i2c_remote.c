@@ -4,7 +4,7 @@
  *
  * Created on April 23, 2014, 8:20 PM
  *
- * Controls the I2C behavior for the local control node. 
+ * Controls the I2C behavior for the local control node.
  * Outgoing communication occurs on the I2C1 channel.
  * Incoming communication occurs on the I2C2 channel.
  */
@@ -22,8 +22,8 @@
 
 
 /* local variables*/
-
-unsigned char data, addr;
+extern Global ourGlobal;
+unsigned char i2cData, addr1;
 int status, index;
 
 /* method declarations*/
@@ -57,13 +57,23 @@ int setupOutgoing() {
  */
 int setupIncoming() {
 
-    int SLAVE_ADDRESS = 0x28; // the slave address
-    // set pins RC14, RC15 as inputs
-    TRISCbits.TRISC3 = 1; // SCL1
-    ANSELCbits.ANSC3 = 0;
+    int SLAVE_ADDRESS = 0x0; // the slave address
+    // set pins  as inputs
+    TRISBbits.TRISB1 = 1; // SCL2
+    ANSELBbits.ANSB1 = 0;
 
-    TRISCbits.TRISC4 = 1; // SDA1
-    ANSELCbits.ANSC4 = 0;
+    TRISBbits.TRISB2 = 1; // SDA2
+    ANSELBbits.ANSB2 = 0;
+        // Enable Priority
+    RCONbits.IPEN = 1;
+    // High priority receive interrupt
+    IPR3bits.SSP2IP = 1;
+    // Enable all high priority interrupts
+    INTCONbits.GIEH = 1;
+    INTCONbits.PEIE = 1;
+    IPR3bits.SSP2IP = 1;
+    PIE3bits.SSP2IE = 1;
+
 
     // configure MSSP2 for i2c slave operation.
     CloseI2C2();
@@ -74,13 +84,13 @@ int setupIncoming() {
 
 /* Task to send the current setpoint to a remote node*/
 void runLocalI2C(unsigned int *setSpeed) {
-    addr = 0x0;
-    sendSpeed(&addr, setSpeed);
+    addr1 = 0x29;
+    sendSpeed(&addr1, setSpeed);
     //    Delay10TCYx(20);
 }
 
 /* Task to read from the bus*/
-void runReceiveI2C(unsigned int *setSpeed) {
+void runRemoteI2C(unsigned int *setSpeed) {
     receiveData();
 }
 
@@ -95,7 +105,7 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     // wait until idle - not actually needed for single-master bus
     IdleI2C1();
     StartI2C1(); // send start
-    data = SSP1BUF;
+    i2cData = SSP1BUF;
 
     WriteI2C1(*slaveAddr & 0xFE);
     //    do { // send address until ack'd
@@ -119,12 +129,13 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
 int receiveData() {
     // get here after interrupt
     // dumb remote just waits for a call
-//    while (0 == DataRdyI2C2());
-//    AckI2C2(); // do we need to ack?
-//    data = SSPBUF; // clear buffer
-//    while (0 == DataRdyI2C2()); // wait for next byte
-//    data = getcI2C2(); // store buffer value to memory
-//    Delay10TCYx(1);
+    while (0 == DataRdyI2C2());
+    //AckI2C2(); // do we need to ack?
+    i2cData = SSPBUF; // clear buffer
+    while (0 == DataRdyI2C2()); // wait for next byte
+    *ourGlobal.setSpeed = getcI2C2(); // store buffer value to memory
+    Delay10TCYx(1);
 
 }
+
 
