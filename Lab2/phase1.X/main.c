@@ -47,6 +47,7 @@ Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, myInput, &inputSpot, &i
 /* Global Controls for I/O banks*/
 #pragma config PBADEN = OFF   // turn off bank B ADCs
 
+<<<<<<< HEAD
 #pragma code high_vector=0x08
 void interrupt_at_high_vector(void) {
     _asm GOTO rcISR _endasm
@@ -83,10 +84,14 @@ void rcISR(void) {
 }
 /****************************************************/
 
+=======
+#define LOCAL 0
+>>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
 /*
  * 
  */
 void main() {
+<<<<<<< HEAD
     /*
      // pwm GO!
      Disable CCp4
@@ -104,8 +109,17 @@ void main() {
 
 
     // I2c Setup
-    setupOutgoing();
+=======
+    unsigned int setSpeed = 0x52;
 
+if(LOCAL) {
+>>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
+    setupOutgoing();
+} else {
+    setupIncoming();
+}
+
+<<<<<<< HEAD
     // Rs232 setup and interrupt
     rs232Setup();
 
@@ -117,6 +131,15 @@ void main() {
         displayFrontPanel(&ourGlobal);
         runLocalI2C(ourGlobal.setSpeed);
         Delay1KTCYx(1);
+=======
+    while (1) {
+        if (LOCAL) {
+            runLocalI2C(&setSpeed);
+            Delay10TCYx(1);
+        } else {
+            runRemoteI2C(&setSpeed);
+        }
+>>>>>>> 72951b5e1c67c48a58ef268c9b7992287ad0cd02
     }
     return;
 }
