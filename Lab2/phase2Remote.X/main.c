@@ -75,30 +75,10 @@ void i2cISR(void) {
 
 int readADC();
 
-/*
- *
+/* setsup the pwm to output the voltage
  */
-void main() {
-
-
-    // I2c Setup
-
-
-        setupIncoming();
-    /*
-         // pwm GO!
-     * Disable CCp4
-     * select timer2
-     * load reg p4 with timer value
-     * configure ccp4con
-     * load ccpr4L reg, dc4b[1:0](ccp4con) with duty cycle
-     * configure timver
-     *  clar TMRIF interrup flag
-     *  congiure T2CKPS prescale bits
-     * set TIMR2EN
-     * enambe PWM ->clearing TRIS
-     *
-     */
+void setupPWM() {
+       // configure PWM
     TRISBbits.RB0 = 1; // disable PWM output
     CCPTMRS1 = 0b00000001; // set C4TSEL = 0b01
     PR4 = 0xF9; // PR = 2 for 20kHz
@@ -109,6 +89,21 @@ void main() {
     PIR5 = 0b00000000; // clear timer interrupt flag
     TRISBbits.RB0 = 0; //enable PWM output
     // Rs232 setup and interrupt
+    
+}
+/*
+ *
+ */
+void main() {
+
+
+    // I2c Setup
+
+
+    setupIncoming();
+    setupPWM();
+
+
 
 //    // adc
 //

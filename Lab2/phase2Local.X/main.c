@@ -11,6 +11,7 @@
 #include "i2c_local.h"
 #include "SRAM.h"
 #include "rs232.h"
+#include "adc.h"
 
 //#include "display.h"
 
@@ -93,37 +94,10 @@ void rcISR(void) {
 }
 /****************************************************/
 
-#define LOCAL 1
-
-/*
- * 
+/* setsup the pwm to output the voltage
  */
-void main() {
-
-
-    // I2c Setup
-
-    unsigned int setSpeed = 0x52;
-    char errorMsg[] = "Error: Input again.\n\r";
-    if (LOCAL) {
-        setupOutgoing();
-    } else {
-        setupIncoming();
-    }
-    /*
-         // pwm GO!
-     * Disable CCp4
-     * select timer2
-     * load reg p4 with timer value
-     * configure ccp4con
-     * load ccpr4L reg, dc4b[1:0](ccp4con) with duty cycle
-     * configure timver
-     *  clar TMRIF interrup flag
-     *  congiure T2CKPS prescale bits
-     * set TIMR2EN
-     * enambe PWM ->clearing TRIS
-     *
-     */
+void setupPWM() {
+    // configure PWM
     TRISBbits.RB0 = 1; // disable PWM output
     CCPTMRS1 = 0b00000001; // set C4TSEL = 0b01
     PR4 = 0xF9; // PR = 2 for 20kHz
@@ -133,14 +107,49 @@ void main() {
     CCPR4L = 0x3E; // set MSB of duty cycle
     PIR5 = 0b00000000; // clear timer interrupt flag
     TRISBbits.RB0 = 0; //enable PWM output
+
+}
+#define LOCAL 1
+
+/*
+ * 
+ */
+void main() {
+
+    int temp;
+    // I2c Setup
+
+    unsigned int setSpeed = 0x52;
+    char errorMsg[] = "Error: Input again.\n\r";
+    if (LOCAL) {
+        setupOutgoing();
+    } else {
+        setupIncoming();
+    }
+
     // Rs232 setup and interrupt
     rs232Setup();
 
     // Enable SRAM pins correctly
     SRAMsetUp();
 
+    // adc
+    //    ADCON0 = 0b00111000;
+    //    ADCON1 = 0;
+    //    ADCON2 = 0b101110000;
+
+    TRISCbits.RC2 = 1;
+    ANSELCbits.ANSC2 = 1; //set as input
+    OpenADC(ADC_FOSC_64 & ADC_LEFT_JUST & ADC_20_TAD,
+            ADC_CH14 & ADC_INT_OFF, 15);
+
+
+
+    // setup PWM (debug purposes only)
+    setupPWM();
+
     // Set Default PWM
-    SetDCPWM4(5*(*ourGlobal.myOp));
+    SetDCPWM4(5 * (*ourGlobal.myOp));
     writeData(1, *ourGlobal.myOp);
 
     while (1) {
@@ -171,20 +180,27 @@ void main() {
         }
         if (*ourGlobal.i2cFlag == 1) {
             *ourGlobal.setSpeed = readData(1);
-            SetDCPWM4(5*(*ourGlobal.setSpeed));
+            SetDCPWM4(5 * (*ourGlobal.setSpeed));
             runLocalI2C(ourGlobal.setSpeed);
             *ourGlobal.i2cFlag = 0;
             *ourGlobal.displayFlag = 1;
+            
+            ConvertADC();
+            while (BusyADC());
+            temp = ReadADC();
+
+            Delay1KTCYx(1);
         }
-        Delay1KTCYx(1);
+
+
     }
 }
 
-int startAndWrite(char *c) {
-    char data = 0x9A;
-    IdleI2C1();
-    StartI2C1();
-    WriteI2C1(*c); // just write a char
-    WriteI2C1(data);
-    StopI2C1();
+// as the name says
+
+int readADC() {
+    ADCON0bits.GO_DONE = 1;
+    while (ADCON0bits.GO_DONE);
+    ADCON0bits.ADON = 0;
+    return ADRESH;
 }
