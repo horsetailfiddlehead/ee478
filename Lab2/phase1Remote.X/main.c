@@ -73,7 +73,6 @@ void i2cISR(void) {
 }
 ///****************************************************/
 
-int readADC();
 
 /*
  *
@@ -110,16 +109,6 @@ void main() {
     TRISBbits.RB0 = 0; //enable PWM output
     // Rs232 setup and interrupt
 
-//    // adc
-//
-//    ADCON0 = 0b00111000;
-//    ADCON1 = 0;
-//    ADCON2 = 0b101110000;
-//
-//    TRISCbits.RC2 = 1;
-//    ANSELCbits.ANSC2 = 1;
-//
-
     // Enable SRAM pins correctly
     SRAMsetUp();
 
@@ -135,16 +124,8 @@ void main() {
         }
         if (*ourGlobal.processFlag == 1) {
             SetDCPWM4(5*(*ourGlobal.setSpeed));
-            //*ourGlobal.myOp = readADC();
             *ourGlobal.processFlag = 0;
         }
        //receiveData();
     }
-}
-
-int readADC() {
-    ADCON0bits.GO_DONE=1;
-    while(ADCON0bits.GO_DONE);
-    ADCON0bits.ADON=0;
-    return ADRESH;
 }
