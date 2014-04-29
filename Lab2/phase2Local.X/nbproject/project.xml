@@ -2,8 +2,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>i2c_test</name>
-            <creation-uuid>4bd9ed58-d5cb-46df-b67a-29d4c0b53513</creation-uuid>
+            <name>phase2Local</name>
+            <creation-uuid>55faa87a-e09b-4b1c-a58f-3011fa6e0257</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
