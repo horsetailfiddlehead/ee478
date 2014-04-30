@@ -30,9 +30,15 @@
 
 typedef struct globalStruct {
     unsigned int* setSpeed; // the user defined motor speed
-    unsigned int* motorSpeed; // The actual speed of the motor
-    unsigned int* errorState; // The current motor state is off
-    unsigned char* myInput;
+	unsigned int* actualSpeed; // Motor speed given from the remote (was motorSpeed)
+    unsigned int* controllerSpeed; // Motor speed send to the remote node by the local
+    
+	//
+	unsigned int* errorState; // The current motor state is off
+    unsigned float motorHIGH;
+	unsigned float motorLOW;
+	
+	unsigned char* myInput;
     int* inputSpot;
     short* inputFinished;
     short* displayFlag;

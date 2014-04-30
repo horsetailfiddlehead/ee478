@@ -2,9 +2,9 @@
  * Created by: Patrick Ma
  * Date: April 29, 2014
  * 
- * Control.c implements the local side of the motor controller.
- * It  adjusts the motor speed value sent to the remote node according to the
- * difference between the expected set speed and the actual motor speed.
+ * Control.c implements the local side of the controller controller.
+ * It  adjusts the controller speed value sent to the remote node according to the
+ * difference between the expected set speed and the actual controller speed.
  */
 
 #include <stdlib.h>
@@ -20,12 +20,13 @@ int i = 0;
 #endif
 
 void control(Global *gData) {
-	float error = gData->setSpeed - gData->currentSpeed;
-
-	gData->motorSpeed = error;
+	
+	// Add the difference between the desired and measured speeds 
+	// back to the controller speed sent to the remote 
+	*gData->controllerSpeed += *gData->setSpeed - *gData->actualSpeed;
 
 	// send the updated speed to the remote
-	gData->i2CFlag = 1;
+	gData->i2cFlag = 1;
 	return;
 }
 
@@ -34,20 +35,20 @@ void control(Global *gData) {
 //
 // 4/29/2014
 void printData() {
-	printf("%d) set: %f motor: %f current: %f\n", i, gData.setSpeed,
-			gData.motorSpeed, gData.currentSpeed);
+	printf("%d) set: %f controller: %f actual: %f\n", i, gData.setSpeed,
+			gData.controllerSpeed, gData.actualSpeed);
 }
 
 void main () {
 	gData.setSpeed = 10;
-	gData.currentSpeed = 2;
+	gData.actualSpeed = 2;
 
 //	for (int i = 0; i < 10; i++) {
-	while(gData.setSpeed != gData.currentSpeed){
+	while(gData.setSpeed != gData.actualSpeed){
 		i++;
 		printData();
 		control(&gData);
-		gData.currentSpeed = gData.currentSpeed + (0.5) * (gData.motorSpeed);
+		gData.actualSpeed = (0.75) * (gData.controllerSpeed); // model motor response
 		printData();
 	}
 
