@@ -34,3 +34,18 @@ Microbial Battery
 http://www.eurekalert.org/pub_releases/2013-09/ssoe-ssu091113.php
 
 http://www.stanford.edu/group/cui_group/papers/Xing_2013.pdf
+From Article:
+ - Battery made of special bacteria that produce electricity upon digestion
+ - The bacteria is natural
+ - Electricity from sewage (plant and animal waste)
+ - Electrodes placed into waste water
+ - "Fishing for electrons"
+ - Silver Oxide builds up and turns into silver, stores electrons.
+	- Silver is removed and turned into silver oxide, which releases the electrons.
+- Can get 30% of wastewater's energy (good, but there is not much energy overall)
+- Offset electric cost of wastewater treatment
+- Why it's not used yet:
+	- Silver oxide was used to prove a principal, but it is too expensive to use on a large scale
+From Paper:
+	TODO
+ 
