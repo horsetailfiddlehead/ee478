@@ -80,10 +80,10 @@ int readData (int adx) {
 
     // Output Enable
     PORTBbits.RB5 = 0;
-
+    Delay10TCYx(5);
     // Get the first 6 bits of Port A and the first 2 bits of port C shifted
     myRead = (PORTA & 0x3F) | ((PORTC << 6) & 0xC0);
-    
+//    Delay10TCYx(5);
     // Output Enable
     PORTBbits.RB5 = 1;
 

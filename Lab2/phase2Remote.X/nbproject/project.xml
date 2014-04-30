@@ -3,12 +3,12 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>phase2Remote</name>
-            <creation-uuid>84d7768f-7ee5-4fea-809f-297883be5126</creation-uuid>
+            <creation-uuid>935b3b0c-f4b5-48f1-ab88-83774c123f21</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
             <header-extensions>h</header-extensions>
-            <sourceEncoding>UTF-8</sourceEncoding>
+            <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
         </data>
     </configuration>

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   globals.h
  * Author: castia
  *
@@ -20,7 +20,7 @@
 #include <delays.h>
 #include <pwm.h>
 #include "SRAM.h"
-
+#include "adc.h"
 
 #include "string.h"
 #include "interrupts.h"
@@ -29,12 +29,18 @@
 #define USE_AND_OR  // allows use of compiler libs
 
 typedef struct globalStruct {
+    // System variables
     unsigned int* setSpeed; // the user defined motor speed
-    unsigned int* motorSpeed; // The actual speed of the motor
+    unsigned int* actualSpeed; // Motor speed given from the remote (was motorSpeed)
+    unsigned int* controllerSpeed; // Motor speed send to the remote node by the local
     unsigned int* errorState; // The current motor state is off
+
+    // User Input
     unsigned char* myInput;
     int* inputSpot;
     short* inputFinished;
+
+    // Flags
     short* displayFlag;
     short* SRAMflag;
     short* i2cFlag;

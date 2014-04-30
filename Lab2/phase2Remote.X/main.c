@@ -28,21 +28,26 @@
 #define IN_BUF_SZ 64
 #define DEF_PWM 20
 /***********************Global Setup*****************/
-unsigned int setSpeed = 0;
-unsigned int motorSpeed = 0; // The actual speed of the motor
-unsigned int errorState = 5; // The current motor state is off
-char myInput[IN_BUF_SZ];
+// System variables
+unsigned int setSpeed = 0; // the user defined motor speed
+unsigned int actualSpeed = 0; // Motor speed given from the remote (was motorSpeed)
+unsigned int controllerSpeed = DEF_PWM; // Motor speed send to the remote node by the local
+unsigned int errorState = 4; // The current motor state is off
+
+// User Input
+unsigned char myInput[IN_BUF_SZ];
 int inputSpot = 0;
 short inputFinished = 0;
 
-short displayFlag = 0;
+// Flags
+short displayFlag = 1;
 short SRAMflag = 0;
 short i2cFlag = 0;
 short processFlag = 0;
 int myCommand = 0;
-int myOp = DEF_PWM;
+int myOp = 0;
 
-Global ourGlobal = {&setSpeed, &motorSpeed, &errorState, &myInput, &inputSpot, &inputFinished, &displayFlag, &SRAMflag, &i2cFlag, &processFlag, &myCommand, &myOp};
+Global ourGlobal = {&setSpeed, &actualSpeed, &controllerSpeed, &errorState, &myInput, &inputSpot, &inputFinished, &displayFlag, &SRAMflag, &i2cFlag, &processFlag, &myCommand, &myOp};
 
 /****************************************************/
 
@@ -95,45 +100,60 @@ void setupPWM() {
  *
  */
 void main() {
-
-
-    // I2c Setup
-
-
+    unsigned int temp = 0;
     setupIncoming();
+    setupOutgoing();
     setupPWM();
 
 
 
 //    // adc
-//
-//    ADCON0 = 0b00111000;
-//    ADCON1 = 0;
-//    ADCON2 = 0b101110000;
-//
-//    TRISCbits.RC2 = 1;
-//    ANSELCbits.ANSC2 = 1;
-//
+    TRISCbits.RC2 = 1;
+    TRISCbits.RC5 = 0;
+    ANSELCbits.ANSC5 = 0;
+    ANSELCbits.ANSC2 = 1; //set as input
+    OpenADC(ADC_FOSC_64 & ADC_RIGHT_JUST & ADC_12_TAD,
+            ADC_CH14 & ADC_INT_OFF, 15);
 
     // Enable SRAM pins correctly
     SRAMsetUp();
 
     // Set Default PWM
-    SetDCPWM4(5*(*ourGlobal.myOp));
-    writeData(1, *ourGlobal.myOp);
+    SetDCPWM4(5*(*ourGlobal.controllerSpeed));
+    writeData(1, *ourGlobal.controllerSpeed);
 
     while (1) {
+        // Store a set speed
         if (*ourGlobal.SRAMflag == 1) {
             writeData(1, *ourGlobal.setSpeed);
             *ourGlobal.processFlag = 1;
             *ourGlobal.SRAMflag = 0;
         }
+        // Process user's "set speed" command
         if (*ourGlobal.processFlag == 1) {
-            SetDCPWM4(5*(*ourGlobal.setSpeed));
-            //*ourGlobal.myOp = readADC();
+            SetDCPWM4(5*(readData(1)));
             *ourGlobal.processFlag = 0;
         }
-       //receiveData();
+        // Transfer actual speed to local node
+        if (*ourGlobal.i2cFlag == 1) {
+            runLocalI2C(ourGlobal.actualSpeed); // Testing: send 2
+            *ourGlobal.i2cFlag = 0;
+            // TODO: Calculate and send error
+        }
+
+        // Measure Motor
+        Delay10KTCYx(8);
+        PORTCbits.RC5 = 1;
+        ConvertADC();
+        while (BusyADC());
+        temp = ReadADC();
+        PORTCbits.RC5 = 0;
+        if ((temp - 5 >= *ourGlobal.actualSpeed) || (*ourGlobal.actualSpeed >= temp + 5)) {
+            *ourGlobal.actualSpeed = temp;
+            *ourGlobal.i2cFlag = 1;
+        }
+        Delay1KTCYx(1);
+        //receiveData();
     }
 }
 

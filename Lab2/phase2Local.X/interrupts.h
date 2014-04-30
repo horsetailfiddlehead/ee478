@@ -14,7 +14,7 @@ extern "C" {
 
 void rcISR(void);
 
-
+void i2cISR(void);
 
 #ifdef	__cplusplus
 }

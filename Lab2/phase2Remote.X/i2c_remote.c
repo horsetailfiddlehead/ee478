@@ -46,7 +46,7 @@ int setupOutgoing() {
     // configure i2c1 for master mode @ 100 kHz
     CloseI2C1();
     OpenI2C1(MASTER, SLEW_OFF);
-    SSPADD = BD_RT;
+    SSP1ADD = BD_RT;
 
     return (1);
 }
@@ -64,7 +64,7 @@ int setupIncoming() {
 
     TRISBbits.TRISB2 = 1; // SDA2
     ANSELBbits.ANSB2 = 0;
-        // Enable Priority
+    // Enable Priority
     RCONbits.IPEN = 1;
     // High priority receive interrupt
     IPR3bits.SSP2IP = 1;
@@ -78,13 +78,13 @@ int setupIncoming() {
     // configure MSSP2 for i2c slave operation.
     CloseI2C2();
     OpenI2C2(SLAVE_7, SLEW_OFF);
-    SSPADD = SLAVE_ADDRESS;
+    SSP2ADD = SLAVE_ADDRESS;
     return (1);
 }
 
 /* Task to send the current setpoint to a remote node*/
 void runLocalI2C(unsigned int *setSpeed) {
-    addr1 = 0x29;
+    addr1 = 0x00;
     sendSpeed(&addr1, setSpeed);
     //    Delay10TCYx(20);
 }
@@ -100,7 +100,11 @@ void runRemoteI2C(unsigned int *setSpeed) {
  */
 int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     // get the data from global variable
-    char newSpeed[3] = {*speed, 'X', '\0'};
+    char newSpeed[5];
+    int k = 0;
+    newSpeed[0] = *speed;
+    newSpeed[4] = '\0';
+
 
     // wait until idle - not actually needed for single-master bus
     IdleI2C1();
@@ -117,7 +121,9 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     //    } while (!(0 == status));
 
     // 	send bytes
-    WriteI2C1(newSpeed[0]); // TODO: send multiple bytes
+//    for (k = 0; k < 2; k++) {
+        WriteI2C1(newSpeed[k]); // TODO: send multiple bytes
+//    }
 
     StopI2C1(); // stop transmission
 

@@ -46,7 +46,7 @@ int setupOutgoing() {
     // configure i2c1 for master mode @ 100 kHz
     CloseI2C1();
     OpenI2C1(MASTER, SLEW_OFF);
-    SSPADD = BD_RT;
+    SSP1ADD = BD_RT;
 
     return (1);
 }
@@ -57,18 +57,28 @@ int setupOutgoing() {
  */
 int setupIncoming() {
 
-    int SLAVE_ADDRESS = 0x28; // the slave address
+    int SLAVE_ADDRESS = 0x00; // the slave address
     // set pins RC14, RC15 as inputs
-    TRISCbits.TRISC3 = 1; // SCL1
-    ANSELCbits.ANSC3 = 0;
+    TRISBbits.TRISB1 = 1; // SCL2
+    ANSELBbits.ANSB1 = 0;
 
-    TRISCbits.TRISC4 = 1; // SDA1
-    ANSELCbits.ANSC4 = 0;
+    TRISBbits.TRISB2 = 1; // SDA2
+    ANSELBbits.ANSB2 = 0;
+
+    // Enable Priority
+    RCONbits.IPEN = 1;
+    // Low priority receive interrupt
+    IPR3bits.SSP2IP = 0;
+    // Enable all low priority interrupts
+    INTCONbits.GIEL = 1;
+    INTCONbits.PEIE = 1;
+    PIE3bits.SSP2IE = 1;
+
 
     // configure MSSP2 for i2c slave operation.
     CloseI2C2();
     OpenI2C2(SLAVE_7, SLEW_OFF);
-    SSPADD = SLAVE_ADDRESS;
+    SSP2ADD = SLAVE_ADDRESS;
     return (1);
 }
 
