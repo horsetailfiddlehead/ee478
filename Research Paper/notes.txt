@@ -21,7 +21,10 @@ StoreDot Bio-Organic Battery
 
 http://www.store-dot.com/
 
+What is it: Nano dots are first bio-organic nano crystals. Increases electrode capacitance, creates super capacitors. Can be recharged in minutes
+
 http://techcrunch.com/2014/04/07/storedots-bio-organic-battery-tech-can-charge-from-flat-to-full-in-30-seconds/
+company has a demonstrated technology, but no prototype yet. functional prototpe is 1 year away, 3 years for a commercial device.
 
 Hydrogen Battery
 
