@@ -190,8 +190,7 @@ void main() {
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 2:
-                    tempA = readData(1) + 1;
-                    writeData(1, tempA);
+                    writeData(1, readData(1) + 1);
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 3:

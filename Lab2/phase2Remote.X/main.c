@@ -101,6 +101,7 @@ void setupPWM() {
  */
 void main() {
     unsigned int temp = 0;
+    unsigned int correct = 0;
     setupIncoming();
     setupOutgoing();
     setupPWM();
@@ -136,7 +137,16 @@ void main() {
         }
         // Transfer actual speed to local node
         if (*ourGlobal.i2cFlag == 1) {
-            runLocalI2C(ourGlobal.actualSpeed); // Testing: send 2
+            // Work on math here. We can't go above 65535 in th emath or it breaks
+            // 16 bit max int. So 100 * 65 is the max doing it a conventional way
+            if (*ourGlobal.actualSpeed >= 50) {
+                correct = 50 * (*ourGlobal.actualSpeed) >> 8; //correct = 2 * (2*((50 * *ourGlobal.actualSpeed) / 1023));
+            } else {
+            
+            correct = 50 * (*ourGlobal.actualSpeed) >> 8; //2 * ((100 * *ourGlobal.actualSpeed) / 1023);
+            }
+            Delay1KTCYx(1);
+            runLocalI2C(&correct);
             *ourGlobal.i2cFlag = 0;
             // TODO: Calculate and send error
         }
@@ -148,7 +158,7 @@ void main() {
         while (BusyADC());
         temp = ReadADC();
         PORTCbits.RC5 = 0;
-        if ((temp - 5 >= *ourGlobal.actualSpeed) || (*ourGlobal.actualSpeed >= temp + 5)) {
+        if ((temp - 5 > *ourGlobal.actualSpeed) || (*ourGlobal.actualSpeed > temp + 5)) {
             *ourGlobal.actualSpeed = temp;
             *ourGlobal.i2cFlag = 1;
         }

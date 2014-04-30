@@ -109,7 +109,7 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     // wait until idle - not actually needed for single-master bus
     IdleI2C1();
     StartI2C1(); // send start
-    i2cData = SSP1BUF;
+//    i2cData = SSP1BUF;
 
     WriteI2C1(*slaveAddr & 0xFE);
     //    do { // send address until ack'd
