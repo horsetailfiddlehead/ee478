@@ -29,19 +29,19 @@
 #define USE_AND_OR  // allows use of compiler libs
 
 typedef struct globalStruct {
-    unsigned int* setSpeed; // the user defined motor speed
+    // System variables
+	unsigned int* setSpeed; // the user defined motor speed
 	unsigned int* actualSpeed; // Motor speed given from the remote (was motorSpeed)
     unsigned int* controllerSpeed; // Motor speed send to the remote node by the local
-    
-	//
 	unsigned int* errorState; // The current motor state is off
-    unsigned float motorHIGH;
-	unsigned float motorLOW;
 	
+	// User Input
 	unsigned char* myInput;
     int* inputSpot;
     short* inputFinished;
-    short* displayFlag;
+    
+	// Flags
+	short* displayFlag;
     short* SRAMflag;
     short* i2cFlag;
     short* processFlag;
