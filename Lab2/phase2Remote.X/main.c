@@ -29,7 +29,7 @@
 #define DEF_PWM 20
 /***********************Global Setup*****************/
 // System variables
-unsigned int setSpeed = 0; // the user defined motor speed (from local node)
+unsigned int setSpeed = DEF_PWM; // the user defined motor speed (from local node)
 unsigned int actualSpeed = 0; // Motor speed given from the remote (was motorSpeed)
 unsigned int controllerSpeed = DEF_PWM; // PWM motor speed
 unsigned int errorState = 4; // The current motor state is off
@@ -153,16 +153,16 @@ void main() {
             *ourGlobal.i2cFlag = 1;
         }
 
+        // Get error state
+        errorCheck(&ourGlobal);
+
         // enable auto correct
         //if (*ourGlobal.actualSpeed < (*ourGlobal.setSpeed - 1) ||
         //(*ourGlobal.setSpeed + 1) < *ourGlobal.actualSpeed) {
         controller(&ourGlobal); // compute the control function and adjust pwm
         //}
 
-        // Get error state
-        errorCheck(&ourGlobal);
-
-
+        
         // Process updated controller speed
         if (*ourGlobal.processFlag == 1) {
             *ourGlobal.processFlag = 0;
