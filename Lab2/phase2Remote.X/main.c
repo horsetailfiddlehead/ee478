@@ -147,14 +147,15 @@ void main() {
 
         // only makes sense to update ADC if significantly different than
         // prior reading
-        if ((temp - 2 > *ourGlobal.actualSpeed) || (*ourGlobal.actualSpeed > temp + 2)) {
+        if ((temp - 1 > *ourGlobal.actualSpeed) || (*ourGlobal.actualSpeed > temp + 1)) {
             correct = temp;
             *ourGlobal.actualSpeed = correct;
             *ourGlobal.i2cFlag = 1;
         }
 
-        if (*ourGlobal.actualSpeed < (*ourGlobal.setSpeed - 2) ||
-                (*ourGlobal.setSpeed + 2) < *ourGlobal.actualSpeed) {
+        // enable auto correct
+        if (*ourGlobal.actualSpeed < (*ourGlobal.setSpeed - 1) ||
+                (*ourGlobal.setSpeed + 1) < *ourGlobal.actualSpeed) {
             controller(&ourGlobal); // compute the control function and adjust pwm
         }
 

@@ -7,13 +7,21 @@ void displayFrontPanel(Global* globalData) {
     if (*globalData->displayFlag == 1) {
         *globalData->displayFlag = 0;
         putc1USART(0x0C);
-        sprintf(errorDisplay, (char*) "Current Speed: %s%%\r\n", itoa(* (globalData->controllerSpeed) / 2, 16));
+        if (*globalData->controllerSpeed % 2 == 0) {
+            sprintf(errorDisplay, (char*) "Current Speed: %s.0%%\r\n", itoa(* (globalData->controllerSpeed) / 2, 16));
+        } else {
+            sprintf(errorDisplay, (char*) "Current Speed: %s.5%%\r\n", itoa(* (globalData->controllerSpeed) / 2, 16));
+        }
         puts1USART(errorDisplay);
-        sprintf(errorDisplay, (char*) "Measured Speed: %s%%\r\n", itoa(*(globalData->actualSpeed) / 2, 16));
+        if (*globalData->actualSpeed % 2 == 0) {
+            sprintf(errorDisplay, (char*) "Measured Speed: %s.0%%\r\n", itoa(*(globalData->actualSpeed) / 2, 16));
+        } else {
+            sprintf(errorDisplay, (char*) "Measured Speed: %s.5%%\r\n", itoa(*(globalData->actualSpeed) / 2, 16));
+        }
         puts1USART(errorDisplay);
         putrs1USART("Enter Command\r\n");
         putrs1USART("s (0-100%), i, d\r\nSet Point (%), Increment, Decrement\r\n");
-//        *globalData->displayFlag = 0;
+        //        *globalData->displayFlag = 0;
         switch (*globalData->errorState) {
                 // Level 0: Severe
             case 0:
