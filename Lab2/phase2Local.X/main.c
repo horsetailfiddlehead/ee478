@@ -114,11 +114,13 @@ void i2cISR(void) {
         temp = SSP2BUF;
     }
     if (SSP2STATbits.D_A == 1 && SSP2STATbits.BF == 1) {
-        //        if (2 > byteNum) {    // send two bytes for speed
-        //            *ourGlobal.actualSpeed = (*ourGlobal.actualSpeed << 8) | SSP2BUF;
-        //        }
-        //        byteNum++;
-        *ourGlobal.actualSpeed = SSP2BUF;
+        if (byteNum == 0) {
+            *ourGlobal.actualSpeed = SSP2BUF;
+            byteNum++;
+        } else {
+            *ourGlobal.errorState = SSP2BUF;
+            byteNum = 0;
+        }
     }
     *ourGlobal.displayFlag = 1;
     PIR3bits.SSP2IF = 0;
@@ -203,15 +205,6 @@ void main() {
             runLocalI2C(ourGlobal.controllerSpeed);
             *ourGlobal.i2cFlag = 0;
             *ourGlobal.displayFlag = 1;
-            //
-            //            Delay10KTCYx(5);
-            //            PORTCbits.RC5 = 1;
-            //            ConvertADC();
-            //            while (BusyADC());
-            //            temp = ReadADC();
-            //            PORTCbits.RC5 = 0;
-            //            *ourGlobal.actualSpeed = temp;
-
         }
         Delay1KTCYx(1);
 

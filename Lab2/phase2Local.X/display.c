@@ -25,23 +25,26 @@ void displayFrontPanel(Global* globalData) {
         switch (*globalData->errorState) {
                 // Level 0: Severe
             case 0:
-                putrs1USART("\r\nWarning! Motor speed 1% out of requested speed.\r\n");
+                putrs1USART("\r\nSevere error! Motor speed 5% out of range. Shutting down.\r\n");
                 break;
                 // Level 1: Moderate
             case 1:
                 putrs1USART("\r\nError! Motor speed 2% out of range. System paused.\r\n");
                 break;
-                // Level 2: Of Concern
+                // Level 2: Warn (Of Concern)
             case 2:
-                putrs1USART("\r\nSevere error! Motor speed 5% out of range. Shutting down.\r\n");
+                putrs1USART("\r\nWarning! Motor speed % out of requested speed.\r\n");
                 break;
                 // Level 3: Off
             case 3:
                 putrs1USART("\r\nSystem currently off.\r\n");
                 break;
                 // Normal State
-            default:
+            case 4:
                 putrs1USART("\r\nAll systems normal.\r\n");
+                break;
+            default:
+                putrs1USART("\r\nUnable to get motor status.\r\n");
                 break;
         }
     }

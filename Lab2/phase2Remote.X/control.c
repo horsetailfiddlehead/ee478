@@ -23,11 +23,14 @@ void controller(Global *gData) {
     
     // Add the difference between the desired and measured speeds
     // back to the controller speed sent to the remote
-    if (*gData->setSpeed > *gData->actualSpeed) {
+    if (*gData->setSpeed == 0) {    // zero case
+        *gData->controllerSpeed = 0;
+    } else if (*gData->setSpeed > *gData->actualSpeed) {
         *gData->controllerSpeed += *gData->setSpeed - *gData->actualSpeed;
     } else if (*gData->setSpeed < *gData->actualSpeed) {
         *gData->controllerSpeed -= *gData->actualSpeed - *gData->setSpeed;
     }
+    
     // store the updated speed in SRAM
     *gData->processFlag = 1;
     

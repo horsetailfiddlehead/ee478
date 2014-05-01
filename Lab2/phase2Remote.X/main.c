@@ -26,7 +26,7 @@
 #pragma config PRICLKEN = OFF // disable primary clock
 /****************************************************/
 #define IN_BUF_SZ 64
-#define DEF_PWM 20
+#define DEF_PWM 00
 /***********************Global Setup*****************/
 // System variables
 unsigned int setSpeed = DEF_PWM; // the user defined motor speed (from local node)
