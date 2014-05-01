@@ -101,15 +101,14 @@ void runRemoteI2C(unsigned int *setSpeed) {
 int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     // get the data from global variable
     char newSpeed[5];
-    int k = 0;
     newSpeed[0] = *speed;
+    newSpeed[1] = *ourGlobal.errorState;
     newSpeed[4] = '\0';
 
 
     // wait until idle - not actually needed for single-master bus
     IdleI2C1();
     StartI2C1(); // send start
-    i2cData = SSP1BUF;
 
     WriteI2C1(*slaveAddr & 0xFE);
     //    do { // send address until ack'd
@@ -121,9 +120,10 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     //    } while (!(0 == status));
 
     // 	send bytes
-//    for (k = 0; k < 2; k++) {
-        WriteI2C1(newSpeed[k]); // TODO: send multiple bytes
-//    }
+
+        WriteI2C1(newSpeed[0]);
+        WriteI2C1(newSpeed[1]);// TODO: send multiple bytes
+
 
     StopI2C1(); // stop transmission
 

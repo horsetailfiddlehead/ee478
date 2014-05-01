@@ -2,4 +2,4 @@
  * header file for control.h
  */
 
-void control(Global *gData);
+void controller(Global *gData);

@@ -28,10 +28,10 @@
 #pragma config PRICLKEN = OFF // disable primary clock
 /****************************************************/
 #define IN_BUF_SZ 64
-#define DEF_PWM 20
+#define DEF_PWM 0
 /***********************Global Setup*****************/
 // System variables
-unsigned int setSpeed = 0; // the user defined motor speed
+unsigned int setSpeed = DEF_PWM; // the user defined motor speed
 unsigned int actualSpeed = 0; // Motor speed given from the remote (was motorSpeed)
 unsigned int controllerSpeed = DEF_PWM; // Motor speed send to the remote node by the local
 unsigned int errorState = 4; // The current motor state is off
@@ -73,7 +73,8 @@ void rcISR(void) {
     input = getc1USART();
 
     // Terminate string on enter or max size
-    if (input >= ' ' && input <= 'z' || input == '\r' || input == '\n') {
+    // Allow for only regular keyboard characters and delete character
+    if (input >= ' ' && input <= 'z' || input == '\r' || input == '\n' || input == '\b') {
         if (input == '\r' || input == '\n' || inputSpot == (IN_BUF_SZ - 1)) {
             myInput[inputSpot] = '\0';
 
@@ -81,7 +82,12 @@ void rcISR(void) {
             inputSpot = 0;
             inputFinished = 1;
             *ourGlobal.processFlag = 1;
-        } else {
+            // Delete a value
+        } else if (input == '\b' && inputSpot > 0) {
+            myInput[inputSpot] = '\0';
+            inputSpot--;
+            putc1USART(input);
+        } else if (input != '\b') {
             // Put character in the input buffer
             myInput[inputSpot] = input;
             inputSpot++;
@@ -90,8 +96,6 @@ void rcISR(void) {
             putc1USART(input);
             inputFinished = 0;
         }
-    } else {
-        putc1USART(input);
     }
 
     // Clear interrupt
@@ -114,11 +118,13 @@ void i2cISR(void) {
         temp = SSP2BUF;
     }
     if (SSP2STATbits.D_A == 1 && SSP2STATbits.BF == 1) {
-//        if (2 > byteNum) {    // send two bytes for speed
-//            *ourGlobal.actualSpeed = (*ourGlobal.actualSpeed << 8) | SSP2BUF;
-//        }
-//        byteNum++;
-        *ourGlobal.actualSpeed =  SSP2BUF;
+        if (byteNum == 0) {
+            *ourGlobal.actualSpeed = SSP2BUF;
+            byteNum++;
+        } else {
+            *ourGlobal.errorState = SSP2BUF;
+            byteNum = 0;
+        }
     }
     *ourGlobal.displayFlag = 1;
     PIR3bits.SSP2IF = 0;
@@ -146,11 +152,11 @@ void setupPWM() {
  * 
  */
 void main() {
+    unsigned int temp = 0;
 
-    unsigned int temp;
-    // I2c Setup
     char errorMsg[] = "Error: Input again.\n\r";
 
+    // I2c Setup
     setupOutgoing();
     setupIncoming();
 
@@ -160,14 +166,8 @@ void main() {
     // Enable SRAM pins correctly
     SRAMsetUp();
 
-    // adc
-    //    ADCON0 = 0b00111000;
-    //    ADCON1 = 0;
-    //    ADCON2 = 0b101110000;
-    //    TRISCbits.RC2 = 1;
-    //    TRISCbits.RC5 = 0;
-    //    ANSELCbits.ANSC5 = 0;
-    //    ANSELCbits.ANSC2 = 1; //set as input
+    // Setup ADC
+
     OpenADC(ADC_FOSC_64 & ADC_RIGHT_JUST & ADC_12_TAD,
             ADC_CH14 & ADC_INT_OFF, 15);
 
@@ -182,20 +182,29 @@ void main() {
         displayFrontPanel(&ourGlobal);
         dataProcess(&ourGlobal);
         if (*ourGlobal.SRAMflag == 1) {
-            int tempA;
+            *ourGlobal.SRAMflag = 0;
             writeData(0, *ourGlobal.myCommand);
             switch (*ourGlobal.myCommand) {
                 case 1:
-                    writeData(1, *ourGlobal.controllerSpeed);
+                    writeData(1, *ourGlobal.setSpeed);
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 2:
-                    tempA = readData(1) + 1;
-                    writeData(1, tempA);
+                    temp = readData(1) + 1;
+                    if (temp <= 202 && temp >= 0) {
+                        writeData(1, temp);
+                    } else {
+                        writeData(1, 202);
+                    }
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 3:
-                    writeData(1, readData(1) - 1);
+                    temp = readData(1) - 1;
+                    if (temp <= 202 && temp >= 0) {
+                        writeData(1, temp);
+                    } else {
+                        writeData(1, 0);
+                    }
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 4:
@@ -203,24 +212,13 @@ void main() {
                     *ourGlobal.displayFlag = 1;
                     break;
             }
-            *ourGlobal.SRAMflag = 0;
-
         }
         if (*ourGlobal.i2cFlag == 1) {
-            *ourGlobal.setSpeed = readData(1);
-            SetDCPWM4(5 * (*ourGlobal.setSpeed));
-            runLocalI2C(ourGlobal.setSpeed);
+            *ourGlobal.controllerSpeed = readData(1);
+            SetDCPWM4(5 * (*ourGlobal.controllerSpeed));
+            runLocalI2C(ourGlobal.controllerSpeed);
             *ourGlobal.i2cFlag = 0;
             *ourGlobal.displayFlag = 1;
-            //
-            //            Delay10KTCYx(5);
-            //            PORTCbits.RC5 = 1;
-            //            ConvertADC();
-            //            while (BusyADC());
-            //            temp = ReadADC();
-            //            PORTCbits.RC5 = 0;
-            //            *ourGlobal.actualSpeed = temp;
-
         }
         Delay1KTCYx(1);
 

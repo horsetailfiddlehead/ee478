@@ -20,22 +20,22 @@
 void errorCheck(Global* gData) {	
 	if(actualSpeed == 0) {
 	// Check if motor is off
-		errorState = 3;
+		*gData->errorState = 3;
 	} else if ((float)*gData->actualSpeed < computeLow(gData, 0.05) || 
 				(float)	*gData->actualSpeed > computeHigh(gData, 0.05)){
 	// Level 0 - Severe
-		errorState = 0;
+		*gData->errorState = 0;
 	} else if ((float)*gData->actualSpeed < computeLow(gData, 0.02) || 
 				(float)*gData->actualSpeed > computeHigh(gData, 0.02)){
 	// Level 1 - Moderate
-		errorState = 1;
+		*gData->errorState = 1;
 	} else if ((float)*gData->actualSpeed < computeLow(gData, 0.01) || 
 				(float)*gData->actualSpeed > computeHigh(gData, 0.01)){
 	// Level 2 - Warning
-		errorState = 2
+		*gData->errorState = 2
 	} else {
 	// System is normal
-		errorState = 4;
+		*gData->errorState = 4;
 	}
 }
 
