@@ -114,11 +114,11 @@ void i2cISR(void) {
         temp = SSP2BUF;
     }
     if (SSP2STATbits.D_A == 1 && SSP2STATbits.BF == 1) {
-//        if (2 > byteNum) {    // send two bytes for speed
-//            *ourGlobal.actualSpeed = (*ourGlobal.actualSpeed << 8) | SSP2BUF;
-//        }
-//        byteNum++;
-        *ourGlobal.actualSpeed =  SSP2BUF;
+        //        if (2 > byteNum) {    // send two bytes for speed
+        //            *ourGlobal.actualSpeed = (*ourGlobal.actualSpeed << 8) | SSP2BUF;
+        //        }
+        //        byteNum++;
+        *ourGlobal.actualSpeed = SSP2BUF;
     }
     *ourGlobal.displayFlag = 1;
     PIR3bits.SSP2IF = 0;
@@ -148,9 +148,9 @@ void setupPWM() {
 void main() {
 
     unsigned int temp;
-    // I2c Setup
     char errorMsg[] = "Error: Input again.\n\r";
 
+    // I2c Setup
     setupOutgoing();
     setupIncoming();
 
@@ -160,14 +160,8 @@ void main() {
     // Enable SRAM pins correctly
     SRAMsetUp();
 
-    // adc
-    //    ADCON0 = 0b00111000;
-    //    ADCON1 = 0;
-    //    ADCON2 = 0b101110000;
-    //    TRISCbits.RC2 = 1;
-    //    TRISCbits.RC5 = 0;
-    //    ANSELCbits.ANSC5 = 0;
-    //    ANSELCbits.ANSC2 = 1; //set as input
+    // Setup ADC
+
     OpenADC(ADC_FOSC_64 & ADC_RIGHT_JUST & ADC_12_TAD,
             ADC_CH14 & ADC_INT_OFF, 15);
 
@@ -182,11 +176,11 @@ void main() {
         displayFrontPanel(&ourGlobal);
         dataProcess(&ourGlobal);
         if (*ourGlobal.SRAMflag == 1) {
-            int tempA;
+            *ourGlobal.SRAMflag = 0;
             writeData(0, *ourGlobal.myCommand);
             switch (*ourGlobal.myCommand) {
                 case 1:
-                    writeData(1, *ourGlobal.controllerSpeed);
+                    writeData(1, *ourGlobal.setSpeed);
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 2:
@@ -202,13 +196,11 @@ void main() {
                     *ourGlobal.displayFlag = 1;
                     break;
             }
-            *ourGlobal.SRAMflag = 0;
-
         }
         if (*ourGlobal.i2cFlag == 1) {
-            *ourGlobal.setSpeed = readData(1);
-            SetDCPWM4(5 * (*ourGlobal.setSpeed));
-            runLocalI2C(ourGlobal.setSpeed);
+            *ourGlobal.controllerSpeed = readData(1);
+            SetDCPWM4(5 * (*ourGlobal.controllerSpeed));
+            runLocalI2C(ourGlobal.controllerSpeed);
             *ourGlobal.i2cFlag = 0;
             *ourGlobal.displayFlag = 1;
             //

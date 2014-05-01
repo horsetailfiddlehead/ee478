@@ -11,10 +11,10 @@ void dataProcess(Global* globalData) {
     // 3 = decrement
     // 4 = error
     if (*globalData->processFlag == 1) {
+        *globalData->processFlag = 0;
         if (globalData->myInput[0] == 's') {
             *globalData->myCommand = 1;
-            *globalData->controllerSpeed = 2*stringToNum((char*) &globalData->myInput[2]);
-            *globalData->processFlag == 0;
+            *globalData->setSpeed = 2 * stringToNum((char*) &globalData->myInput[2]);
         } else if (globalData->myInput[0] == 'i') {
             *globalData->myCommand = 2;
         } else if (globalData->myInput[0] == 'd') {
@@ -22,7 +22,6 @@ void dataProcess(Global* globalData) {
         } else {
             *globalData->myCommand = 4;
         }
-        *globalData->processFlag = 0;
         *globalData->SRAMflag = 1;
     }
 }

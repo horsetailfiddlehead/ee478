@@ -74,7 +74,6 @@ int setupIncoming() {
     INTCONbits.PEIE = 1;
     PIE3bits.SSP2IE = 1;
 
-
     // configure MSSP2 for i2c slave operation.
     CloseI2C2();
     OpenI2C2(SLAVE_7, SLEW_OFF);
@@ -89,10 +88,6 @@ void runLocalI2C(unsigned int *setSpeed) {
     //    Delay10TCYx(20);
 }
 
-/* Task to read from the bus*/
-void runReceiveI2C(unsigned int *setSpeed) {
-    receiveData();
-}
 
 /*
  * send data to a slave device
@@ -124,17 +119,5 @@ int sendSpeed(unsigned int *slaveAddr, unsigned int *speed) {
     return 1;
 }
 
-// read data
-
-int receiveData() {
-    // get here after interrupt
-    // dumb remote just waits for a call
-//    while (0 == DataRdyI2C2());
-//    AckI2C2(); // do we need to ack?
-//    data = SSPBUF; // clear buffer
-//    while (0 == DataRdyI2C2()); // wait for next byte
-//    data = getcI2C2(); // store buffer value to memory
-//    Delay10TCYx(1);
-
-}
+// Read data -> handled by interrupt
 

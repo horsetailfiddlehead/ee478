@@ -64,6 +64,7 @@ void interrupt_at_high_vector(void) {
 #pragma code
 
 #pragma interrupt i2cISR
+
 void i2cISR(void) {
     int temp = 0;
     if (SSP2STATbits.D_A == 0 && SSP2STATbits.BF == 1) {
@@ -83,7 +84,7 @@ int readADC();
 /* setsup the pwm to output the voltage
  */
 void setupPWM() {
-       // configure PWM
+    // configure PWM
     TRISBbits.RB0 = 1; // disable PWM output
     CCPTMRS1 = 0b00000001; // set C4TSEL = 0b01
     PR4 = 0xF9; // PR = 2 for 20kHz
@@ -94,8 +95,9 @@ void setupPWM() {
     PIR5 = 0b00000000; // clear timer interrupt flag
     TRISBbits.RB0 = 0; //enable PWM output
     // Rs232 setup and interrupt
-    
+
 }
+
 /*
  *
  */
@@ -108,7 +110,7 @@ void main() {
 
 
 
-//    // adc
+    //    // adc
     TRISCbits.RC2 = 1;
     TRISCbits.RC5 = 0;
     ANSELCbits.ANSC5 = 0;
@@ -120,7 +122,7 @@ void main() {
     SRAMsetUp();
 
     // Set Default PWM
-    SetDCPWM4(5*(*ourGlobal.controllerSpeed));
+    SetDCPWM4(5 * (*ourGlobal.controllerSpeed));
     writeData(1, *ourGlobal.controllerSpeed);
 
     while (1) {
@@ -132,7 +134,7 @@ void main() {
         }
         // Process user's "set speed" command
         if (*ourGlobal.processFlag == 1) {
-            SetDCPWM4(5*(readData(1)));
+            SetDCPWM4(5 * (readData(1)));
             *ourGlobal.processFlag = 0;
         }
         // Transfer actual speed to local node
@@ -142,8 +144,7 @@ void main() {
             if (*ourGlobal.actualSpeed >= 50) {
                 correct = 50 * (*ourGlobal.actualSpeed) >> 8; //correct = 2 * (2*((50 * *ourGlobal.actualSpeed) / 1023));
             } else {
-            
-            correct = 50 * (*ourGlobal.actualSpeed) >> 8; //2 * ((100 * *ourGlobal.actualSpeed) / 1023);
+                correct = 50 * (*ourGlobal.actualSpeed) >> 8; //2 * ((100 * *ourGlobal.actualSpeed) / 1023);
             }
             Delay1KTCYx(1);
             runLocalI2C(&correct);
@@ -168,8 +169,8 @@ void main() {
 }
 
 int readADC() {
-    ADCON0bits.GO_DONE=1;
-    while(ADCON0bits.GO_DONE);
-    ADCON0bits.ADON=0;
+    ADCON0bits.GO_DONE = 1;
+    while (ADCON0bits.GO_DONE);
+    ADCON0bits.ADON = 0;
     return ADRESH;
 }
