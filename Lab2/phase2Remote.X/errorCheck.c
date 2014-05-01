@@ -28,21 +28,21 @@ void errorCheck(Global* gData) {
             *gData->actualSpeed > computeHigh(gData, 5)) {
         // Level 0 - Severe
         *gData->errorState = 0;
-//        *gData->setSpeed = 0;
+  //      *gData->setSpeed = 0;
 //        writeData(1, 0);
 //        CCP4CON = 0; // disable pwm output
     } else if (*gData->actualSpeed < computeLow(gData, 2) ||
             *gData->actualSpeed > computeHigh(gData, 2)) {
-        // Level 1 - Moderate
+        // Level 1 - Warning
         *gData->errorState = 1;
-//        *gData->setSpeed = 0;
-//        writeData(1, 0);
+        //*gData->setSpeed = 0;
+        //writeData(1, 0);
     } else if (*gData->actualSpeed < computeLow(gData, 1) ||
             *gData->actualSpeed > computeHigh(gData, 1)) {
-        // Level 2 - Warning
+        // Level 2 - Attention
         *gData->errorState = 2;
-//        *gData->setSpeed /= 2; // *ourGlobal.setSpeed / 2
-//        writeData(1, *gData->setSpeed);
+        //*gData->setSpeed /= 2; // *ourGlobal.setSpeed / 2
+        //writeData(1, *gData->setSpeed);
     } else {
         // System is normal
         *gData->errorState = 4;
@@ -54,7 +54,11 @@ void errorCheck(Global* gData) {
     lastState = *gData->errorState;
 }
 
+// returns low bound, with floor of zero
 int computeLow(Global* gData, int range) {
+    if (2 * range > *gData->setSpeed) {
+        return 0;
+    }
     return ((*gData->setSpeed) - 2 * range);
 }
 

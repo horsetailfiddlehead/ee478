@@ -3,8 +3,6 @@
 int stringToNum(char* myStr);
 
 void dataProcess(Global* globalData) {
-    char myTest[] = "setpoint 50";
-    char* curPtr;
     // myCommand key
     // 1 = set point
     // 2 = increment
@@ -12,6 +10,8 @@ void dataProcess(Global* globalData) {
     // 4 = error
     if (*globalData->processFlag == 1) {
         *globalData->processFlag = 0;
+        // Normal state
+        // if (*globalData->errorState == 4) {
         if (globalData->myInput[0] == 's') {
             *globalData->myCommand = 1;
             *globalData->setSpeed = 2 * stringToNum((char*) &globalData->myInput[2]);
@@ -22,6 +22,17 @@ void dataProcess(Global* globalData) {
         } else {
             *globalData->myCommand = 4;
         }
+        // States where speed should be set to 0 (crit, warning, off)
+        //} else if (*globalData->errorState != 2) {
+        //*globalData->setSpeed = 0;
+        //*globalData->controllerSpeed = 0;
+        //writeData(1, 0);
+        // Attention 
+        // } else {
+        //*globalData->setSpeed /= 2;
+        //*globalData->controllerSpeed /= 2;
+        //writeData(1, *globalData->setSpeed);
+        //}
         *globalData->SRAMflag = 1;
     }
 }
