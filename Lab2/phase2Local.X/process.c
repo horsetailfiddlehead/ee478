@@ -3,6 +3,7 @@
 int stringToNum(char* myStr);
 
 void dataProcess(Global* globalData) {
+    unsigned int userSetPoint = 0;
     // myCommand key
     // 1 = set point
     // 2 = increment
@@ -12,9 +13,16 @@ void dataProcess(Global* globalData) {
         *globalData->processFlag = 0;
         // Normal state
         // if (*globalData->errorState == 4) {
-        if (globalData->myInput[0] == 's') {
+        // Only for command "s "
+        if (globalData->myInput[0] == 's' && globalData->myInput[1] == ' ') {
             *globalData->myCommand = 1;
-            *globalData->setSpeed = 2 * stringToNum((char*) &globalData->myInput[2]);
+            // Get data
+            userSetPoint = 2 * stringToNum((char*) &globalData->myInput[2]);
+            if (userSetPoint <= 202 && userSetPoint >= 0) { // Only allow inputs of 0 to 101% (101% is for testing purposes)
+                *globalData->setSpeed = userSetPoint;
+            } else {
+                *globalData->myCommand = 4;
+            }
         } else if (globalData->myInput[0] == 'i') {
             *globalData->myCommand = 2;
         } else if (globalData->myInput[0] == 'd') {

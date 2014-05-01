@@ -73,7 +73,8 @@ void rcISR(void) {
     input = getc1USART();
 
     // Terminate string on enter or max size
-    if (input >= ' ' && input <= 'z' || input == '\r' || input == '\n') {
+    // Allow for only regular keyboard characters and delete character
+    if (input >= ' ' && input <= 'z' || input == '\r' || input == '\n' || input == '\b') {
         if (input == '\r' || input == '\n' || inputSpot == (IN_BUF_SZ - 1)) {
             myInput[inputSpot] = '\0';
 
@@ -81,7 +82,12 @@ void rcISR(void) {
             inputSpot = 0;
             inputFinished = 1;
             *ourGlobal.processFlag = 1;
-        } else {
+            // Delete a value
+        } else if (input == '\b' && inputSpot > 0) {
+            myInput[inputSpot] = '\0';
+            inputSpot--;
+            putc1USART(input);
+        } else if (input != '\b') {
             // Put character in the input buffer
             myInput[inputSpot] = input;
             inputSpot++;
@@ -90,8 +96,6 @@ void rcISR(void) {
             putc1USART(input);
             inputFinished = 0;
         }
-    } else {
-        putc1USART(input);
     }
 
     // Clear interrupt
@@ -148,8 +152,8 @@ void setupPWM() {
  * 
  */
 void main() {
+    unsigned int temp = 0;
 
-    unsigned int temp;
     char errorMsg[] = "Error: Input again.\n\r";
 
     // I2c Setup
@@ -186,11 +190,21 @@ void main() {
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 2:
-                    writeData(1, readData(1) + 1);
+                    temp = readData(1) + 1;
+                    if (temp <= 202 && temp >= 0) {
+                        writeData(1, temp);
+                    } else {
+                        writeData(1, 202);
+                    }
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 3:
-                    writeData(1, readData(1) - 1);
+                    temp = readData(1) - 1;
+                    if (temp <= 202 && temp >= 0) {
+                        writeData(1, temp);
+                    } else {
+                        writeData(1, 0);
+                    }
                     *ourGlobal.i2cFlag = 1;
                     break;
                 case 4:
