@@ -142,7 +142,7 @@ void main() {
         ConvertADC();
         while (BusyADC());
         temp = ReadADC();
-        temp = (50 * (temp)) >> 8;
+        temp = ((50 * (temp)) >> 8) + 1;
         PORTCbits.RC5 = 0; // conversion indicator
 
         // only makes sense to update ADC if significantly different than
@@ -154,10 +154,13 @@ void main() {
         }
 
         // enable auto correct
-        if (*ourGlobal.actualSpeed < (*ourGlobal.setSpeed - 1) ||
-                (*ourGlobal.setSpeed + 1) < *ourGlobal.actualSpeed) {
-            controller(&ourGlobal); // compute the control function and adjust pwm
-        }
+        //if (*ourGlobal.actualSpeed < (*ourGlobal.setSpeed - 1) ||
+        //(*ourGlobal.setSpeed + 1) < *ourGlobal.actualSpeed) {
+        controller(&ourGlobal); // compute the control function and adjust pwm
+        //}
+
+        // Get error state
+        errorCheck(&ourGlobal);
 
 
         // Process updated controller speed

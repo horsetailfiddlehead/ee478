@@ -52,5 +52,6 @@ typedef struct globalStruct {
 
 void displayFrontPanel(Global* globalData);
 void dataProcess(Global* globalData);
+void errorCheck(Global* gData);
 
 #endif	/* GLOBALS_H */

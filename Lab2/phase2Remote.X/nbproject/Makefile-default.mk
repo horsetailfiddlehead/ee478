@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=SRAM.c i2c_remote.c main.c control.c
+SOURCEFILES_QUOTED_IF_SPACED=SRAM.c i2c_remote.c main.c control.c errorCheck.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/SRAM.o ${OBJECTDIR}/i2c_remote.o ${OBJECTDIR}/main.o ${OBJECTDIR}/control.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/SRAM.o.d ${OBJECTDIR}/i2c_remote.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/control.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/SRAM.o ${OBJECTDIR}/i2c_remote.o ${OBJECTDIR}/main.o ${OBJECTDIR}/control.o ${OBJECTDIR}/errorCheck.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/SRAM.o.d ${OBJECTDIR}/i2c_remote.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/control.o.d ${OBJECTDIR}/errorCheck.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/SRAM.o ${OBJECTDIR}/i2c_remote.o ${OBJECTDIR}/main.o ${OBJECTDIR}/control.o
+OBJECTFILES=${OBJECTDIR}/SRAM.o ${OBJECTDIR}/i2c_remote.o ${OBJECTDIR}/main.o ${OBJECTDIR}/control.o ${OBJECTDIR}/errorCheck.o
 
 # Source Files
-SOURCEFILES=SRAM.c i2c_remote.c main.c control.c
+SOURCEFILES=SRAM.c i2c_remote.c main.c control.c errorCheck.c
 
 
 CFLAGS=
@@ -114,6 +114,13 @@ ${OBJECTDIR}/control.o: control.c  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d ${OBJECTDIR}/control.o 
 	@${FIXDEPS} "${OBJECTDIR}/control.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
+${OBJECTDIR}/errorCheck.o: errorCheck.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/errorCheck.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/errorCheck.o   errorCheck.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/errorCheck.o 
+	@${FIXDEPS} "${OBJECTDIR}/errorCheck.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
 else
 ${OBJECTDIR}/SRAM.o: SRAM.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
@@ -142,6 +149,13 @@ ${OBJECTDIR}/control.o: control.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/control.o   control.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/control.o 
 	@${FIXDEPS} "${OBJECTDIR}/control.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/errorCheck.o: errorCheck.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/errorCheck.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION)   -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/errorCheck.o   errorCheck.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/errorCheck.o 
+	@${FIXDEPS} "${OBJECTDIR}/errorCheck.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
 endif
 

@@ -9,7 +9,6 @@
       <itemPath>i2c_local.h</itemPath>
       <itemPath>i2c_remote.h</itemPath>
       <itemPath>interrupts.h</itemPath>
-      <itemPath>control.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -22,6 +21,7 @@
       <itemPath>i2c_remote.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>control.c</itemPath>
+      <itemPath>errorCheck.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "globals.h"
-#include "control.h"
+//#include "control.h"
 
 #define TEST_CONTROL 0
 

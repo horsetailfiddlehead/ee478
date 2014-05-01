@@ -50,7 +50,8 @@ typedef struct globalStruct {
 
 } Global;
 
-void displayFrontPanel(Global* globalData);
-void dataProcess(Global* globalData);
+void errorCheck(Global* gData);
+void controller(Global *gData);
+
 
 #endif	/* GLOBALS_H */
