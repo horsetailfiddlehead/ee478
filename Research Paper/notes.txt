@@ -36,7 +36,7 @@ http://www.eurekalert.org/pub_releases/2013-09/ssoe-ssu091113.php
 http://www.stanford.edu/group/cui_group/papers/Xing_2013.pdf
 From Article:
  - Battery made of special bacteria that produce electricity upon digestion
- - The bacteria is natural
+ - The bacteria is natural (exoelectrogens)
  - Electricity from sewage (plant and animal waste)
  - Electrodes placed into waste water
  - "Fishing for electrons"
