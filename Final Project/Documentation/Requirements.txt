@@ -1,0 +1,11 @@
+Requirements
+- Read multiple RFID Tags
+- Physically react to cards (lock cards into system)
+- Display data on cards/players
+- Card Feeder (gives next card in deck)
+- Communicate wirelessly (1 channel) -> multiple frequencies
+- Accept user inputs via buttons, touch screen, keypad, etc.
+- Track and display game
+- Manipulate game data
+- Maintain card database
+- Run fast enough to play well
