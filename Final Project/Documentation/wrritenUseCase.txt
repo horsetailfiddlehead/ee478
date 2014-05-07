@@ -1,0 +1,71 @@
+--------------------------------------------------
+Digital Card Gaming Device
+--------------------------------------------------
+
+Use Case #1: Single Player Game
+
+	User Actions:
+		- Select computer component / storyline
+		- Places cards down on reader
+		- Selects next move based off of card
+
+	System:
+		Normal Operation:
+		- Acknowledge card input
+			- Read card attributes
+			- Look up card details in database
+			- Display new information from card
+		- Process the user action to create new system state
+		- Lights up and flashes. With sound?
+
+		Exception operation:
+		- Card unable to be read
+			- Error message to user
+			- Suggest user "Try again."
+		- Invalid card type
+			- Error message to user
+
+Use Case #2: Multi-player Game
+	User Actions:
+		- Connects with second player wirelessly
+		- Places cards down on reader
+		- Selects next move based off of card
+
+	System:
+		Normal Operation:
+		- Establishes the wireless connection
+		- Same as Single Player game
+		
+		Exception Operation:
+		- Card unable to be read
+			- Error message to user
+			- Suggest user "Try again."
+		- Invalid card type
+			- Error message to user 
+		- Connection lost to second player
+		- Incompatible device
+		- Incompatible software
+		
+Use Case #3: Build Cards
+	User Actions:
+		- Enter attributes with a limit
+		- Name cards
+		- Add pictures
+
+	System:
+		Normal Operation:
+		- Writes data to card
+			- Overwrites old data with new data defined by user
+			- Creates new serial ID
+			- Store into external database
+		
+		Exception Operation:
+		- Card unable to be read
+			- Error message to user
+			- Suggest user "Try again."
+		- Invalid card type
+			- Error message to user 
+		- Invalid attributes added to card
+			- Try again / Start over
+		
+
