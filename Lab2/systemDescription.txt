@@ -1,0 +1,9 @@
+System description:
+
+The prototype surgery system comprises two nodes: a local node operated by the surgeon and a single remote node that controls the robotic motor. Each node operates independently with a dedicated memory and external crystal oscillator; there are no shared resources. 
+
+Because the system has life-critical applications, the control scheme and error handling and correction function require serious consideration. The initial proposal and requirements split the control and error handling between the two nodes. This creates a very simple and coherent system. 
+
+However, this scheme makes two key assumptions. It assumes a reliable link between the local and remote nodes. The scheme also assumes the local node can handle large amounts of parallel compuation and monitoring. If either of these assumptions is not met, the consequences may be signifcant. In a surgical environment, there may be a number of noisy signals which can easily affect the communication links between local and remote nodes. If the communication link is lost, there is no way to regain control of the systen. Additionally, there is no way to guarantee that the local node's response to an error condition occurs fast enough to prvent significant damage to the patient.
+
+In light of these concerns, a decision was made to move more capability to the remote node. On the remote side, error checking is carried out and rudimentary corrective actions are taken. This choice ensures that any error is dealt with as soon as possible, without requiring input from the local node. This ensures some level of known control exists at all times. Additionally, fine adjustment of the motor occurs in the remote node. This choice was made because it removes the computational burden from the local node (allowing control of more remote nodes).

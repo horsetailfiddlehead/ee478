@@ -1,0 +1,3 @@
+Conclusion:
+
+The remote surgical system is a functional prototype. It has been tested for basic functionality and meets the specifications and requirements outlined in Section III and IV. Additional rigorous testing should be performed. Moving forward, additional remote nodes should be added tested for system robustness. The error handling scheme should be revisted and improved to address issues outlined in Section XII. During testing, the user interface was often cumbersome and refreshed faster than desired. Usability should be addressed in future versions of the prototype.

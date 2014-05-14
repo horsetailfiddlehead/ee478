@@ -1,0 +1,7 @@
+Why the project did no work
+
+Althought the project was successful overall, a couple issues hindered the project, preventing success on all specifications. 
+
+Most importantly, the system lacks a complete error checking subsystem. The partial error checking system is sufficient for operation of the system, but the system cannot take corrective actions. Instead, the system notes when an error state occurs and transmits an alert to the local node. The local node is only capable of displaying the warning appropriate to the level of the error. 
+
+The complete error checking and correction system could not be completed due to three factors. First, there was not enough time to fully work through all the levels of debugging and testing. The system acknowledged errors and appeared to take corrective actions, but would lock the system down, preventing further usage. Second, the precision of the ADC and related calculations often caused the system to enter the severe corretion mode. This shuts down the system and locks the user out. Third, the system could not be reliably restarted when the system entered some of the more severe states. The reason for this behavior is not known, but is likely a result of miscommunication between the two nodes.

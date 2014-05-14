@@ -1,0 +1,3 @@
+Summary
+
+A prototype for a microcontroller-based, remote surgery system has been designed and demonstrated. The prototype consists of two nodes. One communicates and coordinates the operator instructions and the other controls the speed of an attached motor. The software operating system is based on a sequential scheduler that employs a combination of polling and interrupt-driven functions. The system meets the majority of specifications and requirements. A complete error correction scheme could not be implemented but does alert the user when errors occur. All tests for functional systems are completed satisfactorily.
