@@ -13,6 +13,8 @@
 #include "rs232.h"
 #include "interrupts.h
 
+#define INPUT_LENGTH 50
+
 /***************USART set up *********************/
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
@@ -65,6 +67,15 @@ void rcISR(void) {
 /****************************************************/
 
 int main() {
+char myInput[INPUT_LENGTH] = \0;
+int inputFinished;
+
+rs232Setup(); // sets RX=C7, tx=C6
+
+
+while(!inputFinished);
+
+
 
 return EXIT_SUCCESS;
 }
