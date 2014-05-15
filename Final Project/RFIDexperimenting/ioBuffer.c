@@ -13,7 +13,7 @@
 #include "rs232.h"
 #include "interrupts.h
 
-#define INPUT_LENGTH 50
+#define INPUT_LENGTH 50	// size of input buffer
 
 /***************USART set up *********************/
 #pragma config FCMEN = OFF
@@ -25,6 +25,7 @@
 #pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
 #pragma config PRICLKEN = OFF // disable primary clock
 
+/*
 #pragma code high_vector=0x08
 
 void interrupt_at_high_vector(void) {
@@ -64,18 +65,28 @@ void rcISR(void) {
     // Clear interrupt
     PIR1bits.RCIF = 0;
 }
+*/
 /****************************************************/
 
 int main() {
 char myInput[INPUT_LENGTH] = \0;
 int inputFinished;
 
-rs232Setup(); // sets RX=C7, tx=C6
+rs232Setup1(); // sets pc RX=C7, tx=C6
+rs232Setup2();	// sets dlp rx=b7, tx=b6
+while(1) {
+readBytesUntil(&myInput, '\n', INPUT_LENGTH);
 
-
-while(!inputFinished);
-
-
+inputFinished = 0;
+int i = 0;
+while(!inputFinished) {
+	if (myInput[i] != '\0') {
+		puts2USART(myInput[i]);
+	} else {
+	inputFinished = 1;
+	i++;
+	}
+}
 
 return EXIT_SUCCESS;
 }

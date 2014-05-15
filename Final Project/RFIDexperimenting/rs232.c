@@ -50,7 +50,7 @@ void readBytesUntil(char* myStorage, char stopChar, int size) {
 
     while(!DataRdy1USART());
     message = getc1USART();
-    putc1USART(message);
+    putc1USART(message);	//echo char back
     while(message != stopChar && i < (size - 1)) {
         myStorage[i] = message;
         i++;
