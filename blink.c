@@ -406,26 +406,26 @@ void read_block()
 
 	//send AM/PM toggle
 	pos=0;
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x31;//1
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x39;//9
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x33;//3
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x34;//4
-
-	big_buffer_tx[pos++] = 0x46;//F
-	big_buffer_tx[pos++] = 0x31;//1
-	big_buffer_tx[pos++] = 0x46;//F
-	big_buffer_tx[pos++] = 0x46;//F
-
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x30;//0
-	big_buffer_tx[pos++] = 0x30;//0
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x31;//1 
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x39;//9 
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x33;//3 
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x34;//4 
+                                    
+	big_buffer_tx[pos++] = 0x46;//F 
+	big_buffer_tx[pos++] = 0x31;//1 
+	big_buffer_tx[pos++] = 0x46;//F 
+	big_buffer_tx[pos++] = 0x46;//F 
+                                    
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x30;//0 
+	big_buffer_tx[pos++] = 0x30;//0 
 	send_buffer(pos);
 	while(rx_index< 12);
 	short_dly(9000);
