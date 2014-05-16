@@ -1,6 +1,7 @@
-#include "globals.h"
-#include "rs232.h"
 
+#include "rs232.h"
+#include <p18f25k22.h>
+#include <usart.h>
 // setup for USART1
 void rs232Setup1() {
     //  Set RX as input, TX as output
@@ -10,14 +11,14 @@ void rs232Setup1() {
     ANSELC=0x00;
 
     //  Configure UART, 9600 baud with 20MHz clock.
-    Open1USART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 129);
+    Open1USART(USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 129);
 
-    // Enable Priority
-    RCONbits.IPEN = 1;
-    // High priority receive interrupt
-    IPR1bits.RCIP = 1;
-    // Enable all high priority interrupts
-    INTCONbits.GIEH = 1;
+//    // Enable Priority
+//    RCONbits.IPEN = 1;
+//    // High priority receive interrupt
+//    IPR1bits.RCIP = 1;
+//    // Enable all high priority interrupts
+//    INTCONbits.GIEH = 1;
 	
 
 }
@@ -25,20 +26,18 @@ void rs232Setup1() {
 // setup for USART2
 void rs232Setup2() {
     //  Set RX as input, TX as output
-    TRISCbits.TRISB7 = 1;
-    TRISCbits.TRISB6 = 0;
-    // Enable digital for all c pins
-    ANSELC=0x00;
+    TRISBbits.TRISB7 = 1;
+    TRISBbits.TRISB6 = 0;
 
     //  Configure UART, 9600 baud with 20MHz clock.
-    Open2USART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 129);
+    Open2USART(USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 10);
 
-    // Enable Priority
-    RCONbits.IPEN = 1;
-    // High priority receive interrupt
-    IPR1bits.RCIP = 1;
-    // Enable all high priority interrupts
-    INTCONbits.GIEH = 1;
+//    // Enable Priority
+//    RCONbits.IPEN = 1;
+//    // High priority receive interrupt
+//    IPR1bits.RCIP = 1;
+//    // Enable all high priority interrupts
+//    INTCONbits.GIEH = 1;
 	
 
 }
