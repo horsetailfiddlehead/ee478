@@ -12,9 +12,10 @@
 
 #include "rs232.h"
 #include "interrupts.h"
+#include "usart.h"
 #include <p18f25k22.h>
 
-#define INPUT_LENGTH 50	// size of input buffer
+#define INPUT_LENGTH 64	// size of input buffer
 
 /***************USART set up *********************/
 #pragma config FCMEN = OFF
@@ -26,7 +27,7 @@
 #pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
 #pragma config PRICLKEN = OFF // disable primary clock
 
-/*
+
 #pragma code high_vector=0x08
 
 void interrupt_at_high_vector(void) {
@@ -36,37 +37,40 @@ void interrupt_at_high_vector(void) {
 
 #pragma interrupt rcISR
 
+char myInput2[INPUT_LENGTH];
+int inputSpot2 = 0;
+
 void rcISR(void) {
     unsigned char input;
     // Don't have to wait for data available if we are in ISR
-    input = getc1USART();
+    input = getc2USART();
 
+    Write1USART(input);
+    /*
     // Terminate string on enter or max size
     if (input >= ' ' && input <= 'z' || input == '\r' || input == '\n') {
-        if (input == '\r' || input == '\n' || inputSpot == (IN_BUF_SZ - 1)) {
-            myInput[inputSpot] = '\0';
+        if (input == '\r' || input == '\n' || inputSpot2 == (INPUT_LENGTH - 1)) {
+            myInput2[inputSpot2] = '\0';
 
             // Reset input, declare finished
-            inputSpot = 0;
-            inputFinished = 1;
- *ourGlobal.processFlag = 1;
+            inputSpot2 = 0;
         } else {
             // Put character in the input buffer
-            myInput[inputSpot] = input;
-            inputSpot++;
+            myInput2[inputSpot2] = input;
+            inputSpot2++;
 
             // Print current character
-            putc1USART(input);
-            inputFinished = 0;
+            Write1USART(input);
         }
     } else {
-        putc1USART(input);
+        Write1USART(input);
     }
+    */
 
     // Clear interrupt
-    PIR1bits.RCIF = 0;
+    PIR3bits.RC2IF = 0;
 }
- */
+ 
 /****************************************************/
 //int inputFinished;
 //char myInput;
@@ -80,12 +84,13 @@ void main() {
     rs232Setup1(); // sets pc RX=C7, tx=C6
     rs232Setup2(); // sets dlp rx=b7, tx=b6
     while (1) {
-        readBytesUntil(&myInput, '\n', INPUT_LENGTH);
+        readBytesUntil(&myInput, '\r', INPUT_LENGTH);
 
         inputFinished = 0;
         i = 0;
         while (!inputFinished) {
             if (myInput[i] != '\0') {
+                while(Busy2USART());
                 Write2USART(myInput[i]);
                 i++;
             } else {
