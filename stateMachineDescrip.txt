@@ -1,0 +1,18 @@
+1. User wants to play a game.
+2. Game is selected from list, etc.
+3. Game is loaded from memory.
+4. System begins program.
+5. User decides to build a card.
+6. Build card from memory (e.g. Make a copy or from DLC)
+7. User wants to make their own.
+8. System stores data entered by user.
+9. System prepares to write to card.
+10. Data written to card.
+11. Display scenario - prompt move/action
+12. Process user action
+13. Effects calculated
+14. State of game updated
+15. Find player.
+16. Transmit game play request.
+17. Opponent accepted request.
+18. Play 2P Game
