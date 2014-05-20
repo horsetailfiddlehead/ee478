@@ -84,7 +84,7 @@ void main() {
     rs232Setup1(); // sets pc RX=C7, tx=C6
     rs232Setup2(); // sets dlp rx=b7, tx=b6
     while (1) {
-        readBytesUntil(&myInput, '\r', INPUT_LENGTH);
+        readBytesUntil(myInput, '\r', INPUT_LENGTH);
 
         inputFinished = 0;
         i = 0;
