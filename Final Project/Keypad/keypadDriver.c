@@ -45,15 +45,19 @@
  * pin numbers in the schematic above.
  */
 
+int checkForInput();
+int resetPins();
+void keypadSetup();
+
 #ifdef __KEYPAD_DEBUG
 void main(){
 	int keyNum = 0;
-	setup();
+	keypadSetup();
 rs232Setup(); // setup the serial port
 
 	while(1) { // just loop for test
 		keyNum = checkForInput();
-		putc1USART(keynum);
+		putc1USART(keyNum);
 
 		Delay10CYx(10);
 	}
@@ -92,7 +96,7 @@ int checkForInput(){
 
 		PORTpin0 = 0; // check column2
 		PORTpin1 = 1;
-		char scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
+		scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
 		switch (scan) {
 			case 16: // is on pin4
 				return resetPins(4);
@@ -108,7 +112,7 @@ int checkForInput(){
 
 		PORTpin1 = 0; // check column3
 		PORTpin2 = 1;
-		char scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
+		scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
 		switch (scan) {
 			case 16: // is on pin4
 				return resetPins(7);
@@ -124,7 +128,7 @@ int checkForInput(){
 
 		PORTpin2 = 0; // check column4
 		PORTpin3 = 1;
-		char scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
+		scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
 		switch (scan) {
 			case 16: // is on pin4
 				return resetPins(14);
@@ -154,7 +158,7 @@ int resetPins(int key) {
 
 
 // sets all pins to input or output and disables analog in; sets initial port outputs to LOW. May want to consider a better starting point, like all outputs high?
-void setup() {
+void keypadSetup() {
 	// pins 0-3 are toggled, pins 4-7 are monitored
 	TRISpin0 = 0;
 	TRISpin1 = 0;
