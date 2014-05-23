@@ -1,0 +1,14 @@
+Hardware and Software Issues and Design Choices:
+
+Hardware:
+
+discovered there are not enough UART and SSP modules on current (PIC18f22k25) Microcontrollers. 
+Solution: purchased a PIC with more UART,SSP modules from the same family. Also gives us more GPIO pins to work with
+
+DLP reader only capable of reading 2 cards closely spaced. Cannot read 4 cards required by spec.
+Solution: several options including use larger antenna and moving reader. Choice made to go with moving reader, as should be simpler to implement
+
+5/23: decided to move display to frontend; rfid/motor/leds moved to backend
+
+
+Software
