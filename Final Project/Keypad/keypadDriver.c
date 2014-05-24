@@ -26,6 +26,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <usart.h>
+#include <delays.h>
 
 #include "keypadDriver.h"
 
@@ -45,7 +47,11 @@
 
 
 //int checkForInput(void);
+
 int resetPins(int key);
+void keypadSetup();
+int checkForInput();
+
 //void keypadSetup(void);
 
 #ifdef __KEYPAD_DEBUG
