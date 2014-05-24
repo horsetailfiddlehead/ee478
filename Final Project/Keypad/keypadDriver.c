@@ -27,166 +27,174 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "keypadDriver.h"
+
 #ifdef __KEYPAD_DEBUG
-#include "rs232.c"	// use serial for debugging
+#include "rs232.h"	// use serial for debugging
+#include <p18f25k22.h>
 #endif
 
 /***************Clocking set up *********************/
-#pragma config WDTEN = OFF;    // turn off watch dog timer
-#pragma config FOSC = ECHP;    // Ext. Clk, Hi Pwr
-#pragma config PRICLKEN = OFF; // disable primary clock
+#pragma config WDTEN = OFF    // turn off watch dog timer
+#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
+#pragma config PRICLKEN = OFF // disable primary clock
 /****************************************************/
-#pragma config ICSP = ON;			// turn on the In-circuit programmer
-#pragma config PBADEN = OFF; 	// turn off the ADCs for whatever pins I'm using
+#pragma config PBADEN = OFF 	// turn off the ADCs for whatever pins I'm using
 
 /****************************************************/
 
-/* Notes: don't know which pins are going to be used. I'm just going to use the
- * pin numbers in the schematic above.
- */
 
-int checkForInput();
-int resetPins();
-void keypadSetup();
+//int checkForInput(void);
+int resetPins(int key);
+//void keypadSetup(void);
 
 #ifdef __KEYPAD_DEBUG
-void main(){
-	int keyNum = 0;
-	keypadSetup();
-rs232Setup(); // setup the serial port
 
-	while(1) { // just loop for test
-		keyNum = checkForInput();
-		putc1USART(keyNum);
+void main() {
+    char keyNum = 0;
+    keypadSetup();
+    rs232Setup1(); // setup the serial port
 
-		Delay10CYx(10);
-	}
+    while (1) { // just loop for test
+        keyNum = (char) checkForInput();
+        Write1USART(keyNum);
+
+        Delay10KTCYx(1000);
+    }
 
 }
 #endif
 
 // checks the keypad for key press. returns the first key press sensed.
 // Returns the number of the key pressed (* = 14, # = 15)
-int checkForInput(){
-	int key = -1;
 
-	
-	PORTpin0 = 1;	// set outputs HIGH
-	PORTpin1 = 1; 
-	PORTpin2 = 1;
-	PORTpin3 = 1;
+int checkForInput() {
+    int key = -1;
+    int scan;
 
-	if( PORTpin4 == 1 || PORTpin5 == 1 || PORTpin6 == 1 || PORTpin7 == 1) {
-		PORTpin1 = 0; // leave pin0 high
-		PORTpin2 = 0;
-		PORTpin3 = 0;
-		char scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
-		switch (scan) {
-			case 16: // is on pin4
-				return resetPins(1);
-			case 8: // on pin 5
-				return resetPins(2);
-			case 2:  // on pin 6
-				return resetPins(3);
-			case 1:  // on pin 7
-				return resetPins(10);
-			default :
-				return resetPins(-2); // should never get here
-		}
+    PORTBbits.RB3 = 1; // set outputs HIGH
+    //    PORTBbits.RB2 = 1;
+    //    PORTBbits.RB1 = 1;
+    //    PORTBbits.RB0 = 1;
 
-		PORTpin0 = 0; // check column2
-		PORTpin1 = 1;
-		scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
-		switch (scan) {
-			case 16: // is on pin4
-				return resetPins(4);
-			case 8: // on pin 5
-				return resetPins(5);
-			case 2:  // on pin 6
-				return resetPins(6);
-			case 1:  // on pin 7
-				return resetPins(11);
-			default :
-				return resetPins(-2); // should never get here
-		}
+    //    if (PORTCbits.RC0 == 1 || PORTCbits.RC1 == 1 || PORTCbits.RC2 == 1 || PORTCbits.RC3 == 1) {
+    //        PORTBbits.RB2 = 0; // leave Bbits.RB3 high
+    //        PORTBbits.RB1 = 0;
+    //        PORTBbits.RB0 = 0;
+    scan = PORTCbits.RC0; //(PORTCbits.RC0 << 3 | PORTCbits.RC1 << 2 | PORTCbits.RC2 << 1 | PORTCbits.RC3);
+    Write1USART(scan);
+    //        switch (scan) {
+    //            case 16: // is on Cbits.RC0
+    //                return resetPins(1);
+    //            case 8: // on pin 5
+    //                return resetPins(2);
+    //            case 2: // on pin 6
+    //                return resetPins(3);
+    //            case 1: // on pin 7
+    //                return resetPins(10);
+    //            default:
+    //                return resetPins(-2); // should never get here
+    //        }
+    Delay100TCYx(10);
+    PORTBbits.RB3 = 0; // check column2
+    PORTBbits.RB2 = 1;
+    //        scan = PORTCbits.RC0 << 3 || PORTCbits.RC1 << 2 || PORTCbits.RC2 << 1 || PORTCbits.RC3;
+    //        switch (scan) {
+    //            case 16: // is on Cbits.RC0
+    //                return resetPins(4);
+    //            case 8: // on pin 5
+    //                return resetPins(5);
+    //            case 2: // on pin 6
+    //                return resetPins(6);
+    //            case 1: // on pin 7
+    //                return resetPins(11);
+    //            default:
+    //                return resetPins(-2); // should never get here
+    //        }
 
-		PORTpin1 = 0; // check column3
-		PORTpin2 = 1;
-		scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
-		switch (scan) {
-			case 16: // is on pin4
-				return resetPins(7);
-			case 8: // on pin 5
-				return resetPins(8);
-			case 2:  // on pin 6
-				return resetPins(9);
-			case 1:  // on pin 7
-				return resetPins(12);
-			default :
-				return resetPins(-2); // should never get here
-		}
+    Delay100TCYx(10);
+    PORTBbits.RB2 = 0; // check column3
+    PORTBbits.RB1 = 1;
+    //        scan = PORTCbits.RC0 << 3 || PORTCbits.RC1 << 2 || PORTCbits.RC2 << 1 || PORTCbits.RC3;
+    //        switch (scan) {
+    //            case 16: // is on Cbits.RC0
+    //                return resetPins(7);
+    //            case 8: // on pin 5
+    //                return resetPins(8);
+    //            case 2: // on pin 6
+    //                return resetPins(9);
+    //            case 1: // on pin 7
+    //                return resetPins(12);
+    //            default:
+    //                return resetPins(-2); // should never get here
+    //        }
 
-		PORTpin2 = 0; // check column4
-		PORTpin3 = 1;
-		scan = PORTpin4 << 3 || PORTpin5 << 2 || PORTpin6 << 1 || PORTpin7;
-		switch (scan) {
-			case 16: // is on pin4
-				return resetPins(14);
-			case 8: // on pin 5
-				return resetPins(0);
-			case 2:  // on pin 6
-				return resetPins(15);
-			case 1:  // on pin 7
-				return resetPins(13);
-			default :
-				return resetPins(-2); // should never get here
-		}
-	}
-
-	return resetPins(-1);  // assume no key was pressed.
+    Delay100TCYx(10);
+    PORTBbits.RB1 = 0; // check column4
+    PORTBbits.RB0 = 1;
+    //        scan = PORTCbits.RC0 << 3 || PORTCbits.RC1 << 2 || PORTCbits.RC2 << 1 || PORTCbits.RC3;
+    //        switch (scan) {
+    //            case 16: // is on Cbits.RC0
+    //                return resetPins(14);
+    //            case 8: // on pin 5
+    //                return resetPins(0);
+    //            case 2: // on pin 6
+    //                return resetPins(15);
+    //            case 1: // on pin 7
+    //                return resetPins(13);
+    //            default:
+    //                return resetPins(-2); // should never get here
+    //        }
+    //    }
+    Delay100TCYx(10);
+    return resetPins(-1); // assume no key was pressed.
 }
 
 
 // resets the driving pins
+
 int resetPins(int key) {
-	PORTpin0 = 0;	// set outputs LOW
-	PORTpin1 = 0; 
-	PORTpin2 = 0;
-	PORTpin3 = 0;
-	return key;
+    PORTBbits.RB3 = 0; // set outputs LOW
+    PORTBbits.RB2 = 0;
+    PORTBbits.RB1 = 0;
+    PORTBbits.RB0 = 0;
+    return key;
 }
 
 
 // sets all pins to input or output and disables analog in; sets initial port outputs to LOW. May want to consider a better starting point, like all outputs high?
+
 void keypadSetup() {
-	// pins 0-3 are toggled, pins 4-7 are monitored
-	TRISpin0 = 0;
-	TRISpin1 = 0;
-	TRISpin2 = 0;
-	TRISpin3 = 0;
-	TRISpin4 = 1;
-	TRISpin5 = 1;
-	TRISpin6 = 1;
-	TRISpin7 = 1;
+    PORTBbits.RB3 = 0; // disable set outputs
+    PORTBbits.RB2 = 0;
+    PORTBbits.RB1 = 0;
+    PORTBbits.RB0 = 0;
+    PORTCbits.RC0 = 0;
+    PORTCbits.RC1 = 0;
+    PORTCbits.RC2 = 0;
+    PORTCbits.RC3 = 0;
 
-	ANSELpin0 = 0;	// disable analog input
-	ANSELpin1 = 0; 
-	ANSELpin2 = 0;
-	ANSELpin3 = 0;
-	ANSELpin4 = 0;
-	ANSELpin5 = 0;
-	ANSELpin6 = 0;
-	ANSELpin7 = 0;
+    // pins 0-3 are toggled, pins 4-7 are monitored
+    TRISBbits.RB3 = 0;
+    TRISBbits.RB2 = 0;
+    TRISBbits.RB1 = 0;
+    TRISBbits.RB0 = 0;
+    TRISCbits.RC0 = 1;
+    TRISCbits.RC1 = 1;
+    TRISCbits.RC2 = 1;
+    TRISCbits.RC3 = 1;
+
+    ANSELBbits.ANSB3 = 0; // disable analog input
+    ANSELBbits.ANSB2 = 0;
+    ANSELBbits.ANSB1 = 0;
+    ANSELBbits.ANSB0 = 0;
+//        ANSELCbits.ANSC0 = 0;
+//        ANSELCbits.ANSC1 = 0;
+    ANSELCbits.ANSC2 = 0;
+    ANSELCbits.ANSC3 = 0;
 
 
-	PORTpin0 = 0;	// disable set outputs
-	PORTpin1 = 0; 
-	PORTpin2 = 0;
-	PORTpin3 = 0;
-	PORTpin4 = 0;
-	PORTpin5 = 0;
-	PORTpin6 = 0;
-	PORTpin7 = 0;
 
-	return;
+
+    return;
 }
