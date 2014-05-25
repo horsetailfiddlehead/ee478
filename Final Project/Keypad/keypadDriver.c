@@ -76,7 +76,7 @@ void main() {
 
 int checkForInput() {
     int key = -1;
-    int scan;
+    char scan;
 
     PORTBbits.RB3 = 1; // set outputs HIGH
     //    PORTBbits.RB2 = 1;
@@ -87,6 +87,7 @@ int checkForInput() {
     //        PORTBbits.RB2 = 0; // leave Bbits.RB3 high
     //        PORTBbits.RB1 = 0;
     //        PORTBbits.RB0 = 0;
+    Delay10TCYx(10);
     scan = PORTCbits.RC0; //(PORTCbits.RC0 << 3 | PORTCbits.RC1 << 2 | PORTCbits.RC2 << 1 | PORTCbits.RC3);
     Write1USART(scan);
     //        switch (scan) {
@@ -175,10 +176,10 @@ void keypadSetup() {
     PORTBbits.RB2 = 0;
     PORTBbits.RB1 = 0;
     PORTBbits.RB0 = 0;
-    PORTCbits.RC0 = 0;
-    PORTCbits.RC1 = 0;
-    PORTCbits.RC2 = 0;
-    PORTCbits.RC3 = 0;
+//    PORTCbits.RC0 = 0;
+//    PORTCbits.RC1 = 0;
+//    PORTCbits.RC2 = 0;
+//    PORTCbits.RC3 = 0;
 
     // pins 0-3 are toggled, pins 4-7 are monitored
     TRISBbits.RB3 = 0;
