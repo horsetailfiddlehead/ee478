@@ -8,7 +8,7 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
-      <itemPath>18f452_g.lkr</itemPath>
+      <itemPath>18f46k22_g.lkr</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -21,12 +21,15 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>../../../../Program Files (x86)/Microchip/mplabc18/v3.46/bin/LKR</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <targetDevice>PIC18F452</targetDevice>
+        <targetDevice>PIC18F46K22</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>

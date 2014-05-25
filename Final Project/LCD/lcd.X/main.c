@@ -7,21 +7,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 //#include <xc.h>
-#include <p18f452.h>
+#include <p18f46K22.h>
 #include <spi.h>
-#pragma config OSC = XT
-#pragma config WDT = OFF
-#pragma config PWRT = OFF
-//#pragma config MCLRE = OFF
-//#pragma config CP = OFF
-//#pragma config CPD = OFF
-//#pragma config BOREN = OFF
-//#pragma config IESO = OFF
-//#pragma config FCMEN = OFF
-#pragma config LVP = OFF
 
-//#pragma config BORV = BOR40V
-//#pragma config WRT = OFF
+/***************USART set up *********************/
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
+/****************************************************/
+
+/***************Clocking set up *********************/
+#pragma config WDTEN = OFF    // turn off watch dog timer
+#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
+#pragma config PRICLKEN = OFF // disable primary clock
+/****************************************************/
 
 #define V 128
 #define H 160
@@ -83,9 +81,9 @@
 #define WHITE   0xFFFF
 
 
-#define CS 0b00000100 //Low = select, High = deselect.
+#define CS 0b00001000 //Low = select, High = deselect.
 #define RE 0b00000010 //High = normal, Low = reset.
-#define A0 0b00000100 //Low = Command, High = Data.
+#define A0 0b00000001 //Low = Command, High = Data.
 
 #pragma idata myFont
 const char  font[58][5] = {
@@ -368,19 +366,19 @@ void delay(int x){
 
 void sendcomand(char input){
     int j = 0;
-    PORTD &= ~A0;
-    PORTE &= ~CS;
-    SSPBUF = input;
+    PORTC &= ~A0;
+    PORTC &= ~CS;
+    SSP1BUF = input;
     for(j=0;j<1;j++);
-    PORTE |= CS;
+    PORTC |= CS;
 }
 void senddata(char input){
     int j = 0;
-    PORTD |= A0;
-    PORTE &= ~CS;
-    SSPBUF = input;
+    PORTC |= A0;
+    PORTC &= ~CS;
+    SSP1BUF = input;
     for(j=0;j<1;j++);
-    PORTE |= CS;
+    PORTC |= CS;
 }
 void SetPix(char x, char y, int color){
     char Hig = 0;
@@ -435,13 +433,13 @@ void clean(int color){
     }
 }
 void init(){
-    PORTE &= ~CS;
+    PORTC &= ~CS;
     delay(0);
-    PORTD |= RE;
+    PORTC |= RE;
     delay(100);
-    PORTD &= ~RE;
+    PORTC &= ~RE;
     delay(100);
-    PORTD	|= RE;
+    PORTC |= RE;
     delay(10000);
     sendcomand(ST7735_SWRESET);                         //  1: Software reset, 0 args, w/delay 150ms 0x01
     delay(1000);
@@ -554,15 +552,32 @@ void main() {
     char fold=0;
     int l;
 
-    SSPSTAT = 0b01000000;
-    SSPCON1 = 0b00100000;
-    SSPCON2 = 0b00000000;
+    SSP1STAT = 0b01000000;
+    
+    SSP1CON1 = 0b00000000;
+    SSP1CON1bits.SSPEN = 1;
 
-    TRISC = 0;
-    TRISD = 0;
-	TRISE = 0;
+    SSP1CON2 = 0b00000000;
 
-    PORTD |= 0b00001000;
+    TRISCbits.RC0 = 0; // A0
+    TRISCbits.RC1 = 0; // RST
+    TRISCbits.RC2 = 0; // CS
+    TRISCbits.RC3 = 0; // SCK1
+    ANSELCbits.ANSC3 = 0;
+    TRISCbits.RC4 = 0;
+    ANSELCbits.ANSC4 = 0;
+    TRISCbits.RC5 = 0;
+    ANSELCbits.ANSC5 = 0;
+
+    TRISAbits.RA7 = 1;
+
+    //TRISC = 0;
+    //TRISD = 0;
+    //TRISA = 0;
+
+    //PORTD |= 0b00001000;
+
+    PORTC |= 0b00000001;
 
     init();
 
