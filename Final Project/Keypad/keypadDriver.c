@@ -46,13 +46,9 @@
 /****************************************************/
 
 
-//int checkForInput(void);
-
 int resetPins(int key);
-void keypadSetup();
-int checkForInput();
-
-//void keypadSetup(void);
+//void keypadSetup();
+//int checkForInput();
 
 #ifdef __KEYPAD_DEBUG
 
@@ -62,10 +58,10 @@ void main() {
     rs232Setup1(); // setup the serial port
 
     while (1) { // just loop for test
-        keyNum = (char) checkForInput() + 'a';
+        keyNum = (char) checkForInput() + '`';
         Write1USART(keyNum);
 
-        Delay10KTCYx(1000);
+        Delay1KTCYx(1);
     }
 
 }
@@ -73,134 +69,111 @@ void main() {
 
 // checks the keypad for key press. returns the first key press sensed.
 // Returns the number of the key pressed (* = 14, # = 15)
-
 int checkForInput() {
-    int key = -1;
     char scan;
 
-    PORTBbits.RB3 = 1; // set outputs HIGH
-    //    PORTBbits.RB2 = 1;
-    //    PORTBbits.RB1 = 1;
-    //    PORTBbits.RB0 = 1;
-
-    //    if (PORTCbits.RC0 == 1 || PORTCbits.RC1 == 1 || PORTCbits.RC2 == 1 || PORTCbits.RC3 == 1) {
-    //        PORTBbits.RB2 = 0; // leave Bbits.RB3 high
-    //        PORTBbits.RB1 = 0;
-    //        PORTBbits.RB0 = 0;
-    Delay10TCYx(1);
-    scan = (PORTCbits.RC0 << 3 | PORTCbits.RC1 << 2 | PORTCbits.RC2 << 1 | PORTCbits.RC3);
-    //    Write1USART(scan);
+    PORTCbits.RC0 = 0; // check row1
+    Delay10TCYx(10);
+    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
     switch (scan) {
-        case 8: // is on Cbits.RC0
+        case 0b00001110: // is on Bbits.RB3
             return resetPins(1);
-        case 4: // on pin 5
-            return resetPins(4);
-        case 2: // on pin 6
-            return resetPins(7);
-        case 1: // on pin 7
-            return resetPins(14);
-        default:
-            key = -2; // return resetPins(-2); // should never get here
-    }
-    Delay100TCYx(10);
-    PORTBbits.RB3 = 0; // check column2
-    PORTBbits.RB2 = 1;
-    scan = PORTCbits.RC0 << 3 || PORTCbits.RC1 << 2 || PORTCbits.RC2 << 1 || PORTCbits.RC3;
-    Write1USART(scan);
-    switch (scan) {
-        case 8: // is on Cbits.RC0
+        case 0b00001101: // on pin 5
             return resetPins(2);
-        case 4: // on pin 5
-            return resetPins(5);
-        case 2: // on pin 6
-            return resetPins(8);
-        case 1: // on pin 7
-            return resetPins(0);
-        default:
-            key = -2; // return resetPins(-2); // should never get here
+        case 0b00001011: // on pin 6
+            return resetPins(3);
+        case 0b00000111: // on pin 7
+            return resetPins(10);
     }
 
-    Delay100TCYx(10);
-    PORTBbits.RB2 = 0; // check column3
-    PORTBbits.RB1 = 1;
-    //        scan = PORTCbits.RC0 << 3 || PORTCbits.RC1 << 2 || PORTCbits.RC2 << 1 || PORTCbits.RC3;
-    //        switch (scan) {
-    //            case 16: // is on Cbits.RC0
-    //                return resetPins(7);
-    //            case 8: // on pin 5
-    //                return resetPins(8);
-    //            case 2: // on pin 6
-    //                return resetPins(9);
-    //            case 1: // on pin 7
-    //                return resetPins(12);
-    //            default:
-    //                return resetPins(-2); // should never get here
-    //        }
+    PORTCbits.RC0 = 1; // check row2
+    PORTCbits.RC1 = 0;
+    Delay10TCYx(10);
+    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    switch (scan) {
+        case 0b00001110: // is on Bbits.RB3
+            return resetPins(4);
+        case 0b00001101: // on pin 5
+            return resetPins(5);
+        case 0b00001011: // on pin 6
+            return resetPins(6);
+        case 0b00000111: // on pin 7
+            return resetPins(11);
+    }
 
-    Delay100TCYx(10);
-    PORTBbits.RB1 = 0; // check column4
-    PORTBbits.RB0 = 1;
-    //        scan = PORTCbits.RC0 << 3 || PORTCbits.RC1 << 2 || PORTCbits.RC2 << 1 || PORTCbits.RC3;
-    //        switch (scan) {
-    //            case 16: // is on Cbits.RC0
-    //                return resetPins(14);
-    //            case 8: // on pin 5
-    //                return resetPins(0);
-    //            case 2: // on pin 6
-    //                return resetPins(15);
-    //            case 1: // on pin 7
-    //                return resetPins(13);
-    //            default:
-    //                return resetPins(-2); // should never get here
-    //        }
-    //    }
-    Delay100TCYx(10);
-    return resetPins(key); // assume no key was pressed.
+
+    PORTCbits.RC1 = 1; // check row3
+    PORTCbits.RC2 = 0;
+    Delay10TCYx(10);
+    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    switch (scan) {
+        case 0b00001110: // is on Bbits.RB3
+            return resetPins(7);
+        case 0b00001101: // on pin 5
+            return resetPins(8);
+        case 0b00001011: // on pin 6
+            return resetPins(9);
+        case 0b00000111: // on pin 7
+            return resetPins(12);
+    }
+
+    PORTCbits.RC2 = 1; // check row4
+    PORTCbits.RC3 = 0;
+    Delay10TCYx(10);
+    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    switch (scan) {
+        case 0b00001110: // is on Bbits.RB3
+            return resetPins(14);
+        case 0b00001101: // on pin 5
+            return resetPins(0);
+        case 0b00001011: // on pin 6
+            return resetPins(15);
+        case 0b00000111: // on pin 7
+            return resetPins(16);
+    }
+
+    return resetPins(-1); // assume no key was pressed.
 }
 
 
 // resets the driving pins
-
 int resetPins(int key) {
-    PORTBbits.RB3 = 0; // set outputs LOW
-    PORTBbits.RB2 = 0;
-    PORTBbits.RB1 = 0;
-    PORTBbits.RB0 = 0;
+    PORTCbits.RC3 = 1; // set outputs HIGH
+    PORTCbits.RC2 = 1;
+    PORTCbits.RC1 = 1;
+    PORTCbits.RC0 = 1;
     return key;
 }
 
 
 // sets all pins to input or output and disables analog in; sets initial port outputs to LOW. May want to consider a better starting point, like all outputs high?
-
 void keypadSetup() {
-    PORTBbits.RB3 = 0; // disable set outputs
-    PORTBbits.RB2 = 0;
-    PORTBbits.RB1 = 0;
-    PORTBbits.RB0 = 0;
-    //    PORTCbits.RC0 = 0;
-    //    PORTCbits.RC1 = 0;
-    //    PORTCbits.RC2 = 0;
-    //    PORTCbits.RC3 = 0;
+    // initialize pins 4-7 HIGH
+    PORTCbits.RC0 = 1;
+    PORTCbits.RC1 = 1;
+    PORTCbits.RC2 = 1;
+    PORTCbits.RC3 = 1;
 
-    // pins 0-3 are toggled, pins 4-7 are monitored
-    TRISBbits.RB3 = 0;
-    TRISBbits.RB2 = 0;
-    TRISBbits.RB1 = 0;
-    TRISBbits.RB0 = 0;
-    TRISCbits.RC0 = 1;
-    TRISCbits.RC1 = 1;
-    TRISCbits.RC2 = 1;
-    TRISCbits.RC3 = 1;
+    // pins 4-7 are toggled, pins 0-3 are monitored
+    TRISCbits.RC3 = 0;
+    TRISCbits.RC2 = 0;
+    TRISCbits.RC1 = 0;
+    TRISCbits.RC0 = 0;
+    TRISBbits.RB0 = 1;
+    TRISBbits.RB1 = 1;
+    TRISBbits.RB2 = 1;
+    TRISBbits.RB3 = 1;
 
     ANSELBbits.ANSB3 = 0; // disable analog input
     ANSELBbits.ANSB2 = 0;
     ANSELBbits.ANSB1 = 0;
     ANSELBbits.ANSB0 = 0;
-    //        ANSELCbits.ANSC0 = 0;
-    //        ANSELCbits.ANSC1 = 0;
-    ANSELCbits.ANSC2 = 0;
-    ANSELCbits.ANSC3 = 0;
 
+
+    // enable weak pull ups on ports b0-b3
+    WPUB = WPUB & 0b11111111;
+    // enable pull ups on portB globally
+    INTCON2 = INTCON2 & 0b01111111;
 
 
 

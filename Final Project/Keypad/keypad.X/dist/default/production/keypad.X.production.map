@@ -1,51 +1,49 @@
 MPLINK 4.48, Linker
-Linker Map File - Created Sat May 24 20:33:06 2014
+Linker Map File - Created Sun May 25 15:12:15 2014
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                _entry_scn       code   0x000000    program   0x000006
                    .cinit    romdata   0x000006    program   0x000002
-     .code_keypadDriver.o       code   0x000008    program   0x0001a6
-            .code_rs232.o       code   0x0001ae    program   0x00010a
-               _cinit_scn       code   0x0002b8    program   0x00009e
-           .code_u2open.o       code   0x000356    program   0x000078
-           .code_u1open.o       code   0x0003ce    program   0x000072
-           .code_u1read.o       code   0x000440    program   0x00003e
-             D10KTCYXCODE       code   0x00047e    program   0x00002e
-          .code_u1write.o       code   0x0004ac    program   0x00002e
-                    .code       code   0x0004da    program   0x000020
-             _startup_scn       code   0x0004fa    program   0x00001c
-             D100TCYXCODE       code   0x000516    program   0x00001c
-              D10TCYXCODE       code   0x000532    program   0x000016
-           .code___init.o       code   0x000548    program   0x000002
-        .romdata___init.o    romdata   0x00054a    program   0x000000
-        .idata_u1defs.o_i    romdata   0x00054a    program   0x000000
-        .romdata_u1defs.o    romdata   0x00054a    program   0x000000
-           .code_u1defs.o       code   0x00054a    program   0x000000
-       .idata_u1write.o_i    romdata   0x00054a    program   0x000000
-        .romdata_u1read.o    romdata   0x00054a    program   0x000000
-       .romdata_u1write.o    romdata   0x00054a    program   0x000000
-        .idata_u1read.o_i    romdata   0x00054a    program   0x000000
-        .idata___init.o_i    romdata   0x00054a    program   0x000000
-        .romdata_u2open.o    romdata   0x00054a    program   0x000000
-        .idata_u2open.o_i    romdata   0x00054a    program   0x000000
-        .romdata_u1open.o    romdata   0x00054a    program   0x000000
-        .idata_u1open.o_i    romdata   0x00054a    program   0x000000
-         .romdata_rs232.o    romdata   0x00054a    program   0x000000
-         .idata_rs232.o_i    romdata   0x00054a    program   0x000000
-  .romdata_keypadDriver.o    romdata   0x00054a    program   0x000000
-  .idata_keypadDriver.o_i    romdata   0x00054a    program   0x000000
-            .code_c018i.o       code   0x00054a    program   0x000000
-         .romdata_c018i.o    romdata   0x00054a    program   0x000000
-         .idata_c018i.o_i    romdata   0x00054a    program   0x000000
+     .code_keypadDriver.o       code   0x000008    program   0x00023c
+            .code_rs232.o       code   0x000244    program   0x00010a
+               _cinit_scn       code   0x00034e    program   0x00009e
+           .code_u2open.o       code   0x0003ec    program   0x000078
+           .code_u1open.o       code   0x000464    program   0x000072
+           .code_u1read.o       code   0x0004d6    program   0x00003e
+          .code_u1write.o       code   0x000514    program   0x00002e
+              D1KTCYXCODE       code   0x000542    program   0x000020
+                    .code       code   0x000562    program   0x000020
+             _startup_scn       code   0x000582    program   0x00001c
+              D10TCYXCODE       code   0x00059e    program   0x000016
+           .code___init.o       code   0x0005b4    program   0x000002
+        .idata_u1read.o_i    romdata   0x0005b6    program   0x000000
+        .romdata_u1read.o    romdata   0x0005b6    program   0x000000
+        .romdata___init.o    romdata   0x0005b6    program   0x000000
+        .idata_u1defs.o_i    romdata   0x0005b6    program   0x000000
+        .romdata_u1defs.o    romdata   0x0005b6    program   0x000000
+           .code_u1defs.o       code   0x0005b6    program   0x000000
+       .idata_u1write.o_i    romdata   0x0005b6    program   0x000000
+       .romdata_u1write.o    romdata   0x0005b6    program   0x000000
+        .idata___init.o_i    romdata   0x0005b6    program   0x000000
+        .romdata_u2open.o    romdata   0x0005b6    program   0x000000
+        .idata_u2open.o_i    romdata   0x0005b6    program   0x000000
+        .romdata_u1open.o    romdata   0x0005b6    program   0x000000
+        .idata_u1open.o_i    romdata   0x0005b6    program   0x000000
+         .romdata_rs232.o    romdata   0x0005b6    program   0x000000
+         .idata_rs232.o_i    romdata   0x0005b6    program   0x000000
+  .romdata_keypadDriver.o    romdata   0x0005b6    program   0x000000
+  .idata_keypadDriver.o_i    romdata   0x0005b6    program   0x000000
+            .code_c018i.o       code   0x0005b6    program   0x000000
+         .romdata_c018i.o    romdata   0x0005b6    program   0x000000
+         .idata_c018i.o_i    romdata   0x0005b6    program   0x000000
 .config_300001_keypadDriver.o    romdata   0x300001    program   0x000001
 .config_300003_keypadDriver.o    romdata   0x300003    program   0x000001
 .config_300005_keypadDriver.o    romdata   0x300005    program   0x000001
                  .tmpdata      udata   0x000000       data   0x000004
                 MATH_DATA      udata   0x000004       data   0x000002
-                DELAYDAT2      udata   0x000006       data   0x000001
-                DELAYDAT1      udata   0x000007       data   0x000001
+                DELAYDAT1      udata   0x000006       data   0x000001
            .udata_c018i.o      udata   0x000060       data   0x00000a
           .udata_u1defs.o      udata   0x00006a       data   0x000001
           .idata___init.o      idata   0x00006b       data   0x000000
@@ -74,67 +72,60 @@ Linker Map File - Created Sat May 24 20:33:06 2014
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x000549      
+                            0x000000    0x0005b5      
                             0x300001    0x300001      
                             0x300003    0x300003      
                             0x300005    0x300005      
-            1357 out of 33048 program addresses used, program memory utilization is 4%
+            1465 out of 33048 program addresses used, program memory utilization is 4%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                   D100_1   0x000524    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                    D100x   0x000522    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                   D10K_1   0x00048a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kl   0x000496    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kx   0x000488    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10_1   0x000542    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                     D10x   0x00053a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-             Delay100TCYx   0x000516    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-             Delay10KTCYx   0x00047e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-              Delay10TCYx   0x000532    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-               Open1USART   0x0003ce    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
-               Open2USART   0x000356    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
-               Read1USART   0x000440    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
-              Write1USART   0x0004ac    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
-       _D100TCYXCODE_0008   0x00051e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0012   0x000528    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0018   0x00052e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D10KTCYXCODE_0010   0x00048e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-       _D10KTCYXCODE_001C   0x00049a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-        _D10TCYXCODE_000A   0x00053c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000C   0x00053e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000E   0x000540    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                    D10_1   0x0005ae    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                     D10x   0x0005a6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                    D1K_1   0x00054e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+                     D1Kx   0x00054c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+              Delay10TCYx   0x00059e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+              Delay1KTCYx   0x000542    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+               Open1USART   0x000464    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
+               Open2USART   0x0003ec    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
+               Read1USART   0x0004d6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
+              Write1USART   0x000514    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
+        _D10TCYXCODE_000A   0x0005a8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000C   0x0005aa    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000E   0x0005ac    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D1KTCYXCODE_0010   0x000552    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0016   0x000558    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
        ___return_lbl00000   0x000004    program     static                          
-       ___return_lbl00001   0x000514    program     static                          
-       ___return_lbl00002   0x000354    program     static                          
+       ___return_lbl00001   0x00059c    program     static                          
+       ___return_lbl00002   0x0003ea    program     static                          
                __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
                __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
                __config_2   0x300005    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-                   __init   0x000548    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
-            __zero_memory   0x0004da    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                _do_cinit   0x0002b8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                   __init   0x0005b4    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
+            __zero_memory   0x000562    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                _do_cinit   0x00034e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                    _entry   0x000000    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                 _startup   0x0004fa    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-            checkForInput   0x00003e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-                compare_l   0x0004f0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                copy_loop   0x00032a    program     static                          
-            copy_one_byte   0x000330    program     static                          
-                     done   0x000354    program     static                          
-             done_copying   0x00033e    program     static                          
-              keypadSetup   0x000186    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-                     loop   0x00050a    program     static                          
-                   loop_h   0x0004e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                   loop_l   0x0004f2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 _startup   0x000582    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+            checkForInput   0x000038    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
+                compare_l   0x000578    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                copy_loop   0x0003c0    program     static                          
+            copy_one_byte   0x0003c6    program     static                          
+                     done   0x0003ea    program     static                          
+             done_copying   0x0003d4    program     static                          
+              keypadSetup   0x000216    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
+                     loop   0x000592    program     static                          
+                   loop_h   0x000570    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                   loop_l   0x00057a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                      main   0x000008    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-           readBytesUntil   0x0001f2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
-                resetPins   0x00015a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-              rs232Setup1   0x0001ae    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
-              rs232Setup2   0x0001d2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
-                     test   0x0002d2    program     static                          
-               zero_block   0x0004e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+           readBytesUntil   0x000288    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
+                resetPins   0x0001ea    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
+              rs232Setup1   0x000244    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
+              rs232Setup2   0x000268    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
+                     test   0x000368    program     static                          
+               zero_block   0x000570    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    ADCON0   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                ADCON0bits   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    ADCON1   0x000fc1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
@@ -230,8 +221,7 @@ Linker Map File - Created Sat May 24 20:33:06 2014
                  DDRBbits   0x000f93       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                      DDRC   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                  DDRCbits   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-            DelayCounter1   0x000007       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd1.asm
-            DelayCounter2   0x000006       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd2.asm
+            DelayCounter1   0x000006       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd1.asm
                   ECCP1AS   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
               ECCP1ASbits   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                   ECCP2AS   0x000f64       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
@@ -552,85 +542,77 @@ Linker Map File - Created Sat May 24 20:33:06 2014
                    _entry   0x000000    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
        ___return_lbl00000   0x000004    program     static                          
                      main   0x000008    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-            checkForInput   0x00003e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-                resetPins   0x00015a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-              keypadSetup   0x000186    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-              rs232Setup1   0x0001ae    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
-              rs232Setup2   0x0001d2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
-           readBytesUntil   0x0001f2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
-                _do_cinit   0x0002b8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     test   0x0002d2    program     static                          
-                copy_loop   0x00032a    program     static                          
-            copy_one_byte   0x000330    program     static                          
-             done_copying   0x00033e    program     static                          
-       ___return_lbl00002   0x000354    program     static                          
-                     done   0x000354    program     static                          
-               Open2USART   0x000356    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
-               Open1USART   0x0003ce    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
-               Read1USART   0x000440    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
-             Delay10KTCYx   0x00047e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kx   0x000488    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                   D10K_1   0x00048a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-       _D10KTCYXCODE_0010   0x00048e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kl   0x000496    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-       _D10KTCYXCODE_001C   0x00049a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-              Write1USART   0x0004ac    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
-            __zero_memory   0x0004da    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                   loop_h   0x0004e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-               zero_block   0x0004e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                compare_l   0x0004f0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                   loop_l   0x0004f2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 _startup   0x0004fa    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     loop   0x00050a    program     static                          
-       ___return_lbl00001   0x000514    program     static                          
-             Delay100TCYx   0x000516    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0008   0x00051e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                    D100x   0x000522    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                   D100_1   0x000524    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0012   0x000528    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0018   0x00052e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-              Delay10TCYx   0x000532    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                     D10x   0x00053a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000A   0x00053c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000C   0x00053e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000E   0x000540    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                    D10_1   0x000542    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                   __init   0x000548    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
+            checkForInput   0x000038    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
+                resetPins   0x0001ea    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
+              keypadSetup   0x000216    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
+              rs232Setup1   0x000244    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
+              rs232Setup2   0x000268    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
+           readBytesUntil   0x000288    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
+                _do_cinit   0x00034e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     test   0x000368    program     static                          
+                copy_loop   0x0003c0    program     static                          
+            copy_one_byte   0x0003c6    program     static                          
+             done_copying   0x0003d4    program     static                          
+                     done   0x0003ea    program     static                          
+       ___return_lbl00002   0x0003ea    program     static                          
+               Open2USART   0x0003ec    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
+               Open1USART   0x000464    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
+               Read1USART   0x0004d6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
+              Write1USART   0x000514    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
+              Delay1KTCYx   0x000542    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+                     D1Kx   0x00054c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+                    D1K_1   0x00054e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0010   0x000552    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0016   0x000558    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d1ktcyx.asm
+            __zero_memory   0x000562    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+               zero_block   0x000570    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                   loop_h   0x000570    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                compare_l   0x000578    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                   loop_l   0x00057a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 _startup   0x000582    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     loop   0x000592    program     static                          
+       ___return_lbl00001   0x00059c    program     static                          
+              Delay10TCYx   0x00059e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                     D10x   0x0005a6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000A   0x0005a8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000C   0x0005aa    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000E   0x0005ac    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                    D10_1   0x0005ae    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                   __init   0x0005b4    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
                __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
                __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
                __config_2   0x300005    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
+                  __tmp_0   0x000000       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
                   __tmp_0   0x000000       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\rs232.c
                   __tmp_0   0x000000       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\Keypad\keypadDriver.c
-                  __tmp_0   0x000000       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
                   __tmp_0   0x000000       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
                      SIGN   0x000004       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
-            __FPFLAGSbits   0x000005       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
                 __FPFLAGS   0x000005       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
-            DelayCounter2   0x000006       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd2.asm
-            DelayCounter1   0x000007       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd1.asm
+            __FPFLAGSbits   0x000005       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
+            DelayCounter1   0x000006       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd1.asm
                      prom   0x000060       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                 curr_byte   0x000063       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                curr_entry   0x000065       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                  data_ptr   0x000067       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
             USART1_Status   0x00006a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1defs.c
-               ANSELAbits   0x000f38       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    ANSELA   0x000f38       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-               ANSELBbits   0x000f39       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+               ANSELAbits   0x000f38       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    ANSELB   0x000f39       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-               ANSELCbits   0x000f3a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+               ANSELBbits   0x000f39       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    ANSELC   0x000f3a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 PMD2bits   0x000f3d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+               ANSELCbits   0x000f3a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                      PMD2   0x000f3d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 PMD1bits   0x000f3e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 PMD2bits   0x000f3d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                      PMD1   0x000f3e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 PMD0bits   0x000f3f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 PMD1bits   0x000f3e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                      PMD0   0x000f3f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 VREFCON2   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 PMD0bits   0x000f3f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
               DACCON1bits   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                   DACCON1   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
              VREFCON2bits   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-              DACCON0bits   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 VREFCON2   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                   DACCON0   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+              DACCON0bits   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                  VREFCON1   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
              VREFCON1bits   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                FVRCONbits   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
@@ -638,17 +620,17 @@ Linker Map File - Created Sat May 24 20:33:06 2014
              VREFCON0bits   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                  VREFCON0   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
              CTMUICONbits   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-            CTMUICONHbits   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                CTMUICONH   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                  CTMUICON   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 CTMUCONL   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 CTMUCON1   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                CTMUICONH   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+            CTMUICONHbits   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
              CTMUCON1bits   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 CTMUCON1   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 CTMUCONL   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
              CTMUCONLbits   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-             CTMUCON0bits   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 CTMUCON0   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
-                 CTMUCONH   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
              CTMUCONHbits   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 CTMUCON0   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+             CTMUCON0bits   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
+                 CTMUCONH   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                SRCON1bits   0x000f46       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                    SRCON1   0x000f46       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
                SRCON0bits   0x000f47       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f25k22.asm
