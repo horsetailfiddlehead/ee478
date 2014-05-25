@@ -46,13 +46,9 @@
 /****************************************************/
 
 
-//int checkForInput(void);
-
 int resetPins(int key);
-void keypadSetup();
-int checkForInput();
-
-//void keypadSetup(void);
+//void keypadSetup();
+//int checkForInput();
 
 #ifdef __KEYPAD_DEBUG
 
@@ -65,7 +61,7 @@ void main() {
         keyNum = (char) checkForInput() + '`';
         Write1USART(keyNum);
 
-        Delay10KTCYx(1);
+        Delay1KTCYx(1);
     }
 
 }
@@ -73,23 +69,12 @@ void main() {
 
 // checks the keypad for key press. returns the first key press sensed.
 // Returns the number of the key pressed (* = 14, # = 15)
-
 int checkForInput() {
-    int key = -1;
     char scan;
 
-    PORTCbits.RC0 = 0; // set outputs LOW
-    //    PORTCbits.RC2 = 1;
-    //    PORTCbits.RC1 = 1;
-    //    PORTCbits.RC0 = 1;
-
-    //    if (PORTBbits.RB0 == 1 || PORTBbits.RB1 == 1 || PORTBbits.RB2 == 1 || PORTBbits.RB3 == 1) {
-    //        PORTCbits.RC2 = 0; // leave Cbits.RC3 high
-    //        PORTCbits.RC1 = 0;
-    //        PORTCbits.RC0 = 0;
+    PORTCbits.RC0 = 0; // check row1
     Delay10TCYx(10);
     scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
-    //        Write1USART(scan);
     switch (scan) {
         case 0b00001110: // is on Bbits.RB3
             return resetPins(1);
@@ -99,15 +84,12 @@ int checkForInput() {
             return resetPins(3);
         case 0b00000111: // on pin 7
             return resetPins(10);
-            //         default:
-            //             key = -2; // return resetPins(-2); // should never get here
     }
 
-    PORTCbits.RC0 = 1; // check column2
+    PORTCbits.RC0 = 1; // check row2
     PORTCbits.RC1 = 0;
     Delay10TCYx(10);
     scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
-    Write1USART(scan);
     switch (scan) {
         case 0b00001110: // is on Bbits.RB3
             return resetPins(4);
@@ -117,27 +99,44 @@ int checkForInput() {
             return resetPins(6);
         case 0b00000111: // on pin 7
             return resetPins(11);
-            //         default:
-            //             key = -2; // return resetPins(-2); // should never get here
     }
 
 
-    PORTCbits.RC1 = 1; // check column3
+    PORTCbits.RC1 = 1; // check row3
     PORTCbits.RC2 = 0;
     Delay10TCYx(10);
+    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    switch (scan) {
+        case 0b00001110: // is on Bbits.RB3
+            return resetPins(7);
+        case 0b00001101: // on pin 5
+            return resetPins(8);
+        case 0b00001011: // on pin 6
+            return resetPins(9);
+        case 0b00000111: // on pin 7
+            return resetPins(12);
+    }
 
-
-    PORTCbits.RC2 = 1; // check column4
+    PORTCbits.RC2 = 1; // check row4
     PORTCbits.RC3 = 0;
     Delay10TCYx(10);
-    
+    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    switch (scan) {
+        case 0b00001110: // is on Bbits.RB3
+            return resetPins(14);
+        case 0b00001101: // on pin 5
+            return resetPins(0);
+        case 0b00001011: // on pin 6
+            return resetPins(15);
+        case 0b00000111: // on pin 7
+            return resetPins(16);
+    }
 
-    return resetPins(key); // assume no key was pressed.
+    return resetPins(-1); // assume no key was pressed.
 }
 
 
 // resets the driving pins
-
 int resetPins(int key) {
     PORTCbits.RC3 = 1; // set outputs HIGH
     PORTCbits.RC2 = 1;
@@ -148,12 +147,8 @@ int resetPins(int key) {
 
 
 // sets all pins to input or output and disables analog in; sets initial port outputs to LOW. May want to consider a better starting point, like all outputs high?
-
 void keypadSetup() {
-    //    PORTBbits.RB3 = 0; // disable set outputs
-    //    PORTBbits.RB2 = 0;
-    //    PORTBbits.RB1 = 0;
-    //    PORTBbits.RB0 = 0;
+    // initialize pins 4-7 HIGH
     PORTCbits.RC0 = 1;
     PORTCbits.RC1 = 1;
     PORTCbits.RC2 = 1;
@@ -173,10 +168,7 @@ void keypadSetup() {
     ANSELBbits.ANSB2 = 0;
     ANSELBbits.ANSB1 = 0;
     ANSELBbits.ANSB0 = 0;
-    //        ANSELCbits.ANSC0 = 0;
-    //        ANSELCbits.ANSC1 = 0;
-    ANSELCbits.ANSC2 = 0;
-    ANSELCbits.ANSC3 = 0;
+
 
     // enable weak pull ups on ports b0-b3
     WPUB = WPUB & 0b11111111;
