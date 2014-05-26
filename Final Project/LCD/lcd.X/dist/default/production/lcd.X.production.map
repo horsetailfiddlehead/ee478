@@ -1,29 +1,29 @@
 MPLINK 4.48, Linker
-Linker Map File - Created Sun May 25 15:43:17 2014
+Linker Map File - Created Sun May 25 17:17:33 2014
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                _entry_scn       code   0x000000    program   0x000006
                    .cinit    romdata   0x000006    program   0x00000e
-             .code_main.o       code   0x000014    program   0x000f08
-               _cinit_scn       code   0x000f1c    program   0x00009e
-             .stringtable    romdata   0x000fba    program   0x000089
-        .romdata___init.o    romdata   0x001043    program   0x000000
-        .idata___init.o_i    romdata   0x001043    program   0x000000
-      .romdata_fxd1616u.o    romdata   0x001043    program   0x000000
-      .idata_fxd1616u.o_i    romdata   0x001043    program   0x000000
-          .romdata_main.o    romdata   0x001043    program   0x000000
-          .idata_main.o_i    romdata   0x001043    program   0x000000
-         .romdata_c018i.o    romdata   0x001043    program   0x000000
-         .idata_c018i.o_i    romdata   0x001043    program   0x000000
-                     PROG       code   0x001044    program   0x00004c
-            .code_c018i.o       code   0x001044    program   0x000000
-         .code_fxd1616u.o       code   0x001090    program   0x00002c
-                    .code       code   0x0010bc    program   0x000020
-             _startup_scn       code   0x0010dc    program   0x00001c
-           .code___init.o       code   0x0010f8    program   0x000002
-                 myFont_i    romdata   0x0010fa    program   0x000122
+             .code_main.o       code   0x000014    program   0x000f0a
+               _cinit_scn       code   0x000f1e    program   0x00009e
+             .stringtable    romdata   0x000fbc    program   0x000089
+        .romdata___init.o    romdata   0x001045    program   0x000000
+        .idata___init.o_i    romdata   0x001045    program   0x000000
+      .romdata_fxd1616u.o    romdata   0x001045    program   0x000000
+      .idata_fxd1616u.o_i    romdata   0x001045    program   0x000000
+          .romdata_main.o    romdata   0x001045    program   0x000000
+          .idata_main.o_i    romdata   0x001045    program   0x000000
+         .romdata_c018i.o    romdata   0x001045    program   0x000000
+         .idata_c018i.o_i    romdata   0x001045    program   0x000000
+                     PROG       code   0x001046    program   0x00004c
+            .code_c018i.o       code   0x001046    program   0x000000
+         .code_fxd1616u.o       code   0x001092    program   0x00002c
+                    .code       code   0x0010be    program   0x000020
+             _startup_scn       code   0x0010de    program   0x00001c
+           .code___init.o       code   0x0010fa    program   0x000002
+                 myFont_i    romdata   0x0010fc    program   0x000122
     .config_300001_main.o    romdata   0x300001    program   0x000001
     .config_300003_main.o    romdata   0x300003    program   0x000001
                 MATH_DATA      udata   0x000000       data   0x000010
@@ -46,66 +46,66 @@ Linker Map File - Created Sun May 25 15:43:17 2014
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x001042      
-                            0x001044    0x00121b      
+                            0x000000    0x001044      
+                            0x001046    0x00121d      
                             0x300001    0x300001      
                             0x300003    0x300003      
-            4637 out of 66584 program addresses used, program memory utilization is 6%
+            4639 out of 66584 program addresses used, program memory utilization is 6%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                    ASCII   0x0004b4    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                   D1616S   0x001066    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x001074    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x001070    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x001086    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA1616S   0x001056    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD1616S   0x001044    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD1616U   0x001090    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                   SetPix   0x00011c    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-       ___return_lbl00000   0x0010ba    program     static                          
+                    ASCII   0x0004b4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                   D1616S   0x001068    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x001076    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x001072    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x001088    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA1616S   0x001058    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD1616S   0x001046    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD1616U   0x001092    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
+                   SetPix   0x00011c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+       ___return_lbl00000   0x0010bc    program     static                          
        ___return_lbl00000   0x000004    program     static                          
-       ___return_lbl00001   0x0010f6    program     static                          
-       ___return_lbl00002   0x000fb8    program     static                          
-               __config_0   0x300001    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __config_1   0x300003    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                   __init   0x0010f8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
-               __string_0   0x001031    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_1   0x00101f    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_2   0x000fd1    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_3   0x000fcf    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_4   0x000fcd    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_5   0x000fcb    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_6   0x000fc9    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_7   0x000fba    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-            __zero_memory   0x0010bc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                _do_cinit   0x000f1c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+       ___return_lbl00001   0x0010f8    program     static                          
+       ___return_lbl00002   0x000fba    program     static                          
+               __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                   __init   0x0010fa    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
+               __string_0   0x001033    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_1   0x001021    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_2   0x000fd3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_3   0x000fd1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_4   0x000fcf    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_5   0x000fcd    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_6   0x000fcb    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_7   0x000fbc    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+            __zero_memory   0x0010be    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                _do_cinit   0x000f1e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                    _entry   0x000000    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                 _startup   0x0010dc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                      box   0x000aa6    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                    clean   0x0001e2    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                compare_l   0x0010d2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                copy_loop   0x000f8e    program     static                          
-            copy_one_byte   0x000f94    program     static                          
-                    delay   0x000014    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                     done   0x000fb8    program     static                          
-             done_copying   0x000fa2    program     static                          
-                  endloop   0x0010b6    program     static                          
-                     init   0x0002ec    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-             integerprint   0x00078a    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                     loop   0x0010ec    program     static                          
-                     loop   0x00109a    program     static                          
-                   loop_h   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   loop_l   0x0010d4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     main   0x000b52    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                   prints   0x0006d4    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               sendcomand   0x000070    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                 senddata   0x0000c6    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                     test   0x000f36    program     static                          
-               zero_block   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 _startup   0x0010de    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                      box   0x000aa6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                    clean   0x0001e2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                compare_l   0x0010d4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                copy_loop   0x000f90    program     static                          
+            copy_one_byte   0x000f96    program     static                          
+                    delay   0x000014    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                     done   0x000fba    program     static                          
+             done_copying   0x000fa4    program     static                          
+                  endloop   0x0010b8    program     static                          
+                     init   0x0002ec    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+             integerprint   0x00078a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                     loop   0x0010ee    program     static                          
+                     loop   0x00109c    program     static                          
+                   loop_h   0x0010cc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   loop_l   0x0010d6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     main   0x000b52    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                   prints   0x0006d4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               sendcomand   0x000070    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                 senddata   0x0000c6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                     test   0x000f38    program     static                          
+               zero_block   0x0010cc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ADCON0   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                ADCON0bits   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ADCON1   0x000fc1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -539,11 +539,11 @@ Linker Map File - Created Sun May 25 15:43:17 2014
                   __REMB1   0x000004       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\aarg.asm
                   __REMB2   0x000003       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\aarg.asm
                   __REMB3   0x000002       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\aarg.asm
-                  __tmp_0   0x000010       data     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
+                  __tmp_0   0x000010       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
                 curr_byte   0x000f03       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                curr_entry   0x000f05       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                  data_ptr   0x000f07       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     font   0x000100       data     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
+                     font   0x000100       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
                      prom   0x000f00       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
 
 
@@ -553,53 +553,53 @@ Linker Map File - Created Sun May 25 15:43:17 2014
                 ---------  ---------  ---------  --------- ---------                
                    _entry   0x000000    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
        ___return_lbl00000   0x000004    program     static                          
-                    delay   0x000014    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               sendcomand   0x000070    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                 senddata   0x0000c6    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                   SetPix   0x00011c    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                    clean   0x0001e2    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                     init   0x0002ec    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                    ASCII   0x0004b4    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                   prints   0x0006d4    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-             integerprint   0x00078a    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                      box   0x000aa6    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                     main   0x000b52    program     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                _do_cinit   0x000f1c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     test   0x000f36    program     static                          
-                copy_loop   0x000f8e    program     static                          
-            copy_one_byte   0x000f94    program     static                          
-             done_copying   0x000fa2    program     static                          
-                     done   0x000fb8    program     static                          
-       ___return_lbl00002   0x000fb8    program     static                          
-               __string_7   0x000fba    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_6   0x000fc9    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_5   0x000fcb    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_4   0x000fcd    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_3   0x000fcf    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_2   0x000fd1    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_1   0x00101f    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __string_0   0x001031    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                 FXD1616S   0x001044    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA1616S   0x001056    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                   D1616S   0x001066    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x001070    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x001074    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x001086    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD1616U   0x001090    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                     loop   0x00109a    program     static                          
-                  endloop   0x0010b6    program     static                          
-       ___return_lbl00000   0x0010ba    program     static                          
-            __zero_memory   0x0010bc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   loop_h   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               zero_block   0x0010ca    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                compare_l   0x0010d2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   loop_l   0x0010d4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 _startup   0x0010dc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     loop   0x0010ec    program     static                          
-       ___return_lbl00001   0x0010f6    program     static                          
-                   __init   0x0010f8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
-               __config_0   0x300001    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-               __config_1   0x300003    program     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
+                    delay   0x000014    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               sendcomand   0x000070    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                 senddata   0x0000c6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                   SetPix   0x00011c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                    clean   0x0001e2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                     init   0x0002ec    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                    ASCII   0x0004b4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                   prints   0x0006d4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+             integerprint   0x00078a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                      box   0x000aa6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                     main   0x000b52    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                _do_cinit   0x000f1e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     test   0x000f38    program     static                          
+                copy_loop   0x000f90    program     static                          
+            copy_one_byte   0x000f96    program     static                          
+             done_copying   0x000fa4    program     static                          
+                     done   0x000fba    program     static                          
+       ___return_lbl00002   0x000fba    program     static                          
+               __string_7   0x000fbc    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_6   0x000fcb    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_5   0x000fcd    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_4   0x000fcf    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_3   0x000fd1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_2   0x000fd3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_1   0x001021    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __string_0   0x001033    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                 FXD1616S   0x001046    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA1616S   0x001058    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                   D1616S   0x001068    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x001072    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x001076    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x001088    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD1616U   0x001092    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
+                     loop   0x00109c    program     static                          
+                  endloop   0x0010b8    program     static                          
+       ___return_lbl00000   0x0010bc    program     static                          
+            __zero_memory   0x0010be    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   loop_h   0x0010cc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               zero_block   0x0010cc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                compare_l   0x0010d4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   loop_l   0x0010d6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 _startup   0x0010de    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     loop   0x0010ee    program     static                          
+       ___return_lbl00001   0x0010f8    program     static                          
+                   __init   0x0010fa    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
+               __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+               __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
                      SIGN   0x000000       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
             __FPFLAGSbits   0x000001       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
                 __FPFLAGS   0x000001       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
@@ -621,8 +621,8 @@ Linker Map File - Created Sun May 25 15:43:17 2014
                  __BARGB1   0x00000d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\barg.asm
                  __BARGB0   0x00000e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\barg.asm
                    __BEXP   0x00000f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\barg.asm
-                  __tmp_0   0x000010       data     static C:\Users\castia\MPLABXProjects\lcd.X\main.c
-                     font   0x000100       data     extern C:\Users\castia\MPLABXProjects\lcd.X\main.c
+                  __tmp_0   0x000010       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
+                     font   0x000100       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\LCD\lcd.X\main.c
                      prom   0x000f00       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                 curr_byte   0x000f03       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                curr_entry   0x000f05       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c

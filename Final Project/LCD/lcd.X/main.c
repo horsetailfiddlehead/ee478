@@ -9,6 +9,7 @@
 //#include <xc.h>
 #include <p18f46K22.h>
 #include <spi.h>
+#include <delays.h>
 
 /***************USART set up *********************/
 #pragma config FCMEN = OFF
@@ -81,7 +82,7 @@
 #define WHITE   0xFFFF
 
 
-#define CS 0b00001000 //Low = select, High = deselect.
+#define CS 0b00000100 //Low = select, High = deselect.
 #define RE 0b00000010 //High = normal, Low = reset.
 #define A0 0b00000001 //Low = Command, High = Data.
 
@@ -562,6 +563,7 @@ void main() {
     TRISCbits.RC0 = 0; // A0
     TRISCbits.RC1 = 0; // RST
     TRISCbits.RC2 = 0; // CS
+    ANSELCbits.ANSC2 = 0;
     TRISCbits.RC3 = 0; // SCK1
     ANSELCbits.ANSC3 = 0;
     TRISCbits.RC4 = 0;
