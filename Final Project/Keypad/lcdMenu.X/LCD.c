@@ -1,90 +1,6 @@
-/* 
- * File:   main.c
- * Author: castia
- *
- * Created on May 23, 2014, 9:04 PM
- */
-#include <stdio.h>
-#include <stdlib.h>
-//#include <xc.h>
-#include <p18f46K22.h>
-#include <spi.h>
-#include <delays.h>
 
-/***************USART set up *********************/
-#pragma config FCMEN = OFF
-#pragma config IESO = OFF
-/****************************************************/
-
-/***************Clocking set up *********************/
-#pragma config WDTEN = OFF    // turn off watch dog timer
-#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
-#pragma config PRICLKEN = OFF // disable primary clock
-/****************************************************/
-
-#define V 128
-#define H 160
-
-#define ST7735_NOP     0x00
-#define ST7735_SWRESET 0x01
-#define ST7735_RDDID   0x04
-#define ST7735_RDDST   0x09
-
-#define ST7735_SLPIN   0x10
-#define ST7735_SLPOUT  0x11
-#define ST7735_PTLON   0x12
-#define ST7735_NORON   0x13
-
-#define ST7735_INVOFF  0x20
-#define ST7735_INVON   0x21
-#define ST7735_DISPOFF 0x28
-#define ST7735_DISPON  0x29
-#define ST7735_CASET   0x2A
-#define ST7735_RASET   0x2B
-#define ST7735_RAMWR   0x2C
-#define ST7735_RAMRD   0x2E
-
-#define ST7735_PTLAR   0x30
-#define ST7735_COLMOD  0x3A
-#define ST7735_MADCTL  0x36
-
-#define ST7735_FRMCTR1 0xB1
-#define ST7735_FRMCTR2 0xB2
-#define ST7735_FRMCTR3 0xB3
-#define ST7735_INVCTR  0xB4
-#define ST7735_DISSET5 0xB6
-
-#define ST7735_PWCTR1  0xC0
-#define ST7735_PWCTR2  0xC1
-#define ST7735_PWCTR3  0xC2
-#define ST7735_PWCTR4  0xC3
-#define ST7735_PWCTR5  0xC4
-#define ST7735_VMCTR1  0xC5
-
-#define ST7735_RDID1   0xDA
-#define ST7735_RDID2   0xDB
-#define ST7735_RDID3   0xDC
-#define ST7735_RDID4   0xDD
-
-#define ST7735_PWCTR6  0xFC
-
-#define ST7735_GMCTRP1 0xE0
-#define ST7735_GMCTRN1 0xE1
-
-// Color definitions
-#define BLACK 0x0000
-#define BLUE 0x001F
-#define RED 0xF800
-#define GREEN 0x07E0
-#define CYAN 0x07FF
-#define MAGENTA 0xF81F
-#define YELLOW 0xFFE0
-#define WHITE 0xFFFF
-
-
-#define CS 0b00000100 //Low = select, High = deselect.
-#define RE 0b00000010 //High = normal, Low = reset.
-#define A0 0b00000001 //Low = Command, High = Data.
+#include "globals.h"
+#include "LCD.h"
 
 #pragma idata myFont
 const char  font[255][5] = {
@@ -346,24 +262,10 @@ const char  font[255][5] = {
 };
 #pragma idata
 
-void delay(int x);
-void sendcomand(char input);
-void senddata(char input);
-void SetPix(char x, char y, int color);
-void clean(int color);
-void init();
-void ASCII(char x, char y, int color, int background, char letter, char size);
-
-void prints(char x, char y, int color, int background, const rom far char * message, char size);
-void integerprint(char x, char y, int color, int background,int integer, char size);
-void box(char x, char y, char high, char breth, int color);
-
-
 void delay(int x){
     int j = 0;
     for(j=0;j<x;j++);
 }
-
 
 void sendcomand(char input){
     int j = 0;
@@ -433,7 +335,7 @@ void clean(int color){
         }
     }
 }
-void init(){
+void initLCD(){
     PORTC &= ~CS;
     delay(0);
     PORTC |= RE;
@@ -562,78 +464,3 @@ void box(char x, char y, char high, char breth, int color){
     }
 }
 
-
-
-void main() {
-    char  h = 0;
-    char g=1;
-    char f=0;
-    char fold=0;
-    int l;
-
-    SSP1STAT = 0b01000000;
-    
-    SSP1CON1 = 0b00000000;
-    SSP1CON1bits.SSPEN = 1;
-
-    SSP1CON2 = 0b00000000;
-
-    TRISCbits.RC0 = 0; // A0
-    TRISCbits.RC1 = 0; // RST
-    TRISCbits.RC2 = 0; // CS
-    ANSELCbits.ANSC2 = 0;
-    TRISCbits.RC3 = 0; // SCK1
-    ANSELCbits.ANSC3 = 0;
-    TRISCbits.RC4 = 0;
-    ANSELCbits.ANSC4 = 0;
-    TRISCbits.RC5 = 0;
-    ANSELCbits.ANSC5 = 0;
-
-    TRISAbits.RA7 = 1;
-
-    //TRISC = 0;
-    //TRISD = 0;
-    //TRISA = 0;
-
-    //PORTD |= 0b00001000;
-
-    PORTC |= 0b00000001;
-
-    init();
-
-    clean(BLACK);
-    prints(0,0,0xffff,BLACK,(const rom far char *)"         ITC     ", 1);//"CO2 PROFE OF CONCEPT");
-    box(20, 20, 10, 80, 0xff00);
-
-    box(22, 22, 6, f, BLUE);
-    prints(15,32,0xffff,BLACK,(const rom far char *)"LOW  MEDIUM  HIGH", 1);
-    prints(0,50,0xffff,BLACK,(const rom far char *)"THANKS TO ADAFRUIT ST7735 LIBERYS, THIS IS AN ARDUINO CODE TRANSLATED TO PIC.", 1);
-    prints(0,81,GREEN,BLACK,(const rom far char *)"1",1);
-    prints(10,81,BLUE,BLACK,(const rom far char *)"2",2);
-    prints(22,81,MAGENTA,BLACK,(const rom far char *)"3",3);
-    prints(40,81,YELLOW,BLACK,(const rom far char *)"4",4);
-    prints(40,110,0xffff,BLACK,(const rom far char *)"COLOR TESTING:", 1);
-    while(1==1){
-        integerprint(46, 10, 0x0005, BLACK,h,1);
-        if(f!=fold){
-            box(22, 22, 6, f,  h);
-            box(22+f, 22, 6, 76-f, RED);
-            fold=f;
-        }
-        h = h + g;
-        if(h>75){
-            g = -1;
-        }else if(h<1){
-            g = 1;
-        }
-        f = h;
-        l++;
-        if(l>0x7fff){
-            l=0;
-        }
-        box(80, 120, 40, 40, l);
-        integerprint(85, 130, BLACK, l,l,1);
-        box(40, 120, 40, 40, 0xffff-l);
-        integerprint(44, 130, BLACK, 0xffff-l,0x7fff-l,1);
-    }
-}
