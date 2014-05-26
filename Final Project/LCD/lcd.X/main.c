@@ -406,8 +406,8 @@ void SetPix(char x, char y, int color){
 }
 void clean(int color){
     char Hig = 0;
-    char x = 0;
-    char y = 0;
+    int x = 0;
+    int y = 0;
     char Low = color & 0x00ff;
     color >>= 8;
     Hig = color;
@@ -426,12 +426,12 @@ void clean(int color){
 
     sendcomand(ST7735_RAMWR);
 
-//    for(x=0;x<V;x++){
-//        for(y=0;y<H;y++){
-//            senddata(Low);
-//            senddata(Hig);
-//        }
-//    }
+    for(x=0;x<V;x++){
+        for(y=0;y<H;y++){
+            senddata(Low);
+            senddata(Hig);
+        }
+    }
 }
 void init(){
     PORTC &= ~CS;
