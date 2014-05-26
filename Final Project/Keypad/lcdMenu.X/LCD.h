@@ -15,6 +15,8 @@ extern "C" {
 #define V 128
 #define H 160
 
+#define RGB565(r,g,b) ((((r>>3)<<11) | (g>>3) | ((b>>2)<<5)))
+
 #define ST7735_NOP     0x00
 #define ST7735_SWRESET 0x01
 #define ST7735_RDDID   0x04
@@ -62,14 +64,15 @@ extern "C" {
 #define ST7735_GMCTRN1 0xE1
 
 // Color definitions
-#define BLACK 0x0000
-#define GREEN 0x001F
-#define RED 0xF800
-#define BLUE 0x07E0
-#define CYAN 0x07FF
-#define MAGENTA 0xF81F
-#define YELLOW 0xFFE0
-#define WHITE 0xFFFF
+#define BLACK RGB565(0,0,0)
+#define RED RGB565(255,0,0)
+#define GREEN RGB565(0,255,0)
+#define BLUE RGB565(0,0,255)
+#define YELLOW RGB565(255,255,0)
+#define CYAN RGB565(0,255,255)
+#define PINK RGB565(255,0,255)
+#define GRAY RGB565(192,192,192)
+#define WHITE RGB565(255,255,255)
 
 
 #define CS 0b00000100 //Low = select, High = deselect.
@@ -84,8 +87,14 @@ void clean(int color);
 void initLCD();
 void ASCII(char x, char y, int color, int background, char letter, char size);
 
+int customColor(int r, int g, int b);
+void drawBoxFill(char x, char y,char height, char width, int color);
+void drawBox(char x, char y, char height, char width, int border, int color);
+
 void prints(char x, char y, int color, int background, const rom far char * message, char size);
 void integerprint(char x, char y, int color, int background,int integer, char size);
+
+// depreciated
 void box(char x, char y, char high, char breth, int color);
 
 

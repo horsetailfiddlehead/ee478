@@ -30,7 +30,8 @@ void main() {
     int menuSpots[3] = {40, 80, 120};
     initializePreiphs();
     clean(BLUE);
-    box(0,0,20,127,CYAN);
+    drawBoxFill(0,0,20,V-1,CYAN);
+    drawBox(0,0,20,V-1,2,WHITE);
     prints(35,7, WHITE, CYAN, (const rom far char*)"Main Menu", 1);
     prints(35,menuSpots[0], WHITE, BLUE, (const rom far char*)"Single Player", 1);
     prints(35,menuSpots[1], WHITE, BLUE, (const rom far char*)"Multiplayer", 1);
