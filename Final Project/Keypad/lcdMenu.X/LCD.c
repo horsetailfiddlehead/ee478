@@ -306,7 +306,50 @@ void SetPix(char x, char y, int color){
     senddata(Low);
     senddata(Hig);
 }
+
+int customColor(int r, int g, int b) {
+   return RGB565(r,g,b);
+}
+
+void drawBox(char x, char y, char height, char width, int border, int color) {
+    border -= 1;
+    drawBoxFill(x, y, border, width, color);
+    drawBoxFill(x+width - border, y, height, border, color);
+    drawBoxFill(x, y+height - border, border, width, color);
+    drawBoxFill(x, y, height, border, color);
+}
+
+void drawBoxFill(char x, char y, char height, char width, int color) {
+    char Hig = 0;
+    char Low = color & 0x00ff;
+    int i = 0;
+    int j = 0;
+    Hig = color >> 8;
+
+    sendcomand(ST7735_CASET); // Column addr set
+    senddata(0x00);
+    senddata(x);     // XSTART
+    senddata(0x00);
+    senddata(x + width);     // XEND
+
+    sendcomand(ST7735_RASET); // Row addr set
+    senddata(0x00);
+    senddata(y);     // YSTART
+    senddata(0x00);
+    senddata(y + height);     // YEND
+
+    sendcomand(ST7735_RAMWR);
+
+    for(j=0;j <= width;j++){
+        for(i=0;i<=height;i++){
+            senddata(Low);
+            senddata(Hig);
+        }
+    }
+}
+
 void clean(int color){
+
     char Hig = 0;
     int x = 0;
     int y = 0;
@@ -378,22 +421,41 @@ void initLCD(){
       senddata(0xC8);                                   //     row addr/col addr); bottom to top refresh
     sendcomand(ST7735_COLMOD);                          // 15: set color mode); 1 arg); no delay:
       senddata(0x05);                                   //     16-bit color
-      sendcomand(ST7735_GMCTRP1);                       // Gamma correction
-    senddata(0x09);
-    senddata(0x16);
-    senddata(0x09);
+    sendcomand(ST7735_GMCTRP1); // Gamma correction
+    senddata(0x0f);
+    senddata(0x1a);
+    senddata(0x0f);
+    senddata(0x18);
+    senddata(0x2f);
+    senddata(0x28);
     senddata(0x20);
-    senddata(0x21);
-    senddata(0x1B);
-    senddata(0x13);
-    senddata(0x19);
-    senddata(0x17);
-    senddata(0x15);
-    senddata(0x1E);
-    senddata(0x2B);
-    senddata(0x04);
-    senddata(0x05);
+    senddata(0x22);
+    senddata(0x1f);
+    senddata(0x1b);
+    senddata(0x23);
+    senddata(0x37);
+    senddata(0x00);
+    senddata(0x07);
     senddata(0x02);
+    senddata(0x10);
+    sendcomand(ST7735_GMCTRN1);
+    senddata(0x0f);
+    senddata(0x1b);
+    senddata(0x0f);
+    senddata(0x17);
+    senddata(0x33);
+    senddata(0x2c);
+    senddata(0x29);
+    senddata(0x2e);
+    senddata(0x30);
+    senddata(0x30);
+    senddata(0x39);
+    senddata(0x3f);
+    senddata(0x00);
+    senddata(0x07);
+    senddata(0x03);
+    senddata(0x10);
+
     sendcomand(ST7735_NORON);                           //  3: Normal display on, no args, w/delay 10ms 0x13
     delay(100);
     sendcomand(ST7735_DISPON);                          //  4: Main screen turn on, no args w/delay 100ms 0x29
@@ -453,6 +515,8 @@ void integerprint(char x, char y, int color, int background,int integer, char si
     x+=6;
     ASCII(x,y,color,background,ones+48, size);
 }
+
+// Depreciated
 void box(char x, char y, char high, char breth, int color){
     char s = 0;
     char d = 0;
