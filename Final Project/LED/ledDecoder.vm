@@ -1,0 +1,551 @@
+//
+// Written by Synplify
+// Synplify 8.4.0.p, Build 075R.
+// Tue May 27 14:47:05 2014
+//
+// Source file index table:
+// Object locations will have the form <file>:<line>
+// file 0 "noname"
+// file 1 "\c:\isptools6_0_strt\synpbase\lib\cpld\lattice.v "
+// file 2 "\c:\isptools6_0_strt\ispcpld\generic\verilog\synplify\generic.v "
+// file 3 "\c:\users\castia\docume~1\github\ee478\finalp~1\led\led.h "
+// file 4 "\c:\users\castia\docume~1\github\ee478\finalp~1\led\leddecoder.v "
+
+`timescale 100 ps/100 ps
+module MACH_DFF (
+  Q,
+  D,
+  CLK,
+  R,
+  S,
+  NOTIFIER
+);
+output Q ;
+input D ;
+input CLK ;
+input R ;
+input S ;
+input NOTIFIER ;
+wire Q ;
+wire D ;
+wire CLK ;
+wire R ;
+wire S ;
+wire NOTIFIER ;
+wire un0 ;
+wire un1 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  un0 = ~ S;
+  assign #(1)  un1 = ~ R;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+  reg Q_r_e_g; // dffrs
+  always @(posedge CLK or posedge un1 or posedge un0 )
+    Q_r_e_g = #1 un1 ? 1'b0 : (un0 ? 1'b1 : D );
+  assign Q = Q_r_e_g;
+endmodule /* MACH_DFF */
+
+module DFF (
+  Q,
+  D,
+  CLK
+);
+output Q ;
+input D ;
+input CLK ;
+wire Q ;
+wire D ;
+wire CLK ;
+wire VCC ;
+wire GND ;
+  MACH_DFF INS4 (
+	.Q(Q),
+	.D(D),
+	.CLK(CLK),
+	.R(VCC),
+	.S(VCC),
+	.NOTIFIER(GND)
+);
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* DFF */
+
+module OBUF (
+  O,
+  I0
+);
+output O ;
+input I0 ;
+wire O ;
+wire I0 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  O = I0;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* OBUF */
+
+module IBUF (
+  O,
+  I0
+);
+output O ;
+input I0 ;
+wire O ;
+wire I0 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  O = I0;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* IBUF */
+
+module INV (
+  O,
+  I0
+);
+output O ;
+input I0 ;
+wire O ;
+wire I0 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  O = ~ I0;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* INV */
+
+module AND2 (
+  O,
+  I0,
+  I1
+);
+output O ;
+input I0 ;
+input I1 ;
+wire O ;
+wire I0 ;
+wire I1 ;
+wire VCC ;
+wire GND ;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+  assign #(1)  O = I0  & I1 ;
+endmodule /* AND2 */
+
+module OR2 (
+  O,
+  I0,
+  I1
+);
+output O ;
+input I0 ;
+input I1 ;
+wire O ;
+wire I0 ;
+wire I1 ;
+wire VCC ;
+wire GND ;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+  assign #(1)  O = I0  | I1 ;
+endmodule /* OR2 */
+
+module ledDecoder (
+  outputBits,
+  cardSelect,
+  red,
+  green,
+  clk,
+  rst
+);
+output [7:0] outputBits ;
+input [1:0] cardSelect ;
+input red ;
+input green ;
+input clk ;
+input rst ;
+wire red ;
+wire green ;
+wire clk ;
+wire rst ;
+wire [7:0] outputBits_13;
+wire [1:0] cardSelect_i;
+wire [7:0] outputBits_c;
+wire [1:0] cardSelect_c;
+wire outputBits73 ;
+wire outputBits70 ;
+wire outputBits71 ;
+wire outputBits72 ;
+wire N_1 ;
+wire N_2 ;
+wire N_3 ;
+wire N_4 ;
+wire N_5 ;
+wire N_6 ;
+wire N_7 ;
+wire N_8 ;
+wire rst_i_0 ;
+wire red_c ;
+wire green_c ;
+wire clk_c ;
+wire rst_c ;
+wire \outputBits_13_0_.un3  ;
+wire \outputBits_13_0_.un1  ;
+wire \outputBits_13_0_.un0  ;
+wire \outputBits_13_7_.un3  ;
+wire \outputBits_13_7_.un1  ;
+wire \outputBits_13_7_.un0  ;
+wire \outputBits_13_6_.un3  ;
+wire \outputBits_13_6_.un1  ;
+wire \outputBits_13_6_.un0  ;
+wire \outputBits_13_5_.un3  ;
+wire \outputBits_13_5_.un1  ;
+wire \outputBits_13_5_.un0  ;
+wire \outputBits_13_4_.un3  ;
+wire \outputBits_13_4_.un1  ;
+wire \outputBits_13_4_.un0  ;
+wire \outputBits_13_3_.un3  ;
+wire \outputBits_13_3_.un1  ;
+wire \outputBits_13_3_.un0  ;
+wire \outputBits_13_2_.un3  ;
+wire \outputBits_13_2_.un1  ;
+wire \outputBits_13_2_.un0  ;
+wire \outputBits_13_1_.un3  ;
+wire \outputBits_13_1_.un1  ;
+wire \outputBits_13_1_.un0  ;
+wire GND ;
+wire VCC ;
+// @4:24
+  DFF \outputBitsDFF[0]  (
+	.Q(outputBits_c[0]),
+	.D(N_1),
+	.CLK(clk_c)
+);
+// @4:24
+  DFF \outputBitsDFF[1]  (
+	.Q(outputBits_c[1]),
+	.D(N_2),
+	.CLK(clk_c)
+);
+// @4:24
+  DFF \outputBitsDFF[2]  (
+	.Q(outputBits_c[2]),
+	.D(N_3),
+	.CLK(clk_c)
+);
+// @4:24
+  DFF \outputBitsDFF[3]  (
+	.Q(outputBits_c[3]),
+	.D(N_4),
+	.CLK(clk_c)
+);
+// @4:24
+  DFF \outputBitsDFF[4]  (
+	.Q(outputBits_c[4]),
+	.D(N_5),
+	.CLK(clk_c)
+);
+// @4:24
+  DFF \outputBitsDFF[5]  (
+	.Q(outputBits_c[5]),
+	.D(N_6),
+	.CLK(clk_c)
+);
+// @4:24
+  DFF \outputBitsDFF[6]  (
+	.Q(outputBits_c[6]),
+	.D(N_7),
+	.CLK(clk_c)
+);
+// @4:24
+  DFF \outputBitsDFF[7]  (
+	.Q(outputBits_c[7]),
+	.D(N_8),
+	.CLK(clk_c)
+);
+  OBUF \outputBits_cZ[0]  (
+	.O(outputBits[0]),
+	.I0(outputBits_c[0])
+);
+  OBUF \outputBits_cZ[1]  (
+	.O(outputBits[1]),
+	.I0(outputBits_c[1])
+);
+  OBUF \outputBits_cZ[2]  (
+	.O(outputBits[2]),
+	.I0(outputBits_c[2])
+);
+  OBUF \outputBits_cZ[3]  (
+	.O(outputBits[3]),
+	.I0(outputBits_c[3])
+);
+  OBUF \outputBits_cZ[4]  (
+	.O(outputBits[4]),
+	.I0(outputBits_c[4])
+);
+  OBUF \outputBits_cZ[5]  (
+	.O(outputBits[5]),
+	.I0(outputBits_c[5])
+);
+  OBUF \outputBits_cZ[6]  (
+	.O(outputBits[6]),
+	.I0(outputBits_c[6])
+);
+  OBUF \outputBits_cZ[7]  (
+	.O(outputBits[7]),
+	.I0(outputBits_c[7])
+);
+  IBUF \cardSelect_cZ[0]  (
+	.O(cardSelect_c[0]),
+	.I0(cardSelect[0])
+);
+  IBUF \cardSelect_cZ[1]  (
+	.O(cardSelect_c[1]),
+	.I0(cardSelect[1])
+);
+  IBUF red_cZ (
+	.O(red_c),
+	.I0(red)
+);
+  IBUF green_cZ (
+	.O(green_c),
+	.I0(green)
+);
+  IBUF clk_cZ (
+	.O(clk_c),
+	.I0(clk)
+);
+  IBUF rst_cZ (
+	.O(rst_c),
+	.I0(rst)
+);
+  INV \outputBits_13_0_.r  (
+	.O(\outputBits_13_0_.un3 ),
+	.I0(outputBits70)
+);
+  AND2 \outputBits_13_0_.m  (
+	.O(\outputBits_13_0_.un1 ),
+	.I0(red_c),
+	.I1(outputBits70)
+);
+  AND2 \outputBits_13_0_.n  (
+	.O(\outputBits_13_0_.un0 ),
+	.I0(outputBits_c[0]),
+	.I1(\outputBits_13_0_.un3 )
+);
+  OR2 \outputBits_13_0_.p  (
+	.O(outputBits_13[0]),
+	.I0(\outputBits_13_0_.un1 ),
+	.I1(\outputBits_13_0_.un0 )
+);
+  INV \outputBits_13_7_.r  (
+	.O(\outputBits_13_7_.un3 ),
+	.I0(outputBits73)
+);
+  AND2 \outputBits_13_7_.m  (
+	.O(\outputBits_13_7_.un1 ),
+	.I0(green_c),
+	.I1(outputBits73)
+);
+  AND2 \outputBits_13_7_.n  (
+	.O(\outputBits_13_7_.un0 ),
+	.I0(outputBits_c[7]),
+	.I1(\outputBits_13_7_.un3 )
+);
+  OR2 \outputBits_13_7_.p  (
+	.O(outputBits_13[7]),
+	.I0(\outputBits_13_7_.un1 ),
+	.I1(\outputBits_13_7_.un0 )
+);
+  INV \outputBits_13_6_.r  (
+	.O(\outputBits_13_6_.un3 ),
+	.I0(outputBits73)
+);
+  AND2 \outputBits_13_6_.m  (
+	.O(\outputBits_13_6_.un1 ),
+	.I0(red_c),
+	.I1(outputBits73)
+);
+  AND2 \outputBits_13_6_.n  (
+	.O(\outputBits_13_6_.un0 ),
+	.I0(outputBits_c[6]),
+	.I1(\outputBits_13_6_.un3 )
+);
+  OR2 \outputBits_13_6_.p  (
+	.O(outputBits_13[6]),
+	.I0(\outputBits_13_6_.un1 ),
+	.I1(\outputBits_13_6_.un0 )
+);
+  INV \outputBits_13_5_.r  (
+	.O(\outputBits_13_5_.un3 ),
+	.I0(outputBits72)
+);
+  AND2 \outputBits_13_5_.m  (
+	.O(\outputBits_13_5_.un1 ),
+	.I0(green_c),
+	.I1(outputBits72)
+);
+  AND2 \outputBits_13_5_.n  (
+	.O(\outputBits_13_5_.un0 ),
+	.I0(outputBits_c[5]),
+	.I1(\outputBits_13_5_.un3 )
+);
+  OR2 \outputBits_13_5_.p  (
+	.O(outputBits_13[5]),
+	.I0(\outputBits_13_5_.un1 ),
+	.I1(\outputBits_13_5_.un0 )
+);
+  INV \outputBits_13_4_.r  (
+	.O(\outputBits_13_4_.un3 ),
+	.I0(outputBits72)
+);
+  AND2 \outputBits_13_4_.m  (
+	.O(\outputBits_13_4_.un1 ),
+	.I0(red_c),
+	.I1(outputBits72)
+);
+  AND2 \outputBits_13_4_.n  (
+	.O(\outputBits_13_4_.un0 ),
+	.I0(outputBits_c[4]),
+	.I1(\outputBits_13_4_.un3 )
+);
+  OR2 \outputBits_13_4_.p  (
+	.O(outputBits_13[4]),
+	.I0(\outputBits_13_4_.un1 ),
+	.I1(\outputBits_13_4_.un0 )
+);
+  INV \outputBits_13_3_.r  (
+	.O(\outputBits_13_3_.un3 ),
+	.I0(outputBits71)
+);
+  AND2 \outputBits_13_3_.m  (
+	.O(\outputBits_13_3_.un1 ),
+	.I0(green_c),
+	.I1(outputBits71)
+);
+  AND2 \outputBits_13_3_.n  (
+	.O(\outputBits_13_3_.un0 ),
+	.I0(outputBits_c[3]),
+	.I1(\outputBits_13_3_.un3 )
+);
+  OR2 \outputBits_13_3_.p  (
+	.O(outputBits_13[3]),
+	.I0(\outputBits_13_3_.un1 ),
+	.I1(\outputBits_13_3_.un0 )
+);
+  INV \outputBits_13_2_.r  (
+	.O(\outputBits_13_2_.un3 ),
+	.I0(outputBits71)
+);
+  AND2 \outputBits_13_2_.m  (
+	.O(\outputBits_13_2_.un1 ),
+	.I0(red_c),
+	.I1(outputBits71)
+);
+  AND2 \outputBits_13_2_.n  (
+	.O(\outputBits_13_2_.un0 ),
+	.I0(outputBits_c[2]),
+	.I1(\outputBits_13_2_.un3 )
+);
+  OR2 \outputBits_13_2_.p  (
+	.O(outputBits_13[2]),
+	.I0(\outputBits_13_2_.un1 ),
+	.I1(\outputBits_13_2_.un0 )
+);
+  INV \outputBits_13_1_.r  (
+	.O(\outputBits_13_1_.un3 ),
+	.I0(outputBits70)
+);
+  AND2 \outputBits_13_1_.m  (
+	.O(\outputBits_13_1_.un1 ),
+	.I0(green_c),
+	.I1(outputBits70)
+);
+  AND2 \outputBits_13_1_.n  (
+	.O(\outputBits_13_1_.un0 ),
+	.I0(outputBits_c[1]),
+	.I1(\outputBits_13_1_.un3 )
+);
+  OR2 \outputBits_13_1_.p  (
+	.O(outputBits_13[1]),
+	.I0(\outputBits_13_1_.un1 ),
+	.I1(\outputBits_13_1_.un0 )
+);
+  AND2 outputBits73_cZ (
+	.O(outputBits73),
+	.I0(cardSelect_c[0]),
+	.I1(cardSelect_c[1])
+);
+  AND2 outputBits70_cZ (
+	.O(outputBits70),
+	.I0(cardSelect_i[0]),
+	.I1(cardSelect_i[1])
+);
+  INV I_16 (
+	.O(cardSelect_i[1]),
+	.I0(cardSelect_c[1])
+);
+  AND2 outputBits71_cZ (
+	.O(outputBits71),
+	.I0(cardSelect_c[0]),
+	.I1(cardSelect_i[1])
+);
+  INV I_15 (
+	.O(cardSelect_i[0]),
+	.I0(cardSelect_c[0])
+);
+  AND2 outputBits72_cZ (
+	.O(outputBits72),
+	.I0(cardSelect_c[1]),
+	.I1(cardSelect_i[0])
+);
+  AND2 \outputBits_0[0]  (
+	.O(N_1),
+	.I0(outputBits_13[0]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[1]  (
+	.O(N_2),
+	.I0(outputBits_13[1]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[2]  (
+	.O(N_3),
+	.I0(outputBits_13[2]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[3]  (
+	.O(N_4),
+	.I0(outputBits_13[3]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[4]  (
+	.O(N_5),
+	.I0(outputBits_13[4]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[5]  (
+	.O(N_6),
+	.I0(outputBits_13[5]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[6]  (
+	.O(N_7),
+	.I0(outputBits_13[6]),
+	.I1(rst_i_0)
+);
+  INV I_14 (
+	.O(rst_i_0),
+	.I0(rst_c)
+);
+  AND2 \outputBits_0[7]  (
+	.O(N_8),
+	.I0(outputBits_13[7]),
+	.I1(rst_i_0)
+);
+  assign GND = 1'b0;
+  assign VCC = 1'b1;
+endmodule /* ledDecoder */
+

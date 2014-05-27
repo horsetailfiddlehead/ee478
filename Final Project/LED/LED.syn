@@ -1,0 +1,10 @@
+JDF B
+// Created by Version 6.0 
+PROJECT LED
+DESIGN led Normal
+DEVKIT GAL22V10D-15LP
+ENTRY Schematic/Verilog HDL
+MODULE ledDecoder.v
+MODSTYLE ledDecoder Normal
+SYNTHESIS_TOOL Synplify
+TOPMODULE ledDecoder

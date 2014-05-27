@@ -1,0 +1,13 @@
+#-- Synplicity, Inc.
+#-- Version Synplify for Lattice 8.5D
+#-- Project file c:\users\castia\DOCUME~1\github\ee478\FINALP~1\led\TENBIT~1.prd
+#-- Written on Tue May 27 14:26:06 2014
+
+#
+### Watch Implementation type ###
+#
+watch_impl -all
+#
+### Watch Implementation properties ###
+#
+watch_prop -clear

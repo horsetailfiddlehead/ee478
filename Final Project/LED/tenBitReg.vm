@@ -1,0 +1,371 @@
+//
+// Written by Synplify
+// Synplify 8.4.0.p, Build 075R.
+// Tue May 27 14:26:06 2014
+//
+// Source file index table:
+// Object locations will have the form <file>:<line>
+// file 0 "noname"
+// file 1 "\c:\isptools6_0_strt\synpbase\lib\cpld\lattice.v "
+// file 2 "\c:\isptools6_0_strt\ispcpld\generic\verilog\synplify\generic.v "
+// file 3 "\c:\users\castia\docume~1\github\ee478\finalp~1\led\led.h "
+// file 4 "\c:\users\castia\docume~1\github\ee478\lab1\tenbitreg.v "
+
+`timescale 100 ps/100 ps
+module MACH_DFF (
+  Q,
+  D,
+  CLK,
+  R,
+  S,
+  NOTIFIER
+);
+output Q ;
+input D ;
+input CLK ;
+input R ;
+input S ;
+input NOTIFIER ;
+wire Q ;
+wire D ;
+wire CLK ;
+wire R ;
+wire S ;
+wire NOTIFIER ;
+wire un0 ;
+wire un1 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  un0 = ~ S;
+  assign #(1)  un1 = ~ R;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+  reg Q_r_e_g; // dffrs
+  always @(posedge CLK or posedge un1 or posedge un0 )
+    Q_r_e_g = #1 un1 ? 1'b0 : (un0 ? 1'b1 : D );
+  assign Q = Q_r_e_g;
+endmodule /* MACH_DFF */
+
+module DFF (
+  Q,
+  D,
+  CLK
+);
+output Q ;
+input D ;
+input CLK ;
+wire Q ;
+wire D ;
+wire CLK ;
+wire VCC ;
+wire GND ;
+  MACH_DFF INS4 (
+	.Q(Q),
+	.D(D),
+	.CLK(CLK),
+	.R(VCC),
+	.S(VCC),
+	.NOTIFIER(GND)
+);
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* DFF */
+
+module OBUF (
+  O,
+  I0
+);
+output O ;
+input I0 ;
+wire O ;
+wire I0 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  O = I0;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* OBUF */
+
+module IBUF (
+  O,
+  I0
+);
+output O ;
+input I0 ;
+wire O ;
+wire I0 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  O = I0;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* IBUF */
+
+module AND2 (
+  O,
+  I0,
+  I1
+);
+output O ;
+input I0 ;
+input I1 ;
+wire O ;
+wire I0 ;
+wire I1 ;
+wire VCC ;
+wire GND ;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+  assign #(1)  O = I0  & I1 ;
+endmodule /* AND2 */
+
+module INV (
+  O,
+  I0
+);
+output O ;
+input I0 ;
+wire O ;
+wire I0 ;
+wire VCC ;
+wire GND ;
+  assign #(1)  O = ~ I0;
+  assign VCC = 1'b1;
+  assign GND = 1'b0;
+endmodule /* INV */
+
+module tenBitReg (
+  outputBits,
+  inputBits,
+  clk,
+  rst
+);
+output [9:0] outputBits ;
+input [9:0] inputBits ;
+input clk ;
+input rst ;
+wire clk ;
+wire rst ;
+wire [9:0] outputBits_c;
+wire [9:0] inputBits_c;
+wire N_1 ;
+wire N_2 ;
+wire N_3 ;
+wire N_4 ;
+wire N_5 ;
+wire N_6 ;
+wire N_7 ;
+wire N_8 ;
+wire N_9 ;
+wire N_10 ;
+wire rst_i_0 ;
+wire clk_c ;
+wire rst_c ;
+wire GND ;
+wire VCC ;
+// @4:15
+  DFF \outputBitsDFF[2]  (
+	.Q(outputBits_c[2]),
+	.D(N_3),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[3]  (
+	.Q(outputBits_c[3]),
+	.D(N_4),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[4]  (
+	.Q(outputBits_c[4]),
+	.D(N_5),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[5]  (
+	.Q(outputBits_c[5]),
+	.D(N_6),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[6]  (
+	.Q(outputBits_c[6]),
+	.D(N_7),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[7]  (
+	.Q(outputBits_c[7]),
+	.D(N_8),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[8]  (
+	.Q(outputBits_c[8]),
+	.D(N_9),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[9]  (
+	.Q(outputBits_c[9]),
+	.D(N_10),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[0]  (
+	.Q(outputBits_c[0]),
+	.D(N_1),
+	.CLK(clk_c)
+);
+// @4:15
+  DFF \outputBitsDFF[1]  (
+	.Q(outputBits_c[1]),
+	.D(N_2),
+	.CLK(clk_c)
+);
+  OBUF \outputBits_cZ[0]  (
+	.O(outputBits[0]),
+	.I0(outputBits_c[0])
+);
+  OBUF \outputBits_cZ[1]  (
+	.O(outputBits[1]),
+	.I0(outputBits_c[1])
+);
+  OBUF \outputBits_cZ[2]  (
+	.O(outputBits[2]),
+	.I0(outputBits_c[2])
+);
+  OBUF \outputBits_cZ[3]  (
+	.O(outputBits[3]),
+	.I0(outputBits_c[3])
+);
+  OBUF \outputBits_cZ[4]  (
+	.O(outputBits[4]),
+	.I0(outputBits_c[4])
+);
+  OBUF \outputBits_cZ[5]  (
+	.O(outputBits[5]),
+	.I0(outputBits_c[5])
+);
+  OBUF \outputBits_cZ[6]  (
+	.O(outputBits[6]),
+	.I0(outputBits_c[6])
+);
+  OBUF \outputBits_cZ[7]  (
+	.O(outputBits[7]),
+	.I0(outputBits_c[7])
+);
+  OBUF \outputBits_cZ[8]  (
+	.O(outputBits[8]),
+	.I0(outputBits_c[8])
+);
+  OBUF \outputBits_cZ[9]  (
+	.O(outputBits[9]),
+	.I0(outputBits_c[9])
+);
+  IBUF \inputBits_cZ[0]  (
+	.O(inputBits_c[0]),
+	.I0(inputBits[0])
+);
+  IBUF \inputBits_cZ[1]  (
+	.O(inputBits_c[1]),
+	.I0(inputBits[1])
+);
+  IBUF \inputBits_cZ[2]  (
+	.O(inputBits_c[2]),
+	.I0(inputBits[2])
+);
+  IBUF \inputBits_cZ[3]  (
+	.O(inputBits_c[3]),
+	.I0(inputBits[3])
+);
+  IBUF \inputBits_cZ[4]  (
+	.O(inputBits_c[4]),
+	.I0(inputBits[4])
+);
+  IBUF \inputBits_cZ[5]  (
+	.O(inputBits_c[5]),
+	.I0(inputBits[5])
+);
+  IBUF \inputBits_cZ[6]  (
+	.O(inputBits_c[6]),
+	.I0(inputBits[6])
+);
+  IBUF \inputBits_cZ[7]  (
+	.O(inputBits_c[7]),
+	.I0(inputBits[7])
+);
+  IBUF \inputBits_cZ[8]  (
+	.O(inputBits_c[8]),
+	.I0(inputBits[8])
+);
+  IBUF \inputBits_cZ[9]  (
+	.O(inputBits_c[9]),
+	.I0(inputBits[9])
+);
+  IBUF clk_cZ (
+	.O(clk_c),
+	.I0(clk)
+);
+  IBUF rst_cZ (
+	.O(rst_c),
+	.I0(rst)
+);
+  AND2 \outputBits_0[0]  (
+	.O(N_1),
+	.I0(inputBits_c[0]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[1]  (
+	.O(N_2),
+	.I0(inputBits_c[1]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[2]  (
+	.O(N_3),
+	.I0(inputBits_c[2]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[3]  (
+	.O(N_4),
+	.I0(inputBits_c[3]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[4]  (
+	.O(N_5),
+	.I0(inputBits_c[4]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[5]  (
+	.O(N_6),
+	.I0(inputBits_c[5]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[6]  (
+	.O(N_7),
+	.I0(inputBits_c[6]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[7]  (
+	.O(N_8),
+	.I0(inputBits_c[7]),
+	.I1(rst_i_0)
+);
+  AND2 \outputBits_0[8]  (
+	.O(N_9),
+	.I0(inputBits_c[8]),
+	.I1(rst_i_0)
+);
+  INV I_6 (
+	.O(rst_i_0),
+	.I0(rst_c)
+);
+  AND2 \outputBits_0[9]  (
+	.O(N_10),
+	.I0(inputBits_c[9]),
+	.I1(rst_i_0)
+);
+  assign GND = 1'b0;
+  assign VCC = 1'b1;
+endmodule /* tenBitReg */
+
