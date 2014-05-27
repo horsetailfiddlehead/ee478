@@ -1,11 +1,9 @@
-module tenBitReg(outputBits, inputBits, clk, rst);
+module ledDecoder(outputBits, cardSelect, red, green);
 	output[7:0] outputBits /* synthesis LOC="P23P22P21P20P19P18P17" */;
 	input [1:0] cardSelect /* synthesis LOC="P2P3" */;
 	input red /* synthesis LOC="P4" */;
 	input green /* synthesis LOC="P5" */;
-	input clk /* synthesis LOC="P1" */;
-	input rst /* synthesis LOC="P13" */;
-	
+
 	reg[7:0] outputBits;
 	
 	initial begin
@@ -23,7 +21,7 @@ module tenBitReg(outputBits, inputBits, clk, rst);
 	
 	always @ (red or green or cardSelect)
 	// Change card to be selected
-	case (cardSelect) {
+	case (cardSelect) 
 		0: begin
 				outputBits[0] = red;
 				outputBits[1] = green;
