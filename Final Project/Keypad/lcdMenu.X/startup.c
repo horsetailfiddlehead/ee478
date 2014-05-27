@@ -5,6 +5,7 @@ void initClock() {
 }
 
 void initSPI() {
+    OpenSPI1(SPI_FOSC_4, );
 
     SSP1STAT = 0b01000000;
 

@@ -12,9 +12,10 @@
 extern "C" {
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <p18f46K22.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <p18f46K22.h>
+    #include <spi.h>
 
 #ifdef	__cplusplus
 }
