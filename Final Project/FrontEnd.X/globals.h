@@ -12,8 +12,12 @@
 extern "C" {
 #endif
 
+    // microchip libraries
+#include <p18f46k22.h>
+#include <usart.h>
 
-
+    // our headers
+#include "rs232.h"
 
 #ifdef	__cplusplus
 }

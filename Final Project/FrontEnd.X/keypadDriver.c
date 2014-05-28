@@ -22,7 +22,7 @@
  *
  */
 
-#define __KEYPAD_DEBUG 1
+#define __KEYPAD_DEBUG 0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,18 +33,17 @@
 
 #ifdef __KEYPAD_DEBUG
 #include "rs232.h"	// use serial for debugging
-#include <p18f25k22.h>
+#include <p18f46k22.h>
+
+///***************Clocking set up *********************/
+//#pragma config WDTEN = OFF    // turn off watch dog timer
+//#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
+//#pragma config PRICLKEN = OFF // disable primary clock
+///****************************************************/
+//#pragma config PBADEN = OFF 	// turn off the ADCs for whatever pins I'm using
+
+/****************************************************/
 #endif
-
-/***************Clocking set up *********************/
-#pragma config WDTEN = OFF    // turn off watch dog timer
-#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
-#pragma config PRICLKEN = OFF // disable primary clock
-/****************************************************/
-#pragma config PBADEN = OFF 	// turn off the ADCs for whatever pins I'm using
-
-/****************************************************/
-
 
 int resetPins(int key);
 //void keypadSetup();
