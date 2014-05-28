@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <p18F46K22.h>
 #include <stdlib.h>
 #include <usart.h>
 #include <delays.h>
 
 /***************Clocking set up *********************/
 #pragma config WDTEN = OFF    // turn off watch dog timer
-#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
+#pragma config FOSC = ECHPIO6    // Ext. Clk, Hi Pwr
 #pragma config PRICLKEN = OFF // disable primary clock
 /****************************************************/
 #pragma config PBADEN = OFF 	// turn off the ADCs for whatever pins I'm using
@@ -28,6 +29,7 @@ void LEDinit (void) {
     ANSELCbits.ANSC2 = 0;
     ANSELCbits.ANSC3 = 0;
 
+    TRISAbits.RA7 = 1;
 }
 
 void LEDColor (void) {
@@ -39,8 +41,8 @@ void LEDColor (void) {
             break;
         case 1:
             // Green: Card successfully read.
-            PORTCbits.RC1 = 1;
-            PORTCbits.RC0 = 0;
+            PORTCbits.RC1 = 1; //green
+            PORTCbits.RC0 = 0; //red
 
             break;
         case 2:
@@ -96,28 +98,29 @@ void LEDSelect (void) {
 
 // Testing purposes
 void main(void) {
+    LEDinit();
     while(1) {
         // Check Card 1
+        status = 0;
+        card = 0;
+        LEDSelect();
+        Delay10KTCYx(50000*1);
+
+        // Check Card 2
         status = 1;
         card = 1;
         LEDSelect();
         Delay10KTCYx(50000*1);
 
-        // Check Card 2
+        // Check Card 3
         status = 2;
         card = 2;
         LEDSelect();
         Delay10KTCYx(50000*1);
 
-        // Check Card 3
+        // Check Card 4
         status = 3;
         card = 3;
-        LEDSelect();
-        Delay10KTCYx(50000*1);
-
-        // Check Card 4
-        status = 4;
-        card = 4;
         LEDSelect();
         Delay10KTCYx(50000*1);
     }

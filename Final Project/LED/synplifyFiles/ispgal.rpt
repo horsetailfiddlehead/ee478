@@ -1,0 +1,208 @@
+
+
+                                                                      Page 1
+ispLEVER 6.0.00.34.28.06  -  Device Utilization Chart         Tue May 27 16:16:02 2014
+
+
+
+--------------------------------------------------------------------------------
+
+Module                   : 'leddecoder'
+
+--------------------------------------------------------------------------------
+
+Input files:
+
+    ABEL PLA file        : ispgal.tt3
+    Device library       : P22V10G.dev
+
+Output files:
+
+    Report file          : ispgal.rpt
+    Programmer load file : ispgal.jed
+
+--------------------------------------------------------------------------------
+
+
+                                                                      Page 2
+ispLEVER 6.0.00.34.28.06  -  Device Utilization Chart         Tue May 27 16:16:02 2014
+
+P22V10G Programmed Logic:
+--------------------------------------------------------------------------------
+
+
+
+outputBits_0_.D   = (  !cardSelect_1_ & red & !rst & !cardSelect_0_ 
+                     #   cardSelect_1_ & !rst & outputBits_0_.Q 
+                     #   !rst & cardSelect_0_ & outputBits_0_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_0_.C   = (  clk );
+
+outputBits_1_.D   = (  !cardSelect_1_ & green & !rst & !cardSelect_0_ 
+                     #   cardSelect_1_ & !rst & outputBits_1_.Q 
+                     #   !rst & cardSelect_0_ & outputBits_1_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_1_.C   = (  clk );
+
+outputBits_2_.D   = (  !cardSelect_1_ & red & !rst & cardSelect_0_ 
+                     #   cardSelect_1_ & !rst & outputBits_2_.Q 
+                     #   !rst & !cardSelect_0_ & outputBits_2_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_2_.C   = (  clk );
+
+outputBits_3_.D   = (  !cardSelect_1_ & green & !rst & cardSelect_0_ 
+                     #   cardSelect_1_ & !rst & outputBits_3_.Q 
+                     #   !rst & !cardSelect_0_ & outputBits_3_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_3_.C   = (  clk );
+
+outputBits_4_.D   = (  cardSelect_1_ & red & !rst & !cardSelect_0_ 
+                     #   !cardSelect_1_ & !rst & outputBits_4_.Q 
+                     #   !rst & cardSelect_0_ & outputBits_4_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_4_.C   = (  clk );
+
+outputBits_5_.D   = (  cardSelect_1_ & green & !rst & !cardSelect_0_ 
+                     #   !cardSelect_1_ & !rst & outputBits_5_.Q 
+                     #   !rst & cardSelect_0_ & outputBits_5_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_5_.C   = (  clk );
+
+outputBits_6_.D   = (  cardSelect_1_ & red & !rst & cardSelect_0_ 
+                     #   !cardSelect_1_ & !rst & outputBits_6_.Q 
+                     #   !rst & !cardSelect_0_ & outputBits_6_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_6_.C   = (  clk );
+
+outputBits_7_.D   = (  cardSelect_1_ & green & !rst & cardSelect_0_ 
+                     #   !cardSelect_1_ & !rst & outputBits_7_.Q 
+                     #   !rst & !cardSelect_0_ & outputBits_7_.Q );
+                   " ISTYPE 'BUFFER'
+outputBits_7_.C   = (  clk );
+
+
+
+                                                                      Page 3
+ispLEVER 6.0.00.34.28.06  -  Device Utilization Chart         Tue May 27 16:16:02 2014
+
+P22V10G Chip Diagram:
+--------------------------------------------------------------------------------
+
+
+
+
+                                   P22V10G
+
+                         +---------\       /---------+
+                         |          \     /          |
+                         |           -----           |
+                     clk |  1                    24  | Vcc                     
+                         |                           |
+           cardSelect_0_ |  2                    23  |                         
+                         |                           |
+           cardSelect_1_ |  3                    22  |                         
+                         |                           |
+                     red |  4                    21  | outputBits_7_           
+                         |                           |
+                   green |  5                    20  | outputBits_6_           
+                         |                           |
+                         |  6                    19  | outputBits_5_           
+                         |                           |
+                         |  7                    18  | outputBits_4_           
+                         |                           |
+                         |  8                    17  | outputBits_3_           
+                         |                           |
+                         |  9                    16  | outputBits_2_           
+                         |                           |
+                         | 10                    15  | outputBits_1_           
+                         |                           |
+                         | 11                    14  | outputBits_0_           
+                         |                           |
+                     GND | 12                    13  | rst                     
+                         |                           |
+                         |                           |
+                         `---------------------------'
+
+                        SIGNATURE: N/A
+
+
+                                                                      Page 4
+ispLEVER 6.0.00.34.28.06  -  Device Utilization Chart         Tue May 27 16:16:02 2014
+
+P22V10G Resource Allocations:
+--------------------------------------------------------------------------------
+
+
+
+        Device        | Resource  |   Design    |
+       Resources      | Available | Requirement | Unused
+======================|===========|=============|==============
+                      |           |             |
+Input Pins:           |           |             |
+                      |           |             |
+          Input:      |     12    |      6      |    6 ( 50 %)
+                      |           |             |
+Output Pins:          |           |             |
+                      |           |             |
+          In/Out:     |     10    |      8      |    2 ( 20 %)
+          Output:     |      -    |      -      |    -
+                      |           |             |
+Buried Nodes:         |           |             |
+                      |           |             |
+          Input Reg:  |      -    |      -      |    -
+          Pin Reg:    |     10    |      8      |    2 ( 20 %)
+          Buried Reg: |      -    |      -      |    -
+
+
+                                                                      Page 5
+ispLEVER 6.0.00.34.28.06  -  Device Utilization Chart         Tue May 27 16:16:02 2014
+
+P22V10G Product Terms Distribution:
+--------------------------------------------------------------------------------
+
+
+
+            Signal                       |    Pin   | Terms | Terms | Terms
+             Name                        | Assigned | Used  |  Max  | Unused
+=========================================|==========|=======|=======|=======
+outputBits_0_.D                          |   14     |   3   |   8   |   5
+outputBits_1_.D                          |   15     |   3   |  10   |   7
+outputBits_2_.D                          |   16     |   3   |  12   |   9
+outputBits_3_.D                          |   17     |   3   |  14   |  11
+outputBits_4_.D                          |   18     |   3   |  16   |  13
+outputBits_5_.D                          |   19     |   3   |  16   |  13
+outputBits_6_.D                          |   20     |   3   |  14   |  11
+outputBits_7_.D                          |   21     |   3   |  12   |   9
+
+
+     ==== List of Inputs/Feedbacks ====
+
+Signal Name                              | Pin      | Pin Type
+=========================================|==========|=========
+cardSelect_1_                            |    3     | INPUT
+red                                      |    4     | INPUT
+green                                    |    5     | INPUT
+clk                                      |    1     | CLK/IN
+rst                                      |   13     | INPUT
+cardSelect_0_                            |    2     | INPUT
+
+
+                                                                      Page 6
+ispLEVER 6.0.00.34.28.06  -  Device Utilization Chart         Tue May 27 16:16:02 2014
+
+P22V10G Unused Resources:
+--------------------------------------------------------------------------------
+
+
+
+ Pin   |  Pin   |   Product   | Flip-flop
+Number |  Type  |   Terms     |   Type
+=======|========|=============|==========
+    6  |  INPUT |      -      |    -   
+    7  |  INPUT |      -      |    -   
+    8  |  INPUT |      -      |    -   
+    9  |  INPUT |      -      |    -   
+   10  |  INPUT |      -      |    -   
+   11  |  INPUT |      -      |    -   
+   22  |  BIDIR | NORMAL 10   |    D
+   23  |  BIDIR | NORMAL  8   |    D
