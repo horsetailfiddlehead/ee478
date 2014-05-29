@@ -25,16 +25,16 @@
 #define PING "0108000304FF0000"
 #define INVENTORY "010B000304140601000000"
 
-/***************USART set up *********************/
-#pragma config FCMEN = OFF
-#pragma config IESO = OFF
-/****************************************************/
-
-/***************Clocking set up *********************/
-#pragma config WDTEN = OFF    // turn off watch dog timer
-#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
-#pragma config PRICLKEN = OFF // disable primary clock
-
+///***************USART set up *********************/
+//#pragma config FCMEN = OFF
+//#pragma config IESO = OFF
+///****************************************************/
+//
+///***************Clocking set up *********************/
+//#pragma config WDTEN = OFF    // turn off watch dog timer
+//#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
+//#pragma config PRICLKEN = OFF // disable primary clock
+//
 
 /***************Interrupts*****************************/
 
@@ -48,9 +48,9 @@ void interrupt_at_high_vector(void) {
 
 /****************************************/
 // These should be in a global structure
-
+typedef struct {
 // User input
-char myInput2[READER_INPUT_LENGTH];
+char userInput2[READER_INPUT_LENGTH];
 
 // Read UIDs, length can be optimized
 // Currently can read only 3 UIDs before we get errors based on the size
@@ -68,7 +68,8 @@ short nextBlock = 0;
 
 // If the user input was an inventory command
 short invCom = 0;
-
+} RFIDDriver;
+static RFIDDriver readerData;
 /****************************************/
 
 void rcISR(void) {
@@ -79,43 +80,43 @@ void rcISR(void) {
     input = getc2USART();
 
     // If we are processing an Inventory command
-    if (invCom == 1) {
+    if (readerData.invCom == 1) {
 
         // A 'D' character outside of square brackets indicates that the inventory
         // command has finished sending
-        if (input == 'D' && nextBlock == 0) {
+        if (input == 'D' && readerData.nextBlock == 0) {
             // Reset the inventory command flag
-            invCom = 0;
+            readerData.invCom = 0;
 
         // Begin reading what is inside a block of square brackets
         } else if (input == '[') {
             // Go to the beginning of the array, indicate that a block is being read
-            inputSpot2 = 0;
-            nextBlock = 1;
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 1;
 
         // If we are at the end of a block of square brackets
-        } else if(input == ']' && numUID < MAX_UIDS && nextBlock == 1) {
+        } else if(input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
             // If there is a comma as the first character inside a block, then
             // discard what is read.  Otherwise, terminate the string and increment
             // the number of UIDs successfully read.
-            if (readUID[numUID][0] != ',') {
-                readUID[numUID][inputSpot2] = '\0';
-                numUID++;
+            if (readerData.readUID[readerData.numUID][0] != ',') {
+                readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
+                readerData.numUID++;
             }
 
             // Block of square brackets has be read, set the indicator to zero
-            nextBlock = 0;
+            readerData.nextBlock = 0;
 
         // Put anything inside of a square bracket into the UID array
-        } else if (nextBlock == 1 && inputSpot2 < READER_INPUT_LENGTH && numUID < MAX_UIDS) {
-            readUID[numUID][inputSpot2] = input;
-            inputSpot2++;
+        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < READER_INPUT_LENGTH && readerData.numUID < MAX_UIDS) {
+            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
+            readerData.inputSpot2++;
 
         // If we are outside of a block, reset read position and ensure that the block
         // state indicator is zero.
         } else {
-            inputSpot2 = 0;
-            nextBlock = 0;
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 0;
         }
         
     } else {
@@ -150,40 +151,40 @@ void main() {
 
     while (1) {
         // Read user input from computer
-        readBytesUntil(myInput2, '\r', READER_INPUT_LENGTH);
+        readBytesUntil(readerData.userInput2, '\r', READER_INPUT_LENGTH);
         putc1USART('\r');
         putc1USART('\n');
 
         // Ping command
-        if (strcmppgm2ram(myInput2, "ping") == 0) {
+        if (strcmppgm2ram(readerData.userInput2, "ping") == 0) {
             sendToRFID(PING);
 
         // Inventory Command
-        } else if (strcmppgm2ram(myInput2, "inventory") == 0) {
+        } else if (strcmppgm2ram(readerData.userInput2, "inventory") == 0) {
             // Set the inventory command flag for the interrupt
-            invCom = 1;
+            readerData.invCom = 1;
 
             // Set the RFID reader to Read mode and send the Inventory command
             setupRead();
             sendToRFID(INVENTORY);
 
             // Wait until interrupt finishes
-            while(invCom == 1);
+            while(readerData.invCom == 1);
 
             // Print all the UIDs
-            for (i = 0; i < numUID; i++) {
-                puts1USART(readUID[i]);
+            for (i = 0; i < readerData.numUID; i++) {
+                puts1USART(readerData.readUID[i]);
                 putc1USART('\r');
                 while(Busy1USART());
                 putc1USART('\n');
             }
 
             // Reset the number of UIDs read
-            numUID = 0;
+            readerData.numUID = 0;
 
         // Send the "Stay Quiet" command.
         // WARNING: THIS IS HARDCODED TO ONLY WORK WITH THE PROTOCARD
-        } else if (strcmppgm2ram(myInput2, "quiet") == 0) {
+        } else if (strcmppgm2ram(readerData.userInput2, "quiet") == 0) {
             sendToRFID(STAY_QUIET);
 
         // Any errors will reset the RFID reader
