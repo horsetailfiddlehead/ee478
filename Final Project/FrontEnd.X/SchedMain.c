@@ -33,13 +33,14 @@ void systemSetup(void);
  * 
  */
 void main() {
-    char keypress = -1;
+    int keypress = -1;
     systemSetup();
 
     while(1) {
         keypress = checkForInput();
-        Write1USART(keypress);
+        putc2USART(keypress);
 
+        Delay1KTCYx(20);
     }
 
     return;

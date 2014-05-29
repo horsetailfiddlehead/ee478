@@ -64,12 +64,12 @@ int resetPins(int key);
 
 // checks the keypad for key press. returns the first key press sensed.
 // Returns the number of the key pressed (* = 14, # = 15)
-char checkForInput() {
+int checkForInput() {
     char scan;
 
-    PORTCbits.RC0 = 0; // check row1
+    PORTDbits.RD2 = 0; // check row1
     Delay10TCYx(10);
-    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    scan = (PORTBbits.RB3 << 3 | PORTBbits.RB2 << 2 | PORTBbits.RB1 << 1 | PORTBbits.RB0);
     switch (scan) {
         case 0b00001110: // is on Bbits.RB3
             return resetPins(1);
@@ -81,10 +81,10 @@ char checkForInput() {
             return resetPins(10);
     }
 
-    PORTCbits.RC0 = 1; // check row2
-    PORTCbits.RC1 = 0;
+    PORTDbits.RD2 = 1; // check row2
+    PORTDbits.RD3 = 0;
     Delay10TCYx(10);
-    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    scan = (PORTBbits.RB3 << 3 | PORTBbits.RB2 << 2 | PORTBbits.RB1 << 1 | PORTBbits.RB0);
     switch (scan) {
         case 0b00001110: // is on Bbits.RB3
             return resetPins(4);
@@ -97,10 +97,10 @@ char checkForInput() {
     }
 
 
-    PORTCbits.RC1 = 1; // check row3
-    PORTCbits.RC2 = 0;
+    PORTDbits.RD3 = 1; // check row3
+    PORTDbits.RD4 = 0;
     Delay10TCYx(10);
-    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    scan = (PORTBbits.RB3 << 3 | PORTBbits.RB2 << 2 | PORTBbits.RB1 << 1 | PORTBbits.RB0);
     switch (scan) {
         case 0b00001110: // is on Bbits.RB3
             return resetPins(7);
@@ -112,10 +112,10 @@ char checkForInput() {
             return resetPins(12);
     }
 
-    PORTCbits.RC2 = 1; // check row4
-    PORTCbits.RC3 = 0;
+    PORTDbits.RD4 = 1; // check row4
+    PORTDbits.RD5 = 0;
     Delay10TCYx(10);
-    scan = (PORTBbits.RB0 << 3 | PORTBbits.RB1 << 2 | PORTBbits.RB2 << 1 | PORTBbits.RB3);
+    scan = (PORTBbits.RB3 << 3 | PORTBbits.RB2 << 2 | PORTBbits.RB1 << 1 | PORTBbits.RB0);
     switch (scan) {
         case 0b00001110: // is on Bbits.RB3
             return resetPins(14);
@@ -124,7 +124,7 @@ char checkForInput() {
         case 0b00001011: // on pin 6
             return resetPins(15);
         case 0b00000111: // on pin 7
-            return resetPins(16);
+            return resetPins(13);
     }
 
     return resetPins(-1); // assume no key was pressed.
@@ -133,10 +133,10 @@ char checkForInput() {
 
 // resets the driving pins
 int resetPins(int key) {
-    PORTCbits.RC3 = 1; // set outputs HIGH
-    PORTCbits.RC2 = 1;
-    PORTCbits.RC1 = 1;
-    PORTCbits.RC0 = 1;
+    PORTDbits.RD5 = 1; // set outputs HIGH
+    PORTDbits.RD4 = 1;
+    PORTDbits.RD3 = 1;
+    PORTDbits.RD2 = 1;
     return key;
 }
 
@@ -144,16 +144,17 @@ int resetPins(int key) {
 // sets all pins to input or output and disables analog in; sets initial port outputs to LOW. May want to consider a better starting point, like all outputs high?
 void keypadSetup() {
     // initialize pins 4-7 HIGH
-    PORTCbits.RC0 = 1;
-    PORTCbits.RC1 = 1;
-    PORTCbits.RC2 = 1;
-    PORTCbits.RC3 = 1;
+    PORTDbits.RD2 = 1;
+    PORTDbits.RD3 = 1;
+    PORTDbits.RD4 = 1;
+    PORTDbits.RD5 = 1;
 
     // pins 4-7 are toggled, pins 0-3 are monitored
-    TRISCbits.RC3 = 0;
-    TRISCbits.RC2 = 0;
-    TRISCbits.RC1 = 0;
-    TRISCbits.RC0 = 0;
+    TRISDbits.RD5 = 0;
+    TRISDbits.RD4 = 0;
+    TRISDbits.RD3 = 0;
+    TRISDbits.RD2 = 0;
+
     TRISBbits.RB0 = 1;
     TRISBbits.RB1 = 1;
     TRISBbits.RB2 = 1;
@@ -163,6 +164,10 @@ void keypadSetup() {
     ANSELBbits.ANSB2 = 0;
     ANSELBbits.ANSB1 = 0;
     ANSELBbits.ANSB0 = 0;
+    ANSELDbits.ANSD2 = 0;
+    ANSELDbits.ANSD3 = 0;
+    ANSELDbits.ANSD4 = 0;
+    ANSELDbits.ANSD5 = 0;
 
 
     // enable weak pull ups on ports b0-b3

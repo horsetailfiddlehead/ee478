@@ -31,7 +31,7 @@ extern "C" {
      * * = 14
      * # = 15
      */
-    char checkForInput();
+    int checkForInput();
 
 
 #ifdef	__cplusplus
