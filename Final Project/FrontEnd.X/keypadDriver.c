@@ -5,7 +5,8 @@
  * keypadDriver.c
  *
  * The software driver for the keypad. The current option uses 8 pins and polls
- * the matrix looking for key presses.
+ * the matrix looking for key presses. Each row is polled (pins 4-7) and the
+ * keys are read from pins 0-3
  *
  * The keypad has a layout like this:
  *

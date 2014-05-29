@@ -18,4 +18,4 @@ Software
 
 5/27: decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
 
-5/28: decided to poll the keypad when expecting user input.
+5/28: decided to poll the keypad when expecting user input. Using passing a pointer to global data variables.
