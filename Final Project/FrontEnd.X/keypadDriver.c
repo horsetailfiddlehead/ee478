@@ -46,29 +46,25 @@
 #endif
 
 int resetPins(int key);
-//void keypadSetup();
-//int checkForInput();
 
-#ifdef __KEYPAD_DEBUG
+//void main() {
+//    char keyNum = 0;
+//    keypadSetup();
+//    rs232Setup1(); // setup the serial port
+//
+//    while (1) { // just loop for test
+//        keyNum = (char) checkForInput() + '`';
+//        Write1USART(keyNum);
+//
+//        Delay1KTCYx(1);
+//    }
+//
+//}
 
-void main() {
-    char keyNum = 0;
-    keypadSetup();
-    rs232Setup1(); // setup the serial port
-
-    while (1) { // just loop for test
-        keyNum = (char) checkForInput() + '`';
-        Write1USART(keyNum);
-
-        Delay1KTCYx(1);
-    }
-
-}
-#endif
 
 // checks the keypad for key press. returns the first key press sensed.
 // Returns the number of the key pressed (* = 14, # = 15)
-int checkForInput() {
+char checkForInput() {
     char scan;
 
     PORTCbits.RC0 = 0; // check row1

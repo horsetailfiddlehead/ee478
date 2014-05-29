@@ -32,13 +32,22 @@ void systemSetup(void);
 /*
  * 
  */
-int main(int argc, char** argv) {
+void main() {
+    char keypress = -1;
     systemSetup();
 
-    return 0;
+    while(1) {
+        keypress = checkForInput();
+        Write1USART(keypress);
+
+    }
+
+    return;
 }
 
 void systemSetup() {
     rs232Setup2();
+    keypadSetup();
 
+    return;
 }

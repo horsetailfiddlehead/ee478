@@ -17,3 +17,5 @@ Software
 5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function.
 
 5/27: decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
+
+5/28: decided to poll the keypad when expecting user input.
