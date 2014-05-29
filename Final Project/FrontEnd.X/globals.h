@@ -23,13 +23,18 @@ extern "C" {
 #include "keypadDriver.h"
 #include "LCD.h"
 #include "startup.h"
-    
-enum _myBool { FALSE = 0, TRUE = 1 }; 
- typedef enum _myBool Boolean;
+
+    enum _myBool {
+        FALSE = 0, TRUE = 1
+    };
+    typedef enum _myBool Boolean;
 
     typedef struct globaldata {
         short displayPage;
+        Boolean keyFlag;
+        int keyPress;
     } GlobalState;
+
 #ifdef	__cplusplus
 }
 #endif

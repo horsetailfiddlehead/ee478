@@ -15,7 +15,7 @@
 
 
 // Function prototypes
-void systemSetup(void);
+void systemSetup(GlobalState *data);
 
 // PIC configuration settings
 /***************Clocking set up *********************/
@@ -33,37 +33,41 @@ void systemSetup(void);
  */
 void main() {
     int keypress = -1;
-
+    GlobalState globalData;
     // LCD menu
     int menuSpots[3] = {40, 80, 120};
     int cursorPos = 0;
 
-    systemSetup();
+    systemSetup(&globalData);
 
-            // lcd test code
-        clean(BLUE);
-        drawBoxFill(0, 0, 20, V - 1, CYAN);
-        drawBox(0, 0, 20, V - 1, 2, WHITE);
-        prints(35, 7, WHITE, CYAN, (const rom far char*) "Main Menu", 1);
-        prints(35, menuSpots[0], WHITE, BLUE, (const rom far char*) "Single Player", 1);
-        prints(35, menuSpots[1], WHITE, BLUE, (const rom far char*) "Multiplayer", 1);
-        prints(35, menuSpots[2], WHITE, BLUE, (const rom far char*) "Build Cards", 1);
+    // lcd test code
+    clean(BLUE);
+    drawBoxFill(0, 0, 20, V - 1, CYAN);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    prints(35, 7, WHITE, CYAN, (const rom far char*) "Main Menu", 1);
+    prints(35, menuSpots[0], WHITE, BLUE, (const rom far char*) "Single Player", 1);
+    prints(35, menuSpots[1], WHITE, BLUE, (const rom far char*) "Multiplayer", 1);
+    prints(35, menuSpots[2], WHITE, BLUE, (const rom far char*) "Build Cards", 1);
 
     while (1) {
-        do {
-        keypress = checkForInput();
-        }while (keypress < 0);
+        globalData.keyPress = checkForInput();
+        if (globalData.keyPress >= 0) {
+            globalData.keyFlag = TRUE;
+        }
 
-        putc2USART(keypress + '0');
+        if (globalData.keyFlag) { // TODO this goes into a display function
+            globalData.keyFlag = FALSE;
+            putc2USART(globalData.keyPress + '0');
 
-        prints (35, 125, WHITE, BLUE, (const rom far char*) " ", 1);
-        integerprint (35, 125, WHITE, RED, keypress, 1);
+            prints(35, 125, WHITE, BLUE, (const rom far char*) " ", 1);
+            integerprint(35, 125, WHITE, RED, globalData.keyPress, 1);
+        }
 
         // Clear cursor
-//        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)">", 1);
-//        Delay10KTCYx(50000*1);
-//        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)" ", 1);
-//        cursorPos = (cursorPos + 1) % 3;
+        //        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)">", 1);
+        //        Delay10KTCYx(50000*1);
+        //        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)" ", 1);
+        //        cursorPos = (cursorPos + 1) % 3;
 
         Delay1KTCYx(20);
     }
@@ -71,12 +75,15 @@ void main() {
     return;
 }
 
-void systemSetup() {
+void systemSetup(GlobalState *data) {
     initSPI1();
     initLCD();
     rs232Setup2(); // configure USART2
     keypadSetup(); // configure keypad
 
+    data->displayPage = 0;
+    data->keyFlag = FALSE;
+    data->keyPress = -1;
 
     return;
 }

@@ -61,7 +61,6 @@ int resetPins(int key);
 //
 //}
 
-
 // checks the keypad for key press. returns the first key press sensed.
 // Returns the number of the key pressed (* = 14, # = 15)
 int checkForInput() {
