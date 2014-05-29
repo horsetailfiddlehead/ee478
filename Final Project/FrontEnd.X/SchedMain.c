@@ -15,7 +15,7 @@
 
 
 // Function prototypes
-void systemSetup(void);
+void systemSetup(GlobalState *data);
 
 // PIC configuration settings
 /***************Clocking set up *********************/
@@ -28,26 +28,59 @@ void systemSetup(void);
 #pragma config IESO = OFF
 /****************************************************/
 
-
 /*
  * 
  */
 void main() {
-    char keypress = -1;
-    systemSetup();
+    int keypress = -1;
+    GlobalState globalData;
+    // LCD menu
+    int menuSpots[3] = {40, 80, 120};
+    int cursorPos = 0;
 
-    while(1) {
-        keypress = checkForInput();
-        Write1USART(keypress);
+    systemSetup(&globalData);
 
+    // lcd test code
+    clean(BLUE);
+    drawBoxFill(0, 0, 20, V - 1, CYAN);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    prints(35, 7, WHITE, CYAN, "Main Menu", 1);
+    prints(35, menuSpots[0], WHITE, BLUE, "Single Player", 1);
+    prints(35, menuSpots[1], WHITE, BLUE, "Multiplayer", 1);
+    prints(35, menuSpots[2], WHITE, BLUE, "Build Cards", 1);
+
+    while (1) {
+        keypad(&globalData);
+
+        if (globalData.keyFlag) { // TODO this goes into a display function
+            globalData.keyFlag = FALSE;
+            putc2USART(globalData.keyPress + '0');
+
+            prints(35, 125, WHITE, BLUE, " ", 1);
+            integerprint(35, 125, WHITE, RED, globalData.keyPress, 1);
+        }
+
+        // Clear cursor
+        //        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)">", 1);
+        //        Delay10KTCYx(50000*1);
+        //        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)" ", 1);
+        //        cursorPos = (cursorPos + 1) % 3;
+
+        Delay1KTCYx(20);
     }
 
     return;
 }
 
-void systemSetup() {
-    rs232Setup2();
-    keypadSetup();
+void systemSetup(GlobalState *data) {
+    initSPI1();
+    initLCD();
+    rs232Setup2(); // configure USART2
+    keypadSetup(); // configure keypad
+
+    data->displayPage = 0;
+    data->keyFlag = FALSE;
+    data->keyPress = -1;
 
     return;
 }
