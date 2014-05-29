@@ -50,14 +50,20 @@ void main() {
         prints(35, menuSpots[2], WHITE, BLUE, (const rom far char*) "Build Cards", 1);
 
     while (1) {
+        do {
         keypress = checkForInput();
-        putc2USART(keypress);
+        }while (keypress < 0);
+
+        putc2USART(keypress + '0');
+
+        prints (35, 125, WHITE, BLUE, (const rom far char*) " ", 1);
+        integerprint (35, 125, WHITE, RED, keypress, 1);
 
         // Clear cursor
-        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)">", 1);
-        Delay10KTCYx(50000*1);
-        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)" ", 1);
-        cursorPos = (cursorPos + 1) % 3;
+//        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)">", 1);
+//        Delay10KTCYx(50000*1);
+//        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)" ", 1);
+//        cursorPos = (cursorPos + 1) % 3;
 
         Delay1KTCYx(20);
     }

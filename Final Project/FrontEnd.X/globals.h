@@ -24,6 +24,12 @@ extern "C" {
 #include "LCD.h"
 #include "startup.h"
     
+enum _myBool { FALSE = 0, TRUE = 1 }; 
+ typedef enum _myBool Boolean;
+
+    typedef struct globaldata {
+        short displayPage;
+    } GlobalState;
 #ifdef	__cplusplus
 }
 #endif
