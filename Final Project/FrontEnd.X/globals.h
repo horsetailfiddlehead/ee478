@@ -17,12 +17,18 @@ extern "C" {
 #include <usart.h>
 #include <spi.h>
 #include <delays.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
     // our headers
 #include "rs232.h"
 #include "keypadDriver.h"
 #include "LCD.h"
 #include "startup.h"
+#include "interrupts.h"
+#include "usart.h"
+#include "delays.h"
 
     enum _myBool {
         FALSE = 0, TRUE = 1

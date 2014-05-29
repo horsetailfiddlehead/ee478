@@ -89,6 +89,7 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 ${OBJECTDIR}/SchedMain.o: SchedMain.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/SchedMain.o.d 
+	@${RM} ${OBJECTDIR}/SchedMain.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/SchedMain.o   SchedMain.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/SchedMain.o 
 	@${FIXDEPS} "${OBJECTDIR}/SchedMain.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -96,6 +97,7 @@ ${OBJECTDIR}/SchedMain.o: SchedMain.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/keypadDriver.o: keypadDriver.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/keypadDriver.o.d 
+	@${RM} ${OBJECTDIR}/keypadDriver.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/keypadDriver.o   keypadDriver.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/keypadDriver.o 
 	@${FIXDEPS} "${OBJECTDIR}/keypadDriver.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -103,6 +105,7 @@ ${OBJECTDIR}/keypadDriver.o: keypadDriver.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/rs232.o: rs232.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/rs232.o.d 
+	@${RM} ${OBJECTDIR}/rs232.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/rs232.o   rs232.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/rs232.o 
 	@${FIXDEPS} "${OBJECTDIR}/rs232.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -110,6 +113,7 @@ ${OBJECTDIR}/rs232.o: rs232.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/startup.o: startup.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/startup.o.d 
+	@${RM} ${OBJECTDIR}/startup.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/startup.o   startup.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/startup.o 
 	@${FIXDEPS} "${OBJECTDIR}/startup.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -117,6 +121,7 @@ ${OBJECTDIR}/startup.o: startup.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/LCD.o: LCD.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/LCD.o.d 
+	@${RM} ${OBJECTDIR}/LCD.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/LCD.o   LCD.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/LCD.o 
 	@${FIXDEPS} "${OBJECTDIR}/LCD.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -125,6 +130,7 @@ else
 ${OBJECTDIR}/SchedMain.o: SchedMain.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/SchedMain.o.d 
+	@${RM} ${OBJECTDIR}/SchedMain.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/SchedMain.o   SchedMain.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/SchedMain.o 
 	@${FIXDEPS} "${OBJECTDIR}/SchedMain.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -132,6 +138,7 @@ ${OBJECTDIR}/SchedMain.o: SchedMain.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/keypadDriver.o: keypadDriver.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/keypadDriver.o.d 
+	@${RM} ${OBJECTDIR}/keypadDriver.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/keypadDriver.o   keypadDriver.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/keypadDriver.o 
 	@${FIXDEPS} "${OBJECTDIR}/keypadDriver.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -139,6 +146,7 @@ ${OBJECTDIR}/keypadDriver.o: keypadDriver.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/rs232.o: rs232.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/rs232.o.d 
+	@${RM} ${OBJECTDIR}/rs232.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/rs232.o   rs232.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/rs232.o 
 	@${FIXDEPS} "${OBJECTDIR}/rs232.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -146,6 +154,7 @@ ${OBJECTDIR}/rs232.o: rs232.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/startup.o: startup.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/startup.o.d 
+	@${RM} ${OBJECTDIR}/startup.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/startup.o   startup.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/startup.o 
 	@${FIXDEPS} "${OBJECTDIR}/startup.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -153,6 +162,7 @@ ${OBJECTDIR}/startup.o: startup.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/LCD.o: LCD.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/LCD.o.d 
+	@${RM} ${OBJECTDIR}/LCD.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/LCD.o   LCD.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/LCD.o 
 	@${FIXDEPS} "${OBJECTDIR}/LCD.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
