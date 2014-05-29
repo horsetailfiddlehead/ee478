@@ -15,7 +15,7 @@ extern "C" {
 #include "globals.h"
 
     void initClock();
-    void initSPI();
+    void initSPI1();
 
 #ifdef	__cplusplus
 }

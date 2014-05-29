@@ -270,18 +270,18 @@ void delay(int x){
 void sendcomand(char input){
     int j = 0;
     PORTC &= ~A0;
-    PORTC &= ~CS;
+    PORTB &= ~CS;
     SSP1BUF = input;
     for(j=0;j<1;j++);
-    PORTC |= CS;
+    PORTB |= CS;
 }
 void senddata(char input){
     int j = 0;
     PORTC |= A0;
-    PORTC &= ~CS;
+    PORTB &= ~CS;
     SSP1BUF = input;
     for(j=0;j<1;j++);
-    PORTC |= CS;
+    PORTB |= CS;
 }
 void SetPix(char x, char y, int color){
     char Hig = 0;
@@ -379,13 +379,13 @@ void clean(int color){
     }
 }
 void initLCD(){
-    PORTC &= ~CS;
+    PORTB &= ~CS;
     delay(0);
-    PORTC |= RE;
-    delay(100);
-    PORTC &= ~RE;
-    delay(100);
-    PORTC |= RE;
+//    PORTC |= RE;
+//    delay(100);
+//    PORTC &= ~RE;
+//    delay(100);
+//    PORTC |= RE;
     delay(10000);
     sendcomand(ST7735_SWRESET);                         //  1: Software reset, 0 args, w/delay 150ms 0x01
     delay(1000);

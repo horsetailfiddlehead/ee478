@@ -75,9 +75,9 @@ extern "C" {
 #define WHITE RGB565(255,255,255)
 
 
-#define CS 0b00000100 //Low = select, High = deselect.
+#define CS 0b00010000 //Low = select, High = deselect.
 #define RE 0b00000010 //High = normal, Low = reset.
-#define A0 0b00000001 //Low = Command, High = Data.
+#define A0 0b00010000 //Low = Command, High = Data.
 
 void delay(int x);
 void sendcomand(char input);

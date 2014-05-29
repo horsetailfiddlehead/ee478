@@ -16,6 +16,7 @@ extern "C" {
 #include <p18f46k22.h>
 #include <usart.h>
 #include <spi.h>
+#include <delays.h>
 
     // our headers
 #include "rs232.h"
