@@ -15,10 +15,14 @@ extern "C" {
     // microchip libraries
 #include <p18f46k22.h>
 #include <usart.h>
+#include <spi.h>
 
     // our headers
 #include "rs232.h"
-
+#include "keypadDriver.h"
+#include "LCD.h"
+#include "startup.h"
+    
 #ifdef	__cplusplus
 }
 #endif

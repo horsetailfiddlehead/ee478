@@ -7,10 +7,13 @@
       <itemPath>globals.h</itemPath>
       <itemPath>keypadDriver.h</itemPath>
       <itemPath>rs232.h</itemPath>
+      <itemPath>startup.h</itemPath>
+      <itemPath>LCD.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <itemPath>18f46k22_g.lkr</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -18,6 +21,8 @@
       <itemPath>SchedMain.c</itemPath>
       <itemPath>keypadDriver.c</itemPath>
       <itemPath>rs232.c</itemPath>
+      <itemPath>startup.c</itemPath>
+      <itemPath>LCD.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
