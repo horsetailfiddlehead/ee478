@@ -44,22 +44,19 @@ void main() {
     clean(BLUE);
     drawBoxFill(0, 0, 20, V - 1, CYAN);
     drawBox(0, 0, 20, V - 1, 2, WHITE);
-    prints(35, 7, WHITE, CYAN, (const rom far char*) "Main Menu", 1);
-    prints(35, menuSpots[0], WHITE, BLUE, (const rom far char*) "Single Player", 1);
-    prints(35, menuSpots[1], WHITE, BLUE, (const rom far char*) "Multiplayer", 1);
-    prints(35, menuSpots[2], WHITE, BLUE, (const rom far char*) "Build Cards", 1);
+    prints(35, 7, WHITE, CYAN, "Main Menu", 1);
+    prints(35, menuSpots[0], WHITE, BLUE, "Single Player", 1);
+    prints(35, menuSpots[1], WHITE, BLUE, "Multiplayer", 1);
+    prints(35, menuSpots[2], WHITE, BLUE, "Build Cards", 1);
 
     while (1) {
-        globalData.keyPress = checkForInput();
-        if (globalData.keyPress >= 0) {
-            globalData.keyFlag = TRUE;
-        }
+        keypad(&globalData);
 
         if (globalData.keyFlag) { // TODO this goes into a display function
             globalData.keyFlag = FALSE;
             putc2USART(globalData.keyPress + '0');
 
-            prints(35, 125, WHITE, BLUE, (const rom far char*) " ", 1);
+            prints(35, 125, WHITE, BLUE, " ", 1);
             integerprint(35, 125, WHITE, RED, globalData.keyPress, 1);
         }
 

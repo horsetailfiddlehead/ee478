@@ -488,7 +488,7 @@ void ASCII(char x, char y, int color, int background, char letter, char size){
         }
     }
 }
-void prints(char x, char y, int color, int background, char *messageOld, char size){
+void prints(char x, char y, int color, int background, const char messageOld[], char size){
     const far rom char* message = (const far rom char*) messageOld;
     while (*message){
         ASCII(x,y,color,background,*message++, size);

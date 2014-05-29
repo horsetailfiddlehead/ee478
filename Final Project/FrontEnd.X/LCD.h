@@ -84,14 +84,14 @@ void sendcomand(char input);
 void senddata(char input);
 void SetPix(char x, char y, int color);
 void clean(int color);
-void initLCD();
+void initLCD(void);
 void ASCII(char x, char y, int color, int background, char letter, char size);
 
 int customColor(int r, int g, int b);
 void drawBoxFill(char x, char y,char height, char width, int color);
 void drawBox(char x, char y, char height, char width, int border, int color);
 
-void prints(char x, char y, int color, int background, const rom far char * message, char size);
+void prints(char x, char y, int color, int background, const char message[], char size);
 void integerprint(char x, char y, int color, int background,int integer, char size);
 
 // depreciated

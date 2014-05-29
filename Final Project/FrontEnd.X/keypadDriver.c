@@ -46,6 +46,7 @@
 #endif
 
 int resetPins(int key);
+int checkForInput(void);
 
 //void main() {
 //    char keyNum = 0;
@@ -61,8 +62,19 @@ int resetPins(int key);
 //
 //}
 
+/*
+ * Polls the keypad for a key press. The key is stored in the global data struct given.
+ */
+void keypad(GlobalState *gData) {
+    gData->keyPress = checkForInput();
+    if (gData->keyPress >= 0) {
+        gData->keyFlag = TRUE;
+    }
+}
+
 // checks the keypad for key press. returns the first key press sensed.
 // Returns the number of the key pressed (* = 14, # = 15)
+
 int checkForInput() {
     char scan;
 
@@ -131,6 +143,7 @@ int checkForInput() {
 
 
 // resets the driving pins
+
 int resetPins(int key) {
     PORTDbits.RD5 = 1; // set outputs HIGH
     PORTDbits.RD4 = 1;
@@ -139,8 +152,9 @@ int resetPins(int key) {
     return key;
 }
 
-
-// sets all pins to input or output and disables analog in; sets initial port outputs to LOW. May want to consider a better starting point, like all outputs high?
+/* sets all pins to input or output and disables analog in;
+ * sets initial port outputs to HIGH
+ */
 void keypadSetup() {
     // initialize pins 4-7 HIGH
     PORTDbits.RD2 = 1;
@@ -173,8 +187,6 @@ void keypadSetup() {
     WPUB = WPUB & 0b11111111;
     // enable pull ups on portB globally
     INTCON2 = INTCON2 & 0b01111111;
-
-
 
     return;
 }
