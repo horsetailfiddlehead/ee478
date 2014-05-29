@@ -12,8 +12,8 @@
 extern "C" {
 #endif
 
-
-
+void setupRead(void);
+void resetRFID(void);
 
 #ifdef	__cplusplus
 }

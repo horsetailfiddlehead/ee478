@@ -20,6 +20,8 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "usart.h"
+#include "delays.h"
 
     // our headers
 #include "rs232.h"
@@ -27,8 +29,6 @@ extern "C" {
 #include "LCD.h"
 #include "startup.h"
 #include "interrupts.h"
-#include "usart.h"
-#include "delays.h"
 
     enum _myBool {
         FALSE = 0, TRUE = 1

@@ -1,25 +1,18 @@
 /*
  * File:   ioBuffer.c
- * Author: Patrick
+ * Author: Patrick, Ryan
  *
  * Created on May 15, 2014
  * a simple program that buffers user serial input then sends it out
  * sequentially all at once.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "globals.h"
 
-#include "interrupts.h"
-#include "rs232.h"
-#include "usart.h"
-#include "delays.h"
-#include <p18f25k22.h>
+#define READER_INPUT_LENGTH 64	// size of input buffer
+#define MAX_UIDS 3  // UID storage size
 
-#define INPUT_LENGTH 64	// size of input buffer
-#define MAX_UIDS 3
-
+/********Command constants***********************/
 #define START 01
 #define FLAGS 0304
 #define READ_SINGLE_BLOCK 0
@@ -43,7 +36,7 @@
 #pragma config PRICLKEN = OFF // disable primary clock
 
 
-
+/***************Interrupts*****************************/
 
 #pragma code high_vector=0x08
 void interrupt_at_high_vector(void) {
@@ -57,12 +50,12 @@ void interrupt_at_high_vector(void) {
 // These should be in a global structure
 
 // User input
-char myInput2[INPUT_LENGTH];
+char myInput2[READER_INPUT_LENGTH];
 
 // Read UIDs, length can be optimized
 // Currently can read only 3 UIDs before we get errors based on the size
 // of the array
-char readUID[MAX_UIDS][INPUT_LENGTH];
+char readUID[MAX_UIDS][READER_INPUT_LENGTH];
 
 // Current spot in the array processing for input from RFID
 int inputSpot2 = 0;
@@ -114,7 +107,7 @@ void rcISR(void) {
             nextBlock = 0;
 
         // Put anything inside of a square bracket into the UID array
-        } else if (nextBlock == 1 && inputSpot2 < INPUT_LENGTH && numUID < MAX_UIDS) {
+        } else if (nextBlock == 1 && inputSpot2 < READER_INPUT_LENGTH && numUID < MAX_UIDS) {
             readUID[numUID][inputSpot2] = input;
             inputSpot2++;
 
@@ -135,14 +128,8 @@ void rcISR(void) {
 }
 
 /****************************************************/
-//int inputFinished;
-//char myInput;
-//int i;
 
-
-void setupRead();
 void sendToRFID(char* myString);
-void resetRFID();
 
 void main() {
     int i;
@@ -163,7 +150,7 @@ void main() {
 
     while (1) {
         // Read user input from computer
-        readBytesUntil(myInput2, '\r', INPUT_LENGTH);
+        readBytesUntil(myInput2, '\r', READER_INPUT_LENGTH);
         putc1USART('\r');
         putc1USART('\n');
 
@@ -208,7 +195,7 @@ void main() {
 }
 
 void sendToRFID(char* myString) {
-    char myInput[INPUT_LENGTH];
+    char myInput[READER_INPUT_LENGTH];
     short inputFinished = 0;
     int i = 0;
     strcpypgm2ram(myInput, myString);
