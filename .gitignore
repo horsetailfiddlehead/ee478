@@ -19,8 +19,9 @@
 *.out
 *.app
 *.hex
-*/nbproject/*
-*/dist/
+#*/nbproject/*
+*/dist/*
+*/build/*
 
 # the billions of extraneous PLD IDE files
 ############
