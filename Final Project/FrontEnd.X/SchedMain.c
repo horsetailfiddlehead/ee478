@@ -16,6 +16,7 @@
 
 // Function prototypes
 void systemSetup(GlobalState *data);
+void setupPWM(void);
 
 // PIC configuration settings
 /***************Clocking set up *********************/
@@ -32,12 +33,9 @@ void systemSetup(GlobalState *data);
  * 
  */
 void main() {
-    int keypress = -1;
     GlobalState globalData;
     // LCD menu
     int menuSpots[3] = {40, 80, 120};
-    int cursorPos = 0;
-
     systemSetup(&globalData);
 
     // lcd test code
@@ -50,13 +48,16 @@ void main() {
     prints(35, menuSpots[2], WHITE, BLUE, "Build Cards", 1);
 
     while (1) {
-        keypad(&globalData);
+        if (!globalData.keyFlag) {
+            keypad(&globalData);
+        }
 
-        if (globalData.keyFlag) { // TODO this goes into a display function
+        if (globalData.keyFlag && !globalData.displayedKey) { // TODO this goes into a display function
             globalData.keyFlag = FALSE;
+            globalData.displayedKey = TRUE;
             putc2USART(globalData.keyPress + '0');
 
-            prints(35, 125, WHITE, BLUE, " ", 1);
+            prints(35, 125, WHITE, BLUE, "    ", 1);
             integerprint(35, 125, WHITE, RED, globalData.keyPress, 1);
         }
 
@@ -68,7 +69,6 @@ void main() {
 
         Delay1KTCYx(20);
     }
-
     return;
 }
 
@@ -77,10 +77,28 @@ void systemSetup(GlobalState *data) {
     initLCD();
     rs232Setup2(); // configure USART2
     keypadSetup(); // configure keypad
+    setupPWM();
 
     data->displayPage = 0;
     data->keyFlag = FALSE;
+    data->displayedKey = FALSE;
     data->keyPress = -1;
 
     return;
+}
+
+void setupPWM(void) {
+    // configure PWM
+    TRISBbits.RB5 = 1; // disable PWM output
+    CCPTMRS0 = 0b01000000; // set CCP3 to use Timer 4
+    T4CON = 0b00000111; // set timer prescale 1:16, turn on timer4
+    PR4 = 0xFF; // PR = 77 for 4kHz (cool sound). set to 0xff because will be
+                // set based on the key pressed
+
+
+    CCP3CON = 0b00011100; // set LSB of duty yle, select pwm mode
+    CCPR4L = 0x3E; // set MSB of duty cycle
+    PIR5 = 0b00000000; // clear timer interrupt flag
+    TRISBbits.RB5 = 1; //disable PWM output
+    SetDCPWM4(50); // Square wave
 }

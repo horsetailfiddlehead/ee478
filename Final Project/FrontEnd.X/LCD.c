@@ -500,18 +500,30 @@ void prints(char x, char y, int color, int background, const char messageOld[], 
     }
 }
 void integerprint(char x, char y, int color, int background,int integer, char size){
-    unsigned char tenthousands,thousands,hundreds,tens,ones;
-    tenthousands = integer / 10000;
-    ASCII(x,y,color,background,tenthousands+48, size);
-    thousands = ((integer - tenthousands*10000)) / 1000;
-    x+=6;
-    ASCII(x,y,color,background,thousands+48, size);
-    hundreds = (((integer - tenthousands*10000) - thousands*1000)-1) / 100;
-    x+=6;
-    ASCII(x,y,color,background,hundreds+48, size);
-    tens=(integer%100)/10;
-    x+=6;
-    ASCII(x,y,color,background,tens+48, size);
+    unsigned char tenthousands = 0;
+    unsigned char thousands = 0;
+    unsigned char hundreds = 0;
+    unsigned char tens = 0;
+    unsigned char ones = 0;
+    if (integer >= 10000) {
+        tenthousands = integer / 10000;
+        ASCII(x,y,color,background,tenthousands+48, size);
+    }
+    if (integer >= 1000) {
+        thousands = ((integer - tenthousands*10000)) / 1000;
+        x+=6;
+        ASCII(x,y,color,background,thousands+48, size);
+    }
+    if (integer >= 100) {
+        hundreds = (((integer - tenthousands*10000) - thousands*1000)-1) / 100;
+        x+=6;
+        ASCII(x,y,color,background,hundreds+48, size);
+    }
+    if (integer >= 10) {
+        tens=(integer%100)/10;
+        x+=6;
+        ASCII(x,y,color,background,tens+48, size);
+    }
     ones=integer%10;
     x+=6;
     ASCII(x,y,color,background,ones+48, size);
