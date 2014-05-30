@@ -1,4 +1,5 @@
 MPLINK 4.48, Linker
+<<<<<<< HEAD
 Linker Map File - Created Thu May 29 21:10:43 2014
 
                                  Section Info
@@ -103,9 +104,28 @@ Linker Map File - Created Thu May 29 21:10:43 2014
            .udata_c018i.o      udata   0x000f00       data   0x00000a
               SFR_BANKED0      udata   0x000f38       data   0x000028
             SFR_UNBANKED0      udata   0x000f60       data   0x0000a0
+=======
+Linker Error Map File - Created Thu May 29 17:53:26 2014
 
+*Warning* - This is only a partial map file due to a link time error.
+   Only sections which were allocated prior to the error are shown below.
+>>>>>>> 83bd6eb244366833d2b58d1d8ecd0dd275fa4f99
 
+CODEPAGES:
+    Memory      Start        End              Section    Address Size(Bytes)
+ ---------  ---------  ---------            ---------  ---------  ---------
+      page     0x0000     0xffff           _entry_scn     0x0000     0x0006
+                                          high_vector     0x0008     0x0006
+                                               .cinit     0x000e     0x000e
+                                          .code_LCD.o     0x001c     0x0fa4
+                                   .code_rfidReader.o     0x0fc0     0x047a
+                                 .code_keypadDriver.o     0x143a     0x0282
+                                    .code_SchedMain.o     0x16bc     0x024e
+                                        .code_rs232.o     0x190a     0x0112
 
+    idlocs     0x0000     0x0007                                           
+
+<<<<<<< HEAD
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
@@ -114,9 +134,16 @@ Linker Map File - Created Thu May 29 21:10:43 2014
                             0x300001    0x300001      
                             0x300003    0x300003      
             8304 out of 66584 program addresses used, program memory utilization is 12%
+=======
+    config     0x0000     0x000d .config_300001_SchedMain.o     0x0001     0x0001
+                                 .config_300003_SchedMain.o     0x0003     0x0001
+>>>>>>> 83bd6eb244366833d2b58d1d8ecd0dd275fa4f99
 
+     devid     0xfffe     0xffff                                           
 
+    eedata     0x0000     0x03ff                                           
 
+<<<<<<< HEAD
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
@@ -649,9 +676,17 @@ Linker Map File - Created Thu May 29 21:10:43 2014
                      prom   0x000f00       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                secretCode   0x000080       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
              secretSounds   0x00008c       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+=======
+>>>>>>> 83bd6eb244366833d2b58d1d8ecd0dd275fa4f99
 
+SHAREBANKS:
 
+DATABANKS:
+    Memory      Start        End              Section    Address Size(Bytes)
+ ---------  ---------  ---------            ---------  ---------  ---------
+      gpr0     0x0060     0x00ff                                           
 
+<<<<<<< HEAD
                               Symbols - Sorted by Address
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
@@ -1184,5 +1219,38 @@ Linker Map File - Created Thu May 29 21:10:43 2014
                      TOSL   0x000ffd       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      TOSH   0x000ffe       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      TOSU   0x000fff       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+=======
+    myFont     0x0100     0x05ff               myFont     0x0100     0x04fb
+
+      gpr6     0x0600     0x06ff                                           
+
+      gpr7     0x0700     0x07ff                                           
+
+      gpr8     0x0800     0x08ff                                           
+
+      gpr9     0x0900     0x09ff                                           
+
+      gprA     0x0a00     0x0aff                                           
+
+      gprB     0x0b00     0x0bff                                           
+
+      gprC     0x0c00     0x0cff                                           
+
+      gprD     0x0d00     0x0dff                                           
+
+      gprE     0x0e00     0x0eff               .stack     0x0e00     0x0100
+
+      gprF     0x0f00     0x0f37                                           
+
+     sfr15     0x0f38     0x0f5f          SFR_BANKED0     0x0f38     0x0028
+
+
+ACCESSBANKS:
+    Memory      Start        End              Section    Address Size(Bytes)
+ ---------  ---------  ---------            ---------  ---------  ---------
+ accessram     0x0000     0x005f                                           
+
+ accesssfr     0x0f60     0x0fff        SFR_UNBANKED0     0x0f60     0x00a0
+>>>>>>> 83bd6eb244366833d2b58d1d8ecd0dd275fa4f99
 
 
