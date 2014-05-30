@@ -10,6 +10,7 @@
 #include "globals.h"
 
 #define READER_INPUT_LENGTH 64	// size of input buffer
+#define UID_SIZE 24
 #define MAX_UIDS 3  // UID storage size
 
 /********Command constants***********************/
@@ -57,7 +58,7 @@ typedef struct {
     // Read UIDs, length can be optimized
     // Currently can read only 3 UIDs before we get errors based on the size
     // of the array
-    char readUID[MAX_UIDS][READER_INPUT_LENGTH];
+    char readUID[MAX_UIDS][UID_SIZE];
 
     // Current spot in the array processing for input from RFID
     int inputSpot2;
