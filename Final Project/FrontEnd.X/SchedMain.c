@@ -18,6 +18,7 @@
 void systemSetup(GlobalState *data);
 void setupPWM(void);
 
+
 // PIC configuration settings
 /***************Clocking set up *********************/
 #pragma config WDTEN = OFF    // turn off watch dog timer
@@ -32,20 +33,15 @@ void setupPWM(void);
 /*
  * 
  */
+
+
+
 void main() {
     GlobalState globalData;
-    // LCD menu
-    int menuSpots[3] = {40, 80, 120};
     systemSetup(&globalData);
 
     // lcd test code
-    clean(BLUE);
-    drawBoxFill(0, 0, 20, V - 1, CYAN);
-    drawBox(0, 0, 20, V - 1, 2, WHITE);
-    prints(35, 7, WHITE, CYAN, "Main Menu", 1);
-    prints(35, menuSpots[0], WHITE, BLUE, "Single Player", 1);
-    prints(35, menuSpots[1], WHITE, BLUE, "Multiplayer", 1);
-    prints(35, menuSpots[2], WHITE, BLUE, "Build Cards", 1);
+    printMainMenu(&globalData);
 
     while (1) {
         if (!globalData.keyFlag) {
@@ -55,19 +51,10 @@ void main() {
         if (globalData.keyFlag && !globalData.displayedKey) { // TODO this goes into a display function
             globalData.keyFlag = FALSE;
             globalData.displayedKey = TRUE;
-            putc2USART(globalData.keyPress + '0');
 
-            prints(35, 125, WHITE, BLUE, "    ", 1);
-            integerprint(35, 125, WHITE, RED, globalData.keyPress, 1);
+            processDisplay(&globalData);
+
         }
-
-        // Clear cursor
-        //        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)">", 1);
-        //        Delay10KTCYx(50000*1);
-        //        prints(25,menuSpots[cursorPos], WHITE, BLUE, (const rom far char*)" ", 1);
-        //        cursorPos = (cursorPos + 1) % 3;
-
-        Delay1KTCYx(20);
     }
     return;
 }
@@ -83,6 +70,11 @@ void systemSetup(GlobalState *data) {
     data->keyFlag = FALSE;
     data->displayedKey = FALSE;
     data->keyPress = -1;
+    data->cursorPos = 0;
+    // Find better way to do this
+    data->mainMenuSpots[0] = 40;
+    data->mainMenuSpots[1] = 80;
+    data->mainMenuSpots[2] = 120;
 
     return;
 }

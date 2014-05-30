@@ -529,6 +529,128 @@ void integerprint(char x, char y, int color, int background,int integer, char si
     ASCII(x,y,color,background,ones+48, size);
 }
 
+void processDisplay(GlobalState* globalData) {
+    switch (globalData->displayPage) {
+        case 0:
+            switch (globalData->keyPress) {
+                case 0x02:
+                    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, " ", 1);
+                    globalData->cursorPos = ((3 + globalData->cursorPos) - 1) % 3;
+                    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">", 1);
+                    break;
+                case 0x08:
+                    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, " ", 1);
+                    globalData->cursorPos = (globalData->cursorPos + 1) % 3;
+                    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">", 1);
+                    break;
+                case 0x0D:
+                    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">>>", 1);
+                    nextPage(globalData, globalData->cursorPos + 1);
+                    break;
+                case 0xFF: // Debug BSOD
+                    nextPage(globalData, 255);
+                default:
+                    break;
+            }
+            break;
+        case 1:
+            switch (globalData->keyPress) {
+                case 0x0B:
+                    nextPage(globalData, 0);
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 2:
+            switch (globalData->keyPress) {
+                case 0x0B:
+                    nextPage(globalData, 0);
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 3:
+            switch (globalData->keyPress) {
+                case 0x0B:
+                    nextPage(globalData, 0);
+                    break;
+                default:
+                    break;
+            }
+            break;
+        default:
+            printBSOD();
+    }
+}
+
+void printMainMenu(GlobalState* globalData) {
+    // LCD menu
+    clean(BLUE);
+    drawBoxFill(0, 0, 20, V - 1, CYAN);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    prints(35, 7, WHITE, CYAN, "Main Menu", 1);
+    prints(35, globalData->mainMenuSpots[0], WHITE, BLUE, "Single Player", 1);
+    prints(35, globalData->mainMenuSpots[1], WHITE, BLUE, "Multiplayer", 1);
+    prints(35, globalData->mainMenuSpots[2], WHITE, BLUE, "Build Cards", 1);
+    prints(0, H-8, WHITE, BLUE, "2-UP,8-DOWN,D-ENTER", 1);
+    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">", 1);
+}
+
+void printBSOD() {
+    // Beep off
+    TRISBbits.RB5 = 1;
+
+    drawBoxFill(30,39,8,60,GRAY);
+    prints(35, 40, BLUE, GRAY, " Windows ", 1);
+
+    prints(0, 50, WHITE, BLUE, "An error has occurred,", 1);
+    prints(0, 58, WHITE, BLUE, "To continue:", 1);
+    prints(0, 74, WHITE, BLUE, "Remove the battery or", 1);
+    prints(0, 82, WHITE, BLUE, "power supply.", 1);
+    prints(0, 98, WHITE, BLUE, "Error: 0E : BFF9B3D4", 1);
+
+    prints(10, 114, WHITE, BLUE, "Dumping memory...", 1);
+    while (1);
+}
+
+void nextPage(GlobalState* globalData, int cursorPos) {
+    // Beep off
+    TRISBbits.RB5 = 1;
+
+    switch (cursorPos) {
+        case 0:
+            globalData->displayPage = 0;
+            printMainMenu(globalData);
+            break;
+        case 1:
+            globalData->displayPage = 1;
+            // Print singleplayer menu
+            clean(BLACK);
+            prints(0, 0, WHITE, BLACK, "Nothing here. Press B to go back.", 1);
+            break;
+        case 2:
+            globalData->displayPage = 2;
+            // Print multiplayer menu
+            clean(WHITE);
+            prints(0, 0, BLACK, WHITE, "Nothing here. Press B to go back.", 1);
+            break;
+        case 3:
+            globalData->displayPage = 3;
+            // Print build cards menu
+            clean(RED);
+            prints(0, 0, BLACK, RED, "Nothing here. Press B to go back.", 1);
+            break;
+        default:
+            // BSOD
+            clean(BLUE);
+            globalData->keyFlag = TRUE;
+            globalData->displayedKey = FALSE;
+            globalData->displayPage = 255;
+    }
+}
+
 // Depreciated
 void box(char x, char y, char high, char breth, int color){
     char s = 0;

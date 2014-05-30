@@ -12,6 +12,8 @@
 extern "C" {
 #endif
 
+#include "globals.h"
+
 #define V 128
 #define H 160
 
@@ -93,6 +95,14 @@ void drawBox(char x, char y, char height, char width, int border, int color);
 
 void prints(char x, char y, int color, int background, const char message[], char size);
 void integerprint(char x, char y, int color, int background,int integer, char size);
+
+typedef struct globaldata GlobalState;
+
+// System Specific functions
+void nextPage(GlobalState* globalData, int cursorPos);
+void printBSOD(void);
+void printMainMenu(GlobalState* globalData);
+void processDisplay(GlobalState* globalData);
 
 // depreciated
 void box(char x, char y, char high, char breth, int color);

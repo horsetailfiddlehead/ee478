@@ -42,6 +42,8 @@ extern "C" {
         Boolean keyFlag;
         Boolean displayedKey;
         int keyPress;
+        int cursorPos;
+        int mainMenuSpots[3]; // Find better way to do this
     } GlobalState;
 
 #ifdef	__cplusplus
