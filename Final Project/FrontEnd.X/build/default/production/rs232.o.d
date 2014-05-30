@@ -6,4 +6,5 @@ build/default/production/rs232.o:  \
 	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/globals.h  \
 	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/startup.h  \
 	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/interrupts.h  \
+	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/rfidReader.h  \
 

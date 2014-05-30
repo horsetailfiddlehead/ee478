@@ -29,6 +29,7 @@ extern "C" {
 #include "LCD.h"
 #include "startup.h"
 #include "interrupts.h"
+#include "rfidReader.h"
 
     enum _myBool {
         FALSE = 0, TRUE = 1
