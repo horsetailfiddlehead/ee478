@@ -75,7 +75,7 @@ int secretSounds[CODE_SIZE] = {118, 118, 132, 118, 99, 118};
 int secretCode[CODE_SIZE] = {6,6,6,4,2,0};
 short codeCounter = 0;
 
-// 4 Stars will make a BSOD happen
+// 6 Stars will make a BSOD happen
 short debugCount = 0;
 /*
  * Polls the keypad for a key press. The key is stored in the global data struct given.

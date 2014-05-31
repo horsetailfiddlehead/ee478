@@ -14,8 +14,9 @@ void rs232Setup1() {
     ANSELCbits.ANSC7 = 0;
 
     //  Configure UART, 115200 baud with 20MHz clock.
-    Open1USART(USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 10);
-
+    //Open1USART(USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 10);
+    //  Configure UART, 9600 baud with 20MHz clock.
+    Open1USART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH,129);
     // Enable Priority
     RCONbits.IPEN = 1;
     // High priority receive interrupt
@@ -34,7 +35,7 @@ void rs232Setup2() {
     ANSELDbits.ANSD7 = 0;
 
     //  Configure UART, 115200 baud with 20MHz clock.
-    Open2USART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 10);
+    Open2USART(USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 129);
 
     // Enable Priority
     RCONbits.IPEN = 1;
@@ -50,15 +51,15 @@ void readBytesUntil(char* myStorage, char stopChar, int size) {
     int i = 0;
     char message;
 
-    while (!DataRdy1USART());
+    while (!DataRdy2USART());
     message = getc1USART();
-    Write1USART(message); //echo char back
+    Write2USART(message); //echo char back
     while (message != stopChar && i < (size - 1)) {
         myStorage[i] = message;
         i++;
-        while (!DataRdy1USART());
-        message = getc1USART();
-        Write1USART(message);
+        while (!DataRdy2USART());
+        message = getc2USART();
+        Write2USART(message);
     }
 
     myStorage[i] = '\0';

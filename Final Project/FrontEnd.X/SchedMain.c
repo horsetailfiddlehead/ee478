@@ -17,6 +17,8 @@
 // Function prototypes
 void systemSetup(GlobalState *data);
 void setupPWM(void);
+void setXbeeNetwork(void);
+void setupXbee(void);
 
 
 // PIC configuration settings
@@ -35,14 +37,37 @@ void setupPWM(void);
  */
 
 
+void rcISR(void) {
+    // The input character from UART2 (the RFID reader)
+    unsigned char input;
+
+    // Don't have to wait for data available if we are in ISR
+    input = getc1USART();
+    
+    putc2USART(input);
+
+    // Clear interrupt
+    PIR1bits.RC1IF = 0;
+}
+
 
 void main() {
+    short flag = 0;
     GlobalState globalData;
     systemSetup(&globalData);
 
+
     // lcd test code
     printMainMenu(&globalData);
-
+/*
+    while (1) {
+        if (flag == 0) {
+            setXbeeNetwork();
+            flag = 1;
+        }
+    }
+  */
+    
     while (1) {
         if (!globalData.keyFlag) {
             keypad(&globalData);
@@ -57,14 +82,18 @@ void main() {
         }
     }
     return;
+    
+
 }
 
 void systemSetup(GlobalState *data) {
     initSPI1();
     initLCD();
     rs232Setup2(); // configure USART2
+    rs232Setup1(); // configure USART1
     keypadSetup(); // configure keypad
     setupPWM();
+    //setupXbee();
 
     data->displayPage = 0;
     data->keyFlag = FALSE;
@@ -93,4 +122,58 @@ void setupPWM(void) {
     PIR5 = 0b00000000; // clear timer interrupt flag
     TRISBbits.RB5 = 1; //disable PWM output
     SetDCPWM4(50); // Square wave
+}
+
+void setupXbee(void) {
+    TRISAbits.RA1 = 0;
+    ANSELAbits.ANSA1 = 0;
+    PORTAbits.RA1 = 1;
+}
+
+void setXbeeNetwork(void) {
+    /*
+    // Tx set low
+    TXSTA1bits.TXEN1 = 0;
+    PORTCbits.RC6 = 0;
+
+    //Reset Pin- configure these to be outputs
+    //PORTBbits.RB7 = 0;
+    PORTAbits.RA1 = 0;
+    // Delay 10 Instruction cycles, pulse must be at least 200ns;
+    Delay10TCY();
+    //PORTBbits.RB7 = 1;
+    PORTAbits.RA1 = 1;
+    Delay10TCY();
+    // Reenable Tx
+    TXSTA1bits.TXEN1 = 0;
+    */
+    //putrs2USART("ATID\r\n");
+    putrs2USART("+++\r\n");
+    while(Busy2USART());
+    Delay10KTCYx(1);
+    putc1USART('+');
+    while(Busy1USART());
+    Delay10KTCYx(1);
+    putc1USART('+');
+    while(Busy1USART());
+    Delay10KTCYx(1);
+    putc1USART('+');
+    while(Busy1USART());
+    Delay10KTCYx(1);
+    // Config Commands
+    //Carriage return
+    // Config Commands
+    //Carriage return
+    // etc
+
+    // Exit
+    // ATWR,AC,CN - Write changes to nonVolatile memory
+            // ATAC - Apply changes
+            // ATCN - Exit config mode
+    //Carriage return
+    //puts1USART((const far rom char*)"ATWR,AR,CN\r");
+    putrs2USART("ATCN\r\n");
+    while(Busy2USART());
+    putrs1USART("ATCN\r");
+    while(Busy1USART());
 }
