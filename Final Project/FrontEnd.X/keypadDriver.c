@@ -63,13 +63,55 @@ int checkForInput(void);
 //
 //}
 
+#define CODE_SIZE 6
+#define NUM_KEYS 16
+#define DEBUG_BSOD 6
+
+// Sounds range from 4600Hz to 1600 Hz
+int keySounds[NUM_KEYS] = {81, 141, 74, 194, 67, 119, 91, 97, 173, 110, 86, 129, 70, 155, 103, 77};
+
+// EEDEGF# (1318.51), (1318.51) (2349.32) (1318.51) (3135.96) (2959.96)
+int secretSounds[CODE_SIZE] = {118, 118, 132, 118, 99, 118};
+int secretCode[CODE_SIZE] = {6,6,6,4,2,0};
+short codeCounter = 0;
+
+// 4 Stars will make a BSOD happen
+short debugCount = 0;
 /*
  * Polls the keypad for a key press. The key is stored in the global data struct given.
  */
 void keypad(GlobalState *gData) {
     gData->keyPress = checkForInput();
-    if (gData->keyPress >= 0) {
+    if (gData->keyPress >= 0 && !gData->displayedKey) {
         gData->keyFlag = TRUE;
+        // Weak debounce
+        Delay10TCYx(2);
+
+        if (gData->keyPress == 14) {
+            debugCount++;
+        } else {
+            debugCount = 0;
+        }
+
+        if (debugCount == DEBUG_BSOD) {
+            gData->keyPress = 0xFF;
+        }
+
+        if (gData->keyPress == secretCode[codeCounter]) {
+            PR4 = secretSounds[codeCounter];
+            codeCounter = (codeCounter + 1) % CODE_SIZE;
+        } else {
+            // Set tone
+            PR4 = keySounds[gData->keyPress];
+            codeCounter = 0;
+        }
+
+        // Beep on
+        TRISBbits.RB5 = 0;
+    } else if (gData->keyPress < 0) {
+        gData->displayedKey = FALSE;
+        // Beep off
+        TRISBbits.RB5 = 1;
     }
 }
 

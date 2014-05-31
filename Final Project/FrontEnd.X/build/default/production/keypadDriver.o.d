@@ -1,10 +1,10 @@
 build/default/production/keypadDriver.o:  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/keypadDriver.c  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/rs232.h  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/LCD.h  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/keypadDriver.h  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/globals.h  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/startup.h  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/interrupts.h  \
-	D:/School/Senior/Spring/capstone/ee478/Final\ Project/FrontEnd.X/rfidReader.h  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/keypadDriver.c  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/rs232.h  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/LCD.h  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/keypadDriver.h  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/globals.h  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/startup.h  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/interrupts.h  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/rfidReader.h  \
 

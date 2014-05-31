@@ -17,6 +17,7 @@ extern "C" {
 #include <usart.h>
 #include <spi.h>
 #include <delays.h>
+#include <pwm.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +40,10 @@ extern "C" {
     typedef struct globaldata {
         short displayPage;
         Boolean keyFlag;
+        Boolean displayedKey;
         int keyPress;
+        int cursorPos;
+        int mainMenuSpots[3]; // Find better way to do this
     } GlobalState;
 
 #ifdef	__cplusplus
