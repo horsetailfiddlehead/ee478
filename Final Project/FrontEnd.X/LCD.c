@@ -634,6 +634,10 @@ void printBuildCard1(GlobalState *globalData) {
     // first page of build card
     clean(RED);
     prints(0, 0, BLACK, RED, "It looks like you want to build a card.", 1);
+    prints(0, 16, BLACK, RED, "Available cards:", 1);
+    
+    // get the inventory of cards
+    strcpypgm2ram(readerData.userInput2, "inventory"); // this is not "safe" or good pointer use
     prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
 }
 

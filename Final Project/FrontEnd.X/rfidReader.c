@@ -9,10 +9,6 @@
 
 #include "globals.h"
 
-#define READER_INPUT_LENGTH 64	// size of input buffer
-#define UID_SIZE 24
-#define MAX_UIDS 3  // UID storage size
-
 /********Command constants***********************/
 #define START 01
 #define FLAGS 0304
@@ -51,28 +47,28 @@ void interrupt_at_high_vector(void) {
 /****************************************/
 // These should be in a global structure
 
-typedef struct {
-    // User input
-    char userInput2[READER_INPUT_LENGTH];
-
-    // Read UIDs, length can be optimized
-    // Currently can read only 3 UIDs before we get errors based on the size
-    // of the array
-    char readUID[MAX_UIDS][UID_SIZE];
-
-    // Current spot in the array processing for input from RFID
-    int inputSpot2;
-
-    // The UID that we are reading. (first, second, etc)
-    int numUID;
-
-    // Weather or not we are in a block of square brackets
-    short nextBlock;
-
-    // If the user input was an inventory command
-    short invCom;
-} RFIDDriver;
-static RFIDDriver readerData;
+//typedef struct {
+//    // User input
+//    char userInput2[READER_INPUT_LENGTH];
+//
+//    // Read UIDs, length can be optimized
+//    // Currently can read only 3 UIDs before we get errors based on the size
+//    // of the array
+//    char readUID[MAX_UIDS][UID_SIZE];
+//
+//    // Current spot in the array processing for input from RFID
+//    int inputSpot2;
+//
+//    // The UID that we are reading. (first, second, etc)
+//    int numUID;
+//
+//    // Weather or not we are in a block of square brackets
+//    short nextBlock;
+//
+//    // If the user input was an inventory command
+//    short invCom;
+//} RFIDDriver;
+RFIDDriver readerData;
 
 /****************************************/
 
@@ -140,13 +136,13 @@ void setupRead(void);
 void processRFIDCmd() {
     int i;
 
-    // Controls the RESET for the RFID reader
-    TRISBbits.RB5 = 0;
-    ANSELBbits.ANSB5 = 0;
+//    // Controls the RESET for the RFID reader
+//    TRISBbits.RB5 = 0;
+//    ANSELBbits.ANSB5 = 0;
 
     // Set up UART to computer and RFID
-    rs232Setup1(); // sets pc RX=C7, tx=C6
-    rs232Setup2(); // sets dlp rx=b7, tx=b6
+//    rs232Setup1(); // sets pc RX=C7, tx=C6
+//    rs232Setup2(); // sets dlp rx=b7, tx=b6
 
     // Start the RFID with a reset
     resetRFID();
@@ -154,11 +150,11 @@ void processRFIDCmd() {
     // Get RFID attention
     sendToRFID("0");
 
-    while (1) {
-        // Read user input from computer
-        readBytesUntil(readerData.userInput2, '\r', READER_INPUT_LENGTH);
-        putc1USART('\r');
-        putc1USART('\n');
+//    while (1) {
+//        // Read user input from computer
+//        readBytesUntil(readerData.userInput2, '\r', READER_INPUT_LENGTH);
+//        putc1USART('\r');
+//        putc1USART('\n');
 
         // Ping command
         if (strcmppgm2ram(readerData.userInput2, "ping") == 0) {
@@ -196,7 +192,7 @@ void processRFIDCmd() {
         } else {
             resetRFID();
         }
-    }
+//    }
     return;
 }
 
@@ -241,6 +237,7 @@ void RFIDSetup() {
     readerData.nextBlock = 0;
     readerData.invCom = 0;
 
-    sendToRFID("0");
-    setupRead();
+    rs232Setup2();
+//    sendToRFID("0");
+//    setupRead();
 }
