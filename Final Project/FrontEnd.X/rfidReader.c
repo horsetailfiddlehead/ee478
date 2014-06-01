@@ -173,12 +173,13 @@ void processRFIDCmd() {
             while (readerData.invCom == 1);
 
             // Print all the UIDs
-            for (i = 0; i < readerData.numUID; i++) {
-                puts1USART(readerData.readUID[i]);
-                putc1USART('\r');
-                while (Busy1USART());
-                putc1USART('\n');
-            }
+//            for (i = 0; i < readerData.numUID; i++) {
+//                puts1USART(readerData.readUID[i]);
+//                putc1USART('\r');
+//                while (Busy1USART());
+//                putc1USART('\n');
+//            }
+            readerData.availableUIDs = 1;
 
             // Reset the number of UIDs read
             readerData.numUID = 0;
@@ -236,6 +237,7 @@ void RFIDSetup() {
     readerData.numUID = 0;
     readerData.nextBlock = 0;
     readerData.invCom = 0;
+    readerData.availableUIDs = FALSE;
 
     rs232Setup2();
 //    sendToRFID("0");

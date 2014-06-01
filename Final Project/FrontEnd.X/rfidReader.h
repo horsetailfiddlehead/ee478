@@ -41,6 +41,9 @@ typedef struct {
 
     // If the user input was an inventory command
     short invCom;
+
+    // Are the UIDs available to read?
+    int availableUIDs;
 } RFIDDriver;
 extern RFIDDriver readerData;
 
