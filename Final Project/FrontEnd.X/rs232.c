@@ -1,4 +1,3 @@
-`
 //#include "rs232.h"
 //#include <p18f25k22.h>
 //#include <usart.h>
