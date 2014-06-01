@@ -241,5 +241,6 @@ void RFIDSetup() {
     readerData.nextBlock = 0;
     readerData.invCom = 0;
 
+    sendToRFID("0");
     setupRead();
 }

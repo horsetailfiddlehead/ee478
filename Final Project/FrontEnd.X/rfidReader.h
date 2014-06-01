@@ -12,9 +12,10 @@
 extern "C" {
 #endif
 
-void resetRFID(void);
-void RFIDSetup(void);
-void processRFIDCmd(void);
+
+    void resetRFID(void);
+    void RFIDSetup(void);
+    void processRFIDCmd(void);
 
 #ifdef	__cplusplus
 }

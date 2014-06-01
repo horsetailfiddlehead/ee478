@@ -25,6 +25,7 @@
       <itemPath>rs232.c</itemPath>
       <itemPath>startup.c</itemPath>
       <itemPath>LCD.c</itemPath>
+      <itemPath>rfidReader.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

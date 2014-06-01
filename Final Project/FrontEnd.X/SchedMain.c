@@ -11,7 +11,6 @@
 
 // included files for each sw function
 #include "globals.h"
-#include "rs232.h"
 
 
 // Function prototypes
@@ -20,6 +19,7 @@ void setupPWM(void);
 void setXbeeNetwork(void);
 void setupXbee(void);
 
+extern RFIDDriver readerData;
 
 // PIC configuration settings
 /***************Clocking set up *********************/
@@ -36,19 +36,73 @@ void setupXbee(void);
  * 
  */
 
+#pragma code high_vector=0x08
+
+void interrupt_at_high_vector(void) {
+    _asm GOTO rcISR _endasm
+}
+#pragma code
+
+#pragma interrupt rcISR
+/****************************************/
 
 void rcISR(void) {
     // The input character from UART2 (the RFID reader)
     unsigned char input;
 
     // Don't have to wait for data available if we are in ISR
-    input = getc1USART();
-    
-    putc2USART(input);
+    input = getc2USART();
+
+    // If we are processing an Inventory command
+    if (readerData.invCom == 1) {
+
+        // A 'D' character outside of square brackets indicates that the inventory
+        // command has finished sending
+        if (input == 'D' && readerData.nextBlock == 0) {
+            // Reset the inventory command flag
+            readerData.invCom = 0;
+
+            // Begin reading what is inside a block of square brackets
+        } else if (input == '[') {
+            // Go to the beginning of the array, indicate that a block is being read
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 1;
+
+            // If we are at the end of a block of square brackets
+        } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
+            // If there is a comma as the first character inside a block, then
+            // discard what is read.  Otherwise, terminate the string and increment
+            // the number of UIDs successfully read.
+            if (readerData.readUID[readerData.numUID][0] != ',') {
+                readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
+                readerData.numUID++;
+            }
+
+            // Block of square brackets has be read, set the indicator to zero
+            readerData.nextBlock = 0;
+
+            // Put anything inside of a square bracket into the UID array
+        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < READER_INPUT_LENGTH && readerData.numUID < MAX_UIDS) {
+            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
+            readerData.inputSpot2++;
+
+            // If we are outside of a block, reset read position and ensure that the block
+            // state indicator is zero.
+        } else {
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 0;
+        }
+
+    } else {
+        // Echo back typed character
+        Write1USART(input);
+    }
 
     // Clear interrupt
-    PIR1bits.RC1IF = 0;
+    PIR3bits.RC2IF = 0;
 }
+
+/****************************************************/
 
 
 void main() {

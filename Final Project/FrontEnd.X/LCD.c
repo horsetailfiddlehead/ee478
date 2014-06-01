@@ -640,7 +640,7 @@ void nextPage(GlobalState* globalData, int cursorPos) {
             globalData->displayPage = 3;
             // Print build cards menu
             clean(RED);
-            prints(0, 0, BLACK, RED, "Nothing here. Press B to go back.", 1);
+            prints(0, 0, BLACK, RED, "It looks like you want to build a card. Press B to go back.", 1);
             break;
         default:
             // BSOD
