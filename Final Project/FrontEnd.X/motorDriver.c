@@ -4,6 +4,7 @@
 
 #include "globals.h"
 
+#define ADC_PRECISION 5 // precision of the ADC, to allow motor settling
 void adjustMotor(int direction);
 
 void motorSetup() {
@@ -27,28 +28,31 @@ void motorSetup() {
     Delay10TCYx(5);
 }
 
+/*
+ * move the motor to the given location
+ */
 void move(int location) {
-    static int loc;
     int posn = 0;
-    ConvertADC();
-    while (BusyADC());
-    loc = ReadADC();
-    while (0 != posn) {
+    ADCON0bits.GO = 1; //ConvertADC();
+    while (0 == ADCON0bits.GO); // spin while busy
+    posn = ((((unsigned int)ADRESH)<<8)|(ADRESL) - location) / ADC_PRECISION;
+    while (0 != posn) { // move forward or back depending on the location
         if (posn < 0) {
             adjustMotor(1);
         } else {
             adjustMotor(0);
         }
-        Delay10TCY(2);
-        ConvertADC;
-        while (BusyADC());
-        loc = ReadADC();
+        Delay100TCYx(1);
+        ADCON0bits.GO = 1; //ConvertADC(); // determine new location and if any change is needed
+        while (0 == ADCON0bits.GO); // spin while busy
+        posn = ((((unsigned int)ADRESH)<<8)|(ADRESL) - location) / ADC_PRECISION;
     }
-    PORTDbits.RD6 = 1;  // lock the reader
+    PORTDbits.RD6 = 1; // lock the reader
     PORTDbits.RD7 = 1;
 }
 
 // moves the motor forward (1) or backwards(0)
+
 void adjustMotor(int direction) {
     PORTDbits.RD6 = direction;
     PORTDbits.RD7 = !direction;

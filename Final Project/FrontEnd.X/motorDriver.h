@@ -13,6 +13,7 @@ extern "C" {
 #endif
 
     void motorSetup(void);
+    void move(int location);
 
 
 #ifdef	__cplusplus
