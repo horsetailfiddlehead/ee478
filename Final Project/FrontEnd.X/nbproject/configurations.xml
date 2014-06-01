@@ -11,6 +11,7 @@
       <itemPath>LCD.h</itemPath>
       <itemPath>interrupts.h</itemPath>
       <itemPath>rfidReader.h</itemPath>
+      <itemPath>motorDriver.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -26,6 +27,7 @@
       <itemPath>startup.c</itemPath>
       <itemPath>LCD.c</itemPath>
       <itemPath>rfidReader.c</itemPath>
+      <itemPath>motorDriver.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -110,6 +112,7 @@
         <property key="stack-analysis-mplink" value="false"/>
       </C18LanguageToolchain>
       <PICkit3PlatformTool>
+        <property key="firmware.download.all" value="false"/>
       </PICkit3PlatformTool>
     </conf>
   </confs>

@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=SchedMain.c keypadDriver.c rs232.c startup.c LCD.c rfidReader.c
+SOURCEFILES_QUOTED_IF_SPACED=SchedMain.c keypadDriver.c rs232.c startup.c LCD.c rfidReader.c motorDriver.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/SchedMain.o ${OBJECTDIR}/keypadDriver.o ${OBJECTDIR}/rs232.o ${OBJECTDIR}/startup.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/rfidReader.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/SchedMain.o.d ${OBJECTDIR}/keypadDriver.o.d ${OBJECTDIR}/rs232.o.d ${OBJECTDIR}/startup.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/rfidReader.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/SchedMain.o ${OBJECTDIR}/keypadDriver.o ${OBJECTDIR}/rs232.o ${OBJECTDIR}/startup.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/rfidReader.o ${OBJECTDIR}/motorDriver.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/SchedMain.o.d ${OBJECTDIR}/keypadDriver.o.d ${OBJECTDIR}/rs232.o.d ${OBJECTDIR}/startup.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/rfidReader.o.d ${OBJECTDIR}/motorDriver.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/SchedMain.o ${OBJECTDIR}/keypadDriver.o ${OBJECTDIR}/rs232.o ${OBJECTDIR}/startup.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/rfidReader.o
+OBJECTFILES=${OBJECTDIR}/SchedMain.o ${OBJECTDIR}/keypadDriver.o ${OBJECTDIR}/rs232.o ${OBJECTDIR}/startup.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/rfidReader.o ${OBJECTDIR}/motorDriver.o
 
 # Source Files
-SOURCEFILES=SchedMain.c keypadDriver.c rs232.c startup.c LCD.c rfidReader.c
+SOURCEFILES=SchedMain.c keypadDriver.c rs232.c startup.c LCD.c rfidReader.c motorDriver.c
 
 
 CFLAGS=
@@ -128,6 +128,13 @@ ${OBJECTDIR}/rfidReader.o: rfidReader.c  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d ${OBJECTDIR}/rfidReader.o 
 	@${FIXDEPS} "${OBJECTDIR}/rfidReader.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
+${OBJECTDIR}/motorDriver.o: motorDriver.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/motorDriver.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/motorDriver.o   motorDriver.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/motorDriver.o 
+	@${FIXDEPS} "${OBJECTDIR}/motorDriver.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
 else
 ${OBJECTDIR}/SchedMain.o: SchedMain.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
@@ -170,6 +177,13 @@ ${OBJECTDIR}/rfidReader.o: rfidReader.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/rfidReader.o   rfidReader.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/rfidReader.o 
 	@${FIXDEPS} "${OBJECTDIR}/rfidReader.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
+	
+${OBJECTDIR}/motorDriver.o: motorDriver.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/motorDriver.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/motorDriver.o   motorDriver.c 
+	@${DEP_GEN} -d ${OBJECTDIR}/motorDriver.o 
+	@${FIXDEPS} "${OBJECTDIR}/motorDriver.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
 	
 endif
 

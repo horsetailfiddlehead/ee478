@@ -23,6 +23,7 @@ extern "C" {
 #include <string.h>
 #include "usart.h"
 #include "delays.h"
+#include <adc.h>
 
     // our headers
 #include "rs232.h"
@@ -31,6 +32,7 @@ extern "C" {
 #include "startup.h"
 #include "interrupts.h"
 #include "rfidReader.h"
+#include "motorDriver.h"
 
     enum _myBool {
         FALSE = 0, TRUE = 1
