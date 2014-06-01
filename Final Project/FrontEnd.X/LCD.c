@@ -3,7 +3,7 @@
 #include "LCD.h"
 
 #pragma idata myFont
-const char  font[255][5] = {
+const char font[255][5] = {
     {0x00, 0x00, 0x00, 0x00, 0x00},
     {0x3E, 0x5B, 0x4F, 0x5B, 0x3E},
     {0x3E, 0x6B, 0x4F, 0x6B, 0x3E},
@@ -262,28 +262,30 @@ const char  font[255][5] = {
 };
 #pragma idata
 
-void delay(int x){
+void delay(int x) {
     int j = 0;
-    for(j=0;j<x;j++);
+    for (j = 0; j < x; j++);
 }
 
-void sendcomand(char input){
+void sendcomand(char input) {
     int j = 0;
     PORTC &= ~A0;
     PORTB &= ~CS;
     SSP1BUF = input;
-    for(j=0;j<1;j++);
+    for (j = 0; j < 1; j++);
     PORTB |= CS;
 }
-void senddata(char input){
+
+void senddata(char input) {
     int j = 0;
     PORTC |= A0;
     PORTB &= ~CS;
     SSP1BUF = input;
-    for(j=0;j<1;j++);
+    for (j = 0; j < 1; j++);
     PORTB |= CS;
 }
-void SetPix(char x, char y, int color){
+
+void SetPix(char x, char y, int color) {
     char Hig = 0;
     char Low = color & 0x00ff;
     color >>= 8;
@@ -291,15 +293,15 @@ void SetPix(char x, char y, int color){
 
     sendcomand(ST7735_CASET); // Column addr set
     senddata(0x00);
-    senddata(x);     // XSTART
+    senddata(x); // XSTART
     senddata(0x00);
-    senddata(x+1);     // XEND
+    senddata(x + 1); // XEND
 
     sendcomand(ST7735_RASET); // Row addr set
     senddata(0x00);
-    senddata(y);     // YSTART
+    senddata(y); // YSTART
     senddata(0x00);
-    senddata(y+1);     // YEND
+    senddata(y + 1); // YEND
 
     sendcomand(ST7735_RAMWR);
 
@@ -308,14 +310,14 @@ void SetPix(char x, char y, int color){
 }
 
 int customColor(int r, int g, int b) {
-   return RGB565(r,g,b);
+    return RGB565(r, g, b);
 }
 
 void drawBox(char x, char y, char height, char width, int border, int color) {
     border -= 1;
     drawBoxFill(x, y, border, width, color);
-    drawBoxFill(x+width - border, y, height, border, color);
-    drawBoxFill(x, y+height - border, border, width, color);
+    drawBoxFill(x + width - border, y, height, border, color);
+    drawBoxFill(x, y + height - border, border, width, color);
     drawBoxFill(x, y, height, border, color);
 }
 
@@ -328,27 +330,27 @@ void drawBoxFill(char x, char y, char height, char width, int color) {
 
     sendcomand(ST7735_CASET); // Column addr set
     senddata(0x00);
-    senddata(x);     // XSTART
+    senddata(x); // XSTART
     senddata(0x00);
-    senddata(x + width);     // XEND
+    senddata(x + width); // XEND
 
     sendcomand(ST7735_RASET); // Row addr set
     senddata(0x00);
-    senddata(y);     // YSTART
+    senddata(y); // YSTART
     senddata(0x00);
-    senddata(y + height);     // YEND
+    senddata(y + height); // YEND
 
     sendcomand(ST7735_RAMWR);
 
-    for(j=0;j <= width;j++){
-        for(i=0;i<=height;i++){
+    for (j = 0; j <= width; j++) {
+        for (i = 0; i <= height; i++) {
             senddata(Low);
             senddata(Hig);
         }
     }
 }
 
-void clean(int color){
+void clean(int color) {
 
     char Hig = 0;
     int x = 0;
@@ -359,68 +361,78 @@ void clean(int color){
 
     sendcomand(ST7735_CASET); // Column addr set
     senddata(0x00);
-    senddata(0);     // XSTART
+    senddata(0); // XSTART
     senddata(0x00);
-    senddata(V);     // XEND
+    senddata(V); // XEND
 
     sendcomand(ST7735_RASET); // Row addr set
     senddata(0x00);
-    senddata(0);     // YSTART
+    senddata(0); // YSTART
     senddata(0x00);
-    senddata(H);     // YEND
+    senddata(H); // YEND
 
     sendcomand(ST7735_RAMWR);
 
-    for(x=0;x<V;x++){
-        for(y=0;y<H;y++){
+    for (x = 0; x < V; x++) {
+        for (y = 0; y < H; y++) {
             senddata(Low);
             senddata(Hig);
         }
     }
 }
-void initLCD(){
+
+void initLCD() {
     PORTB &= ~CS;
     delay(0);
-//    PORTC |= RE;
-//    delay(100);
-//    PORTC &= ~RE;
-//    delay(100);
-//    PORTC |= RE;
+    //    PORTC |= RE;
+    //    delay(100);
+    //    PORTC &= ~RE;
+    //    delay(100);
+    //    PORTC |= RE;
     delay(10000);
-    sendcomand(ST7735_SWRESET);                         //  1: Software reset, 0 args, w/delay 150ms 0x01
+    sendcomand(ST7735_SWRESET); //  1: Software reset, 0 args, w/delay 150ms 0x01
     delay(1000);
-    sendcomand(ST7735_SLPOUT);                          //  2: Out of sleep mode, 0 args, w/delay 500ms 0x11
+    sendcomand(ST7735_SLPOUT); //  2: Out of sleep mode, 0 args, w/delay 500ms 0x11
     delay(10000);
-    sendcomand(ST7735_FRMCTR1);                         //  3: Frame rate ctrl - normal mode) 3 args: 0xb1
-      senddata(0x01); senddata(0x2C); senddata(0x2D);   //     Rate = fosc/(1x2+40) * (LINE+2C+2D)
-    sendcomand(ST7735_FRMCTR2);                         //  4: Frame rate control - idle mode) 3 args: 0xb2
-      senddata(0x01); senddata(0x2C); senddata(0x2D);   //     Rate = fosc/(1x2+40) * (LINE+2C+2D)
-    sendcomand(ST7735_FRMCTR3);                         //  5: Frame rate ctrl - partial mode) 6 args: 0xb3
-      senddata(0x01); senddata(0x2C); senddata(0x2D);   //     Dot inversion mode
-      senddata(0x01); senddata(0x2C); senddata(0x2D);   //     Line inversion mode
-    sendcomand(ST7735_INVCTR);                          //  6: Display inversion ctrl) 1 arg) no delay: 0xb4
-      senddata(0x07);                                   //     No inversion
-    sendcomand(ST7735_PWCTR1);                          //  7: Power control) 3 args) no delay: 0xc0
-      senddata(0xA2);
-      senddata(0x02);                                   //     -4.6V
-      senddata(0x84);                                   //     AUTO mode
-    sendcomand(ST7735_PWCTR2);                          //  8: Power control) 1 arg) no delay: 0xc1
-      senddata(0xC5);                                   //     VGH25 = 2.4C VGSEL = -10 VGH = 3 * AVDD
-    sendcomand(ST7735_PWCTR3);                          //  9: Power control) 2 args) no delay: 0xc2
-      senddata(0x0A);                                   //     Opamp current small
-      senddata(0x00);                                   //     Boost frequency
-    sendcomand(ST7735_PWCTR4);                          // 10: Power control) 2 args) no delay:
-      senddata(0x8A);                                   //     BCLK/2) Opamp current small & Medium low
-      senddata(0x2A);
-    sendcomand(ST7735_PWCTR5);                          // 11: Power control) 2 args) no delay:
-      senddata(0x8A); senddata(0xEE);
-    sendcomand(ST7735_VMCTR1);                          // 12: Power control) 1 arg) no delay:
-      senddata(0x0E);
-    sendcomand(ST7735_INVOFF);                          // 13: Don't invert display) no args) no delay 0x20
-    sendcomand(ST7735_MADCTL);                          // 14: Memory access control (directions)) 1 arg:
-      senddata(0xC8);                                   //     row addr/col addr); bottom to top refresh
-    sendcomand(ST7735_COLMOD);                          // 15: set color mode); 1 arg); no delay:
-      senddata(0x05);                                   //     16-bit color
+    sendcomand(ST7735_FRMCTR1); //  3: Frame rate ctrl - normal mode) 3 args: 0xb1
+    senddata(0x01);
+    senddata(0x2C);
+    senddata(0x2D); //     Rate = fosc/(1x2+40) * (LINE+2C+2D)
+    sendcomand(ST7735_FRMCTR2); //  4: Frame rate control - idle mode) 3 args: 0xb2
+    senddata(0x01);
+    senddata(0x2C);
+    senddata(0x2D); //     Rate = fosc/(1x2+40) * (LINE+2C+2D)
+    sendcomand(ST7735_FRMCTR3); //  5: Frame rate ctrl - partial mode) 6 args: 0xb3
+    senddata(0x01);
+    senddata(0x2C);
+    senddata(0x2D); //     Dot inversion mode
+    senddata(0x01);
+    senddata(0x2C);
+    senddata(0x2D); //     Line inversion mode
+    sendcomand(ST7735_INVCTR); //  6: Display inversion ctrl) 1 arg) no delay: 0xb4
+    senddata(0x07); //     No inversion
+    sendcomand(ST7735_PWCTR1); //  7: Power control) 3 args) no delay: 0xc0
+    senddata(0xA2);
+    senddata(0x02); //     -4.6V
+    senddata(0x84); //     AUTO mode
+    sendcomand(ST7735_PWCTR2); //  8: Power control) 1 arg) no delay: 0xc1
+    senddata(0xC5); //     VGH25 = 2.4C VGSEL = -10 VGH = 3 * AVDD
+    sendcomand(ST7735_PWCTR3); //  9: Power control) 2 args) no delay: 0xc2
+    senddata(0x0A); //     Opamp current small
+    senddata(0x00); //     Boost frequency
+    sendcomand(ST7735_PWCTR4); // 10: Power control) 2 args) no delay:
+    senddata(0x8A); //     BCLK/2) Opamp current small & Medium low
+    senddata(0x2A);
+    sendcomand(ST7735_PWCTR5); // 11: Power control) 2 args) no delay:
+    senddata(0x8A);
+    senddata(0xEE);
+    sendcomand(ST7735_VMCTR1); // 12: Power control) 1 arg) no delay:
+    senddata(0x0E);
+    sendcomand(ST7735_INVOFF); // 13: Don't invert display) no args) no delay 0x20
+    sendcomand(ST7735_MADCTL); // 14: Memory access control (directions)) 1 arg:
+    senddata(0xC8); //     row addr/col addr); bottom to top refresh
+    sendcomand(ST7735_COLMOD); // 15: set color mode); 1 arg); no delay:
+    senddata(0x05); //     16-bit color
     sendcomand(ST7735_GMCTRP1); // Gamma correction
     senddata(0x0f);
     senddata(0x1a);
@@ -456,50 +468,53 @@ void initLCD(){
     senddata(0x03);
     senddata(0x10);
 
-    sendcomand(ST7735_NORON);                           //  3: Normal display on, no args, w/delay 10ms 0x13
+    sendcomand(ST7735_NORON); //  3: Normal display on, no args, w/delay 10ms 0x13
     delay(100);
-    sendcomand(ST7735_DISPON);                          //  4: Main screen turn on, no args w/delay 100ms 0x29
+    sendcomand(ST7735_DISPON); //  4: Main screen turn on, no args w/delay 100ms 0x29
     delay(1000);
 }
-void ASCII(char x, char y, int color, int background, char letter, char size){
+
+void ASCII(char x, char y, int color, int background, char letter, char size) {
     char data;
     char q = 0;
     char z = 0;
     char d = 0;
     char b = 0;
 
-    for(q=0;q<5;q++){
+    for (q = 0; q < 5; q++) {
         data = font[letter][q];
-        for(z=0;z<8*size;z++){
-            if((data&1)!=0){
-                for(d=0; d<size;d++){
-                    for(b=0; b<size;b++){
-                        SetPix(x+(q*size)+d,y+(z*size)+b,color);
+        for (z = 0; z < 8 * size; z++) {
+            if ((data & 1) != 0) {
+                for (d = 0; d < size; d++) {
+                    for (b = 0; b < size; b++) {
+                        SetPix(x + (q * size) + d, y + (z * size) + b, color);
                     }
                 }
-            }else{
-                for(d=0; d<size;d++){
-                    for(b=0; b<size;b++){
-                        SetPix(x+(q*size)+d,y+(z*size)+b,background);
+            } else {
+                for (d = 0; d < size; d++) {
+                    for (b = 0; b < size; b++) {
+                        SetPix(x + (q * size) + d, y + (z * size) + b, background);
                     }
                 }
             }
-            data>>=1;
+            data >>= 1;
         }
     }
 }
-void prints(char x, char y, int color, int background, const char messageOld[], char size){
+
+void prints(char x, char y, int color, int background, const char messageOld[], char size) {
     const far rom char* message = (const far rom char*) messageOld;
-    while (*message){
-        ASCII(x,y,color,background,*message++, size);
-        x+=6*size;
-        if(x>120){
-            x=0;
-            y+=8*size;
+    while (*message) {
+        ASCII(x, y, color, background, *message++, size);
+        x += 6 * size;
+        if (x > 120) {
+            x = 0;
+            y += 8 * size;
         }
     }
 }
-void integerprint(char x, char y, int color, int background,int integer, char size){
+
+void integerprint(char x, char y, int color, int background, int integer, char size) {
     unsigned char tenthousands = 0;
     unsigned char thousands = 0;
     unsigned char hundreds = 0;
@@ -507,26 +522,26 @@ void integerprint(char x, char y, int color, int background,int integer, char si
     unsigned char ones = 0;
     if (integer >= 10000) {
         tenthousands = integer / 10000;
-        ASCII(x,y,color,background,tenthousands+48, size);
+        ASCII(x, y, color, background, tenthousands + 48, size);
     }
     if (integer >= 1000) {
-        thousands = ((integer - tenthousands*10000)) / 1000;
-        x+=6;
-        ASCII(x,y,color,background,thousands+48, size);
+        thousands = ((integer - tenthousands * 10000)) / 1000;
+        x += 6;
+        ASCII(x, y, color, background, thousands + 48, size);
     }
     if (integer >= 100) {
-        hundreds = (((integer - tenthousands*10000) - thousands*1000)-1) / 100;
-        x+=6;
-        ASCII(x,y,color,background,hundreds+48, size);
+        hundreds = (((integer - tenthousands * 10000) - thousands * 1000) - 1) / 100;
+        x += 6;
+        ASCII(x, y, color, background, hundreds + 48, size);
     }
     if (integer >= 10) {
-        tens=(integer%100)/10;
-        x+=6;
-        ASCII(x,y,color,background,tens+48, size);
+        tens = (integer % 100) / 10;
+        x += 6;
+        ASCII(x, y, color, background, tens + 48, size);
     }
-    ones=integer%10;
-    x+=6;
-    ASCII(x,y,color,background,ones+48, size);
+    ones = integer % 10;
+    x += 6;
+    ASCII(x, y, color, background, ones + 48, size);
 }
 
 void processDisplay(GlobalState* globalData) {
@@ -594,7 +609,7 @@ void printMainMenu(GlobalState* globalData) {
     prints(35, globalData->mainMenuSpots[0], WHITE, BLUE, "Single Player", 1);
     prints(35, globalData->mainMenuSpots[1], WHITE, BLUE, "Multiplayer", 1);
     prints(35, globalData->mainMenuSpots[2], WHITE, BLUE, "Build Cards", 1);
-    prints(0, H-8, WHITE, BLUE, "2-UP,8-DOWN,D-ENTER", 1);
+    prints(0, H - 8, WHITE, BLUE, "2-UP,8-DOWN,D-ENTER", 1);
     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">", 1);
 }
 
@@ -602,7 +617,7 @@ void printBSOD() {
     // Beep off
     TRISBbits.RB5 = 1;
 
-    drawBoxFill(30,39,8,60,GRAY);
+    drawBoxFill(30, 39, 8, 60, GRAY);
     prints(35, 40, BLUE, GRAY, " Windows ", 1);
 
     prints(0, 50, WHITE, BLUE, "An error has occurred,", 1);
@@ -613,6 +628,13 @@ void printBSOD() {
 
     prints(10, 114, WHITE, BLUE, "Dumping memory...", 1);
     while (1);
+}
+
+void printBuildCard1(GlobalState *globalData) {
+    // first page of build card
+    clean(RED);
+    prints(0, 0, BLACK, RED, "It looks like you want to build a card.", 1);
+    prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
 }
 
 void nextPage(GlobalState* globalData, int cursorPos) {
@@ -639,8 +661,7 @@ void nextPage(GlobalState* globalData, int cursorPos) {
         case 3:
             globalData->displayPage = 3;
             // Print build cards menu
-            clean(RED);
-            prints(0, 0, BLACK, RED, "It looks like you want to build a card. Press B to go back.", 1);
+            printBuildCard1(globalData);
             break;
         default:
             // BSOD
@@ -652,13 +673,14 @@ void nextPage(GlobalState* globalData, int cursorPos) {
 }
 
 // Depreciated
-void box(char x, char y, char high, char breth, int color){
+
+void box(char x, char y, char high, char breth, int color) {
     char s = 0;
     char d = 0;
 
-    for(s = y; s < y+high; s++){
-        for(d = x; d < x+breth; d++){
-            SetPix(d,s,color);
+    for (s = y; s < y + high; s++) {
+        for (d = x; d < x + breth; d++) {
+            SetPix(d, s, color);
         }
     }
 }
