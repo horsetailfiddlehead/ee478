@@ -640,7 +640,7 @@ void printBuildCard1(GlobalState *globalData) {
     strcpypgm2ram(readerData.userInput2, "inventory"); // this is not "safe" or good pointer use
     processRFIDCmd();
     while (readerData.availableUIDs == 0);
-//    puts1USART(readerData.readUID[0]);
+    puts2USART(readerData.readUID[0]);
     prints(0, 24, BLACK, RED, readerData.readUID[0], 1); // print first UID
     prints(0, 32, BLACK, RED, readerData.readUID[1], 1); // print first UID
     prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);

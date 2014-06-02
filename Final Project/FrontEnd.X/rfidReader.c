@@ -148,7 +148,7 @@ void processRFIDCmd() {
     //resetRFID();
 
     // Get RFID attention
-    sendToRFID("0");
+    //sendToRFID("0");
 
 //    while (1) {
 //        // Read user input from computer
@@ -157,6 +157,7 @@ void processRFIDCmd() {
 //        putc1USART('\n');
 
         // Ping command
+        sendToRFID("\n");
         if (strcmppgm2ram(readerData.userInput2, "ping") == 0) {
             sendToRFID(PING);
 
@@ -173,12 +174,12 @@ void processRFIDCmd() {
             while (readerData.invCom == 1);
 
             // Print all the UIDs
-//            for (i = 0; i < readerData.numUID; i++) {
-//                puts1USART(readerData.readUID[i]);
-//                putc1USART('\r');
-//                while (Busy1USART());
-//                putc1USART('\n');
-//            }
+            for (i = 0; i < readerData.numUID; i++) {
+                puts2USART(readerData.readUID[i]);
+                putc2USART('\r');
+                while (Busy2USART());
+                putc2USART('\n');
+            }
             readerData.availableUIDs = 1;
 
             // Reset the number of UIDs read
@@ -204,7 +205,7 @@ void sendToRFID(char* myString) {
     strcpypgm2ram(myInput, myString);
     while (!inputFinished) {
         if (myInput[i] != '\0') {
-            while (Busy2USART());
+            while (Busy1USART());
             Write1USART(myInput[i]);
             i++;
         } else {
@@ -239,7 +240,7 @@ void RFIDSetup() {
     readerData.invCom = 0;
     readerData.availableUIDs = FALSE;
 
-    rs232Setup1();
+//    rs232Setup1();
 //    sendToRFID("0");
 //    setupRead();
 }
