@@ -94,6 +94,7 @@ void systemSetup(GlobalState *data) {
     keypadSetup(); // configure keypad
     setupPWM();
     //setupXbee();
+    RFIDSetup();
 
     data->displayPage = 0;
     data->keyFlag = FALSE;

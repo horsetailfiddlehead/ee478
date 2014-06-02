@@ -77,7 +77,7 @@ void rcISR(void) {
     unsigned char input;
 
     // Don't have to wait for data available if we are in ISR
-    input = getc2USART();
+    input = getc1USART();
 
     // If we are processing an Inventory command
     if (readerData.invCom == 1) {
@@ -121,11 +121,11 @@ void rcISR(void) {
 
     } else {
         // Echo back typed character
-        Write1USART(input);
+        Write2USART(input);
     }
 
     // Clear interrupt
-    PIR3bits.RC2IF = 0;
+    PIR1bits.RC1IF = 0;
 }
 
 /****************************************************/
@@ -145,7 +145,7 @@ void processRFIDCmd() {
 //    rs232Setup2(); // sets dlp rx=b7, tx=b6
 
     // Start the RFID with a reset
-    resetRFID();
+    //resetRFID();
 
     // Get RFID attention
     sendToRFID("0");
@@ -191,7 +191,7 @@ void processRFIDCmd() {
 
             // Any errors will reset the RFID reader
         } else {
-            resetRFID();
+            //resetRFID();
         }
 //    }
     return;
@@ -205,7 +205,7 @@ void sendToRFID(char* myString) {
     while (!inputFinished) {
         if (myInput[i] != '\0') {
             while (Busy2USART());
-            Write2USART(myInput[i]);
+            Write1USART(myInput[i]);
             i++;
         } else {
             inputFinished = 1;
@@ -239,7 +239,7 @@ void RFIDSetup() {
     readerData.invCom = 0;
     readerData.availableUIDs = FALSE;
 
-    rs232Setup2();
+    rs232Setup1();
 //    sendToRFID("0");
 //    setupRead();
 }
