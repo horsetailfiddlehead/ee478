@@ -15,7 +15,7 @@ extern "C" {
     /********ReaderData sizes************************/
 #define READER_INPUT_LENGTH 64	// size of input buffer
 #define UID_SIZE 24
-#define MAX_UIDS 3  // UID storage size
+#define MAX_UIDS 5  // UID storage size
 
 void resetRFID(void);
 void RFIDSetup(void);
