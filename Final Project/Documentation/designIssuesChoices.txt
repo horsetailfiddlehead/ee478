@@ -10,11 +10,11 @@ Solution: several options including use larger antenna and moving reader. Choice
 
 5/23: decided to move display to frontend; rfid/motor/leds moved to backend
 
-5/24: Keypad uses internal pullups from portB (could also use PortA?) to simplify # of external components
+5/24: Keypad uses internal pullups from portB (could also use PortA?) to simplify # of external components. 
 
 Software
 
-5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function.
+5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function. difficulty with initial implementation. port outputs were not occurring as expected. fixed by moving to different port bank (see HW), using different polling scheme, and explicitly disabling analog inputs.
 
 5/27: decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
 
