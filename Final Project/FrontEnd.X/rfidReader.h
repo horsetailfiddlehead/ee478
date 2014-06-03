@@ -13,22 +13,26 @@ extern "C" {
 #endif
     
     /********ReaderData sizes************************/
-#define READER_INPUT_LENGTH 64	// size of input buffer
 #define UID_SIZE 24
 #define MAX_UIDS 5  // UID storage size
 
 void resetRFID(void);
 void RFIDSetup(void);
-void processRFIDCmd(void);
+void pingRFID(void);
+void inventoryRFID(void);
+void quietRFID(char* uid);
+void sendToRFID2(char* myInput);
+
+//void processRFIDCmd(void);
 
 typedef struct {
-    // User input
-    char userInput2[READER_INPUT_LENGTH];
-
     // Read UIDs, length can be optimized
     // Currently can read only 3 UIDs before we get errors based on the size
     // of the array
     char readUID[MAX_UIDS][UID_SIZE];
+
+    short lineFeeds;
+    short configFlag;
 
     // Current spot in the array processing for input from RFID
     int inputSpot2;
@@ -44,6 +48,9 @@ typedef struct {
 
     // Are the UIDs available to read?
     int availableUIDs;
+    
+    // Read mode set?
+    short readMode;
 } RFIDDriver;
 extern RFIDDriver readerData;
 

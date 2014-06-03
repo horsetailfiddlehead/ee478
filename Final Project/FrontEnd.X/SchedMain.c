@@ -20,6 +20,8 @@ void setupPWM(void);
 void setXbeeNetwork(void);
 void setupXbee(void);
 
+void processUID(char* uid);
+
 
 // PIC configuration settings
 /***************Clocking set up *********************/
@@ -49,8 +51,9 @@ void interrupt_at_high_vector(void) {
 void rcISR(void) {
     // The input character from UART2 (the RFID reader)
     unsigned char input;
-    unsigned char temp;
-    /*
+
+    /* Overrun errors
+     * unsigned char temp;
     if (RCSTA1bits.OERR) {
         temp = RCREG;
         temp = RCREG;
@@ -60,7 +63,7 @@ void rcISR(void) {
         RCSTA1bits.OERR = 0;
     }
     */
-    // Don't have to wait for data available if we are in ISR
+    // Read fast by directly looking at RCREG
     input = RCREG;
     PORTAbits.RA0 = 1;
     // Clear interrupt
@@ -95,7 +98,7 @@ void rcISR(void) {
             PORTAbits.RA0 = 0;
 
             // Put anything inside of a square bracket into the UID array
-        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < READER_INPUT_LENGTH && readerData.numUID < MAX_UIDS) {
+        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < UID_SIZE && readerData.numUID < MAX_UIDS) {
             readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
             readerData.inputSpot2++;
 
@@ -108,6 +111,12 @@ void rcISR(void) {
             // Echo back typed character
             //Write2USART(input);
         }
+
+    // In config mode, count the line feeds
+    } else if (readerData.configFlag == 1) {
+              if (input == '\n') {
+                readerData.lineFeeds++;
+            }
     } else {
         // Echo back typed character
         //Write2USART(input);
@@ -119,11 +128,9 @@ void rcISR(void) {
 
 
 void main() {
-    short flag = 0;
     int i = 0;
     GlobalState globalData;
     systemSetup(&globalData);
-
 
     // lcd test code
     printMainMenu(&globalData);
@@ -148,29 +155,23 @@ void main() {
             processDisplay(&globalData);
 
         }
+        // Doing an inventory command from the Build card menu
         if( globalData.getInventory == TRUE) {
             // get the inventory of cards
-            strcpypgm2ram(readerData.userInput2, "inventory"); // this is not "safe" or good pointer use
-            processRFIDCmd();
-            // Wait until interrupt finishes
-            while (readerData.invCom == 1);
-            // Print all the UIDs
-            for (i = 0; i < readerData.numUID; i++) {
-                puts2USART(readerData.readUID[i]);
-                putc2USART('\r');
-                while (Busy2USART());
-                putc2USART('\n');
+            inventoryRFID();
+
+            // Print out each on to the LCD
+            for (i = 0; i < readerData.availableUIDs; i++) {
+                if (readerData.readUID[i][0] != ',') {
+                    // Get rid of commas
+                    processUID(readerData.readUID[i]);
+                    printrs(0, 24 + 8*i, BLACK, RED, readerData.readUID[i], 1); // print first UID
+                }
             }
-            readerData.availableUIDs = 1;
-
-            // Reset the number of UIDs read
-            readerData.numUID = 0;
-
-            while (readerData.availableUIDs == 0);
-            puts2USART(readerData.readUID[0]);
-            printrs(0, 24, BLACK, RED, readerData.readUID[0], 1); // print first UID
-            //prints(0, 32, BLACK, RED, readerData.readUID[1], 1); // print first UID
+            // Tell UID to be quiet - Works but needs to have at least one uid in this state
+            // quietRFID(readerData.readUID[0]);
             prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
+            // Turn off inventory flag
             globalData.getInventory = FALSE;
         }
 
@@ -178,6 +179,15 @@ void main() {
     return;
     
 
+}
+
+// Reads the UID up until the comma
+void processUID(char* uid) {
+    int i = 0;
+    while (uid[i] != ',') {
+        i++;
+    }
+    uid[i] = '\0';
 }
 
 void systemSetup(GlobalState *data) {
