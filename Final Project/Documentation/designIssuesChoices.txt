@@ -12,6 +12,11 @@ Solution: several options including use larger antenna and moving reader. Choice
 
 5/24: Keypad uses internal pullups from portB (could also use PortA?) to simplify # of external components. 
 
+5/27: Decided to save pins by using a GAL22v10 to encode card led output. Used
+gal over pal b/c of latches to hold desired output states for 2 pins/LED.
+Choice reduces PIC outputs from 8 to 4 pins. Also chose to use only red/green
+because gal has 10 outputs and gives sufficient colors.
+
 Software
 
 5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function. difficulty with initial implementation. port outputs were not occurring as expected. fixed by moving to different port bank (see HW), using different polling scheme, and explicitly disabling analog inputs.
