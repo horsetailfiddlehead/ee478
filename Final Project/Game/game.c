@@ -124,17 +124,34 @@ int attack (int attackDamage, int targetScore) {
 
 // User selects move based off of available cards
 // Returns damage of chosen move
+ int selectMonster(GlobalState* globalData) {
+	printSelectMenu(globalData);
+	switch(globalData->keyPress) {
+		case 0x0A:
+			return globalData->monsterSelect[0]; 
+			break;
+		case 0x0B:
+			return globalData->monsterSelect[1];
+			break;
+		case 0xC:
+			return globalData->monsterSelect[2];
+			break;
+	}
+}
+
+// User selects move based off of available cards
+// Returns damage of chosen move
  int pickMove(GlobalState* globalData) {
 	printAttackMenu(globalData);
 	switch(globalData->keyPress) {
 		case 0x0A:
-			return selectMove[0]; 
+			return globalData->selectMove[0]; 
 			break;
 		case 0x0B:
-			return selectMove[1];
+			return globalData->selectMove[1];
 			break;
 		case 0xC:
-			return select[2]
+			return globalData->select[2];
 			break;
 	}
 }
