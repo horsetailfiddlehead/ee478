@@ -19,3 +19,6 @@ Software
 5/27: decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
 
 5/28: decided to poll the keypad when expecting user input. Using passing a pointer to global data variables.
+
+6/1: had ongoing issue with RFID reader when moving into the full project. Issue tracked to function calls in ISR causing long context switches. Compiler does not know what variables are needed when doing context switch to function, so saves entire state of program. Solution: reworked program to eliminate function calls (some were echos for debug, other accessed UART register). Could also use compiler instructions to not save values (source: http://www.xargs.com/pic/c18-isr-optim.pdf)
+
