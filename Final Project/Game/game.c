@@ -105,8 +105,8 @@ void singlePlayer() {
 }
 
 // Checks if a winner has been found
- int gameStatus(int player1, int player2) {
-	if(0 == player1 || 0 == player2) {
+ int gameStatus() {
+	if(0 == oppScore || 0 == myScore) {
 		return 1;
 	} else {
 		return 0;
@@ -124,62 +124,87 @@ int attack (int attackDamage, int targetScore) {
 
 // User selects move based off of available cards
 // Returns damage of chosen move
- int pickMove() {
-	return myMove;
-}
-
-// Send move to opponent
-int sendMove(int move) {
-}
-
-// Receive move from opponent
-int recieveMove(int move) {
-}
-
-// Send my score to opponent after taking damage
-int sendScore (int score) {
-}
-
-// Receive new score from opponent after attacking
-int recieveScore(int score) {
-}
-
-//
-void printGame(int status) {
-	switch(status) {		
-		case 0:
-			prints("Your Move!");
-			printMoveMenu();
+ int pickMove(GlobalState* globalData) {
+	printAttackMenu(globalData);
+	switch(globalData->keyPress) {
+		case 0x0A:
+			return selectMove[0]; 
 			break;
-		case 1:
-			prints("Opponent's turn.");
+		case 0x0B:
+			return selectMove[1];
 			break;
-		case 2:
-			prints("Opponent used:");
-			prints(moveName);
-			break;
-		case 3:
-			prints("");
+		case 0xC:
+			return select[2]
 			break;
 	}
-	prints(0, 10, WHITE, BLACK, "Your Score: ");
-	integerprint(0, 25, WHITE, BLACK, myScore);
-	prints(0, 10, WHITE, BLACK, "Opponent Score: ");
-	integerprint(0, 25, WHITE, BLACK, oppScore);
+}
 
+// Xbee: Send move to opponent
+int sendMove(int move) {
+	return 0;
+}
+
+// Xbee: Receive move from opponent
+int recieveMove() {
+	return 0;
+}
+
+// Xbee: Send my score to opponent after taking damage
+int sendScore (int score) {
+	return 0;
+}
+
+// Xbee: Receive new score from opponent after attacking
+int recieveScore() {
+	return 0;
+}
+
+void printSelectMonster(GlobalState* globalData) {
+	// LCD menu
+    clean(RED);
+    drawBoxFill(0, 0, 20, V - 1, RED);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    prints(35, 7, WHITE, RED, "Choose a monster by its slot number:", 1);
+	
+	// Check if there is a card / monster that has been read
+	prints(35, 30, WHITE, BLACK, "Slot 1", 1);
+	prints(35, 60, WHITE, BLACK, "Slot 2", 1);
+	prints(35, 90, WHITE, BLACK, "Slot 3", 1);
+	prints(35, 120, WHITE, BLACK, "Slot 4", 1);
+}
+
+void printAttackMenu(GlobalState* globalData) {
+    int i = 0;
+	
+	// LCD menu
+    clean(BLUE);
+    drawBoxFill(0, 0, 20, V - 1, CYAN);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    prints(35, 7, WHITE, CYAN, "Please select an attack: ", 1);
+    // Show attack options and heir
+	prints(35, 40, WHITE, BLUE, "A. Attack with max. damage: ", 1);
+	interprint(60, 40, WHITE, BLUE, moveSelect[0]);
+	prints(35, 80, WHITE, BLUE, "B. Attack with damage: ", 1);
+	interprint(60, 80, WHITE, BLUE, moveSelect[1]);
+	prints(35, 120, WHITE, BLUE, "C. Attack with damage: ", 1);
+	interprint(60, 120, WHITE, BLUE, moveSelect[2]);
 }
 
 // Displays Results
  void printResults() {
-	if(myScore > oppScore) {	
-		prints(YELLOW, BLACK, "Your Score: ");
-		integerprint(YELLOW, BLACK, myScore);
+	prints(0, 15, YELLOW, BLACK, "GAME OVER", 1);
+	
+	if(myScore > oppScore) {
+		prints(0, 15, YELLOW, BLACK, "You won!", 1);
+		prints(0, 15, YELLOW, BLACK, "Your Score: ", 1);
+		integerprint(0, 15, YELLOW, BLACK, myScore);
 		prints(WHITE, BLACK, "Opponent Score: ");
 		integerprint(WHITE, BLACK, oppScore);
 	} else {
-		prints(WHITE, BLACK, "Your Score: ");
-		integerprint(WHITE, BLACK, myScore);
-		prints(YELLOW, BLACK, "Opponent Score: ");
-		integerprint(YELLOW, BLACK, oppScore);
+		prints(0, 15, RED, BLACK, "You lost", 1);
+		prints(0, 15, WHITE, BLACK, "Your Score: ");
+		integerprint(0, 15, WHITE, BLACK, myScore);
+		prints(0, 15, YELLOW, BLACK, "Opponent Score: ");
+		integerprint(0, 15, YELLOW, BLACK, oppScore);
 	}
 }
