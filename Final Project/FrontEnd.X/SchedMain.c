@@ -20,6 +20,8 @@ void setupPWM(void);
 void setXbeeNetwork(void);
 void setupXbee(void);
 
+void processUID(char* uid);
+
 
 // PIC configuration settings
 /***************Clocking set up *********************/
@@ -36,26 +38,99 @@ void setupXbee(void);
  * 
  */
 
+RFIDDriver readerData;
 
-//void rcISR(void) {
-//    // The input character from UART2 (the RFID reader)
-//    unsigned char input;
-//
-//    // Don't have to wait for data available if we are in ISR
-//    input = getc1USART();
-//
-//    putc2USART(input);
-//
-//    // Clear interrupt
-//    PIR1bits.RC1IF = 0;
-//}
+#pragma code high_vector=0x08
+
+void interrupt_at_high_vector(void) {
+    _asm GOTO rcISR _endasm
+}
+#pragma code
+
+#pragma interrupt rcISR
+void rcISR(void) {
+    // The input character from UART2 (the RFID reader)
+    unsigned char input;
+
+    /* Overrun errors
+     * unsigned char temp;
+    if (RCSTA1bits.OERR) {
+        temp = RCREG;
+        temp = RCREG;
+        temp = RCREG;
+        RCSTA1bits.CREN = 0;
+        RCSTA1bits.CREN = 1;
+        RCSTA1bits.OERR = 0;
+    }
+    */
+    // Read fast by directly looking at RCREG
+    input = RCREG;
+    PORTAbits.RA0 = 1;
+    // Clear interrupt
+    PIR1bits.RC1IF = 0;
+    // If we are processing an Inventory command
+    if (readerData.invCom == 1) {
+
+        if (input == 'D' && readerData.nextBlock == 0) {
+            // Reset the inventory command flag
+            readerData.invCom = 0;
+
+            // Begin reading what is inside a block of square brackets
+
+        } else if (input == '[') {
+            // Go to the beginning of the array, indicate that a block is being read
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 1;
+            PORTAbits.RA0 = 1;
+
+            // If we are at the end of a block of square brackets
+        } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
+            // If there is a comma as the first character inside a block, then
+            // discard what is read.  Otherwise, terminate the string and increment
+            // the number of UIDs successfully read.
+            if (readerData.readUID[readerData.numUID][0] != ',') {
+                readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
+                readerData.numUID++;
+            }
+
+            // Block of square brackets has be read, set the indicator to zero
+            readerData.nextBlock = 0;
+            PORTAbits.RA0 = 0;
+
+            // Put anything inside of a square bracket into the UID array
+        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < UID_SIZE && readerData.numUID < MAX_UIDS) {
+            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
+            readerData.inputSpot2++;
+
+            // If we are outside of a block, reset read position and ensure that the block
+            // state indicator is zero.
+        } else {
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 0;
+            PORTAbits.RA0 = 0;
+            // Echo back typed character
+            //Write2USART(input);
+        }
+
+    // In config mode, count the line feeds
+    } else if (readerData.configFlag == 1) {
+              if (input == '\n') {
+                readerData.lineFeeds++;
+            }
+    } else {
+        // Echo back typed character
+        //Write2USART(input);
+    }
+    PORTAbits.RA0 = 0;
+}
+
+
 
 
 void main() {
-    short flag = 0;
+    int i = 0;
     GlobalState globalData;
     systemSetup(&globalData);
-
 
     // lcd test code
     printMainMenu(&globalData);
@@ -80,10 +155,39 @@ void main() {
             processDisplay(&globalData);
 
         }
+        // Doing an inventory command from the Build card menu
+        if( globalData.getInventory == TRUE) {
+            // get the inventory of cards
+            inventoryRFID();
+
+            // Print out each on to the LCD
+            for (i = 0; i < readerData.availableUIDs; i++) {
+                if (readerData.readUID[i][0] != ',') {
+                    // Get rid of commas
+                    processUID(readerData.readUID[i]);
+                    printrs(0, 24 + 8*i, BLACK, RED, readerData.readUID[i], 1); // print first UID
+                }
+            }
+            // Tell UID to be quiet - Works but needs to have at least one uid in this state
+            // quietRFID(readerData.readUID[0]);
+            prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
+            // Turn off inventory flag
+            globalData.getInventory = FALSE;
+        }
+
     }
     return;
     
 
+}
+
+// Reads the UID up until the comma
+void processUID(char* uid) {
+    int i = 0;
+    while (uid[i] != ',') {
+        i++;
+    }
+    uid[i] = '\0';
 }
 
 void systemSetup(GlobalState *data) {
@@ -94,6 +198,7 @@ void systemSetup(GlobalState *data) {
     keypadSetup(); // configure keypad
     setupPWM();
     //setupXbee();
+    RFIDSetup();
 
     data->displayPage = 0;
     data->keyFlag = FALSE;
@@ -104,6 +209,7 @@ void systemSetup(GlobalState *data) {
     data->mainMenuSpots[0] = 40;
     data->mainMenuSpots[1] = 80;
     data->mainMenuSpots[2] = 120;
+    data->getInventory = FALSE;
 
     return;
 }

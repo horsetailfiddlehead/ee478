@@ -10,12 +10,15 @@ Solution: several options including use larger antenna and moving reader. Choice
 
 5/23: decided to move display to frontend; rfid/motor/leds moved to backend
 
-5/24: Keypad uses internal pullups from portB (could also use PortA?) to simplify # of external components
+5/24: Keypad uses internal pullups from portB (could also use PortA?) to simplify # of external components. 
 
 Software
 
-5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function.
+5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function. difficulty with initial implementation. port outputs were not occurring as expected. fixed by moving to different port bank (see HW), using different polling scheme, and explicitly disabling analog inputs.
 
 5/27: decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
 
 5/28: decided to poll the keypad when expecting user input. Using passing a pointer to global data variables.
+
+6/1: had ongoing issue with RFID reader when moving into the full project. Issue tracked to function calls in ISR causing long context switches. Compiler does not know what variables are needed when doing context switch to function, so saves entire state of program. Solution: reworked program to eliminate function calls (some were echos for debug, other accessed UART register). Could also use compiler instructions to not save values (source: http://www.xargs.com/pic/c18-isr-optim.pdf)
+

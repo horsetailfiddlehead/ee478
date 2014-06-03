@@ -1,7 +1,8 @@
 
-#include "globals.h"
+//#include "globals.h"
 #include "LCD.h"
-
+#include <p18f46k22.h>
+//#pragma idata myFont
 const rom char font[255][5] = {
     {0x00, 0x00, 0x00, 0x00, 0x00},
     {0x3E, 0x5B, 0x4F, 0x5B, 0x3E},
@@ -259,13 +260,13 @@ const rom char font[255][5] = {
     {0x00, 0x3C, 0x3C, 0x3C, 0x3C},
     {0x00, 0x00, 0x00, 0x00, 0x00}
 };
+//#pragma idata
 
 void delay(int x) {
     int j = 0;
     for (j = 0; j < x; j++);
 }
 
-// Sends a "command" to the LCD
 void sendcomand(char input) {
     int j = 0;
     PORTC &= ~A0;
@@ -275,7 +276,6 @@ void sendcomand(char input) {
     PORTB |= CS;
 }
 
-// Sends "data" to the LCD
 void senddata(char input) {
     int j = 0;
     PORTC |= A0;
@@ -285,7 +285,6 @@ void senddata(char input) {
     PORTB |= CS;
 }
 
-// Sets individual pixels at coords x and y  to the given color
 void SetPix(char x, char y, int color) {
     char Hig = 0;
     char Low = color & 0x00ff;
@@ -310,14 +309,10 @@ void SetPix(char x, char y, int color) {
     senddata(Hig);
 }
 
-// Returns a custom color in RGB values
 int customColor(int r, int g, int b) {
     return RGB565(r, g, b);
 }
 
-// Draw a border in a box shape at upper left x, y coords
-// Box will be height tall, width wide, have a border of the given size and color
-// of the given color
 void drawBox(char x, char y, char height, char width, int border, int color) {
     border -= 1;
     drawBoxFill(x, y, border, width, color);
@@ -326,7 +321,6 @@ void drawBox(char x, char y, char height, char width, int border, int color) {
     drawBoxFill(x, y, height, border, color);
 }
 
-// Draws a box and fills it in with the given color
 void drawBoxFill(char x, char y, char height, char width, int color) {
     char Hig = 0;
     char Low = color & 0x00ff;
@@ -356,7 +350,6 @@ void drawBoxFill(char x, char y, char height, char width, int color) {
     }
 }
 
-// Cleans the entire screen as a certain color
 void clean(int color) {
 
     char Hig = 0;
@@ -388,7 +381,6 @@ void clean(int color) {
     }
 }
 
-// Initializes the LCD screen by sending a bajillion commands
 void initLCD() {
     PORTB &= ~CS;
     delay(0);
@@ -482,7 +474,6 @@ void initLCD() {
     delay(1000);
 }
 
-// Looks up the pixels to set when writing ascii character
 void ASCII(char x, char y, int color, int background, char letter, char size) {
     char data;
     char q = 0;
@@ -511,12 +502,6 @@ void ASCII(char x, char y, int color, int background, char letter, char size) {
     }
 }
 
-// Prints a string that is sent in " " marks
-// It will start at coords x and y, with background colors and text colors
-// Font size can be specified.
-
-// Each line with size 1 should be around 8 pixels apart, font will wrap around
-// the screen if it's too long
 void prints(char x, char y, int color, int background, const char messageOld[], char size) {
     const far rom char* message = (const far rom char*) messageOld;
     while (*message) {
@@ -529,24 +514,6 @@ void prints(char x, char y, int color, int background, const char messageOld[], 
     }
 }
 
-// Prints a string saved in ram already
-// It will start at coords x and y, with background colors and text colors
-// Font size can be specified.
-
-// Each line with size 1 should be around 8 pixels apart, font will wrap around
-// the screen if it's too long
-void printrs(char x, char y, int color, int background, char* message, char size) {
-    while (*message) {
-        ASCII(x, y, color, background, *message++, size);
-        x += 6 * size;
-        if (x > 120) {
-            x = 0;
-            y += 8 * size;
-        }
-    }
-}
-
-// Prints an INT value to the screen
 void integerprint(char x, char y, int color, int background, int integer, char size) {
     unsigned char tenthousands = 0;
     unsigned char thousands = 0;
@@ -576,34 +543,23 @@ void integerprint(char x, char y, int color, int background, int integer, char s
     x += 6;
     ASCII(x, y, color, background, ones + 48, size);
 }
-
-// Visuals and navigation for main menu
-void processDisplay(GlobalState* globalData) {
-    // Different controls for each page being displayed
+/*
+ void processDisplay(GlobalState* globalData) {
     switch (globalData->displayPage) {
-        // Main menu
         case 0:
             switch (globalData->keyPress) {
-                // Press 2 to move up
                 case 0x02:
-                    // Moves the cursor up 1 space.  Loops around
                     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, " ", 1);
                     globalData->cursorPos = ((3 + globalData->cursorPos) - 1) % 3;
                     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">", 1);
                     break;
-                // Press 8 to move down
                 case 0x08:
-                    // Moves the cursor down 1 space.  Loops around
                     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, " ", 1);
                     globalData->cursorPos = (globalData->cursorPos + 1) % 3;
                     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">", 1);
                     break;
-                // D is the enter key. Figure out the next page
                 case 0x0D:
                     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">>>", 1);
-                    
-                    // Cursor position determines next page. Add 1 to remove main menu "case 0" from the
-                    // list of options when navigating out of the main menu
                     nextPage(globalData, globalData->cursorPos + 1);
                     break;
                 case 0xFF: // Debug BSOD
@@ -612,10 +568,8 @@ void processDisplay(GlobalState* globalData) {
                     break;
             }
             break;
-        // Singleplayer
         case 1:
             switch (globalData->keyPress) {
-                // B to go back
                 case 0x0B:
                     nextPage(globalData, 0);
                     break;
@@ -623,10 +577,8 @@ void processDisplay(GlobalState* globalData) {
                     break;
             }
             break;
-        // Multiplayer
         case 2:
             switch (globalData->keyPress) {
-                // B to go back
                 case 0x0B:
                     nextPage(globalData, 0);
                     break;
@@ -634,10 +586,8 @@ void processDisplay(GlobalState* globalData) {
                     break;
             }
             break;
-        // build cards
         case 3:
             switch (globalData->keyPress) {
-                // B to go back
                 case 0x0B:
                     nextPage(globalData, 0);
                     break;
@@ -650,7 +600,6 @@ void processDisplay(GlobalState* globalData) {
     }
 }
 
-// Draws the main menu
 void printMainMenu(GlobalState* globalData) {
     // LCD menu
     clean(BLUE);
@@ -681,14 +630,12 @@ void printBSOD() {
     while (1);
 }
 
-// Draws the build card menu, begins an inventory read
 void printBuildCard1(GlobalState *globalData) {
     // first page of build card
     clean(RED);
     prints(0, 0, BLACK, RED, "It looks like you want to build a card.", 1);
     prints(0, 16, BLACK, RED, "Available cards:", 1);
-
-    // Tell system we need to do an inventory command
+    Delay1KTCYx(100);
     globalData->getInventory = TRUE;
 }
 
@@ -697,32 +644,27 @@ void nextPage(GlobalState* globalData, int cursorPos) {
     TRISBbits.RB5 = 1;
 
     switch (cursorPos) {
-        // Send a 0 to go to main menu
         case 0:
             globalData->displayPage = 0;
             printMainMenu(globalData);
             break;
-        // Getting a position of 1 does singleplayer
         case 1:
             globalData->displayPage = 1;
             // Print singleplayer menu
             clean(BLACK);
             prints(0, 0, WHITE, BLACK, "Nothing here. Press B to go back.", 1);
             break;
-        // Getting a position of 2 does multiplayer
         case 2:
             globalData->displayPage = 2;
             // Print multiplayer menu
             clean(WHITE);
             prints(0, 0, BLACK, WHITE, "Nothing here. Press B to go back.", 1);
             break;
-        // Getting a position of 3 does build cards
         case 3:
             globalData->displayPage = 3;
             // Print build cards menu
             printBuildCard1(globalData);
             break;
-        // Error
         default:
             // BSOD
             clean(BLUE);
@@ -744,4 +686,5 @@ void box(char x, char y, char high, char breth, int color) {
         }
     }
 }
+ */
 

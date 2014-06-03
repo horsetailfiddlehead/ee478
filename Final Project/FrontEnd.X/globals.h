@@ -48,6 +48,7 @@ extern "C" {
         int mainMenuSpots[3]; // Find better way to do this
 		int monsterSelect[4];
 		int selectMove[3];
+        Boolean getInventory;
     } GlobalState;
 
 #ifdef	__cplusplus

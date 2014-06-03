@@ -16,196 +16,185 @@
 #define READ 0
 #define WRITE 0
 
-#define STAY_QUIET "01120003041822023FBD371B000007E00000"
+#define READER_INPUT_LENGTH 64
+#define QUIET_LEN 37
+#define END_COM "0000" // End of a command
+#define STAY_QUIET "0112000304182202" // Beginning part of stay quiet, add 0000
 #define AGC "0109000304F0000000"
 #define REG_WRITE "010C00030410002101020000"
 #define PING "0108000304FF0000"
 #define INVENTORY "010B000304140601000000"
 
-///***************USART set up *********************/
-//#pragma config FCMEN = OFF
-//#pragma config IESO = OFF
-///****************************************************/
-//
-///***************Clocking set up *********************/
-//#pragma config WDTEN = OFF    // turn off watch dog timer
-//#pragma config FOSC = ECHP    // Ext. Clk, Hi Pwr
-//#pragma config PRICLKEN = OFF // disable primary clock
-//
-
-/***************Interrupts*****************************/
-
-#pragma code high_vector=0x08
-
-void interrupt_at_high_vector(void) {
-    _asm GOTO rcISR _endasm
-}
-#pragma code
-
-#pragma interrupt rcISR
-
-/****************************************/
-// These should be in a global structure
-
-//typedef struct {
-//    // User input
-//    char userInput2[READER_INPUT_LENGTH];
-//
-//    // Read UIDs, length can be optimized
-//    // Currently can read only 3 UIDs before we get errors based on the size
-//    // of the array
-//    char readUID[MAX_UIDS][UID_SIZE];
-//
-//    // Current spot in the array processing for input from RFID
-//    int inputSpot2;
-//
-//    // The UID that we are reading. (first, second, etc)
-//    int numUID;
-//
-//    // Weather or not we are in a block of square brackets
-//    short nextBlock;
-//
-//    // If the user input was an inventory command
-//    short invCom;
-//} RFIDDriver;
-RFIDDriver readerData;
-
-/****************************************/
-
-void rcISR(void) {
-    // The input character from UART2 (the RFID reader)
-    unsigned char input;
-
-    // Don't have to wait for data available if we are in ISR
-    input = getc2USART();
-
-    // If we are processing an Inventory command
-    if (readerData.invCom == 1) {
-
-        // A 'D' character outside of square brackets indicates that the inventory
-        // command has finished sending
-        if (input == 'D' && readerData.nextBlock == 0) {
-            // Reset the inventory command flag
-            readerData.invCom = 0;
-
-            // Begin reading what is inside a block of square brackets
-        } else if (input == '[') {
-            // Go to the beginning of the array, indicate that a block is being read
-            readerData.inputSpot2 = 0;
-            readerData.nextBlock = 1;
-
-            // If we are at the end of a block of square brackets
-        } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
-            // If there is a comma as the first character inside a block, then
-            // discard what is read.  Otherwise, terminate the string and increment
-            // the number of UIDs successfully read.
-            if (readerData.readUID[readerData.numUID][0] != ',') {
-                readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
-                readerData.numUID++;
-            }
-
-            // Block of square brackets has be read, set the indicator to zero
-            readerData.nextBlock = 0;
-
-            // Put anything inside of a square bracket into the UID array
-        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < READER_INPUT_LENGTH && readerData.numUID < MAX_UIDS) {
-            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
-            readerData.inputSpot2++;
-
-            // If we are outside of a block, reset read position and ensure that the block
-            // state indicator is zero.
-        } else {
-            readerData.inputSpot2 = 0;
-            readerData.nextBlock = 0;
-        }
-
-    } else {
-        // Echo back typed character
-        Write1USART(input);
-    }
-
-    // Clear interrupt
-    PIR3bits.RC2IF = 0;
-}
-
-/****************************************************/
-
 void sendToRFID(char* myString);
 void setupRead(void);
 
+// Send a ping commmand to the rfid
+void pingRFID() {
+    sendToRFID(PING);
+}
+
+// Send an inventory command to the RFID
+void inventoryRFID() {
+    // Set the inventory command flag for the interrupt
+        readerData.invCom = 1;
+
+        // If we have not set read mode yet, go to config mode
+        if (readerData.readMode == 0) {
+            // Config mode
+            readerData.configFlag = 1;
+            
+            // Disable current flag
+            readerData.invCom = 0;
+
+            // Send read commands
+            setupRead();
+
+            // Turn off config
+            readerData.configFlag = 0;
+
+            // Turn back on inventory mode, indicate read set
+            readerData.invCom = 1;
+            readerData.readMode = 1;
+        }
+        // Send inventory command
+        sendToRFID(INVENTORY);
+
+        // Wait until interrupt finishes
+        while (readerData.invCom == 1);
+        readerData.availableUIDs = readerData.numUID;
+
+        // Reset the UID counters
+        readerData.numUID = 0;
+        readerData.lineFeeds = 0;
+}
+
+// Send a quiet command to the given uid
+void quietRFID(char* uid) {
+    // Holds the command
+    char quietCommand[QUIET_LEN]; // {STAY_QUIET, uid, END_COM};
+    // Beginning part of command
+    strcatpgm2ram(quietCommand, STAY_QUIET);
+    
+    // Concatenate the uid
+    strcat(quietCommand, uid);
+
+    // Add 0000 for the ending bits
+    strcatpgm2ram(quietCommand, END_COM);
+
+    // Do sendToRFID2 because it is already saved to ram
+    sendToRFID2(quietCommand);
+    return;
+}
+/* // Depreciated
 void processRFIDCmd() {
     int i;
-
-//    // Controls the RESET for the RFID reader
-//    TRISBbits.RB5 = 0;
-//    ANSELBbits.ANSB5 = 0;
+    //    // Controls the RESET for the RFID reader
+    //    TRISBbits.RB5 = 0;
+    //    ANSELBbits.ANSB5 = 0;
 
     // Set up UART to computer and RFID
-//    rs232Setup1(); // sets pc RX=C7, tx=C6
-//    rs232Setup2(); // sets dlp rx=b7, tx=b6
+    //    rs232Setup1(); // sets pc RX=C7, tx=C6
+    //    rs232Setup2(); // sets dlp rx=b7, tx=b6
 
     // Start the RFID with a reset
-    resetRFID();
+    //resetRFID();
 
     // Get RFID attention
-    sendToRFID("0");
+    //sendToRFID("0");
 
-//    while (1) {
-//        // Read user input from computer
-//        readBytesUntil(readerData.userInput2, '\r', READER_INPUT_LENGTH);
-//        putc1USART('\r');
-//        putc1USART('\n');
+    //    while (1) {
+    //        // Read user input from computer
+    //        readBytesUntil(readerData.userInput2, '\r', READER_INPUT_LENGTH);
+    //        putc1USART('\r');
+    //        putc1USART('\n');
 
-        // Ping command
-        if (strcmppgm2ram(readerData.userInput2, "ping") == 0) {
-            sendToRFID(PING);
+    // Ping command
+    sendToRFID("\n");
+    if (strcmppgm2ram(readerData.userInput2, "ping") == 0) {
+        sendToRFID(PING);
+        // Inventory Command
+    } else if (strcmppgm2ram(readerData.userInput2, "inventory") == 0) {
+        // Set the inventory command flag for the interrupt
+        readerData.invCom = 1;
 
-            // Inventory Command
-        } else if (strcmppgm2ram(readerData.userInput2, "inventory") == 0) {
-            // Set the inventory command flag for the interrupt
-            readerData.invCom = 1;
-
-            // Set the RFID reader to Read mode and send the Inventory command
+        // Set the RFID reader to Read mode and send the Inventory command
+        if (readerData.readMode == 0) {
+            readerData.configFlag = 1;
+            readerData.invCom = 0;
             setupRead();
-            sendToRFID(INVENTORY);
-
-            // Wait until interrupt finishes
-            while (readerData.invCom == 1);
-
-            // Print all the UIDs
-//            for (i = 0; i < readerData.numUID; i++) {
-//                puts1USART(readerData.readUID[i]);
-//                putc1USART('\r');
-//                while (Busy1USART());
-//                putc1USART('\n');
-//            }
-            readerData.availableUIDs = 1;
-
-            // Reset the number of UIDs read
-            readerData.numUID = 0;
-
-            // Send the "Stay Quiet" command.
-            // WARNING: THIS IS HARDCODED TO ONLY WORK WITH THE PROTOCARD
-        } else if (strcmppgm2ram(readerData.userInput2, "quiet") == 0) {
-            sendToRFID(STAY_QUIET);
-
-            // Any errors will reset the RFID reader
-        } else {
-            resetRFID();
+            readerData.configFlag = 0;
+            readerData.invCom = 1;
+            readerData.readMode = 1;
         }
-//    }
+        sendToRFID(INVENTORY);
+
+        // Wait until interrupt finishes
+        while (readerData.invCom == 1);
+        // Print all the UIDs
+        for (i = 0; i < readerData.numUID; i++) {
+            puts2USART(readerData.readUID[i]);
+            putc2USART('\r');
+            while (Busy2USART());
+            putc2USART('\n');
+        }
+        readerData.availableUIDs = readerData.numUID;
+
+        // Reset the number of UIDs read
+        readerData.numUID = 0;
+        readerData.lineFeeds = 0;
+
+        // Send the "Stay Quiet" command.
+        // WARNING: THIS IS HARDCODED TO ONLY WORK WITH THE PROTOCARD
+    } else if (strcmppgm2ram(readerData.userInput2, "quiet") == 0) {
+        sendToRFID(STAY_QUIET);
+
+        // Any errors will reset the RFID reader
+    } else {
+        //resetRFID();
+    }
+    //    }
+    return;
+}
+ */
+
+// Sends the string to the DLP RFID 2
+void sendToRFID(char* myString) {
+    // Copy string into an input array
+    char myInput[READER_INPUT_LENGTH];
+    // Says whether the input has finished sending or not
+    short inputFinished = 0;
+    int i = 0;
+
+    // Copy string to ram so it can be read correctly
+    strcpypgm2ram(myInput, myString);
+
+    // Send character by character
+    while (!inputFinished) {
+        if (myInput[i] != '\0') {
+            while (Busy1USART());
+            Write1USART(myInput[i]);
+            i++;
+        } else {
+            inputFinished = 1;
+        }
+    }
+
+    // Short delay, try removing
+    Delay10TCYx(100);
     return;
 }
 
-void sendToRFID(char* myString) {
-    char myInput[READER_INPUT_LENGTH];
+// Use this for when you need to send a string that isn't sent
+// in double quotes (not this: "mystring!")
+//
+// see sendToRFID for more comments
+void sendToRFID2(char* myInput) {
     short inputFinished = 0;
     int i = 0;
-    strcpypgm2ram(myInput, myString);
     while (!inputFinished) {
         if (myInput[i] != '\0') {
-            while (Busy2USART());
-            Write2USART(myInput[i]);
+            while (Busy1USART());
+            Write1USART(myInput[i]);
             i++;
         } else {
             inputFinished = 1;
@@ -215,12 +204,34 @@ void sendToRFID(char* myString) {
     return;
 }
 
+// Set up read commands
 void setupRead() {
+    // Set to register write mode
     sendToRFID(REG_WRITE);
+
+    // Needs to read two line breaks from dlp before
+    // continuing.
+    while(readerData.lineFeeds < 2);
+    
+    // Reset line feeds for next command
+    readerData.lineFeeds = 0;
+
+    // Set AGC mode
     sendToRFID(AGC);
+
+    // We need to read only one line feed when setting AGC
+    while(readerData.lineFeeds < 1);
+
+    // Reset line feeds
+    readerData.lineFeeds = 0;
+
+    // Send new line to clear out any junk
+    // Try removing
+    sendToRFID("\n");
     return;
 }
 
+// Depreciated - we don't use them anymore
 void resetRFID() {
 
     PORTBbits.RB5 = 1;
@@ -237,9 +248,12 @@ void RFIDSetup() {
     readerData.numUID = 0;
     readerData.nextBlock = 0;
     readerData.invCom = 0;
+    readerData.readMode = 0;
+    readerData.lineFeeds = 0;
+    readerData.configFlag = 0;
     readerData.availableUIDs = FALSE;
+    memset(readerData.readUID, '\0', MAX_UIDS * UID_SIZE * sizeof (char));
 
-    rs232Setup2();
-//    sendToRFID("0");
-//    setupRead();
+    // Get RFID attention if not already
+    sendToRFID("\n");
 }
