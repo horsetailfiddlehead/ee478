@@ -1,0 +1,14 @@
+void setup();
+void singlePlayer();
+void multiPlayer();
+void buildCards();
+void findPlayer();
+void gameStatus();
+int attack(int attackDamage, int targetScore);
+int pickMove();
+int sendMove(int move);
+int recieveMove();
+int sendScore();
+int recieveScore();
+void printGame(int status);
+void printResults();
