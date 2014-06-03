@@ -1,7 +1,7 @@
-//#include "rs232.h"
+#include "rs232.h"
 //#include <p18f25k22.h>
-//#include <usart.h>
-#include "globals.h"
+#include <usart.h>
+//#include "globals.h"
 // setup for USART1
 
 void rs232Setup1() {
@@ -51,7 +51,7 @@ void readBytesUntil(char* myStorage, char stopChar, int size) {
     char message;
 
     while (!DataRdy2USART());
-    message = getc1USART();
+    message = getc2USART();
     Write2USART(message); //echo char back
     while (message != stopChar && i < (size - 1)) {
         myStorage[i] = message;

@@ -1,9 +1,9 @@
 
-#include "globals.h"
+//#include "globals.h"
 #include "LCD.h"
-
-#pragma idata myFont
-const char font[255][5] = {
+#include <p18f46k22.h>
+//#pragma idata myFont
+const rom char font[255][5] = {
     {0x00, 0x00, 0x00, 0x00, 0x00},
     {0x3E, 0x5B, 0x4F, 0x5B, 0x3E},
     {0x3E, 0x6B, 0x4F, 0x6B, 0x3E},
@@ -260,7 +260,7 @@ const char font[255][5] = {
     {0x00, 0x3C, 0x3C, 0x3C, 0x3C},
     {0x00, 0x00, 0x00, 0x00, 0x00}
 };
-#pragma idata
+//#pragma idata
 
 void delay(int x) {
     int j = 0;
@@ -514,17 +514,6 @@ void prints(char x, char y, int color, int background, const char messageOld[], 
     }
 }
 
-void printrs(char x, char y, int color, int background, char* message, char size) {
-    while (*message) {
-        ASCII(x, y, color, background, *message++, size);
-        x += 6 * size;
-        if (x > 120) {
-            x = 0;
-            y += 8 * size;
-        }
-    }
-}
-
 void integerprint(char x, char y, int color, int background, int integer, char size) {
     unsigned char tenthousands = 0;
     unsigned char thousands = 0;
@@ -554,8 +543,8 @@ void integerprint(char x, char y, int color, int background, int integer, char s
     x += 6;
     ASCII(x, y, color, background, ones + 48, size);
 }
-
-void processDisplay(GlobalState* globalData) {
+/*
+ void processDisplay(GlobalState* globalData) {
     switch (globalData->displayPage) {
         case 0:
             switch (globalData->keyPress) {
@@ -697,4 +686,5 @@ void box(char x, char y, char high, char breth, int color) {
         }
     }
 }
+ */
 

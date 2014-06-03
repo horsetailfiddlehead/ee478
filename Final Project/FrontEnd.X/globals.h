@@ -46,6 +46,7 @@ extern "C" {
         int keyPress;
         int cursorPos;
         int mainMenuSpots[3]; // Find better way to do this
+        Boolean getInventory;
     } GlobalState;
 
 #ifdef	__cplusplus

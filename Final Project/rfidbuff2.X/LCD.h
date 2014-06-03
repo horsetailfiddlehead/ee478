@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#include "globals.h"
+//#include "globals.h"
 
 #define V 128
 #define H 160
@@ -94,7 +94,6 @@ void drawBoxFill(char x, char y,char height, char width, int color);
 void drawBox(char x, char y, char height, char width, int border, int color);
 
 void prints(char x, char y, int color, int background, const char message[], char size);
-void printrs(char x, char y, int color, int background, char* message, char size);
 void integerprint(char x, char y, int color, int background,int integer, char size);
 
 typedef struct globaldata GlobalState;

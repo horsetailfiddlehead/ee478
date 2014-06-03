@@ -36,23 +36,91 @@ void setupXbee(void);
  * 
  */
 
+RFIDDriver readerData;
 
-//void rcISR(void) {
-//    // The input character from UART2 (the RFID reader)
-//    unsigned char input;
-//
-//    // Don't have to wait for data available if we are in ISR
-//    input = getc1USART();
-//
-//    putc2USART(input);
-//
-//    // Clear interrupt
-//    PIR1bits.RC1IF = 0;
-//}
+#pragma code high_vector=0x08
+
+void interrupt_at_high_vector(void) {
+    _asm GOTO rcISR _endasm
+}
+#pragma code
+
+#pragma interrupt rcISR
+void rcISR(void) {
+    // The input character from UART2 (the RFID reader)
+    unsigned char input;
+    unsigned char temp;
+    /*
+    if (RCSTA1bits.OERR) {
+        temp = RCREG;
+        temp = RCREG;
+        temp = RCREG;
+        RCSTA1bits.CREN = 0;
+        RCSTA1bits.CREN = 1;
+        RCSTA1bits.OERR = 0;
+    }
+    */
+    // Don't have to wait for data available if we are in ISR
+    input = RCREG;
+    PORTAbits.RA0 = 1;
+    // Clear interrupt
+    PIR1bits.RC1IF = 0;
+    // If we are processing an Inventory command
+    if (readerData.invCom == 1) {
+
+        if (input == 'D' && readerData.nextBlock == 0) {
+            // Reset the inventory command flag
+            readerData.invCom = 0;
+
+            // Begin reading what is inside a block of square brackets
+
+        } else if (input == '[') {
+            // Go to the beginning of the array, indicate that a block is being read
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 1;
+            PORTAbits.RA0 = 1;
+
+            // If we are at the end of a block of square brackets
+        } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
+            // If there is a comma as the first character inside a block, then
+            // discard what is read.  Otherwise, terminate the string and increment
+            // the number of UIDs successfully read.
+            if (readerData.readUID[readerData.numUID][0] != ',') {
+                readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
+                readerData.numUID++;
+            }
+
+            // Block of square brackets has be read, set the indicator to zero
+            readerData.nextBlock = 0;
+            PORTAbits.RA0 = 0;
+
+            // Put anything inside of a square bracket into the UID array
+        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < READER_INPUT_LENGTH && readerData.numUID < MAX_UIDS) {
+            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
+            readerData.inputSpot2++;
+
+            // If we are outside of a block, reset read position and ensure that the block
+            // state indicator is zero.
+        } else {
+            readerData.inputSpot2 = 0;
+            readerData.nextBlock = 0;
+            PORTAbits.RA0 = 0;
+            // Echo back typed character
+            //Write2USART(input);
+        }
+    } else {
+        // Echo back typed character
+        //Write2USART(input);
+    }
+    PORTAbits.RA0 = 0;
+}
+
+
 
 
 void main() {
     short flag = 0;
+    int i = 0;
     GlobalState globalData;
     systemSetup(&globalData);
 
@@ -80,6 +148,32 @@ void main() {
             processDisplay(&globalData);
 
         }
+        if( globalData.getInventory == TRUE) {
+            // get the inventory of cards
+            strcpypgm2ram(readerData.userInput2, "inventory"); // this is not "safe" or good pointer use
+            processRFIDCmd();
+            // Wait until interrupt finishes
+            while (readerData.invCom == 1);
+            // Print all the UIDs
+            for (i = 0; i < readerData.numUID; i++) {
+                puts2USART(readerData.readUID[i]);
+                putc2USART('\r');
+                while (Busy2USART());
+                putc2USART('\n');
+            }
+            readerData.availableUIDs = 1;
+
+            // Reset the number of UIDs read
+            readerData.numUID = 0;
+
+            while (readerData.availableUIDs == 0);
+            puts2USART(readerData.readUID[0]);
+            printrs(0, 24, BLACK, RED, readerData.readUID[0], 1); // print first UID
+            //prints(0, 32, BLACK, RED, readerData.readUID[1], 1); // print first UID
+            prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
+            globalData.getInventory = FALSE;
+        }
+
     }
     return;
     
@@ -105,6 +199,7 @@ void systemSetup(GlobalState *data) {
     data->mainMenuSpots[0] = 40;
     data->mainMenuSpots[1] = 80;
     data->mainMenuSpots[2] = 120;
+    data->getInventory = FALSE;
 
     return;
 }

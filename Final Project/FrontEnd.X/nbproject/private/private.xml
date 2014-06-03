@@ -1,3 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?><project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1">
+        <file>
+            <url>rfidReader.h</url>
+            <line>15</line>
+        </file>
+        <file>
+            <url>LCD.c</url>
+            <line>639</line>
+        </file>
+        <file>
+            <url>rfidReader.c</url>
+            <line>76</line>
+            <line>186</line>
+            <line>281</line>
+        </file>
+    </editor-bookmarks>
 </project-private>

@@ -35,14 +35,14 @@
 
 /***************Interrupts*****************************/
 
-#pragma code high_vector=0x08
-
-void interrupt_at_high_vector(void) {
-    _asm GOTO rcISR _endasm
-}
-#pragma code
-
-#pragma interrupt rcISR
+//#pragma code high_vector=0x08
+//
+//void interrupt_at_high_vector(void) {
+//    _asm GOTO rcISR _endasm
+//}
+//#pragma code
+//
+//
 
 /****************************************/
 // These should be in a global structure
@@ -68,94 +68,87 @@ void interrupt_at_high_vector(void) {
 //    // If the user input was an inventory command
 //    short invCom;
 //} RFIDDriver;
-RFIDDriver readerData;
-
-/****************************************/
-
-void rcISR(void) {
-    // The input character from UART2 (the RFID reader)
-    unsigned char input;
-    unsigned char temp;
-    /*
-    if (RCSTA1bits.OERR) {
-        temp = RCREG;
-        temp = RCREG;
-        temp = RCREG;
-        RCSTA1bits.CREN = 0;
-        RCSTA1bits.CREN = 1;
-        RCSTA1bits.OERR = 0;
-    }
-    */
-    // Don't have to wait for data available if we are in ISR
-    input = getc1USART();
-    PORTAbits.RA0 = 1;
-    // Clear interrupt
-    PIR1bits.RC1IF = 0;
-    // If we are processing an Inventory command
-    if (readerData.invCom == 1) {
-
-        if (input == 'D' && readerData.nextBlock == 0) {
-            // Reset the inventory command flag
-            readerData.invCom = 0;
-
-            // Begin reading what is inside a block of square brackets
-            
-        } else if (input == '[') {
-            // Go to the beginning of the array, indicate that a block is being read
-            readerData.inputSpot2 = 0;
-            readerData.nextBlock = 1;
-            PORTAbits.RA0 = 1;
-
-            // If we are at the end of a block of square brackets
-        } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
-            // If there is a comma as the first character inside a block, then
-            // discard what is read.  Otherwise, terminate the string and increment
-            // the number of UIDs successfully read.
-            if (readerData.readUID[readerData.numUID][0] != ',') {
-                readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
-                readerData.numUID++;
-            }
-
-            // Block of square brackets has be read, set the indicator to zero
-            readerData.nextBlock = 0;
-            PORTAbits.RA0 = 0;
-
-            // Put anything inside of a square bracket into the UID array
-        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < READER_INPUT_LENGTH && readerData.numUID < MAX_UIDS) {
-            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
-            readerData.inputSpot2++;
-
-            // If we are outside of a block, reset read position and ensure that the block
-            // state indicator is zero.
-        } else {
-            readerData.inputSpot2 = 0;
-            readerData.nextBlock = 0;
-            PORTAbits.RA0 = 0;
-            // Echo back typed character
-            Write2USART(input);
-        }
-    } else {
-        // Echo back typed character
-        Write2USART(input);
-    }
-    PORTAbits.RA0 = 0;
-}
+//RFIDDriver readerData;
+//
+///*
+///****************************************/
+//#pragma interrupt rcISR
+//void rcISR(void) {
+//    // The input character from UART2 (the RFID reader)
+//    unsigned char input;
+//    unsigned char temp;
+//    /*
+//    if (RCSTA1bits.OERR) {
+//        temp = RCREG;
+//        temp = RCREG;
+//        temp = RCREG;
+//        RCSTA1bits.CREN = 0;
+//        RCSTA1bits.CREN = 1;
+//        RCSTA1bits.OERR = 0;
+//    }
+//    */
+//    // Don't have to wait for data available if we are in ISR
+//    input = getc1USART();
+//    PORTAbits.RA0 = 1;
+//    // Clear interrupt
+//    PIR1bits.RC1IF = 0;
+//    // If we are processing an Inventory command
+//    if (readerData.invCom == 1) {
+//
+//        if (input == 'D' && readerData.nextBlock == 0) {
+//            // Reset the inventory command flag
+//            readerData.invCom = 0;
+//
+//            // Begin reading what is inside a block of square brackets
+//
+//        } else if (input == '[') {
+//            // Go to the beginning of the array, indicate that a block is being read
+//            readerData.inputSpot2 = 0;
+//            readerData.nextBlock = 1;
+//            PORTAbits.RA0 = 1;
+//
+//            // If we are at the end of a block of square brackets
+//        } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
+//            // If there is a comma as the first character inside a block, then
+//            // discard what is read.  Otherwise, terminate the string and increment
+//            // the number of UIDs successfully read.
+//            if (readerData.readUID[readerData.numUID][0] != ',') {
+//                readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
+//                readerData.numUID++;
+//            }
+//
+//            // Block of square brackets has be read, set the indicator to zero
+//            readerData.nextBlock = 0;
+//            PORTAbits.RA0 = 0;
+//
+//            // Put anything inside of a square bracket into the UID array
+//        } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < READER_INPUT_LENGTH && readerData.numUID < MAX_UIDS) {
+//            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
+//            readerData.inputSpot2++;
+//
+//            // If we are outside of a block, reset read position and ensure that the block
+//            // state indicator is zero.
+//        } else {
+//            readerData.inputSpot2 = 0;
+//            readerData.nextBlock = 0;
+//            PORTAbits.RA0 = 0;
+//            // Echo back typed character
+//            Write2USART(input);
+//        }
+//    } else {
+//        // Echo back typed character
+//        Write2USART(input);
+//    }
+//    PORTAbits.RA0 = 0;
+//}
 
 /****************************************************/
 
 void sendToRFID(char* myString);
 void setupRead(void);
 
-short invCom = 0;
-short nextBlock = 0;
-int inputSpot2 = 0;
-int numUID = 0;
-char readUID[MAX_UIDS][UID_SIZE] = {0,0,0,0,0};
-
 void processRFIDCmd() {
     int i;
-    char input;
-    char temp;
     //    // Controls the RESET for the RFID reader
     //    TRISBbits.RB5 = 0;
     //    ANSELBbits.ANSB5 = 0;
@@ -178,88 +171,29 @@ void processRFIDCmd() {
 
     // Ping command
     sendToRFID("\n");
-    Delay1KTCYx(1000);
     if (strcmppgm2ram(readerData.userInput2, "ping") == 0) {
         sendToRFID(PING);
         // Inventory Command
     } else if (strcmppgm2ram(readerData.userInput2, "inventory") == 0) {
         // Set the inventory command flag for the interrupt
-        invCom = 1;
+        readerData.invCom = 1;
 
         // Set the RFID reader to Read mode and send the Inventory command
         //setupRead();
         sendToRFID(INVENTORY);
-        // Wait until interrupt finishes
-        while (invCom == 1) {
-            while(!DataRdy1USART());
-            PORTAbits.RA0 = 1;
-            input = RCREG1;
-            // A 'D' character outside of square brackets indicates that the inventory
-            // command has finished sending
-            if (input == 'D' && nextBlock == 0) {
-                // Reset the inventory command flag
-                invCom = 0;
-
-                // Begin reading what is inside a block of square brackets
-
-            } else if (input == '[') {
-                // Go to the beginning of the array, indicate that a block is being read
-                inputSpot2 = 0;
-                nextBlock = 1;
-                PORTAbits.RA0 = 1;
-
-                // If we are at the end of a block of square brackets
-            } else if (input == ']' && numUID < MAX_UIDS && nextBlock == 1) {
-                // If there is a comma as the first character inside a block, then
-                // discard what is read.  Otherwise, terminate the string and increment
-                // the number of UIDs successfully read.
-                if (readUID[numUID][0] != ',') {
-                    readUID[numUID][inputSpot2] = '\0';
-                    numUID++;
-                }
-
-                // Block of square brackets has be read, set the indicator to zero
-                nextBlock = 0;
-                PORTAbits.RA0 = 0;
-
-                // Put anything inside of a square bracket into the UID array
-            } else if (nextBlock == 1 && inputSpot2 < UID_SIZE && numUID < MAX_UIDS) {
-                readUID[numUID][inputSpot2] = input;
-                inputSpot2++;
-
-                // If we are outside of a block, reset read position and ensure that the block
-                // state indicator is zero.
-            } else {
-                inputSpot2 = 0;
-                nextBlock = 0;
-                PORTAbits.RA0 = 0;
-                // Echo back typed character
-                Write2USART(input);
-            }
-            PORTAbits.RA0 = 0;/*
-            if (RCSTA1bits.OERR) {
-                temp = RCREG;
-                temp = RCREG;
-                temp = RCREG;
-                RCSTA1bits.CREN = 0;
-                RCSTA1bits.CREN = 1;
-                RCSTA1bits.OERR = 0;
-            }*/
-        }
-
-
-
-        // Print all the UIDs
-        for (i = 0; i < readerData.numUID; i++) {
-            puts2USART(readerData.readUID[i]);
-            putc2USART('\r');
-            while (Busy2USART());
-            putc2USART('\n');
-        }
-        readerData.availableUIDs = 1;
-
-        // Reset the number of UIDs read
-        readerData.numUID = 0;
+//        // Wait until interrupt finishes
+//        while (readerData.invCom == 1);
+//        // Print all the UIDs
+//        for (i = 0; i < readerData.numUID; i++) {
+//            puts2USART(readerData.readUID[i]);
+//            putc2USART('\r');
+//            while (Busy2USART());
+//            putc2USART('\n');
+//        }
+//        readerData.availableUIDs = 1;
+//
+//        // Reset the number of UIDs read
+//        readerData.numUID = 0;
 
         // Send the "Stay Quiet" command.
         // WARNING: THIS IS HARDCODED TO ONLY WORK WITH THE PROTOCARD
