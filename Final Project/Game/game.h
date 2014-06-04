@@ -27,5 +27,7 @@ void printAttackMenu(GlobalState* globalData, int card);
 	int oppScore;
 	short turn;
 	int gameOver;
+        int myMove;
+        int oppMove;
 	char* moveName;
 }gameData;

@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "globals.h"
-#include game.h
+#include "game.h"
 #include "LCD.h"
+
+#define HEALTH 100;
 
 gameData game;
 
@@ -16,9 +18,11 @@ void setup() {
 	game.turn = 0;
 	game.gameOver = 0;
 	game.moveName = NULL;
+        game.myMove =0;
+        game.oppMove = 0;
 }
 
-void singlePlayer() {
+void singlePlayer(gameData game) {
 	// Setup new game
 	setup();
 	game.turn = rand() % 2;
@@ -27,12 +31,12 @@ void singlePlayer() {
 	while(!game.gameOver) {
 		// Situation depends on game.turn
 		if(game.turn) {
-			myMove = pickMove();
-			game.oppScore = attack(myMove, game.oppScore);
+			game.myMove = pickMove();
+			game.oppScore = attack(game.myMove, game.oppScore);
 		} else {
 			// Computer randomly picks an attack with damage b/w 0 and 50
-			compMove = rand() % 50 + 1;
-			game.myScore = attack(compMove, game.myScore);
+			game.oppMove = rand() % 50 + 1;
+			game.myScore = attack(game.oppMove, game.myScore);
 		}
 		// Check game status
 		game.gameOver = gameStatus();
@@ -43,7 +47,8 @@ void singlePlayer() {
 }
 
  void multiPlayer() {
-	int oppMove = 0;
+        int myMove;
+        int oppMove = 0;
 	int connect = 0;
 	
 	// Find other players
@@ -120,7 +125,7 @@ int attack (int attackDamage, int targetScore) {
 // Regame.turns damage of chosen move
  int selectCard(GlobalState* globalData) {
 	globalData->keyStatus = 0;
-	printSelectMenu(globalData);
+	printSelect(globalData);
 	
 	// Waits till valid keypad input
 	globalData->keyStatus = 1;
@@ -173,7 +178,7 @@ int attack (int attackDamage, int targetScore) {
 			return globalData->selectMove[card][1];
 			break;
 		case 0xC:
-			return globalData->select[card][2];
+			return globalData->selectMove[card][2];
 			break;
 	}
 }
@@ -217,7 +222,7 @@ int recieveScore() {
 	switch(globalData->keyStatus) {
 		case 0:
 			prints(35, 7, WHITE, RED, "Choose a card by its slot number:", 1);
-			break
+			break;
 		case 1:
 			prints(35, 7, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
 			break;
@@ -242,7 +247,7 @@ void printSelect(GlobalState* globalData) {
 	switch(globalData->keyStatus) {
 		case 0:
 			prints(35, 7, WHITE, RED, "Choose a card by its slot number:", 1);
-			break
+			break;
 		case 1:
 			prints(35, 7, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
 			break;
@@ -279,9 +284,9 @@ void printAttackMenu(GlobalState* globalData, int card) {
 	
 	// Show attack options and their damage
 	prints(35, 40, WHITE, BLUE, "A. Attack with max. damage: ", 1);
-	integerprint(60, 40, WHITE, BLUE, selectMove[card][0]);
+	integerprint(60, 40, WHITE, BLUE, game.selectMove[card][0]);
 	prints(35, 80, WHITE, BLUE, "B. Attack with damage: ", 1);
-	interprint(60, 80, WHITE, BLUE, selectMove[card][1]);
+	interprint(60, 80, WHITE, BLUE, game.selectMove[card][1]);
 	prints(35, 120, WHITE, BLUE, "C. Attack with damage: ", 1);
 	integerprint(60, 120, WHITE, BLUE, selectMove[card][2]);
 }

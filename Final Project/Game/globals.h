@@ -33,8 +33,8 @@ extern "C" {
 #include "LCD.h"
 #include "startup.h"
 #include "interrupts.h"
-#include "rfidReader.h"
-#include "motorDriver.h"
+//#include "rfidReader.h"
+//#include "motorDriver.h"
 #include "game.h"
 
     enum _myBool {
