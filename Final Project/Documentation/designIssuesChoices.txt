@@ -8,18 +8,20 @@ Solution: purchased a PIC with more UART,SSP modules from the same family. Also 
 DLP reader only capable of reading 2 cards closely spaced. Cannot read 4 cards required by spec.
 Solution: several options including use larger antenna and moving reader. Choice made to go with moving reader, as should be simpler to implement
 
-5/23: decided to move display to frontend; rfid/motor/leds moved to backend
+5/23: decided to move display to frontend; rfid/motor/leds moved to backend 
 
 5/24: Keypad uses internal pullups from portB (could also use PortA?) to simplify # of external components. 
 
-5/27: Decided to save pins by using a GAL22v10 to encode card led output. Used
-gal over pal b/c of latches to hold desired output states for 2 pins/LED.
-Choice reduces PIC outputs from 8 to 4 pins. Also chose to use only red/green
-because gal has 10 outputs and gives sufficient colors.
+5/27: Decided to save pins by using a GAL22v10 to encode card led output. Used gal over pal b/c of latches to hold desired output states for 2 pins/LED.
+Choice reduces PIC outputs from 8 to 4 pins. Also chose to use only red/green because gal has 10 outputs and gives sufficient colors.
+
+6/4: excessive voltage noise ~40-5-kHz on 3.3v power rail. Prevented proper operation of XBee (or sounds). Traced to Voltage regulator. 10uF bypass cap
+reduced levels to manageable limits, alloing correct operation of xbee and sounds.
 
 Software
 
-5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function. difficulty with initial implementation. port outputs were not occurring as expected. fixed by moving to different port bank (see HW), using different polling scheme, and explicitly disabling analog inputs.
+5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function.
+difficulty with initial implementation. port outputs were not occurring as expected. fixed by moving to different port bank (see HW), using different polling scheme, and explicitly disabling analog inputs.
 
 5/27: decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
 
