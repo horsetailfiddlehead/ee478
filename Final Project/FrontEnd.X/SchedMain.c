@@ -134,14 +134,14 @@ void main() {
 
     // lcd test code
     printMainMenu(&globalData);
-/*
+
     while (1) {
         if (flag == 0) {
             setXbeeNetwork();
             flag = 1;
         }
     }
-  */
+ 
     
     while (1) {
         if (!globalData.keyFlag) {
@@ -197,7 +197,7 @@ void systemSetup(GlobalState *data) {
     rs232Setup1(); // configure USART1
     keypadSetup(); // configure keypad
     setupPWM();
-    //setupXbee();
+    setupXbee();
     RFIDSetup();
 
     data->displayPage = 0;
