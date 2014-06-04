@@ -12,6 +12,8 @@
 extern "C" {
 #endif
 
+#define HEALTH 100
+
     // microchip libraries
 #include <p18f46k22.h>
 #include <usart.h>
@@ -46,8 +48,9 @@ extern "C" {
         int keyPress;
         int cursorPos;
         int mainMenuSpots[3]; // Find better way to do this
-		int monsterSelect[4];
-		int selectMove[3];
+		int status;
+		int cardSelect[4];
+		int selectMove[4][3];
         Boolean getInventory;
     } GlobalState;
 

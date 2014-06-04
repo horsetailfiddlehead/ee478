@@ -4,45 +4,42 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include "globals.h"
+#include game.h
 #include "LCD.h"
 
-int myScore;
-int oppScore;
-int turn;
-int gameOver;
-char* moveName;
+gameData game;
 
 void setup() {
-	myScore = 0;
-	oppScore = 0;
-	gameOver = 0;
-	
+	game.myScore = HEALTH;
+	game.oppScore = HEALTH;
+	game.turn = 0;
+	game.gameOver = 0;
+	game.moveName = NULL;
 }
 
 void singlePlayer() {
-	turn = rand() % 2;
-	
 	// Setup new game
 	setup();
+	game.turn = rand() % 2;
 	
 	// Begin game with computer
-	while(!gameOver) {
-		// Situation depends on turn
-		if(turn) {
+	while(!game.gameOver) {
+		// Situation depends on game.turn
+		if(game.turn) {
 			myMove = pickMove();
-			oppScore = attack(myMove, oppScore);
+			game.oppScore = attack(myMove, game.oppScore);
 		} else {
-			// Computer randomly picks an attak with damage b/w 0 and 50
+			// Computer randomly picks an attack with damage b/w 0 and 50
 			compMove = rand() % 50 + 1;
-			myScore = attack(compMove, myScore);
+			game.myScore = attack(compMove, game.myScore);
 		}
-		
 		// Check game status
-		gameOver = gameStatus(myScore, oppScore);
-		!turn;
+		game.gameOver = gameStatus();
+		!game.turn;
 	}
 	// Display results once there is a lost
-	
+	printResults();
 }
 
  void multiPlayer() {
@@ -54,32 +51,33 @@ void singlePlayer() {
 		connect = findPlayer();
 	}
 	
-	// Begin game
-	while(!gameOver) {
-		while(connect) {
-			if(turn) {
-				// Pick Move
-				myMove = pickMove();
-				// Send Move
-					sendMove(myMove);
-				// Receive new score after opponent takes damage
-					oppScore = recieveScore();
-			} else {				
-				// Receive player move and take damage
-				myScore = attack(recieveMove(), myScore);
-				// Send new score
-				sendScore(myScore);
-			}		
-			// Check game status
-			gameOver = gameStatus(myScore, oppScore);
-			!turn;
-		}
-		// If connection is lost, re-establish connection with other player
-		connect = findPlayer();
-	}
+	// NOTE: Need to build something to determine who goes first
+	// Compare Xbee ID's perhaps?
 	
-	//
-	// Display results once there is a lost
+	// Begin game
+	while(!game.gameOver && connect) {
+		if(game.turn) {
+			// Pick Move
+			myMove = pickMove();
+			// Send Move
+				sendMove(myMove);
+			// Receive new score after opponent takes damage
+				game.oppScore = recieveScore();
+		} else {				
+			// Receive player move and take damage
+			game.myScore = attack(recieveMove(), game.myScore);
+			// Send new score
+			sendScore(game.myScore);
+		}		
+		// Check game status
+		game.gameOver = gameStatus();
+		!game.turn;
+	}
+	if (!connect) {
+		printBSOD();
+	} else {
+		printResults();
+	}
 }
 
 // Program data on the card
@@ -106,14 +104,10 @@ void singlePlayer() {
 
 // Checks if a winner has been found
  int gameStatus() {
-	if(0 == oppScore || 0 == myScore) {
-		return 1;
-	} else {
-		return 0;
-	}
+	return (0 == game.oppScore || 0 == game.myScore);
 }
 
-// Returns new score of player after taking damage
+// Regame.turns new score of player after taking damage
 int attack (int attackDamage, int targetScore) {
 	if(attackDamage < targetScore) {
 		return (targetScore - attackDamage);
@@ -123,38 +117,70 @@ int attack (int attackDamage, int targetScore) {
 }
 
 // User selects move based off of available cards
-// Returns damage of chosen move
- int selectMonster(GlobalState* globalData) {
+// Regame.turns damage of chosen move
+ int selectCard(GlobalState* globalData) {
+	globalData->keyStatus = 0;
 	printSelectMenu(globalData);
+	
+	// Waits till valid keypad input
+	globalData->keyStatus = 1;
+	while(0 != globalData->keyStatus) {
+		// Invalid keypad input
+		if(0 == globalData->keyPress || globalData->keypress > 5) {
+			globalData->keyStatus = 1;
+			printSelectMenu(globalData);
+		// No card available
+		} else if (0 == globalData->cardSelect[globalData->keypress-1]) {
+			globalData->keyStatus = 2;
+			printSelectMenu(globalData);
+		// Selected card is available
+		} else {
+			globalData->keyStatus = 0;
+		}
+	}
+	return (globalData->keypress - 1);
+}
+
+// User selects move based off of available cards
+// Regame.turns damage of chosen move
+ int pickMove(GlobalState* globalData) {
+	int card = selectCard(globalData);
+	printAttackMenu(globalData, card);
+	globalData->keyStatus = 1;
+	// Checks keypad input and outputs a message to user if incorrect
+	while(0 != globalData->keyStatus) {
+		// Keypad input is not valid
+		if((10 > globalData->keypress) || (globalData->keypress > 12)) {
+			globalData->keyStatus = 1;
+			printAttackMenu(globalData, card);
+		// Selected attack does nothing
+		} else if (0 == globalData->selectMove[card][(globalData->keypress)-10]) {
+			globalData->keyStatus = 2;
+			printAttackMenu(globalData, card);
+		// Input is valid and passes all checks
+		} else {
+			globalData->keyStatus = 0;
+		}
+	}
+	
+	// Thing to consider: User pressing a key multiple times???
+	// Regame.turn the amount of damage the move makes
 	switch(globalData->keyPress) {
 		case 0x0A:
-			return globalData->monsterSelect[0]; 
+			return globalData->selectMove[card][0]; 
 			break;
 		case 0x0B:
-			return globalData->monsterSelect[1];
+			return globalData->selectMove[card][1];
 			break;
 		case 0xC:
-			return globalData->monsterSelect[2];
+			return globalData->select[card][2];
 			break;
 	}
 }
 
-// User selects move based off of available cards
-// Returns damage of chosen move
- int pickMove(GlobalState* globalData) {
-	printAttackMenu(globalData);
-	switch(globalData->keyPress) {
-		case 0x0A:
-			return globalData->selectMove[0]; 
-			break;
-		case 0x0B:
-			return globalData->selectMove[1];
-			break;
-		case 0xC:
-			return globalData->select[2];
-			break;
-	}
-}
+/* Xbee functions for multiplayer
+ *
+ */
 
 // Xbee: Send move to opponent
 int sendMove(int move) {
@@ -176,52 +202,105 @@ int recieveScore() {
 	return 0;
 }
 
-void printSelectMonster(GlobalState* globalData) {
+/* Display Functions for the Game
+ * These functions are built to display the game screen.
+ */
+ 
+ 
+ 
+ void printGame(GlobalState* globalData) {
 	// LCD menu
     clean(RED);
     drawBoxFill(0, 0, 20, V - 1, RED);
     drawBox(0, 0, 20, V - 1, 2, WHITE);
-    prints(35, 7, WHITE, RED, "Choose a monster by its slot number:", 1);
-	
-	// Check if there is a card / monster that has been read
+    // Prints messages to LCD based off of keypad input
+	switch(globalData->keyStatus) {
+		case 0:
+			prints(35, 7, WHITE, RED, "Choose a card by its slot number:", 1);
+			break
+		case 1:
+			prints(35, 7, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
+			break;
+		case 2:
+			prints(35, 7, WHITE, RED, "No card found. Please try again:", 1);
+			break;
+	}
+	// Display commands to select a slot - the LED's should indicate if a card is read
 	prints(35, 30, WHITE, BLACK, "Slot 1", 1);
 	prints(35, 60, WHITE, BLACK, "Slot 2", 1);
 	prints(35, 90, WHITE, BLACK, "Slot 3", 1);
 	prints(35, 120, WHITE, BLACK, "Slot 4", 1);
 }
 
-void printAttackMenu(GlobalState* globalData) {
-    int i = 0;
-	
+// Select a card to play
+void printSelect(GlobalState* globalData) {
+	// LCD menu
+    clean(RED);
+    drawBoxFill(0, 0, 20, V - 1, RED);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    // Prints messages to LCD based off of keypad input
+	switch(globalData->keyStatus) {
+		case 0:
+			prints(35, 7, WHITE, RED, "Choose a card by its slot number:", 1);
+			break
+		case 1:
+			prints(35, 7, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
+			break;
+		case 2:
+			prints(35, 7, WHITE, RED, "No card found. Please try again:", 1);
+			break;
+	}
+	// Display commands to select a slot - the LED's should indicate if a card is read
+	prints(35, 30, WHITE, BLACK, "Slot 1", 1);
+	prints(35, 60, WHITE, BLACK, "Slot 2", 1);
+	prints(35, 90, WHITE, BLACK, "Slot 3", 1);
+	prints(35, 120, WHITE, BLACK, "Slot 4", 1);
+}
+
+// Select an attack.
+void printAttackMenu(GlobalState* globalData, int card) {
 	// LCD menu
     clean(BLUE);
     drawBoxFill(0, 0, 20, V - 1, CYAN);
     drawBox(0, 0, 20, V - 1, 2, WHITE);
-    prints(35, 7, WHITE, CYAN, "Please select an attack: ", 1);
-    // Show attack options and heir
+	
+	// Prints messages to LCD based off of keypad input
+	switch(globalData->keyStatus) {
+		case 0:
+			prints(35, 7, WHITE, CYAN, "Please select an attack: ", 1);
+			break;
+		case 1:
+			prints(35, 7, WHITE, CYAN, "Invalid attack input. Please select from the options below: ", 1);
+			break;
+		case 2:
+			prints(35, 7, WHITE, CYAN, "This will have no effect! Select a better option.", 1);
+			break;
+    }
+	
+	// Show attack options and their damage
 	prints(35, 40, WHITE, BLUE, "A. Attack with max. damage: ", 1);
-	interprint(60, 40, WHITE, BLUE, moveSelect[0]);
+	integerprint(60, 40, WHITE, BLUE, selectMove[card][0]);
 	prints(35, 80, WHITE, BLUE, "B. Attack with damage: ", 1);
-	interprint(60, 80, WHITE, BLUE, moveSelect[1]);
+	interprint(60, 80, WHITE, BLUE, selectMove[card][1]);
 	prints(35, 120, WHITE, BLUE, "C. Attack with damage: ", 1);
-	interprint(60, 120, WHITE, BLUE, moveSelect[2]);
+	integerprint(60, 120, WHITE, BLUE, selectMove[card][2]);
 }
 
-// Displays Results
- void printResults() {
+// Displays Game Results
+void printResults() {
 	prints(0, 15, YELLOW, BLACK, "GAME OVER", 1);
 	
-	if(myScore > oppScore) {
+	if(game.myScore > game.oppScore) {
 		prints(0, 15, YELLOW, BLACK, "You won!", 1);
 		prints(0, 15, YELLOW, BLACK, "Your Score: ", 1);
-		integerprint(0, 15, YELLOW, BLACK, myScore);
+		integerprint(0, 15, YELLOW, BLACK, game.myScore);
 		prints(WHITE, BLACK, "Opponent Score: ");
-		integerprint(WHITE, BLACK, oppScore);
+		integerprint(WHITE, BLACK, game.oppScore);
 	} else {
 		prints(0, 15, RED, BLACK, "You lost", 1);
 		prints(0, 15, WHITE, BLACK, "Your Score: ");
-		integerprint(0, 15, WHITE, BLACK, myScore);
+		integerprint(0, 15, WHITE, BLACK, game.myScore);
 		prints(0, 15, YELLOW, BLACK, "Opponent Score: ");
-		integerprint(0, 15, YELLOW, BLACK, oppScore);
+		integerprint(0, 15, YELLOW, BLACK, game.oppScore);
 	}
 }

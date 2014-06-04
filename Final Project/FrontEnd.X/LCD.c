@@ -732,7 +732,7 @@ void nextPage(GlobalState* globalData, int cursorPos) {
     }
 }
 
-// Depreciated
+/* Depreciated
 
 void box(char x, char y, char high, char breth, int color) {
     char s = 0;
@@ -744,4 +744,4 @@ void box(char x, char y, char high, char breth, int color) {
         }
     }
 }
-
+*/
