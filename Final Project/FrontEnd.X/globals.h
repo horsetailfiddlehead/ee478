@@ -34,6 +34,7 @@ extern "C" {
 #include "rfidReader.h"
 #include "motorDriver.h"
 #include "game.h"
+#include "i2cComm.h"
 
     enum _myBool {
         FALSE = 0, TRUE = 1

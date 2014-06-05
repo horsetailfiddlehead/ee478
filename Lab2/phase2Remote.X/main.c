@@ -68,7 +68,7 @@ void interrupt_at_high_vector(void) {
 void i2cISR(void) {
     int temp = 0;
     if (SSP2STATbits.D_A == 0 && SSP2STATbits.BF == 1) {
-        temp = SSP2BUF;
+        temp = SSP2BUF; // get rid of address
     }
     if (SSP2STATbits.D_A == 1 && SSP2STATbits.BF == 1) {
         *ourGlobal.setSpeed = SSP2BUF; // new motor set speed
