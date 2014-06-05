@@ -11,9 +11,8 @@
 #define HEALTH 100
 
 gameData game;
-GlobalState globalData;
 
-void setup() {
+void setupGame() {
 	game.myScore = HEALTH;
 	game.oppScore = HEALTH;
 	game.turn = 0;
@@ -23,9 +22,9 @@ void setup() {
         game.oppMove = 0;
 }
 
-void singlePlayer(gameData game) {
+void singlePlayer(GlobalState* globalData) {
 	// Setup new game
-	setup();
+	setupGame();
 	game.turn = rand() % 2;
 	
 	// Begin game with computer
@@ -41,17 +40,17 @@ void singlePlayer(gameData game) {
 		}
 		// Check game status
 		game.gameOver = gameStatus();
-		!game.turn;
+		game.turn = !game.turn;
 	}
 	// Display results once there is a lost
 	printResults();
 }
 
- void multiPlayer() {
+ void multiPlayer(GlobalState* globalData) {
         int myMove;
         int oppMove = 0;
 	int connect = 0;
-	
+	setupGame();
 	// Find other players
 	while(!connect) {
 		connect = findPlayer();
@@ -64,7 +63,7 @@ void singlePlayer(gameData game) {
 	while(!game.gameOver && connect) {
 		if(game.turn) {
 			// Pick Move
-			myMove = pickMove();
+			myMove = pickMove(globalData);
 			// Send Move
 				sendMove(myMove);
 			// Receive new score after opponent takes damage
@@ -89,7 +88,7 @@ void singlePlayer(gameData game) {
 // Program data on the card
 // Monster ID
 // Attack ID
- void buildCard() {
+ void buildCard(GlobalState* globalData) {
 	// Read Card to be built
 	
 	// Enter data to be stored in card
@@ -125,26 +124,32 @@ int attack (int attackDamage, int targetScore) {
 // User selects move based off of available cards
 // Regame.turns damage of chosen move
  int selectCard(GlobalState* globalData) {
-	globalData->keyStatus = 0;
-	printSelect(globalData);
-	
-	// Waits till valid keypad input
-	globalData->keyStatus = 1;
-	while(0 != globalData->keyStatus) {
-		// Invalid keypad input
-		if(0 == globalData->keyPress || globalData->keypress > 5) {
-			globalData->keyStatus = 1;
-			printSelectMenu(globalData);
-		// No card available
-		} else if (0 == globalData->cardSelect[globalData->keypress-1]) {
-			globalData->keyStatus = 2;
-			printSelectMenu(globalData);
-		// Selected card is available
-		} else {
-			globalData->keyStatus = 0;
-		}
-	}
-	return (globalData->keypress - 1);
+    printSelect(globalData);
+    prints(0, 5, WHITE, RED, "Choose a card by its slot number:", 1);
+    // Waits till valid keypad input
+    globalData->keyStatus = 1;
+    while (0 != globalData->keyStatus) {
+        keypad(globalData);
+        // Invalid keypad input
+        if (globalData->keyPress >= 0) {
+            // Beep off
+            TRISBbits.RB5 = 1;
+            if ((0 == globalData->keyPress || globalData->keyPress > 5)) {
+                globalData->keyStatus = 1;
+                prints(0, 5, WHITE, RED, "                                                 ", 1);
+                prints(0, 5, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
+                // No card available
+            } else if (0 == globalData->cardSelect[globalData->keyPress - 1]) {
+                globalData->keyStatus = 2;
+                prints(0, 5, WHITE, RED, "                                ", 1);
+                prints(0, 5, WHITE, RED, "No card found. Please try again:", 1);
+                // Selected card is available
+            } else {
+                globalData->keyStatus = 0;
+            }
+        }
+    }
+    return (globalData->keyPress - 1);
 }
 
 // User selects move based off of available cards
@@ -152,21 +157,26 @@ int attack (int attackDamage, int targetScore) {
  int pickMove(GlobalState* globalData) {
 	int card = selectCard(globalData);
 	printAttackMenu(globalData, card);
+        prints(0, 5, WHITE, CYAN, "Please select an attack: ", 1);
 	globalData->keyStatus = 1;
 	// Checks keypad input and outputs a message to user if incorrect
 	while(0 != globalData->keyStatus) {
-		// Keypad input is not valid
-		if((10 > globalData->keypress) || (globalData->keypress > 12)) {
-			globalData->keyStatus = 1;
-			printAttackMenu(globalData, card);
-		// Selected attack does nothing
-		} else if (0 == globalData->selectMove[card][(globalData->keypress)-10]) {
-			globalData->keyStatus = 2;
-			printAttackMenu(globalData, card);
-		// Input is valid and passes all checks
-		} else {
-			globalData->keyStatus = 0;
-		}
+            keypad(globalData);
+            if(globalData->keyPress >= 0) {
+                // Keypad input is not valid
+                if(((0x0A > globalData->keyPress) || (globalData->keyPress > 0x0D))) {
+                        globalData->keyStatus = 1;
+                        prints(0, 5, WHITE, CYAN, "Invalid attack input. Please select from the options below: ", 1);
+                // Selected attack does nothing
+                } else if (0 == globalData->selectMove[card][(globalData->keyPress)-10]) {
+                        globalData->keyStatus = 2;
+                        prints(0, 5, WHITE, CYAN, "This will have no effect! Select a better option.", 1);
+                // Input is valid and passes all checks
+                } else {
+                        globalData->keyStatus = 0;
+                         prints(0, 5, WHITE, CYAN, "Please select an attack: ", 1);
+                }
+            }
 	}
 	
 	// Thing to consider: User pressing a key multiple times???
@@ -216,21 +226,11 @@ int recieveScore() {
  
  void printGame(GlobalState* globalData) {
 	// LCD menu
+         // Beep off
+    TRISBbits.RB5 = 1;
+
     clean(RED);
-    drawBoxFill(0, 0, 20, V - 1, RED);
-    drawBox(0, 0, 20, V - 1, 2, WHITE);
     // Prints messages to LCD based off of keypad input
-	switch(globalData->keyStatus) {
-		case 0:
-			prints(35, 7, WHITE, RED, "Choose a card by its slot number:", 1);
-			break;
-		case 1:
-			prints(35, 7, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
-			break;
-		case 2:
-			prints(35, 7, WHITE, RED, "No card found. Please try again:", 1);
-			break;
-	}
 	// Display commands to select a slot - the LED's should indicate if a card is read
 	prints(35, 30, WHITE, BLACK, "Slot 1", 1);
 	prints(35, 60, WHITE, BLACK, "Slot 2", 1);
@@ -240,73 +240,62 @@ int recieveScore() {
 
 // Select a card to play
 void printSelect(GlobalState* globalData) {
+        // Beep off
+    TRISBbits.RB5 = 1;
+
 	// LCD menu
-    clean(RED);
-    drawBoxFill(0, 0, 20, V - 1, RED);
-    drawBox(0, 0, 20, V - 1, 2, WHITE);
-    // Prints messages to LCD based off of keypad input
-	switch(globalData->keyStatus) {
-		case 0:
-			prints(35, 7, WHITE, RED, "Choose a card by its slot number:", 1);
-			break;
-		case 1:
-			prints(35, 7, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
-			break;
-		case 2:
-			prints(35, 7, WHITE, RED, "No card found. Please try again:", 1);
-			break;
-	}
+        clean(RED);
 	// Display commands to select a slot - the LED's should indicate if a card is read
-	prints(35, 30, WHITE, BLACK, "Slot 1", 1);
-	prints(35, 60, WHITE, BLACK, "Slot 2", 1);
-	prints(35, 90, WHITE, BLACK, "Slot 3", 1);
-	prints(35, 120, WHITE, BLACK, "Slot 4", 1);
+        drawBoxFill(30, 39, 8, 45, BLACK);
+        drawBoxFill(30, 69, 8, 45, BLACK);
+        drawBoxFill(30, 99, 8, 45, BLACK);
+        drawBoxFill(30, 129, 8,45, BLACK);
+	prints(35, 40, WHITE, BLACK, "Slot 1", 1);
+	prints(35, 70, WHITE, BLACK, "Slot 2", 1);
+	prints(35, 100, WHITE, BLACK, "Slot 3", 1);
+	prints(35, 130, WHITE, BLACK, "Slot 4", 1);
 }
 
 // Select an attack.
 void printAttackMenu(GlobalState* globalData, int card) {
-	// LCD menu
+     // Beep off
+    TRISBbits.RB5 = 1;
+
+    // LCD menu
     clean(BLUE);
-    drawBoxFill(0, 0, 20, V - 1, CYAN);
-    drawBox(0, 0, 20, V - 1, 2, WHITE);
 	
-	// Prints messages to LCD based off of keypad input
-	switch(globalData->keyStatus) {
-		case 0:
-			prints(35, 7, WHITE, CYAN, "Please select an attack: ", 1);
-			break;
-		case 1:
-			prints(35, 7, WHITE, CYAN, "Invalid attack input. Please select from the options below: ", 1);
-			break;
-		case 2:
-			prints(35, 7, WHITE, CYAN, "This will have no effect! Select a better option.", 1);
-			break;
-    }
-	
-	// Show attack options and their damage
-	prints(35, 40, WHITE, BLUE, "A. Attack with max. damage: ", 1);
-	integerprint(60, 40, WHITE, BLUE, game.selectMove[card][0]);
-	prints(35, 80, WHITE, BLUE, "B. Attack with damage: ", 1);
-	interprint(60, 80, WHITE, BLUE, game.selectMove[card][1]);
-	prints(35, 120, WHITE, BLUE, "C. Attack with damage: ", 1);
-	integerprint(60, 120, WHITE, BLUE, selectMove[card][2]);
+    // Show attack options and their damage
+    prints(0, 40, WHITE, BLUE, "A. Attack with:", 1);
+    integerprint(0, 48, WHITE, BLUE, globalData->selectMove[card][0],1);
+    prints(25, 48, WHITE, BLUE, "damage", 1);
+
+    prints(0, 80, WHITE, BLUE, "B. Attack with: ", 1);
+    integerprint(0, 88, WHITE, BLUE, globalData->selectMove[card][1],1);
+    prints(25, 88, WHITE, BLUE, "damage", 1);
+    
+    prints(0, 120, WHITE, BLUE, "C. Attack with: ", 1);
+    integerprint(0, 128, WHITE, BLUE, globalData->selectMove[card][2],1);
+    prints(25, 128, WHITE, BLUE, "damage", 1);
 }
 
 // Displays Game Results
 void printResults() {
+        // Beep off
+    TRISBbits.RB5 = 1;
+        clean(RED);
 	prints(0, 15, YELLOW, BLACK, "GAME OVER", 1);
 	
 	if(game.myScore > game.oppScore) {
 		prints(0, 15, YELLOW, BLACK, "You won!", 1);
-		prints(0, 15, YELLOW, BLACK, "Your Score: ", 1);
-		integerprint(0, 15, YELLOW, BLACK, game.myScore);
-		prints(WHITE, BLACK, "Opponent Score: ");
-		integerprint(WHITE, BLACK, game.oppScore);
+		prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
+		integerprint(0, 45, YELLOW, BLACK, game.myScore,1);
+		prints(0,60, WHITE, BLACK, "Opponent Score: ",1);
+		integerprint(0, 75, WHITE, BLACK, game.oppScore,1);
 	} else {
 		prints(0, 15, RED, BLACK, "You lost", 1);
-		prints(0, 15, WHITE, BLACK, "Your Score: ");
-		integerprint(0, 15, WHITE, BLACK, game.myScore);
-		prints(0, 15, YELLOW, BLACK, "Opponent Score: ");
-		integerprint(0, 15, YELLOW, BLACK, game.oppScore);
+		prints(0, 30, WHITE, BLACK, "Your Score: ",1);
+		integerprint(0, 45, WHITE, BLACK, game.myScore,1);
+		prints(0, 60, YELLOW, BLACK, "Opponent Score: ",1);
+		integerprint(0, 75, YELLOW, BLACK, game.oppScore,1);
 	}
 }

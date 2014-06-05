@@ -1,5 +1,5 @@
 MPLINK 4.48, Linker
-Linker Map File - Created Tue Jun 03 01:17:19 2014
+Linker Map File - Created Wed Jun 04 18:23:00 2014
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -7,81 +7,86 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                _entry_scn       code   0x000000    program   0x000006
            .code___init.o       code   0x000006    program   0x000002
               high_vector       code   0x000008    program   0x000006
-                   .cinit    romdata   0x00000e    program   0x00000e
-              .code_LCD.o       code   0x00001c    program   0x0019a4
-        .code_SchedMain.o       code   0x0019c0    program   0x000590
-           .romdata_LCD.o    romdata   0x001f50    program   0x0004fb
-       .romdata_u2putrs.o    romdata   0x00244b    program   0x000000
-       .idata_u1putrs.o_i    romdata   0x00244b    program   0x000000
-    .romdata_rfidReader.o    romdata   0x00244b    program   0x000000
-   .romdata_motorDriver.o    romdata   0x00244b    program   0x000000
-      .idata_fxd1616u.o_i    romdata   0x00244b    program   0x000000
-      .romdata_fxd1616u.o    romdata   0x00244b    program   0x000000
-        .romdata_u1open.o    romdata   0x00244b    program   0x000000
-        .idata_u2open.o_i    romdata   0x00244b    program   0x000000
-       .idata_adcopen.o_i    romdata   0x00244b    program   0x000000
-       .romdata_adcopen.o    romdata   0x00244b    program   0x000000
-        .romdata_u1read.o    romdata   0x00244b    program   0x000000
-        .idata_u2read.o_i    romdata   0x00244b    program   0x000000
-      .idata_pw4setdc.o_i    romdata   0x00244b    program   0x000000
-        .idata_u1defs.o_i    romdata   0x00244b    program   0x000000
-       .romdata_u2write.o    romdata   0x00244b    program   0x000000
-       .idata_u1write.o_i    romdata   0x00244b    program   0x000000
-        .romdata_u2defs.o    romdata   0x00244b    program   0x000000
-         .idata_rs232.o_i    romdata   0x00244b    program   0x000000
-     .romdata_SchedMain.o    romdata   0x00244b    program   0x000000
-     .idata_SchedMain.o_i    romdata   0x00244b    program   0x000000
-       .romdata_startup.o    romdata   0x00244b    program   0x000000
-     .code_keypadDriver.o       code   0x00244c    program   0x0003f0
-           .code_u2defs.o       code   0x00244c    program   0x000000
-            .code_c018i.o       code   0x00244c    program   0x000000
-       .code_rfidReader.o       code   0x00283c    program   0x00032e
-             .stringtable    romdata   0x002b6a    program   0x0001b3
-        .romdata___init.o    romdata   0x002d1d    program   0x000000
-        .idata___init.o_i    romdata   0x002d1d    program   0x000000
-       .idata_u2write.o_i    romdata   0x002d1d    program   0x000000
-       .romdata_u1write.o    romdata   0x002d1d    program   0x000000
-       .romdata_u1putrs.o    romdata   0x002d1d    program   0x000000
-       .idata_u2putrs.o_i    romdata   0x002d1d    program   0x000000
-        .idata_u2defs.o_i    romdata   0x002d1d    program   0x000000
-        .romdata_u1defs.o    romdata   0x002d1d    program   0x000000
-      .romdata_pw4setdc.o    romdata   0x002d1d    program   0x000000
-         .romdata_c018i.o    romdata   0x002d1d    program   0x000000
-        .romdata_u2read.o    romdata   0x002d1d    program   0x000000
-        .idata_u1read.o_i    romdata   0x002d1d    program   0x000000
-         .idata_c018i.o_i    romdata   0x002d1d    program   0x000000
-           .idata_LCD.o_i    romdata   0x002d1d    program   0x000000
-    .idata_rfidReader.o_i    romdata   0x002d1d    program   0x000000
-   .idata_motorDriver.o_i    romdata   0x002d1d    program   0x000000
-       .idata_startup.o_i    romdata   0x002d1d    program   0x000000
-        .idata_u1open.o_i    romdata   0x002d1d    program   0x000000
-         .romdata_rs232.o    romdata   0x002d1d    program   0x000000
-  .romdata_keypadDriver.o    romdata   0x002d1d    program   0x000000
-        .romdata_u2open.o    romdata   0x002d1d    program   0x000000
-           .code_u1defs.o       code   0x002d1e    program   0x000000
-      .code_motorDriver.o       code   0x002d1e    program   0x000120
-            .code_rs232.o       code   0x002e3e    program   0x000116
-                   STRING       code   0x002f54    program   0x0000e6
-                     PROG       code   0x00303a    program   0x0000a6
-               _cinit_scn       code   0x0030e0    program   0x00009e
-           .code_u2open.o       code   0x00317e    program   0x000078
-           .code_u1open.o       code   0x0031f6    program   0x000072
-          .code_u2putrs.o       code   0x003268    program   0x000064
-          .code_u1putrs.o       code   0x0032cc    program   0x000064
-         .code_pw4setdc.o       code   0x003330    program   0x000060
-          .code_adcopen.o       code   0x003390    program   0x000060
-           .code_u2read.o       code   0x0033f0    program   0x00003e
-           .code_u1read.o       code   0x00342e    program   0x00003e
-             D10KTCYXCODE       code   0x00346c    program   0x00002e
-          .code_u2write.o       code   0x00349a    program   0x00002e
-          .code_u1write.o       code   0x0034c8    program   0x00002e
-         .code_fxd1616u.o       code   0x0034f6    program   0x00002c
-          .code_startup.o       code   0x003522    program   0x000022
-                    .code       code   0x003544    program   0x000020
-             _startup_scn       code   0x003564    program   0x00001c
-             D100TCYXCODE       code   0x003580    program   0x00001c
-              D10TCYXCODE       code   0x00359c    program   0x000016
-  .idata_keypadDriver.o_i    romdata   0x0035b2    program   0x00003c
+                   .cinit    romdata   0x00000e    program   0x00001a
+              .code_LCD.o       code   0x000028    program   0x0018e4
+             .code_game.o       code   0x00190c    program   0x000efc
+        .code_SchedMain.o       code   0x002808    program   0x00067e
+           .romdata_LCD.o    romdata   0x002e86    program   0x0004fb
+       .romdata_u2putrs.o    romdata   0x003381    program   0x000000
+    .romdata_rfidReader.o    romdata   0x003381    program   0x000000
+   .idata_motorDriver.o_i    romdata   0x003381    program   0x000000
+   .romdata_motorDriver.o    romdata   0x003381    program   0x000000
+          .romdata_game.o    romdata   0x003381    program   0x000000
+      .idata_fxd1616u.o_i    romdata   0x003381    program   0x000000
+        .idata_u1open.o_i    romdata   0x003381    program   0x000000
+        .romdata_u1open.o    romdata   0x003381    program   0x000000
+       .idata_adcopen.o_i    romdata   0x003381    program   0x000000
+        .idata_u1read.o_i    romdata   0x003381    program   0x000000
+        .romdata_u1read.o    romdata   0x003381    program   0x000000
+        .idata_u2defs.o_i    romdata   0x003381    program   0x000000
+        .romdata_u2defs.o    romdata   0x003381    program   0x000000
+       .idata_u2putrs.o_i    romdata   0x003381    program   0x000000
+       .idata_u2write.o_i    romdata   0x003381    program   0x000000
+       .romdata_u2write.o    romdata   0x003381    program   0x000000
+        .romdata___init.o    romdata   0x003381    program   0x000000
+    .idata_rfidReader.o_i    romdata   0x003381    program   0x000000
+         .romdata_c018i.o    romdata   0x003381    program   0x000000
+       .romdata_startup.o    romdata   0x003381    program   0x000000
+       .idata_startup.o_i    romdata   0x003381    program   0x000000
+     .idata_SchedMain.o_i    romdata   0x003381    program   0x000000
+            .code_c018i.o       code   0x003382    program   0x000000
+     .code_keypadDriver.o       code   0x003382    program   0x0003f0
+           .code_u2defs.o       code   0x003382    program   0x000000
+             .stringtable    romdata   0x003772    program   0x000393
+       .romdata_adcopen.o    romdata   0x003b05    program   0x000000
+        .idata_u2read.o_i    romdata   0x003b05    program   0x000000
+        .romdata_u2read.o    romdata   0x003b05    program   0x000000
+      .idata_pw4setdc.o_i    romdata   0x003b05    program   0x000000
+      .romdata_pw4setdc.o    romdata   0x003b05    program   0x000000
+        .idata_u1defs.o_i    romdata   0x003b05    program   0x000000
+        .romdata_u1defs.o    romdata   0x003b05    program   0x000000
+       .idata_u1write.o_i    romdata   0x003b05    program   0x000000
+       .romdata_u1write.o    romdata   0x003b05    program   0x000000
+     .romdata_SchedMain.o    romdata   0x003b05    program   0x000000
+        .idata___init.o_i    romdata   0x003b05    program   0x000000
+       .idata_u1putrs.o_i    romdata   0x003b05    program   0x000000
+       .romdata_u1putrs.o    romdata   0x003b05    program   0x000000
+         .idata_c018i.o_i    romdata   0x003b05    program   0x000000
+           .idata_LCD.o_i    romdata   0x003b05    program   0x000000
+          .idata_game.o_i    romdata   0x003b05    program   0x000000
+         .romdata_rs232.o    romdata   0x003b05    program   0x000000
+      .romdata_fxd1616u.o    romdata   0x003b05    program   0x000000
+         .idata_rs232.o_i    romdata   0x003b05    program   0x000000
+        .idata_u2open.o_i    romdata   0x003b05    program   0x000000
+  .romdata_keypadDriver.o    romdata   0x003b05    program   0x000000
+        .romdata_u2open.o    romdata   0x003b05    program   0x000000
+       .code_rfidReader.o       code   0x003b06    program   0x00032e
+           .code_u1defs.o       code   0x003b06    program   0x000000
+      .code_motorDriver.o       code   0x003e34    program   0x000120
+            .code_rs232.o       code   0x003f54    program   0x000116
+                   STRING       code   0x00406a    program   0x0000e6
+                     PROG       code   0x004150    program   0x0000e2
+               _cinit_scn       code   0x004232    program   0x00009e
+           .code_u2open.o       code   0x0042d0    program   0x000078
+           .code_u1open.o       code   0x004348    program   0x000072
+          .code_u2putrs.o       code   0x0043ba    program   0x000064
+          .code_u1putrs.o       code   0x00441e    program   0x000064
+         .code_pw4setdc.o       code   0x004482    program   0x000060
+          .code_adcopen.o       code   0x0044e2    program   0x000060
+           .code_u2read.o       code   0x004542    program   0x00003e
+           .code_u1read.o       code   0x004580    program   0x00003e
+                   STDLIB       code   0x0045be    program   0x00003c
+             D10KTCYXCODE       code   0x0045fa    program   0x00002e
+          .code_u2write.o       code   0x004628    program   0x00002e
+          .code_u1write.o       code   0x004656    program   0x00002e
+         .code_fxd1616u.o       code   0x004684    program   0x00002c
+          .code_startup.o       code   0x0046b0    program   0x000022
+                    .code       code   0x0046d2    program   0x000020
+             _startup_scn       code   0x0046f2    program   0x00001c
+             D100TCYXCODE       code   0x00470e    program   0x00001c
+              D10TCYXCODE       code   0x00472a    program   0x000016
+              SEED_DATA_i    romdata   0x004740    program   0x000002
+  .idata_keypadDriver.o_i    romdata   0x004742    program   0x00003c
 .config_300001_SchedMain.o    romdata   0x300001    program   0x000001
 .config_300003_SchedMain.o    romdata   0x300003    program   0x000001
                 MATH_DATA      udata   0x000000       data   0x000014
@@ -90,50 +95,53 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                 DELAYDAT2      udata   0x000020       data   0x000001
                 DELAYDAT1      udata   0x000021       data   0x000001
        .udata_SchedMain.o      udata   0x000060       data   0x000088
-           .udata_c018i.o      udata   0x0000e8       data   0x00000a
-          .udata_u2defs.o      udata   0x0000f2       data   0x000001
-          .udata_u1defs.o      udata   0x0000f3       data   0x000001
-          .idata_u1read.o      idata   0x0000f4       data   0x000000
-          .udata_u2read.o      udata   0x0000f4       data   0x000000
-          .idata_u2read.o      idata   0x0000f4       data   0x000000
-          .udata_u1read.o      udata   0x0000f4       data   0x000000
-         .idata_adcopen.o      idata   0x0000f4       data   0x000000
-        .udata_pw4setdc.o      udata   0x0000f4       data   0x000000
-        .idata_pw4setdc.o      idata   0x0000f4       data   0x000000
-         .udata_adcopen.o      udata   0x0000f4       data   0x000000
-          .idata_u1defs.o      idata   0x0000f4       data   0x000000
-          .idata_u2defs.o      idata   0x0000f4       data   0x000000
-         .udata_u1write.o      udata   0x0000f4       data   0x000000
-         .idata_u1write.o      idata   0x0000f4       data   0x000000
-         .udata_u2write.o      udata   0x0000f4       data   0x000000
-         .idata_u2write.o      idata   0x0000f4       data   0x000000
-          .udata___init.o      udata   0x0000f4       data   0x000000
-          .idata___init.o      idata   0x0000f4       data   0x000000
-         .udata_u1putrs.o      udata   0x0000f4       data   0x000000
-         .idata_u1putrs.o      idata   0x0000f4       data   0x000000
-         .udata_u2putrs.o      udata   0x0000f4       data   0x000000
-         .idata_u2putrs.o      idata   0x0000f4       data   0x000000
-           .idata_c018i.o      idata   0x0000f4       data   0x000000
-       .idata_SchedMain.o      idata   0x0000f4       data   0x000000
-    .udata_keypadDriver.o      udata   0x0000f4       data   0x000000
-           .udata_rs232.o      udata   0x0000f4       data   0x000000
-           .idata_rs232.o      idata   0x0000f4       data   0x000000
-         .udata_startup.o      udata   0x0000f4       data   0x000000
-         .idata_startup.o      idata   0x0000f4       data   0x000000
-             .udata_LCD.o      udata   0x0000f4       data   0x000000
-             .idata_LCD.o      idata   0x0000f4       data   0x000000
-      .udata_rfidReader.o      udata   0x0000f4       data   0x000000
-      .idata_rfidReader.o      idata   0x0000f4       data   0x000000
-     .udata_motorDriver.o      udata   0x0000f4       data   0x000000
-     .idata_motorDriver.o      idata   0x0000f4       data   0x000000
-        .udata_fxd1616u.o      udata   0x0000f4       data   0x000000
-        .idata_fxd1616u.o      idata   0x0000f4       data   0x000000
-          .udata_u1open.o      udata   0x0000f4       data   0x000000
-          .idata_u1open.o      idata   0x0000f4       data   0x000000
-          .udata_u2open.o      udata   0x0000f4       data   0x000000
-          .idata_u2open.o      idata   0x0000f4       data   0x000000
+            .udata_game.o      udata   0x0000e8       data   0x00000e
+           .udata_c018i.o      udata   0x0000f6       data   0x00000a
     .idata_keypadDriver.o      idata   0x000100       data   0x00003c
                    .stack      udata   0x000e00       data   0x000100
+                SEED_DATA      idata   0x000f00       data   0x000002
+          .udata_u2defs.o      udata   0x000f02       data   0x000001
+          .udata_u1defs.o      udata   0x000f03       data   0x000001
+          .udata_u1read.o      udata   0x000f04       data   0x000000
+          .idata_u1read.o      idata   0x000f04       data   0x000000
+          .udata_u2read.o      udata   0x000f04       data   0x000000
+          .idata_u2read.o      idata   0x000f04       data   0x000000
+        .udata_pw4setdc.o      udata   0x000f04       data   0x000000
+        .idata_pw4setdc.o      idata   0x000f04       data   0x000000
+          .idata_u1defs.o      idata   0x000f04       data   0x000000
+          .idata_u2defs.o      idata   0x000f04       data   0x000000
+         .udata_u1write.o      udata   0x000f04       data   0x000000
+         .idata_u1write.o      idata   0x000f04       data   0x000000
+         .udata_u2write.o      udata   0x000f04       data   0x000000
+         .idata_u2write.o      idata   0x000f04       data   0x000000
+          .udata___init.o      udata   0x000f04       data   0x000000
+          .idata___init.o      idata   0x000f04       data   0x000000
+         .udata_u1putrs.o      udata   0x000f04       data   0x000000
+         .idata_u1putrs.o      idata   0x000f04       data   0x000000
+         .udata_u2putrs.o      udata   0x000f04       data   0x000000
+         .idata_u2putrs.o      idata   0x000f04       data   0x000000
+           .idata_c018i.o      idata   0x000f04       data   0x000000
+           .idata_rs232.o      idata   0x000f04       data   0x000000
+         .udata_startup.o      udata   0x000f04       data   0x000000
+         .idata_startup.o      idata   0x000f04       data   0x000000
+             .udata_LCD.o      udata   0x000f04       data   0x000000
+             .idata_LCD.o      idata   0x000f04       data   0x000000
+      .udata_rfidReader.o      udata   0x000f04       data   0x000000
+      .idata_rfidReader.o      idata   0x000f04       data   0x000000
+     .udata_motorDriver.o      udata   0x000f04       data   0x000000
+     .idata_motorDriver.o      idata   0x000f04       data   0x000000
+           .udata_rs232.o      udata   0x000f04       data   0x000000
+            .idata_game.o      idata   0x000f04       data   0x000000
+    .udata_keypadDriver.o      udata   0x000f04       data   0x000000
+       .idata_SchedMain.o      idata   0x000f04       data   0x000000
+        .udata_fxd1616u.o      udata   0x000f04       data   0x000000
+        .idata_fxd1616u.o      idata   0x000f04       data   0x000000
+          .udata_u1open.o      udata   0x000f04       data   0x000000
+          .idata_u1open.o      idata   0x000f04       data   0x000000
+          .udata_u2open.o      udata   0x000f04       data   0x000000
+          .idata_u2open.o      idata   0x000f04       data   0x000000
+         .udata_adcopen.o      udata   0x000f04       data   0x000000
+         .idata_adcopen.o      idata   0x000f04       data   0x000000
               SFR_BANKED0      udata   0x000f38       data   0x000028
             SFR_UNBANKED0      udata   0x000f60       data   0x0000a0
 
@@ -142,171 +150,211 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x00244a      
-                            0x00244c    0x002d1c      
-                            0x002d1e    0x0035ed      
+                            0x000000    0x003380      
+                            0x003382    0x003b04      
+                            0x003b06    0x00477d      
                             0x300001    0x300001      
                             0x300003    0x300003      
-            13806 out of 66584 program addresses used, program memory utilization is 20%
+            18302 out of 66584 program addresses used, program memory utilization is 27%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                    ASCII   0x0008e0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                   D100_1   0x00358e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                    D100x   0x00358c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                   D10K_1   0x003478    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kl   0x003484    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kx   0x003476    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10_1   0x0035ac    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                     D10x   0x0035a4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                   D1616S   0x00305c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x00306a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x003066    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x00307c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA1616S   0x00304c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-             Delay100TCYx   0x003580    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-             Delay10KTCYx   0x00346c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-              Delay10TCYx   0x00359c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                 FXD1616S   0x00303a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD1616U   0x0034f6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                 FXM1616S   0x003086    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-               Open1USART   0x0031f6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
-               Open2USART   0x00317e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
-                  OpenADC   0x003390    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
-                RFIDSetup   0x002b1c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               Read1USART   0x00342e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
-               Read2USART   0x0033f0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2read.c
-                SetDCPWM4   0x003330    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
-                   SetPix   0x000124    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               TSIGN1616A   0x0030d2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-              Write1USART   0x0034c8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
-              Write2USART   0x00349a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2write.c
-              _2jContinue   0x002f74    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-                   _3jEnd   0x002f7e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-       _D100TCYXCODE_0008   0x003588    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0012   0x003592    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0018   0x003598    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D10KTCYXCODE_0010   0x00347c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-       _D10KTCYXCODE_001C   0x003488    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-        _D10TCYXCODE_000A   0x0035a6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000C   0x0035a8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000E   0x0035aa    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                    ASCII   0x0008ec    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                   D100_1   0x00471c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+                    D100x   0x00471a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+                   D10K_1   0x004606    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+                    D10Kl   0x004612    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+                    D10Kx   0x004604    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+                    D10_1   0x00473a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                     D10x   0x004732    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                   D1616S   0x004172    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x004180    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x00417c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x004192    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA1616S   0x004162    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+             Delay100TCYx   0x00470e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+             Delay10KTCYx   0x0045fa    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+              Delay10TCYx   0x00472a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                 FXD1616S   0x004150    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD1616U   0x004684    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
+                 FXM1616S   0x00419c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+                 FXM1616U   0x0041f6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616u.asm
+               Open1USART   0x004348    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
+               Open2USART   0x0042d0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
+                  OpenADC   0x0044e2    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
+                RFIDSetup   0x003de6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               Read1USART   0x004580    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
+               Read2USART   0x004542    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2read.c
+                SetDCPWM4   0x004482    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
+                   SetPix   0x000130    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               TSIGN1616A   0x0041e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+              Write1USART   0x004656    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
+              Write2USART   0x004628    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2write.c
+              _2jContinue   0x00408a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+                   _3jEnd   0x004094    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+       _D100TCYXCODE_0008   0x004716    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+       _D100TCYXCODE_0012   0x004720    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+       _D100TCYXCODE_0018   0x004726    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+       _D10KTCYXCODE_0010   0x00460a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+       _D10KTCYXCODE_001C   0x004616    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+        _D10TCYXCODE_000A   0x004734    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000C   0x004736    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000E   0x004738    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+       ___return_lbl00000   0x0046ae    program     static                          
        ___return_lbl00000   0x00000c    program     static                          
        ___return_lbl00000   0x000004    program     static                          
-       ___return_lbl00000   0x003520    program     static                          
-       ___return_lbl00001   0x00357e    program     static                          
-       ___return_lbl00002   0x00317c    program     static                          
+       ___return_lbl00001   0x00470c    program     static                          
+       ___return_lbl00002   0x0042ce    program     static                          
                __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
                __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
                    __init   0x000006    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
-               __string_0   0x002d0c    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_0   0x002b7d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               __string_0   0x002caf    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_1   0x002cf5    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_1   0x002b77    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               __string_1   0x002cad    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_10   0x002c37    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_11   0x002c21    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_12   0x002c13    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_13   0x002bfe    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_14   0x002bec    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_15   0x002bc4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_16   0x002bb3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_17   0x002b91    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_2   0x002b70    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               __string_2   0x002ce4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_2   0x002ca9    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_3   0x002b6a    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               __string_3   0x002cdf    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_3   0x002c9f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_4   0x002cc6    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_4   0x002c91    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_5   0x002cb3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_5   0x002c85    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_6   0x002cb1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_6   0x002c79    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_7   0x002c65    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_8   0x002c5b    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_9   0x002c44    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-            __zero_memory   0x003544    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                _do_cinit   0x0030e0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+               __string_0   0x0038b7    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_0   0x003914    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_0   0x003ae3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_0   0x003785    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               __string_1   0x0038fd    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_1   0x00377f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               __string_1   0x0038b5    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_1   0x003ab1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_10   0x00383f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_10   0x00399f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_11   0x003829    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_11   0x003998    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_12   0x00381b    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_12   0x003988    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_13   0x003981    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_13   0x003806    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_14   0x0037f4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_14   0x003970    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_15   0x0037cc    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_15   0x00395f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_16   0x003955    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_16   0x0037bb    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_17   0x003799    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_17   0x00394c    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_18   0x00393f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_19   0x00392e    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_2   0x0038ec    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_2   0x003778    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               __string_2   0x003a7f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_2   0x0038b1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_20   0x003925    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_3   0x003a5e    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_3   0x0038a7    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_3   0x003772    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               __string_3   0x0038e7    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_4   0x003a3d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_4   0x0038ce    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_4   0x003899    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_5   0x0038bb    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_5   0x00388d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_5   0x003a23    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_6   0x0038b9    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_6   0x003881    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_6   0x0039e6    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_7   0x00386d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_7   0x0039b4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_8   0x003863    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_8   0x0039ad    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_9   0x0039a6    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_9   0x00384c    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+            __zero_memory   0x0046d2    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                _do_cinit   0x004232    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                    _entry   0x000000    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                 _startup   0x003564    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-              adjustMotor   0x002e02    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
-                      box   0x001914    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-            checkForInput   0x002628    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                    clean   0x0004f8    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                compare_l   0x00355a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                copy_loop   0x003152    program     static                          
-            copy_one_byte   0x003158    program     static                          
-              customColor   0x0001ea    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                    delay   0x00001c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                     done   0x00317c    program     static                          
-             done_copying   0x003166    program     static                          
-                  drawBox   0x000278    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              drawBoxFill   0x00039a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                  endloop   0x00351c    program     static                          
-                     font   0x001f50    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                initClock   0x003522    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
-                  initLCD   0x000622    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                 initSPI1   0x003526    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
-             integerprint   0x000cb0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                 _startup   0x0046f2    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+              adjustMotor   0x003f18    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+                   attack   0x001b76    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                buildCard   0x001b3e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+            checkForInput   0x00355e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+                    clean   0x000504    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                compare_l   0x0046e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                copy_loop   0x0042a4    program     static                          
+            copy_one_byte   0x0042aa    program     static                          
+              customColor   0x0001f6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                    delay   0x000028    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                     done   0x0042ce    program     static                          
+             done_copying   0x0042b8    program     static                          
+                  drawBox   0x000284    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              drawBoxFill   0x0003a6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                  endloop   0x0046aa    program     static                          
+               findPlayer   0x001b4a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                     font   0x002e86    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               gameStatus   0x001b50    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                initClock   0x0046b0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
+                  initLCD   0x00062e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                 initSPI1   0x0046b4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
+             integerprint   0x000cbc    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
  interrupt_at_high_vector   0x000008    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-            inventoryRFID   0x00284c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                     jEnd   0x003038    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
-                     jEnd   0x003006    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-                     jEnd   0x002f86    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-                    jLoop   0x00302e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
-                    jLoop   0x002ffc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-                    jLoop   0x002fb6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
-                    jLoop   0x002f68    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-                jNullLoop   0x002ff6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-                jNullLoop   0x002fb0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
-                   keypad   0x00244c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-              keypadSetup   0x002806    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                     loop   0x003574    program     static                          
-                     loop   0x003500    program     static                          
-                   loop_h   0x003552    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   loop_l   0x00355c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     main   0x001b50    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                   memset   0x002f54    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-               motorSetup   0x002d1e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
-                     move   0x002d52    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
-                 nextPage   0x0017be    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                 pingRFID   0x00283c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                printBSOD   0x0015e0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-          printBuildCard1   0x001736    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-            printMainMenu   0x0013e8    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                  printrs   0x000bfa    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                   prints   0x000b04    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-           processDisplay   0x00103e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               processUID   0x001cf6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-              putrs1USART   0x0032cc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1putrs.c
-              putrs2USART   0x003268    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2putrs.c
-                quietRFID   0x0028a2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                    rcISR   0x0019c0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-           readBytesUntil   0x002e8a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
-                resetPins   0x0027da    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                resetRFID   0x002b14    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-              rs232Setup1   0x002e3e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
-              rs232Setup2   0x002e64    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
-               sendToRFID   0x002940    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-              sendToRFID2   0x002a16    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               sendcomand   0x000078    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                 senddata   0x0000ce    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-           setXbeeNetwork   0x001e96    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                 setupPWM   0x001e62    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                setupRead   0x002ab8    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                setupXbee   0x001e8c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                   strcat   0x002f88    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
-            strcatpgm2ram   0x002fd0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-            strcpypgm2ram   0x003008    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
-              systemSetup   0x001d5c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                     test   0x0030fa    program     static                          
-               zero_block   0x003552    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+            inventoryRFID   0x003b16    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                     jEnd   0x00409c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+                     jEnd   0x00414e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
+                     jEnd   0x00411c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+                    jLoop   0x0040cc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
+                    jLoop   0x004144    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
+                    jLoop   0x004112    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+                    jLoop   0x00407e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+                jNullLoop   0x0040c6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
+                jNullLoop   0x00410c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+                   keypad   0x003382    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+              keypadSetup   0x00373c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+                     loop   0x004702    program     static                          
+                     loop   0x00468e    program     static                          
+                   loop_h   0x0046e0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   loop_l   0x0046ea    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     main   0x002998    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                   memset   0x00406a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+               motorSetup   0x003e34    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+                     move   0x003e68    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+              multiPlayer   0x001a2c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                 nextPage   0x0017ca    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                 pickMove   0x001e24    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                 pingRFID   0x003b06    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+          printAttackMenu   0x0023b0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                printBSOD   0x0015ec    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+          printBuildCard1   0x001742    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                printGame   0x002198    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+            printMainMenu   0x0013f4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+             printResults   0x00261c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              printSelect   0x002260    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                  printrs   0x000c06    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                   prints   0x000b10    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+           processDisplay   0x00104a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               processUID   0x002b3e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+              putrs1USART   0x00441e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1putrs.c
+              putrs2USART   0x0043ba    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2putrs.c
+                quietRFID   0x003b6c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                     rand   0x0045cc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\rand.asm
+                    rcISR   0x002808    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+           readBytesUntil   0x003fa0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
+              recieveMove   0x00217c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+             recieveScore   0x002192    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                resetPins   0x003710    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+                resetRFID   0x003dde    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+              rs232Setup1   0x003f54    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
+              rs232Setup2   0x003f7a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
+               selectCard   0x001bdc    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                 sendMove   0x00216c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                sendScore   0x002182    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               sendToRFID   0x003c0a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+              sendToRFID2   0x003ce0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               sendcomand   0x000084    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                 senddata   0x0000da    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+           setXbeeNetwork   0x002dcc    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                setupGame   0x00190c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                 setupPWM   0x002d98    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                setupRead   0x003d82    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                setupXbee   0x002dc2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+             singlePlayer   0x00192e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                    srand   0x0045be    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\rand.asm
+                   strcat   0x00409e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
+            strcatpgm2ram   0x0040e6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+            strcpypgm2ram   0x00411e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
+              systemSetup   0x002ba4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                     test   0x00424c    program     static                          
+               zero_block   0x0046e0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ADCON0   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                ADCON0bits   0x000fc2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ADCON1   0x000fc1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -641,6 +689,7 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                STATUSbits   0x000fd8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    STKPTR   0x000ffc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                STKPTRbits   0x000ffc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     Seed   0x000f00       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\rand.asm
                     T0CON   0x000fd5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 T0CONbits   0x000fd5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     T1CON   0x000fcd       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -710,8 +759,8 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                    TXSTA2   0x000f72       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                TXSTA2bits   0x000f72       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 TXSTAbits   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-            USART1_Status   0x0000f3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1defs.c
-            USART2_Status   0x0000f2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2defs.c
+            USART1_Status   0x000f03       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1defs.c
+            USART2_Status   0x000f02       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2defs.c
                  VREFCON0   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              VREFCON0bits   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  VREFCON1   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -749,24 +798,26 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                  __TEMPB1   0x000012       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\temparg.asm
                  __TEMPB2   0x000011       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\temparg.asm
                  __TEMPB3   0x000010       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\temparg.asm
+                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
+                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
+                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
+                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
                   __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
                   __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
                   __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
                   __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
                   __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
-                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
-                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
-                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
-                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
                   __tmp_1   0x00001e       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
               codeCounter   0x000138       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                curr_byte   0x0000eb       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-               curr_entry   0x0000ed       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                 data_ptr   0x0000ef       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                curr_byte   0x0000f9       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+               curr_entry   0x0000fb       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                 data_ptr   0x0000fd       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                debugCount   0x00013a       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+                     game   0x0000e8       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
                 keySounds   0x000100       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                     prom   0x0000e8       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     prom   0x0000f6       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                readerData   0x000060       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
                secretCode   0x00012c       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
              secretSounds   0x000120       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
@@ -781,152 +832,192 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                    __init   0x000006    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
  interrupt_at_high_vector   0x000008    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
        ___return_lbl00000   0x00000c    program     static                          
-                    delay   0x00001c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               sendcomand   0x000078    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                 senddata   0x0000ce    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                   SetPix   0x000124    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              customColor   0x0001ea    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                  drawBox   0x000278    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              drawBoxFill   0x00039a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                    clean   0x0004f8    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                  initLCD   0x000622    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                    ASCII   0x0008e0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                   prints   0x000b04    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                  printrs   0x000bfa    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-             integerprint   0x000cb0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-           processDisplay   0x00103e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-            printMainMenu   0x0013e8    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                printBSOD   0x0015e0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-          printBuildCard1   0x001736    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                 nextPage   0x0017be    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                      box   0x001914    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                    rcISR   0x0019c0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                     main   0x001b50    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               processUID   0x001cf6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-              systemSetup   0x001d5c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                 setupPWM   0x001e62    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                setupXbee   0x001e8c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-           setXbeeNetwork   0x001e96    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                     font   0x001f50    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                   keypad   0x00244c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-            checkForInput   0x002628    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                resetPins   0x0027da    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-              keypadSetup   0x002806    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                 pingRFID   0x00283c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-            inventoryRFID   0x00284c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                quietRFID   0x0028a2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               sendToRFID   0x002940    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-              sendToRFID2   0x002a16    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                setupRead   0x002ab8    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                resetRFID   0x002b14    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-                RFIDSetup   0x002b1c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_3   0x002b6a    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               __string_2   0x002b70    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               __string_1   0x002b77    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-               __string_0   0x002b7d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-              __string_17   0x002b91    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_16   0x002bb3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_15   0x002bc4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_14   0x002bec    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_13   0x002bfe    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_12   0x002c13    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_11   0x002c21    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-              __string_10   0x002c37    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_9   0x002c44    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_8   0x002c5b    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_7   0x002c65    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_6   0x002c79    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_5   0x002c85    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_4   0x002c91    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_3   0x002c9f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_2   0x002ca9    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_1   0x002cad    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_0   0x002caf    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-               __string_6   0x002cb1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_5   0x002cb3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_4   0x002cc6    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_3   0x002cdf    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_2   0x002ce4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_1   0x002cf5    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               __string_0   0x002d0c    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
-               motorSetup   0x002d1e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
-                     move   0x002d52    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
-              adjustMotor   0x002e02    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
-              rs232Setup1   0x002e3e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
-              rs232Setup2   0x002e64    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
-           readBytesUntil   0x002e8a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
-                   memset   0x002f54    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-                    jLoop   0x002f68    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-              _2jContinue   0x002f74    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-                   _3jEnd   0x002f7e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-                     jEnd   0x002f86    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
-                   strcat   0x002f88    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
-                jNullLoop   0x002fb0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
-                    jLoop   0x002fb6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
-            strcatpgm2ram   0x002fd0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-                jNullLoop   0x002ff6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-                    jLoop   0x002ffc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-                     jEnd   0x003006    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
-            strcpypgm2ram   0x003008    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
-                    jLoop   0x00302e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
-                     jEnd   0x003038    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
-                 FXD1616S   0x00303a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA1616S   0x00304c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                   D1616S   0x00305c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x003066    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x00306a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x00307c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXM1616S   0x003086    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-               TSIGN1616A   0x0030d2    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-                _do_cinit   0x0030e0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     test   0x0030fa    program     static                          
-                copy_loop   0x003152    program     static                          
-            copy_one_byte   0x003158    program     static                          
-             done_copying   0x003166    program     static                          
-       ___return_lbl00002   0x00317c    program     static                          
-                     done   0x00317c    program     static                          
-               Open2USART   0x00317e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
-               Open1USART   0x0031f6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
-              putrs2USART   0x003268    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2putrs.c
-              putrs1USART   0x0032cc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1putrs.c
-                SetDCPWM4   0x003330    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
-                  OpenADC   0x003390    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
-               Read2USART   0x0033f0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2read.c
-               Read1USART   0x00342e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
-             Delay10KTCYx   0x00346c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kx   0x003476    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                   D10K_1   0x003478    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-       _D10KTCYXCODE_0010   0x00347c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-                    D10Kl   0x003484    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-       _D10KTCYXCODE_001C   0x003488    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
-              Write2USART   0x00349a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2write.c
-              Write1USART   0x0034c8    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
-                 FXD1616U   0x0034f6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                     loop   0x003500    program     static                          
-                  endloop   0x00351c    program     static                          
-       ___return_lbl00000   0x003520    program     static                          
-                initClock   0x003522    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
-                 initSPI1   0x003526    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
-            __zero_memory   0x003544    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               zero_block   0x003552    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   loop_h   0x003552    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                compare_l   0x00355a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   loop_l   0x00355c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 _startup   0x003564    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     loop   0x003574    program     static                          
-       ___return_lbl00001   0x00357e    program     static                          
-             Delay100TCYx   0x003580    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0008   0x003588    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                    D100x   0x00358c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-                   D100_1   0x00358e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0012   0x003592    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-       _D100TCYXCODE_0018   0x003598    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
-              Delay10TCYx   0x00359c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                     D10x   0x0035a4    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000A   0x0035a6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000C   0x0035a8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-        _D10TCYXCODE_000E   0x0035aa    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
-                    D10_1   0x0035ac    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                    delay   0x000028    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               sendcomand   0x000084    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                 senddata   0x0000da    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                   SetPix   0x000130    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              customColor   0x0001f6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                  drawBox   0x000284    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              drawBoxFill   0x0003a6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                    clean   0x000504    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                  initLCD   0x00062e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                    ASCII   0x0008ec    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                   prints   0x000b10    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                  printrs   0x000c06    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+             integerprint   0x000cbc    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+           processDisplay   0x00104a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+            printMainMenu   0x0013f4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                printBSOD   0x0015ec    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+          printBuildCard1   0x001742    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                 nextPage   0x0017ca    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                setupGame   0x00190c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+             singlePlayer   0x00192e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              multiPlayer   0x001a2c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                buildCard   0x001b3e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               findPlayer   0x001b4a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               gameStatus   0x001b50    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                   attack   0x001b76    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               selectCard   0x001bdc    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                 pickMove   0x001e24    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                 sendMove   0x00216c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              recieveMove   0x00217c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                sendScore   0x002182    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+             recieveScore   0x002192    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                printGame   0x002198    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              printSelect   0x002260    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+          printAttackMenu   0x0023b0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+             printResults   0x00261c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                    rcISR   0x002808    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                     main   0x002998    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               processUID   0x002b3e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+              systemSetup   0x002ba4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                 setupPWM   0x002d98    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                setupXbee   0x002dc2    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+           setXbeeNetwork   0x002dcc    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+                     font   0x002e86    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                   keypad   0x003382    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+            checkForInput   0x00355e    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+                resetPins   0x003710    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+              keypadSetup   0x00373c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+               __string_3   0x003772    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               __string_2   0x003778    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               __string_1   0x00377f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+               __string_0   0x003785    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
+              __string_17   0x003799    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_16   0x0037bb    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_15   0x0037cc    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_14   0x0037f4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_13   0x003806    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_12   0x00381b    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_11   0x003829    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+              __string_10   0x00383f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_9   0x00384c    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_8   0x003863    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_7   0x00386d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_6   0x003881    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_5   0x00388d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_4   0x003899    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_3   0x0038a7    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_2   0x0038b1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_1   0x0038b5    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_0   0x0038b7    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+               __string_6   0x0038b9    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_5   0x0038bb    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_4   0x0038ce    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_3   0x0038e7    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_2   0x0038ec    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_1   0x0038fd    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               __string_0   0x003914    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+              __string_20   0x003925    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_19   0x00392e    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_18   0x00393f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_17   0x00394c    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_16   0x003955    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_15   0x00395f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_14   0x003970    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_13   0x003981    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_12   0x003988    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_11   0x003998    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+              __string_10   0x00399f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_9   0x0039a6    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_8   0x0039ad    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_7   0x0039b4    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_6   0x0039e6    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_5   0x003a23    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_4   0x003a3d    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_3   0x003a5e    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_2   0x003a7f    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_1   0x003ab1    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+               __string_0   0x003ae3    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                 pingRFID   0x003b06    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+            inventoryRFID   0x003b16    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                quietRFID   0x003b6c    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               sendToRFID   0x003c0a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+              sendToRFID2   0x003ce0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                setupRead   0x003d82    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                resetRFID   0x003dde    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                RFIDSetup   0x003de6    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+               motorSetup   0x003e34    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+                     move   0x003e68    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+              adjustMotor   0x003f18    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+              rs232Setup1   0x003f54    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
+              rs232Setup2   0x003f7a    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
+           readBytesUntil   0x003fa0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
+                   memset   0x00406a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+                    jLoop   0x00407e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+              _2jContinue   0x00408a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+                   _3jEnd   0x004094    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+                     jEnd   0x00409c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\memset.asm
+                   strcat   0x00409e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
+                jNullLoop   0x0040c6    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
+                    jLoop   0x0040cc    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strcat.asm
+            strcatpgm2ram   0x0040e6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+                jNullLoop   0x00410c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+                    jLoop   0x004112    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+                     jEnd   0x00411c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scatp2r.asm
+            strcpypgm2ram   0x00411e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
+                    jLoop   0x004144    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
+                     jEnd   0x00414e    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\scpyp2r.asm
+                 FXD1616S   0x004150    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA1616S   0x004162    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                   D1616S   0x004172    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x00417c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x004180    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x004192    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXM1616S   0x00419c    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+               TSIGN1616A   0x0041e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+                 FXM1616U   0x0041f6    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616u.asm
+                _do_cinit   0x004232    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     test   0x00424c    program     static                          
+                copy_loop   0x0042a4    program     static                          
+            copy_one_byte   0x0042aa    program     static                          
+             done_copying   0x0042b8    program     static                          
+                     done   0x0042ce    program     static                          
+       ___return_lbl00002   0x0042ce    program     static                          
+               Open2USART   0x0042d0    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
+               Open1USART   0x004348    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
+              putrs2USART   0x0043ba    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2putrs.c
+              putrs1USART   0x00441e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1putrs.c
+                SetDCPWM4   0x004482    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
+                  OpenADC   0x0044e2    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
+               Read2USART   0x004542    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2read.c
+               Read1USART   0x004580    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1read.c
+                    srand   0x0045be    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\rand.asm
+                     rand   0x0045cc    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\rand.asm
+             Delay10KTCYx   0x0045fa    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+                    D10Kx   0x004604    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+                   D10K_1   0x004606    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+       _D10KTCYXCODE_0010   0x00460a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+                    D10Kl   0x004612    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+       _D10KTCYXCODE_001C   0x004616    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10ktcyx.asm
+              Write2USART   0x004628    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2write.c
+              Write1USART   0x004656    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1write.c
+                 FXD1616U   0x004684    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
+                     loop   0x00468e    program     static                          
+                  endloop   0x0046aa    program     static                          
+       ___return_lbl00000   0x0046ae    program     static                          
+                initClock   0x0046b0    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
+                 initSPI1   0x0046b4    program     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\startup.c
+            __zero_memory   0x0046d2    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               zero_block   0x0046e0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   loop_h   0x0046e0    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                compare_l   0x0046e8    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   loop_l   0x0046ea    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 _startup   0x0046f2    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     loop   0x004702    program     static                          
+       ___return_lbl00001   0x00470c    program     static                          
+             Delay100TCYx   0x00470e    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+       _D100TCYXCODE_0008   0x004716    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+                    D100x   0x00471a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+                   D100_1   0x00471c    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+       _D100TCYXCODE_0012   0x004720    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+       _D100TCYXCODE_0018   0x004726    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d100tcyx.asm
+              Delay10TCYx   0x00472a    program     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                     D10x   0x004732    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000A   0x004734    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000C   0x004736    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+        _D10TCYXCODE_000E   0x004738    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
+                    D10_1   0x00473a    program     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\d10tcyx.asm
                __config_0   0x300001    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
                __config_1   0x300003    program     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
                      SIGN   0x000000       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\cmath18.asm
@@ -955,31 +1046,34 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                  __TEMPB1   0x000012       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\temparg.asm
                    __TEMP   0x000013       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\temparg.asm
                  __TEMPB0   0x000013       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\math\temparg.asm
-                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
-                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
-                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
-                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
+                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
                   __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\motorDriver.c
+                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
+                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
+                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
                   __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1open.c
                   __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2open.c
-                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\ADC\adcopen.c
-                  __tmp_0   0x000014       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\PWM\pw4setdc.c
+                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rs232.c
+                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\LCD.c
+                  __tmp_0   0x000014       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\rfidReader.c
                   __tmp_1   0x00001e       data     static C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
             DelayCounter2   0x000020       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd2.asm
             DelayCounter1   0x000021       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\delays\delayd1.asm
                readerData   0x000060       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\SchedMain.c
-                     prom   0x0000e8       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                curr_byte   0x0000eb       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-               curr_entry   0x0000ed       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                 data_ptr   0x0000ef       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-            USART2_Status   0x0000f2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2defs.c
-            USART1_Status   0x0000f3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1defs.c
+                     game   0x0000e8       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\game.c
+                     prom   0x0000f6       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                curr_byte   0x0000f9       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+               curr_entry   0x0000fb       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                 data_ptr   0x0000fd       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                 keySounds   0x000100       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
              secretSounds   0x000120       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
                secretCode   0x00012c       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
               codeCounter   0x000138       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
                debugCount   0x00013a       data     extern C:\Users\castia\Documents\GitHub\ee478\Final Project\FrontEnd.X\keypadDriver.c
+                     Seed   0x000f00       data     static E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\stdclib\rand.asm
+            USART2_Status   0x000f02       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u2defs.c
+            USART1_Status   0x000f03       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\pmc_common\USART\u1defs.c
                ANSELAbits   0x000f38       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ANSELA   0x000f38       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                ANSELBbits   0x000f39       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -988,156 +1082,156 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                ANSELCbits   0x000f3a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                ANSELDbits   0x000f3b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ANSELD   0x000f3b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               ANSELEbits   0x000f3c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ANSELE   0x000f3c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     PMD2   0x000f3d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               ANSELEbits   0x000f3c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PMD2bits   0x000f3d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     PMD1   0x000f3e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     PMD2   0x000f3d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PMD1bits   0x000f3e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     PMD0   0x000f3f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     PMD1   0x000f3e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PMD0bits   0x000f3f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              DACCON1bits   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     PMD0   0x000f3f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   DACCON1   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              DACCON1bits   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              VREFCON2bits   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  VREFCON2   0x000f40       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 VREFCON1   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             VREFCON1bits   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               DACCON0bits   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   DACCON0   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             VREFCON1bits   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 VREFCON1   0x000f41       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             VREFCON0bits   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   FVRCON   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                FVRCONbits   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  VREFCON0   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   FVRCON   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             CTMUICONbits   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-            CTMUICONHbits   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                CTMUICONH   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             VREFCON0bits   0x000f42       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  CTMUICON   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             CTMUCONLbits   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                CTMUICONH   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+            CTMUICONHbits   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             CTMUICONbits   0x000f43       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  CTMUCONL   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             CTMUCONLbits   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              CTMUCON1bits   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  CTMUCON1   0x000f44       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 CTMUCON0   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             CTMUCON0bits   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              CTMUCONHbits   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  CTMUCONH   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             CTMUCON0bits   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 CTMUCON0   0x000f45       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                SRCON1bits   0x000f46       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    SRCON1   0x000f46       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   SRCON0   0x000f47       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                SRCON0bits   0x000f47       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   SRCON0   0x000f47       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              CCPTMRS1bits   0x000f48       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  CCPTMRS1   0x000f48       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             CCPTMRS0bits   0x000f49       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  CCPTMRS0   0x000f49       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             CCPTMRS0bits   0x000f49       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     T6CON   0x000f4a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 T6CONbits   0x000f4a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                       PR6   0x000f4b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      TMR6   0x000f4c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   T5GCON   0x000f4d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                T5GCONbits   0x000f4d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    T5CON   0x000f4e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   T5GCON   0x000f4d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 T5CONbits   0x000f4e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    T5CON   0x000f4e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR5L   0x000f4f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR5H   0x000f50       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 T4CONbits   0x000f51       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     T4CON   0x000f51       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                       PR4   0x000f52       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      TMR4   0x000f53       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              CCP5CONbits   0x000f54       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   CCP5CON   0x000f54       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              CCP5CONbits   0x000f54       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     CCPR5   0x000f55       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCPR5L   0x000f55       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCPR5H   0x000f56       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               CCP4CONbits   0x000f57       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   CCP4CON   0x000f57       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   CCPR4L   0x000f58       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     CCPR4   0x000f58       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   CCPR4L   0x000f58       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCPR4H   0x000f59       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             PSTR3CONbits   0x000f5a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PSTR3CON   0x000f5a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  ECCP3AS   0x000f5b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               CCP3ASbits   0x000f5b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             PSTR3CONbits   0x000f5a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCP3AS   0x000f5b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               CCP3ASbits   0x000f5b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  ECCP3AS   0x000f5b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               ECCP3ASbits   0x000f5b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   PWM3CON   0x000f5c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               PWM3CONbits   0x000f5c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  CCP3CON   0x000f5d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               CCP3CONbits   0x000f5d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  CCP3CON   0x000f5d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCPR3L   0x000f5e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     CCPR3   0x000f5e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCPR3H   0x000f5f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   SLRCON   0x000f60       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                SLRCONbits   0x000f60       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 WPUBbits   0x000f61       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   SLRCON   0x000f60       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      WPUB   0x000f61       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 IOCBbits   0x000f62       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 WPUBbits   0x000f61       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      IOCB   0x000f62       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 PSTR2CON   0x000f63       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 IOCBbits   0x000f62       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              PSTR2CONbits   0x000f63       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              ECCP2ASbits   0x000f64       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 PSTR2CON   0x000f63       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   ECCP2AS   0x000f64       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              ECCP2ASbits   0x000f64       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                CCP2ASbits   0x000f64       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCP2AS   0x000f64       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   PWM2CON   0x000f65       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               PWM2CONbits   0x000f65       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              CCP2CONbits   0x000f66       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   CCP2CON   0x000f66       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   CCPR2L   0x000f67       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              CCP2CONbits   0x000f66       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     CCPR2   0x000f67       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   CCPR2L   0x000f67       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    CCPR2H   0x000f68       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  SSP2CON3   0x000f69       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              SSP2CON3bits   0x000f69       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              SSP2MSKbits   0x000f6a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SSP2MSK   0x000f6a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             SSP2CON2bits   0x000f6b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              SSP2MSKbits   0x000f6a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  SSP2CON2   0x000f6b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             SSP2CON1bits   0x000f6c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             SSP2CON2bits   0x000f6b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  SSP2CON1   0x000f6c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             SSP2CON1bits   0x000f6c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  SSP2STAT   0x000f6d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              SSP2STATbits   0x000f6d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SSP2ADD   0x000f6e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SSP2BUF   0x000f6f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  BAUD2CON   0x000f70       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              BAUD2CONbits   0x000f70       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             BAUDCON2bits   0x000f70       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  BAUDCON2   0x000f70       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             BAUDCON2bits   0x000f70       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               RCSTA2bits   0x000f71       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   RCSTA2   0x000f71       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                RC2STAbits   0x000f71       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    RC2STA   0x000f71       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   RCSTA2   0x000f71       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               RCSTA2bits   0x000f71       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    TX2STA   0x000f72       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                TX2STAbits   0x000f72       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    TXSTA2   0x000f72       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                TXSTA2bits   0x000f72       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   TXREG2   0x000f73       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    TX2REG   0x000f73       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   RC2REG   0x000f74       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   TXREG2   0x000f73       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    RCREG2   0x000f74       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   SP2BRG   0x000f75       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   RC2REG   0x000f74       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    SPBRG2   0x000f75       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   SP2BRG   0x000f75       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SP2BRGH   0x000f76       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SPBRGH2   0x000f76       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               CM2CON1bits   0x000f77       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              CM12CONbits   0x000f77       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   CM12CON   0x000f77       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              CM12CONbits   0x000f77       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   CM2CON1   0x000f77       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              CM2CON0bits   0x000f78       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  CM2CON0   0x000f78       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   CM2CON   0x000f78       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                CM2CONbits   0x000f78       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               CM1CONbits   0x000f79       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   CM1CON   0x000f79       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   CM2CON   0x000f78       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  CM2CON0   0x000f78       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              CM2CON0bits   0x000f78       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   CM1CON0   0x000f79       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               CM1CON0bits   0x000f79       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               CM1CONbits   0x000f79       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   CM1CON   0x000f79       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PIE4bits   0x000f7a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIE4   0x000f7a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PIR4bits   0x000f7b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIR4   0x000f7b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     IPR4   0x000f7c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  IPR4bits   0x000f7c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     IPR4   0x000f7c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PIE5bits   0x000f7d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIE5   0x000f7d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 PIR5bits   0x000f7e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIR5   0x000f7e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 PIR5bits   0x000f7e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  IPR5bits   0x000f7f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      IPR5   0x000f7f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 PORTAbits   0x000f80       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -1146,136 +1240,136 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                     PORTB   0x000f81       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 PORTCbits   0x000f82       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     PORTC   0x000f82       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    PORTD   0x000f83       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 PORTDbits   0x000f83       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    PORTD   0x000f83       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 PORTEbits   0x000f84       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     PORTE   0x000f84       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      LATA   0x000f89       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  LATAbits   0x000f89       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     LATB   0x000f8a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  LATBbits   0x000f8a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     LATC   0x000f8b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     LATB   0x000f8a       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  LATCbits   0x000f8b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     LATC   0x000f8b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      LATD   0x000f8c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  LATDbits   0x000f8c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 LATEbits   0x000f8d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      LATE   0x000f8d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 LATEbits   0x000f8d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 DDRAbits   0x000f92       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     DDRA   0x000f92       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TRISA   0x000f92       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 TRISAbits   0x000f92       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     DDRA   0x000f92       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 DDRAbits   0x000f92       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TRISB   0x000f93       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 TRISBbits   0x000f93       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      DDRB   0x000f93       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  DDRBbits   0x000f93       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 DDRCbits   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    TRISC   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      DDRC   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 TRISCbits   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    TRISC   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    TRISD   0x000f95       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                TRISDbits   0x000f95       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 DDRCbits   0x000f94       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      DDRD   0x000f95       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  DDRDbits   0x000f95       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 DDREbits   0x000f96       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                TRISDbits   0x000f95       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    TRISD   0x000f95       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      DDRE   0x000f96       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    TRISE   0x000f96       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 DDREbits   0x000f96       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 TRISEbits   0x000f96       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              OSCTUNEbits   0x000f9b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    TRISE   0x000f96       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   OSCTUNE   0x000f9b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  HLVDCON   0x000f9c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              HLVDCONbits   0x000f9c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              OSCTUNEbits   0x000f9b       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    LVDCON   0x000f9c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                LVDCONbits   0x000f9c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 PIE1bits   0x000f9d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              HLVDCONbits   0x000f9c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  HLVDCON   0x000f9c       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIE1   0x000f9d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 PIR1bits   0x000f9e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 PIE1bits   0x000f9d       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIR1   0x000f9e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 IPR1bits   0x000f9f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 PIR1bits   0x000f9e       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      IPR1   0x000f9f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 IPR1bits   0x000f9f       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIE2   0x000fa0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PIE2bits   0x000fa0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PIR2bits   0x000fa1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIR2   0x000fa1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 IPR2bits   0x000fa2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      IPR2   0x000fa2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 IPR2bits   0x000fa2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PIE3bits   0x000fa3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PIE3   0x000fa3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     PIR3   0x000fa4       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PIR3bits   0x000fa4       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 IPR3bits   0x000fa5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     PIR3   0x000fa4       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      IPR3   0x000fa5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   EECON1   0x000fa6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 IPR3bits   0x000fa5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                EECON1bits   0x000fa6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   EECON1   0x000fa6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    EECON2   0x000fa7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    EEDATA   0x000fa8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     EEADR   0x000fa9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 EEADRbits   0x000fa9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    EEADRH   0x000faa       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                EEADRHbits   0x000faa       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   RC1STA   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               RC1STAbits   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                RCSTAbits   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               RCSTA1bits   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     RCSTA   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   RC1STA   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                RCSTAbits   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               RC1STAbits   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    RCSTA1   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                TXSTAbits   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               TXSTA1bits   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   TXSTA1   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    TXSTA   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               RCSTA1bits   0x000fab       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    TX1STA   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                TX1STAbits   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    TXSTA   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   TXSTA1   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               TXSTA1bits   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                TXSTAbits   0x000fac       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 TXREGbits   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   TX1REG   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               TX1REGbits   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                TXREG1bits   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    TXREG1   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TXREG   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               TX1REGbits   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   TX1REG   0x000fad       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 RCREGbits   0x000fae       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                RCREG1bits   0x000fae       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    RCREG1   0x000fae       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     RCREG   0x000fae       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               RC1REGbits   0x000fae       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    RC1REG   0x000fae       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               RC1REGbits   0x000fae       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                SPBRGbits   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    SP1BRG   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                SP1BRGbits   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    SPBRG   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                SPBRGbits   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   SPBRG1   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                SPBRG1bits   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   SPBRG1   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    SPBRG   0x000faf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               SPBRGHbits   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              SPBRGH1bits   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  SPBRGH1   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SP1BRGH   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               SP1BRGHbits   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    SPBRGH   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  SPBRGH1   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              SPBRGH1bits   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               SPBRGHbits   0x000fb0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     T3CON   0x000fb1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 T3CONbits   0x000fb1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR3L   0x000fb2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR3H   0x000fb3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   T3GCON   0x000fb4       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                T3GCONbits   0x000fb4       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              ECCP1ASbits   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  ECCP1AS   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   T3GCON   0x000fb4       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                ECCPASbits   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    ECCPAS   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  ECCP1AS   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              ECCP1ASbits   0x000fb6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                PWMCONbits   0x000fb7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    PWMCON   0x000fb7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               PWM1CONbits   0x000fb7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   PWM1CON   0x000fb7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               BAUDCTLbits   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                 BAUD1CON   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             BAUD1CONbits   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   BAUDCTL   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               BAUDCONbits   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              BAUDCON1bits   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  BAUDCON1   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   BAUDCON   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              PSTRCONbits   0x000fb9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  PSTRCON   0x000fb9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             PSTR1CONbits   0x000fb9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             BAUD1CONbits   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                 BAUD1CON   0x000fb8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  PSTR1CON   0x000fb9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                T2CONbits   0x000fba       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             PSTR1CONbits   0x000fb9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  PSTRCON   0x000fb9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              PSTRCONbits   0x000fb9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     T2CON   0x000fba       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                T2CONbits   0x000fba       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                       PR2   0x000fbb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      TMR2   0x000fbc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   CCP1CON   0x000fbd       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -1297,51 +1391,51 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                   SSPCON2   0x000fc5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               SSPCON2bits   0x000fc5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              SSP1CON1bits   0x000fc6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  SSPCON1   0x000fc6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              SSPCON1bits   0x000fc6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  SSP1CON1   0x000fc6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              SSPSTATbits   0x000fc7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  SSPSTAT   0x000fc7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              SSPCON1bits   0x000fc6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  SSPCON1   0x000fc6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  SSP1STAT   0x000fc7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  SSPSTAT   0x000fc7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              SSPSTATbits   0x000fc7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
              SSP1STATbits   0x000fc7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SSP1ADD   0x000fc8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    SSPADD   0x000fc8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                SSPADDbits   0x000fc8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               SSP1ADDbits   0x000fc8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-               SSPBUFbits   0x000fc9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    SSPBUF   0x000fc9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              SSP1BUFbits   0x000fc9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+               SSPBUFbits   0x000fc9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SSP1BUF   0x000fc9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              SSP1BUFbits   0x000fc9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                  SSP1MSK   0x000fca       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              SSP1MSKbits   0x000fca       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                SSPMSKbits   0x000fca       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    SSPMSK   0x000fca       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              SSP1MSKbits   0x000fca       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                  SSP1MSK   0x000fca       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-              SSPCON3bits   0x000fcb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   SSPCON3   0x000fcb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-             SSP1CON3bits   0x000fcb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  SSP1CON3   0x000fcb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   T1GCON   0x000fcc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+             SSP1CON3bits   0x000fcb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+              SSPCON3bits   0x000fcb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                T1GCONbits   0x000fcc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   T1GCON   0x000fcc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     T1CON   0x000fcd       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 T1CONbits   0x000fcd       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR1L   0x000fce       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR1H   0x000fcf       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  RCONbits   0x000fd0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      RCON   0x000fd0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   WDTCON   0x000fd1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                WDTCONbits   0x000fd1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   WDTCON   0x000fd1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   OSCCON2   0x000fd2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               OSCCON2bits   0x000fd2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   OSCCON   0x000fd3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                OSCCONbits   0x000fd3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   OSCCON   0x000fd3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                 T0CONbits   0x000fd5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     T0CON   0x000fd5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR0L   0x000fd6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     TMR0H   0x000fd7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    STATUS   0x000fd8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                STATUSbits   0x000fd8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     FSR2   0x000fd9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     FSR2L   0x000fd9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     FSR2   0x000fd9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     FSR2H   0x000fda       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    PLUSW2   0x000fdb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   PREINC2   0x000fdc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -1357,10 +1451,10 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                  POSTDEC1   0x000fe5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                  POSTINC1   0x000fe6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     INDF1   0x000fe7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                     WREG   0x000fe8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                         W   0x000fe8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                    FSR0L   0x000fe9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                     WREG   0x000fe8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      FSR0   0x000fe9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                    FSR0L   0x000fe9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     FSR0H   0x000fea       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    PLUSW0   0x000feb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   PREINC0   0x000fec       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -1371,14 +1465,14 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                   INTCON3   0x000ff0       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               INTCON2bits   0x000ff1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   INTCON2   0x000ff1       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   INTCON   0x000ff2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                INTCONbits   0x000ff2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   INTCON   0x000ff2       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     PRODL   0x000ff3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      PROD   0x000ff3       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                     PRODH   0x000ff4       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    TABLAT   0x000ff5       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   TBLPTR   0x000ff6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   TBLPTRL   0x000ff6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   TBLPTR   0x000ff6       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   TBLPTRH   0x000ff7       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                   TBLPTRU   0x000ff8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
               TBLPTRUbits   0x000ff8       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
@@ -1386,8 +1480,8 @@ Linker Map File - Created Tue Jun 03 01:17:19 2014
                        PC   0x000ff9       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    PCLATH   0x000ffa       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                    PCLATU   0x000ffb       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
-                   STKPTR   0x000ffc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                STKPTRbits   0x000ffc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
+                   STKPTR   0x000ffc       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      TOSL   0x000ffd       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                       TOS   0x000ffd       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm
                      TOSH   0x000ffe       data     extern E:\c18v3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f46k22.asm

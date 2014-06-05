@@ -1,5 +1,5 @@
-build/default/production/SchedMain.o:  \
-	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/SchedMain.c  \
+build/default/production/game.o:  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/game.c  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/rs232.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/keypadDriver.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/LCD.h  \

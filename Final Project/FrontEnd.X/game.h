@@ -10,16 +10,16 @@ typedef struct _gameData {
     char* moveName;
 } gameData;
 
-void setup();
+void setupGame();
 
 // Game Prototypes
-void singlePlayer(gameData game);
-void multiPlayer(gameData game);
-void buildCards(gameData game);
+void singlePlayer(GlobalState* globalData);
+void multiPlayer(GlobalState* globalData);
+void buildCards(GlobalState* globalData);
 
 // Helper Prototypes
-void findPlayer();
-void gameStatus();
+int findPlayer(void);
+int gameStatus(void);
 int attack(int attackDamage, int targetScore);
 int selectCard(GlobalState* globalData);
 int pickMove(GlobalState* globalData);

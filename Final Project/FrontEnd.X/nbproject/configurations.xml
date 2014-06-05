@@ -12,6 +12,7 @@
       <itemPath>interrupts.h</itemPath>
       <itemPath>rfidReader.h</itemPath>
       <itemPath>motorDriver.h</itemPath>
+      <itemPath>game.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -28,6 +29,7 @@
       <itemPath>LCD.c</itemPath>
       <itemPath>rfidReader.c</itemPath>
       <itemPath>motorDriver.c</itemPath>
+      <itemPath>game.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

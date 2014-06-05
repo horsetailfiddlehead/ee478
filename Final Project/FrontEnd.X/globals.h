@@ -12,8 +12,6 @@
 extern "C" {
 #endif
 
-#define HEALTH 100
-
     // microchip libraries
 #include <p18f46k22.h>
 #include <usart.h>
@@ -47,6 +45,7 @@ extern "C" {
         Boolean keyFlag;
         Boolean displayedKey;
         int keyPress;
+        int keyStatus;
         int cursorPos;
         int mainMenuSpots[3]; // Find better way to do this
         int status;

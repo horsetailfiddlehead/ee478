@@ -706,8 +706,7 @@ void nextPage(GlobalState* globalData, int cursorPos) {
         case 1:
             globalData->displayPage = 1;
             // Print singleplayer menu
-            clean(BLACK);
-            prints(0, 0, WHITE, BLACK, "Nothing here. Press B to go back.", 1);
+            singlePlayer(globalData);
             break;
         // Getting a position of 2 does multiplayer
         case 2:

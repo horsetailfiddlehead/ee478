@@ -55,6 +55,8 @@ extern "C" {
         Boolean getInventory;
     } GlobalState;
 
+
+
 #ifdef	__cplusplus
 }
 #endif
