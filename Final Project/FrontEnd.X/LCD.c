@@ -563,7 +563,7 @@ void integerprint(char x, char y, int color, int background, int integer, char s
         ASCII(x, y, color, background, thousands + 48, size);
     }
     if (integer >= 100) {
-        hundreds = (((integer - tenthousands * 10000) - thousands * 1000) - 1) / 100;
+        hundreds = (((integer - tenthousands * 10000) - thousands * 1000)) / 100;
         x += 6;
         ASCII(x, y, color, background, hundreds + 48, size);
     }

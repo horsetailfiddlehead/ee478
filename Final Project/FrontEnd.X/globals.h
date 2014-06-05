@@ -24,7 +24,7 @@ extern "C" {
 #include "usart.h"
 #include "delays.h"
 #include <adc.h>
-
+#include <timers.h>
     // our headers
 #include "rs232.h"
 #include "keypadDriver.h"
@@ -46,6 +46,7 @@ extern "C" {
         Boolean keyFlag;
         Boolean displayedKey;
         Boolean xbeeFlag;
+        Boolean firstTime;
         int keyPress;
         int keyStatus;
         int cursorPos;

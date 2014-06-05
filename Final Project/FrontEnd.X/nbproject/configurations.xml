@@ -13,6 +13,7 @@
       <itemPath>rfidReader.h</itemPath>
       <itemPath>motorDriver.h</itemPath>
       <itemPath>game.h</itemPath>
+      <itemPath>SRAM.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -30,7 +31,7 @@
       <itemPath>rfidReader.c</itemPath>
       <itemPath>motorDriver.c</itemPath>
       <itemPath>game.c</itemPath>
-      <itemPath>i2cComm.c</itemPath>
+      <itemPath>SRAMfront.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -58,7 +59,6 @@
         </linkerTool>
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
-          <parseOnProdLoad>false</parseOnProdLoad>
           <alternateLoadableFile></alternateLoadableFile>
         </loading>
       </compileType>
