@@ -6,4 +6,5 @@
  */
 void rs232Setup1(void);
 void rs232Setup2(void);
-void readBytesUntil(char* myStorage, char stopChar, int size);
+void readBytesUntil1USART(char* myStorage, char stopChar, int size);
+void readBytesUntil2USART(char* myStorage, char stopChar, int size);

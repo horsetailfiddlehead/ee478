@@ -44,6 +44,7 @@ extern "C" {
         short displayPage;
         Boolean keyFlag;
         Boolean displayedKey;
+        Boolean xbeeFlag;
         int keyPress;
         int keyStatus;
         int cursorPos;

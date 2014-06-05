@@ -712,7 +712,8 @@ void nextPage(GlobalState* globalData, int cursorPos) {
         case 2:
             globalData->displayPage = 2;
             // Print multiplayer menu
-            clean(WHITE);
+            clean(GREEN);
+            globalData->xbeeFlag = TRUE;
             prints(0, 0, BLACK, WHITE, "Nothing here. Press B to go back.", 1);
             break;
         // Getting a position of 3 does build cards

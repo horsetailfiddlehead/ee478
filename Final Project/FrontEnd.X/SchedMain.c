@@ -17,7 +17,7 @@
 // Function prototypes
 void systemSetup(GlobalState *data);
 void setupPWM(void);
-void setXbeeNetwork(void);
+void setXbeeNetwork(char* myNetwork);
 void setupXbee(void);
 
 void processUID(char* uid);
@@ -64,13 +64,10 @@ void rcISR(void) {
     }
     */
     // Read fast by directly looking at RCREG
-    input = RCREG;
+    input = RCREG2;
     PORTAbits.RA0 = 1;
-    // Clear interrupt
-    PIR1bits.RC1IF = 0;
     // If we are processing an Inventory command
     if (readerData.invCom == 1) {
-
         if (input == 'D' && readerData.nextBlock == 0) {
             // Reset the inventory command flag
             readerData.invCom = 0;
@@ -121,7 +118,11 @@ void rcISR(void) {
         // Echo back typed character
         //Write2USART(input);
     }
+
+
     PORTAbits.RA0 = 0;
+    // Clear interrupts
+    PIR3bits.RC2IF = 0;
 }
 
 
@@ -166,6 +167,10 @@ void main() {
             // Turn off inventory flag
             globalData.getInventory = FALSE;
         }
+        if (globalData.xbeeFlag == TRUE) {
+            setXbeeNetwork("4567");
+            globalData.xbeeFlag = FALSE;
+        }
 
     }
     return;
@@ -202,6 +207,7 @@ void systemSetup(GlobalState *data) {
     data->mainMenuSpots[1] = 80;
     data->mainMenuSpots[2] = 120;
     data->getInventory = FALSE;
+    data->xbeeFlag = FALSE;
     // Game Related Globals
     data->keyStatus = -1;
     memset( data->selectMove, 0, sizeof(int) * 4 * 3);
@@ -236,8 +242,7 @@ void setupXbee(void) {
     PORTAbits.RA1 = 1;
 }
 
-void setXbeeNetwork(void) {
-    
+void setXbeeNetwork(char* myNetwork) {
     // Tx set low
     TXSTA1bits.TXEN1 = 0;
     PORTCbits.RC6 = 0;
@@ -246,14 +251,17 @@ void setXbeeNetwork(void) {
     //PORTBbits.RB7 = 0;
     PORTAbits.RA1 = 0;
     // Delay 10 Instruction cycles, pulse must be at least 200ns;
-    Delay10TCY();
+    Delay10TCYx(5);
     //PORTBbits.RB7 = 1;
     PORTAbits.RA1 = 1;
-    Delay10TCY();
+    while (!DataRdy1USART());
+    while (!DataRdy1USART());
     // Reenable Tx
-    TXSTA1bits.TXEN1 = 0;
-
-
+    TXSTA1bits.TXEN1 = 1;
+    putrs1USART("ATID");
+    while (Busy1USART());
+    putrs1USART(myNetwork);
+    while (Busy1USART());
     // Config Commands
     //Carriage return
     // Config Commands
@@ -265,5 +273,11 @@ void setXbeeNetwork(void) {
             // ATAC - Apply changes
             // ATCN - Exit config mode
     //Carriage return
-    putrs1USART("ATWR,AR,CN\r");
+    putrs1USART("WR,AC,ID\r");
+    while(Busy1USART());    
+    while (!DataRdy1USART());
+//
+//    putrs1USART("ATID\r");
+//    while(Busy1USART());
+//    while (!DataRdy1USART());
 }
