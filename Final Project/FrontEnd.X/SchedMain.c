@@ -134,14 +134,6 @@ void main() {
 
     // lcd test code
     printMainMenu(&globalData);
-
-//    while (1) {
-//        if (flag == 0) {
-//            setXbeeNetwork();
-//            flag = 1;
-//        }
-//    }
-//
     
     while (1) {
         if (!globalData.keyFlag) {
@@ -245,7 +237,7 @@ void setupXbee(void) {
 }
 
 void setXbeeNetwork(void) {
-    /*
+    
     // Tx set low
     TXSTA1bits.TXEN1 = 0;
     PORTCbits.RC6 = 0;
@@ -260,34 +252,18 @@ void setXbeeNetwork(void) {
     Delay10TCY();
     // Reenable Tx
     TXSTA1bits.TXEN1 = 0;
-    */
-    //putrs2USART("ATID\r\n");
-    putrs2USART("+++\r\n");
-    while(Busy2USART());
-    Delay10KTCYx(1);
-    putc1USART('+');
-    while(Busy1USART());
-    Delay10KTCYx(1);
-    putc1USART('+');
-    while(Busy1USART());
-    Delay10KTCYx(1);
-    putc1USART('+');
-    while(Busy1USART());
-    Delay10KTCYx(1);
+
+
     // Config Commands
     //Carriage return
     // Config Commands
     //Carriage return
     // etc
-
     // Exit
+
     // ATWR,AC,CN - Write changes to nonVolatile memory
             // ATAC - Apply changes
             // ATCN - Exit config mode
     //Carriage return
-    //puts1USART((const far rom char*)"ATWR,AR,CN\r");
-    putrs2USART("ATCN\r\n");
-    while(Busy2USART());
-    putrs1USART("ATCN\r");
-    while(Busy1USART());
+    putrs1USART("ATWR,AR,CN\r");
 }

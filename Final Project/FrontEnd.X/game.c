@@ -166,15 +166,18 @@ int attack (int attackDamage, int targetScore) {
                 // Keypad input is not valid
                 if(((0x0A > globalData->keyPress) || (globalData->keyPress > 0x0D))) {
                         globalData->keyStatus = 1;
+                        prints(0, 5, WHITE, CYAN, "                                                            ", 1);
                         prints(0, 5, WHITE, CYAN, "Invalid attack input. Please select from the options below: ", 1);
                 // Selected attack does nothing
                 } else if (0 == globalData->selectMove[card][(globalData->keyPress)-10]) {
                         globalData->keyStatus = 2;
+                        prints(0, 5, WHITE, CYAN, "                                                 ", 1);
                         prints(0, 5, WHITE, CYAN, "This will have no effect! Select a better option.", 1);
                 // Input is valid and passes all checks
                 } else {
                         globalData->keyStatus = 0;
-                         prints(0, 5, WHITE, CYAN, "Please select an attack: ", 1);
+                        prints(0, 5, WHITE, CYAN, "                         ", 1);
+                        prints(0, 5, WHITE, CYAN, "Please select an attack: ", 1);
                 }
             }
 	}
@@ -228,14 +231,26 @@ int recieveScore() {
 	// LCD menu
          // Beep off
     TRISBbits.RB5 = 1;
+    clean(BLACK);
 
-    clean(RED);
+    if(game.turn) {
+        prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
+    } else {
+        prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
+    }
+
+    prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
+    integerprint(0, 45, YELLOW, BLACK, game.myScore,1);
+    prints(0,60, WHITE, BLACK, "Opponent Score: ",1);
+    integerprint(0, 75, WHITE, BLACK, game.oppScore,1);
+
+
     // Prints messages to LCD based off of keypad input
-	// Display commands to select a slot - the LED's should indicate if a card is read
-	prints(35, 30, WHITE, BLACK, "Slot 1", 1);
-	prints(35, 60, WHITE, BLACK, "Slot 2", 1);
-	prints(35, 90, WHITE, BLACK, "Slot 3", 1);
-	prints(35, 120, WHITE, BLACK, "Slot 4", 1);
+    // Display commands to select a slot - the LED's should indicate if a card is read
+    prints(35, 30, WHITE, BLACK, "Slot 1", 1);
+    prints(35, 60, WHITE, BLACK, "Slot 2", 1);
+    prints(35, 90, WHITE, BLACK, "Slot 3", 1);
+    prints(35, 120, WHITE, BLACK, "Slot 4", 1);
 }
 
 // Select a card to play
