@@ -14,7 +14,8 @@ extern "C" {
     
     /********ReaderData sizes************************/
 #define UID_SIZE 24
-#define MAX_UIDS 5  // UID storage size
+#define MAX_UIDS 5  // number of UIDs stored
+#define RFID_BLOCK 10
 
 void resetRFID(void);
 void RFIDSetup(void);
@@ -22,6 +23,8 @@ void pingRFID(void);
 void inventoryRFID(void);
 void quietRFID(char* uid);
 void sendToRFID2(char* myInput);
+void writeRFID(char* uid, char block, unsigned int data);
+void readRFID(char* uid, char block);
 
 //void processRFIDCmd(void);
 
@@ -46,11 +49,16 @@ typedef struct {
     // If the user input was an inventory command
     short invCom;
 
+    // If the user input was a single block read command
+    short readFlag_1;
+
     // Are the UIDs available to read?
     int availableUIDs;
     
     // Read mode set?
     short readMode;
+
+    short writeFlag_1;
 } RFIDDriver;
 extern RFIDDriver readerData;
 

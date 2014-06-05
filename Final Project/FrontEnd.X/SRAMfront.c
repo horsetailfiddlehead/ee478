@@ -13,7 +13,6 @@ void SRAMsetUp() {
 
     // Output Enable
     TRISCbits.TRISC1 = 0;
-    ANSELAbits.
     // Store
     TRISCbits.TRISC0 = 0;
 

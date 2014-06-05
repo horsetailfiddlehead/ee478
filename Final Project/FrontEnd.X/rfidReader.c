@@ -10,12 +10,6 @@
 #include "globals.h"
 
 /********Command constants***********************/
-#define START 01
-#define FLAGS 0304
-#define READ_SINGLE_BLOCK 0
-#define READ 0
-#define WRITE 0
-
 #define READER_INPUT_LENGTH 64
 #define QUIET_LEN 37
 #define END_COM "0000" // End of a command
@@ -24,6 +18,10 @@
 #define REG_WRITE "010C00030410002101020000"
 #define PING "0108000304FF0000"
 #define INVENTORY "010B000304140601000000"
+#define READ_SINGLE "0113000304182220"
+#define WRITE_SINGLE "0117000304186221"
+#define READ_SING_LEN 39
+#define WR_SING_LEN 47
 
 void sendToRFID(char* myString);
 void setupRead(void);
@@ -31,52 +29,54 @@ void setupRead(void);
 // Set up on USART 2
 
 // Send a ping commmand to the rfid
+
 void pingRFID() {
     sendToRFID(PING);
 }
 
 // Send an inventory command to the RFID
+
 void inventoryRFID() {
     // Set the inventory command flag for the interrupt
+    readerData.invCom = 1;
+    // If we have not set read mode yet, go to config mode
+    if (readerData.readMode == 0) {
+        // Config mode
+        readerData.configFlag = 1;
+
+        // Disable current flag
+        readerData.invCom = 0;
+
+        // Send read commands
+        setupRead();
+
+        // Turn off config
+        readerData.configFlag = 0;
+
+        // Turn back on inventory mode, indicate read set
         readerData.invCom = 1;
+        readerData.readMode = 1;
+    }
+    // Send inventory command
+    sendToRFID(INVENTORY);
 
-        // If we have not set read mode yet, go to config mode
-        if (readerData.readMode == 0) {
-            // Config mode
-            readerData.configFlag = 1;
-            
-            // Disable current flag
-            readerData.invCom = 0;
+    // Wait until interrupt finishes
+    while (readerData.invCom == 1);
+    readerData.availableUIDs = readerData.numUID;
 
-            // Send read commands
-            setupRead();
-
-            // Turn off config
-            readerData.configFlag = 0;
-
-            // Turn back on inventory mode, indicate read set
-            readerData.invCom = 1;
-            readerData.readMode = 1;
-        }
-        // Send inventory command
-        sendToRFID(INVENTORY);
-
-        // Wait until interrupt finishes
-        while (readerData.invCom == 1);
-        readerData.availableUIDs = readerData.numUID;
-
-        // Reset the UID counters
-        readerData.numUID = 0;
-        readerData.lineFeeds = 0;
+    // Reset the UID counters
+    readerData.numUID = 0;
+    readerData.lineFeeds = 0;
 }
 
 // Send a quiet command to the given uid
+
 void quietRFID(char* uid) {
     // Holds the command
     char quietCommand[QUIET_LEN]; // {STAY_QUIET, uid, END_COM};
     // Beginning part of command
     strcatpgm2ram(quietCommand, STAY_QUIET);
-    
+
     // Concatenate the uid
     strcat(quietCommand, uid);
 
@@ -87,6 +87,95 @@ void quietRFID(char* uid) {
     sendToRFID2(quietCommand);
     return;
 }
+
+void writeRFID(char* uid, char block, unsigned int data) {
+    // Holds the command
+    char writeCommand[WR_SING_LEN]; // {STAY_QUIET, uid, END_COM};
+    char dataHex[9];
+    memset(writeCommand, '\0', WR_SING_LEN * sizeof (char));
+    readerData.writeFlag_1 = 1;
+    // If we have not set read mode yet, go to config mode
+    if (readerData.readMode == 0) {
+        // Config mode
+        readerData.configFlag = 1;
+        readerData.writeFlag_1 = 0;
+
+        // Send read commands
+        setupRead();
+
+        // Turn off config
+        readerData.configFlag = 0;
+        readerData.writeFlag_1 = 1;
+    }
+
+    // Beginning part of command
+    strcatpgm2ram(writeCommand, READ_SINGLE);
+
+    // Concatenate the uid and block
+    strcat(writeCommand, uid);
+    
+    sprintf(dataHex,"%02x",(int)block);
+    strcat(writeCommand, dataHex);
+
+    sprintf(dataHex,"%08x",data);
+    strcat(writeCommand, dataHex);
+
+    // Add 0000 for the ending bits
+    strcatpgm2ram(writeCommand, END_COM);
+
+    // Do sendToRFID2 because it is already saved to ram
+    sendToRFID2(writeCommand);
+
+    // Wait until interrupt finishes
+    while (readerData.writeFlag_1 == 1);
+
+    return;
+}
+
+void readRFID(char* uid, char block) {
+    // Holds the command
+    char readCommand[READ_SING_LEN]; // {STAY_QUIET, uid, END_COM};
+    char blockHex[3];
+    memset(readCommand, '\0', READ_SING_LEN * sizeof (char));
+    readerData.readFlag_1 = 1;
+    // If we have not set read mode yet, go to config mode
+    if (readerData.readMode == 0) {
+        // Config mode
+        readerData.configFlag = 1;
+
+        // Disable current flag
+        readerData.readFlag_1 = 0;
+
+        // Send read commands
+        setupRead();
+
+        // Turn off config
+        readerData.configFlag = 0;
+
+        readerData.readFlag_1 = 1;
+    }
+
+    // Beginning part of command
+    strcatpgm2ram(readCommand, READ_SINGLE);
+
+    // Concatenate the uid and block
+    strcat(readCommand, uid);
+    
+    sprintf(blockHex,"%02x",(int)block);
+    strcat(readCommand, blockHex);
+
+    // Add 0000 for the ending bits
+    strcatpgm2ram(readCommand, END_COM);
+
+    // Do sendToRFID2 because it is already saved to ram
+    sendToRFID2(readCommand);
+
+    // Wait until interrupt finishes
+    while (readerData.readFlag_1 == 1);
+
+    return;
+}
+
 /* // Depreciated
 void processRFIDCmd() {
     int i;
@@ -160,6 +249,7 @@ void processRFIDCmd() {
  */
 
 // Sends the string to the DLP RFID 2
+
 void sendToRFID(char* myString) {
     // Copy string into an input array
     char myInput[READER_INPUT_LENGTH];
@@ -190,6 +280,7 @@ void sendToRFID(char* myString) {
 // in double quotes (not this: "mystring!")
 //
 // see sendToRFID for more comments
+
 void sendToRFID2(char* myInput) {
     short inputFinished = 0;
     int i = 0;
@@ -207,14 +298,15 @@ void sendToRFID2(char* myInput) {
 }
 
 // Set up read commands
+
 void setupRead() {
     // Set to register write mode
     sendToRFID(REG_WRITE);
 
     // Needs to read two line breaks from dlp before
     // continuing.
-    while(readerData.lineFeeds < 2);
-    
+    while (readerData.lineFeeds < 2);
+
     // Reset line feeds for next command
     readerData.lineFeeds = 0;
 
@@ -222,7 +314,7 @@ void setupRead() {
     sendToRFID(AGC);
 
     // We need to read only one line feed when setting AGC
-    while(readerData.lineFeeds < 1);
+    while (readerData.lineFeeds < 1);
 
     // Reset line feeds
     readerData.lineFeeds = 0;
@@ -234,6 +326,7 @@ void setupRead() {
 }
 
 // Depreciated - we don't use them anymore
+
 void resetRFID() {
 
     PORTBbits.RB5 = 1;
@@ -255,6 +348,8 @@ void RFIDSetup() {
     readerData.configFlag = 0;
     readerData.availableUIDs = FALSE;
     memset(readerData.readUID, '\0', MAX_UIDS * UID_SIZE * sizeof (char));
+    readerData.readFlag_1 = 0;
+    readerData.writeFlag_1 = 0;
 
     // Get RFID attention if not already
     sendToRFID("\n");

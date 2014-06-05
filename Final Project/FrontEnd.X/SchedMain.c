@@ -67,7 +67,7 @@ void rcISR(void) {
     input = RCREG2;
     PORTAbits.RA0 = 1;
     // If we are processing an Inventory command
-    if (readerData.invCom == 1) {
+    if (readerData.invCom == 1 || readerData.readFlag_1 == 1 || readerData.writeFlag_1 == 1) {
         if (input == 'D' && readerData.nextBlock == 0) {
             // Reset the inventory command flag
             readerData.invCom = 0;
@@ -85,7 +85,7 @@ void rcISR(void) {
             // If there is a comma as the first character inside a block, then
             // discard what is read.  Otherwise, terminate the string and increment
             // the number of UIDs successfully read.
-            if (readerData.readUID[readerData.numUID][0] != ',') {
+            if (readerData.readUID[readerData.numUID][0] != ',' && readerData.writeFlag_1 != 1) {
                 readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
                 readerData.numUID++;
             }
@@ -93,11 +93,23 @@ void rcISR(void) {
             // Block of square brackets has be read, set the indicator to zero
             readerData.nextBlock = 0;
             PORTAbits.RA0 = 0;
+            
+            // Disable read 1 flag
+            if (readerData.readFlag_1 == 1) {
+                readerData.readFlag_1 = 0;
+            }
+            
+            // Disable write 1 flag
+            if (readerData.writeFlag_1 == 1) {
+                readerData.writeFlag_1 = 0;
+            }
 
             // Put anything inside of a square bracket into the UID array
         } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < UID_SIZE && readerData.numUID < MAX_UIDS) {
-            readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
-            readerData.inputSpot2++;
+            if (readerData.writeFlag_1 != 1) {
+                readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
+                readerData.inputSpot2++;
+            }
 
             // If we are outside of a block, reset read position and ensure that the block
             // state indicator is zero.
@@ -130,6 +142,7 @@ void rcISR(void) {
 
 void main() {
     int i = 0;
+    int j = 0;
     GlobalState globalData;
     systemSetup(&globalData);
 
@@ -163,6 +176,15 @@ void main() {
             }
             // Tell UID to be quiet - Works but needs to have at least one uid in this state
             // quietRFID(readerData.readUID[0]);
+            writeRFID(readerData.readUID[0], 0x01, 0xFACEDEAD);
+            readRFID(readerData.readUID[0], 0x01);
+            // Print out block on to the LCD
+            for (j = 0; j < readerData.availableUIDs; j++) {
+                if (readerData.readUID[j][0] != ',') {
+                    // Get rid of commas
+                    printrs(0, 24 + 8*i + 8*j, BLACK, RED, readerData.readUID[j], 1); // print first UID
+                }
+            }
             prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
             // Turn off inventory flag
             globalData.getInventory = FALSE;
