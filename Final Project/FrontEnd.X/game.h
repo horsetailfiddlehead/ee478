@@ -8,9 +8,12 @@ typedef struct _gameData {
     int myMove;
     int oppMove;
     char* moveName;
+    char name[5];
 } gameData;
 
 void setupGame();
+
+void printKeyboard(GlobalState* globalData, char* name);
 
 // Game Prototypes
 void singlePlayer(GlobalState* globalData);

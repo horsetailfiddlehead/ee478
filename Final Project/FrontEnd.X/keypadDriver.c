@@ -85,7 +85,7 @@ void keypad(GlobalState *gData) {
     if (gData->keyPress >= 0 && !gData->displayedKey) {
         gData->keyFlag = TRUE;
         // Weak debounce
-        Delay10TCYx(2);
+        Delay10TCYx(20);
 
         if (gData->keyPress == 14) {
             debugCount++;

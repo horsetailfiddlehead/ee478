@@ -211,12 +211,15 @@ void systemSetup(GlobalState *data) {
     // Game Related Globals
     data->keyStatus = -1;
     memset( data->selectMove, 0, sizeof(int) * 4 * 3);
-    data->selectMove[0][1] = 69;
+    data->selectMove[0][1] = 10;
     data->cardSelect[0] = 1;
     data->cardSelect[1] = 0;
     data->cardSelect[2] = 0;
     data->cardSelect[3] = 0;
+    data->firstTime = TRUE;
 
+    OpenTimer0( TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
+    
     return;
 }
 
