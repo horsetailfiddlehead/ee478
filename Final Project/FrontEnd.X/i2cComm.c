@@ -3,7 +3,7 @@
  * June 2, 2014
  *
  * I2C system for the front and back ends. The system is configured as a
- * Master/slave-idle. The i2c uses MSSP1 for communication
+ * Master/slave-idle. The i2c uses MSSP2 for communication
  */
 
 #include "globals.h"
@@ -42,4 +42,38 @@ void i2CSetup(){
     SSP2CON1 |= SSPEN;  // enable module
 
 
+}
+
+// send bytes as the master
+void sendBytes(char *data, int numBytes) {
+    // switch to master mode?
+    //for num bytes
+        // check idle bus
+        // diable receiveEN
+        // send start bit
+        // send slave address with write bit
+            //load slave address/bit
+            // send
+        // check for ack or WCOL
+        // if okay, load/send data
+        // check ack
+    // send stop
+    // MAYBE? switch to slave mode
+        // set address register
+        // switch to RCEN idle
+}
+
+void switchToMaster() {
+    // set address reg to baud rate?
+    // switch out of RCEN mode?
+}
+
+//ISR for received data in slave mode
+void i2cSlaveISR() {
+    // ccheck if address
+        // dump buffer
+    // not address
+        //store into global variable/buffer
+        // set i2c process flag
+    // clear interrupt flag
 }
