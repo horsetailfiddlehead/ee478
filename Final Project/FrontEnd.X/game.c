@@ -26,19 +26,34 @@ void singlePlayer(GlobalState* globalData) {
 	// Setup new game
 	setupGame();
 	game.turn = rand() % 2;
-	
+        printGame(globalData);
+
 	// Begin game with computer
 	while(!game.gameOver) {
 		// Situation depends on game.turn
 		if(game.turn) {
 			game.myMove = pickMove(globalData);
 			game.oppScore = attack(game.myMove, game.oppScore);
-		} else {
+                        prints(0, 5, BLACK, RED, "                    ", 1);
+                        prints(0, 5, BLACK, RED, "Opponent took damage. -", 1);
+                        integerprint(30, 5, BLACK, RED, game.oppMove, 1);
+                } else {
 			// Computer randomly picks an attack with damage b/w 0 and 50
 			game.oppMove = rand() % 50 + 1;
 			game.myScore = attack(game.oppMove, game.myScore);
+                        prints(0, 5, BLACK, RED, "                    ", 1);
+                        prints(0, 5, BLACK, RED, "Taken damage. -", 1);
+                        integerprint(30, 5, BLACK, RED, game.oppMove, 1);
 		}
-		// Check game status
+                prints(0, 45, YELLOW, BLACK, "        ", 1);
+                integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
+                prints(0, 75, WHITE, BLACK, "        ", 1);
+                integerprint(0, 75, WHITE, BLACK, game.oppScore, 1);
+
+                keypad(globalData);
+                while(globalData->keyPress != 0x0A);
+
+                // Check game status
 		game.gameOver = gameStatus();
 		game.turn = !game.turn;
 	}
@@ -227,30 +242,22 @@ int recieveScore() {
  
  
  
- void printGame(GlobalState* globalData) {
+void printGame(GlobalState* globalData) {
 	// LCD menu
          // Beep off
     TRISBbits.RB5 = 1;
     clean(BLACK);
 
     if(game.turn) {
-        prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
+        prints(0, 10, YELLOW, BLACK, "Your move!", 1);
     } else {
-        prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
+        prints(0, 10, YELLOW, BLACK, "Opponent's turn.", 1);
     }
 
     prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
-    integerprint(0, 45, YELLOW, BLACK, game.myScore,1);
-    prints(0,60, WHITE, BLACK, "Opponent Score: ",1);
-    integerprint(0, 75, WHITE, BLACK, game.oppScore,1);
-
-
-    // Prints messages to LCD based off of keypad input
-    // Display commands to select a slot - the LED's should indicate if a card is read
-    prints(35, 30, WHITE, BLACK, "Slot 1", 1);
-    prints(35, 60, WHITE, BLACK, "Slot 2", 1);
-    prints(35, 90, WHITE, BLACK, "Slot 3", 1);
-    prints(35, 120, WHITE, BLACK, "Slot 4", 1);
+    integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
+    prints(0,60, WHITE, BLACK, "Opponent Score: ", 1);
+    integerprint(0, 75, WHITE, BLACK, game.oppScore, 1);
 }
 
 // Select a card to play
