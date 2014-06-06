@@ -5,6 +5,7 @@
 ###################
 *.com
 *.class
+*.d
 *.dll
 *.exe
 *.o
@@ -19,6 +20,8 @@
 *.out
 *.app
 *.hex
+*.map
+*.cof
 #*/nbproject/*
 */dist/*
 */build/*
