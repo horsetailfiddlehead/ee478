@@ -149,7 +149,7 @@ void main() {
     printMainMenu(&globalData);
 
     while (1) {
-        sendBytes();
+        sendBytes('a', 1);
         
         if (!globalData.keyFlag) {
             keypad(&globalData);

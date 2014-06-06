@@ -15,14 +15,16 @@ extern "C" {
     /*
      * Configures the MSSP2 module for master/slave-idle at 100kHz
      */
-    void i2CSetup(void);
+    void i2CSetup();
 
     /*
      * Sends the first numBytes bytes of the char array
      */
-    void sendBytes();
+    int sendBytes(char *data, int numBytes);
 
     void switchToMaster(void);
+
+    void i2cISR();
 
 #ifdef	__cplusplus
 }

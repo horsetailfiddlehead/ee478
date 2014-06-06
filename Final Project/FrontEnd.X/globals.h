@@ -36,6 +36,8 @@ extern "C" {
 #include "game.h"
 #include "i2cComm.h"
 
+#define FRONT_NOT_BACK 1 // is this the Front end or backend (should move to globals)
+
     enum _myBool {
         FALSE = 0, TRUE = 1
     };
