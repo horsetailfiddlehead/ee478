@@ -35,8 +35,8 @@ void i2CSetup() {
     i2cData.destAddr = 0xFE; // 8-bit address, 7-bit address is 0x7F
     i2cData.myAddr = 0x00;
 #else
-    i2cAddr = 0x00; // 0b0000000
-    i2cData.myAddr = 0xFE;
+    i2cData.destAddr = 0x00; // 0b0000000
+    i2cData.myAddr = 0xFF;
 #endif
 
     i2cData.inDataSequence = FALSE;
@@ -59,13 +59,19 @@ void i2CSetup() {
     // configure MSSP2 for i2c communication
     SSP2CON1 &= SSPDIS; // disable module
     SSP2STAT |= SLEW_OFF;
+#if FRONT_NOT_BACK
     SSP2CON1 = MASTER; // set mode to master mode
+    SSP2ADD = BAUD; // set baud rate to 100kHz
+#else
+    SSP2CON1 = SLAVE;
+    SSP2ADD = i2cData.myAddr;
+#endif
     SSP2CON2 = 0b00000000; // disable general call interrupt
     SSP2CON3 = 0b01100011; // enable stop int, enable start int, addr/data hold
 
     //      CloseI2C2();
     //    OpenI2C2(MASTER, SLEW_OFF);
-    SSP2ADD = BAUD; // set baud rate to 100kHz
+
     SSP2CON1 |= SSPEN; // enable module
 
 }
@@ -74,21 +80,22 @@ void i2CSetup() {
  * master mode. Returns a negative number if error occurs during writing,
  * otherwise exits with 0. Exit state: slave mode.
  */
+
 int sendBytes(char *data, int numBytes) {
     int i = 0;
     signed char status = 0;
 
     // enter masater mode if no data is being sent (stop bit last seen)
     if (!i2cData.inDataSequence)
-        switchToMaster(); 
+        switchToMaster();
     else
         return -1;
 
     sendStart();
 
     status = WriteI2C2(i2cData.destAddr & 0b11111110); // send address with write
-    if (status > 0) {// if collision, revert to slave, reset data sequence flag to transfer ok
-        sendStop(); //TODO: fix conditional
+    if (status < 0) {// if collision, revert to slave, reset data sequence flag to transfer ok
+        sendStop();
         switchToSlave();
         return status;
     } else { // if no collision,
@@ -97,7 +104,7 @@ int sendBytes(char *data, int numBytes) {
             if (status < 0) {// if nack or wcol, break
                 sendStop();
                 switchToSlave();
-                return status; 
+                return status;
             }
         }
     }
