@@ -152,7 +152,8 @@ void buildCard(GlobalState* globalData) {
 
 // Sets up connection with other players
 
-int findPlayer() {
+int findPlayer(GlobalState* globalData) {
+    printMultiplayerSetup(globalData);
     return 0;
 }
 
@@ -305,6 +306,18 @@ void printGame(GlobalState* globalData) {
     prints(0, H - 8, WHITE, BLACK, "Press D to continue.", 1);
 }
 
+void printMultiplayerSetup(GlobalState* globalData) {
+    // LCD menu
+    clean(GREEN);
+    drawBoxFill(0, 0, 20, V - 1, GREEN);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    prints(35, 7, WHITE, BLACK, "Main Menu", 1);
+    prints(35, globalData->mainMenuSpots[0], WHITE, GREEN, "Host Game", 1);
+    prints(35, globalData->mainMenuSpots[1], WHITE, GREEN, "Join Game", 1);
+    prints(35, globalData->mainMenuSpots[2], WHITE, GREEN, "Nevermind.", 1);
+    prints(0, H - 8, WHITE, BLUE, "2-UP,8-DOWN,D-ENTER", 1);
+    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, GREEN, ">", 1);
+}
 
 void printKeyboard(GlobalState* globalData, char* name) {
     short pos[] = {0, 0};
