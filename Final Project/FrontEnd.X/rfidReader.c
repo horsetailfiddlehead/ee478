@@ -88,47 +88,51 @@ void quietRFID(char* uid) {
     return;
 }
 
-void writeRFID(char* uid, char block, unsigned int data) {
+void writeRFID(char* uid, char block, int highData, int lowData) {
     // Holds the command
     char writeCommand[WR_SING_LEN]; // {STAY_QUIET, uid, END_COM};
-    char dataHex[9];
-    memset(writeCommand, '\0', WR_SING_LEN * sizeof (char));
-    readerData.writeFlag_1 = 1;
-    // If we have not set read mode yet, go to config mode
-    if (readerData.readMode == 0) {
-        // Config mode
-        readerData.configFlag = 1;
-        readerData.writeFlag_1 = 0;
-
-        // Send read commands
-        setupRead();
-
-        // Turn off config
-        readerData.configFlag = 0;
+    char dataHex[5];
+    if (readerData.availableUIDs > 0) {
+        memset(writeCommand, '\0', WR_SING_LEN * sizeof (char));
         readerData.writeFlag_1 = 1;
+        // If we have not set read mode yet, go to config mode
+        if (readerData.readMode == 0) {
+            // Config mode
+            readerData.configFlag = 1;
+            readerData.writeFlag_1 = 0;
+
+            // Send read commands
+            setupRead();
+
+            // Turn off config
+            readerData.configFlag = 0;
+            readerData.writeFlag_1 = 1;
+        }
+
+        // Beginning part of command
+        strcatpgm2ram(writeCommand, WRITE_SINGLE);
+
+        // Concatenate the uid and block
+        strcat(writeCommand, uid);
+
+        sprintf(dataHex, "%02x", (int) block);
+        strcat(writeCommand, dataHex);
+
+        sprintf(dataHex, "%04x", highData);
+        strcat(writeCommand, dataHex);
+
+        sprintf(dataHex, "%04x", lowData);
+        strcat(writeCommand, dataHex);
+
+        // Add 0000 for the ending bits
+        strcatpgm2ram(writeCommand, END_COM);
+
+        // Do sendToRFID2 because it is already saved to ram
+        sendToRFID2(writeCommand);
+
+        // Wait until interrupt finishes
+        while (readerData.writeFlag_1 == 1);
     }
-
-    // Beginning part of command
-    strcatpgm2ram(writeCommand, READ_SINGLE);
-
-    // Concatenate the uid and block
-    strcat(writeCommand, uid);
-    
-    sprintf(dataHex,"%02x",(int)block);
-    strcat(writeCommand, dataHex);
-
-    sprintf(dataHex,"%08x",data);
-    strcat(writeCommand, dataHex);
-
-    // Add 0000 for the ending bits
-    strcatpgm2ram(writeCommand, END_COM);
-
-    // Do sendToRFID2 because it is already saved to ram
-    sendToRFID2(writeCommand);
-
-    // Wait until interrupt finishes
-    while (readerData.writeFlag_1 == 1);
-
     return;
 }
 
@@ -136,43 +140,46 @@ void readRFID(char* uid, char block) {
     // Holds the command
     char readCommand[READ_SING_LEN]; // {STAY_QUIET, uid, END_COM};
     char blockHex[3];
-    memset(readCommand, '\0', READ_SING_LEN * sizeof (char));
-    readerData.readFlag_1 = 1;
-    // If we have not set read mode yet, go to config mode
-    if (readerData.readMode == 0) {
-        // Config mode
-        readerData.configFlag = 1;
-
-        // Disable current flag
-        readerData.readFlag_1 = 0;
-
-        // Send read commands
-        setupRead();
-
-        // Turn off config
-        readerData.configFlag = 0;
-
+    if (readerData.availableUIDs > 0) {
+        memset(readCommand, '\0', READ_SING_LEN * sizeof (char));
         readerData.readFlag_1 = 1;
+        // If we have not set read mode yet, go to config mode
+        if (readerData.readMode == 0) {
+            // Config mode
+            readerData.configFlag = 1;
+
+            // Disable current flag
+            readerData.readFlag_1 = 0;
+
+            // Send read commands
+            setupRead();
+
+            // Turn off config
+            readerData.configFlag = 0;
+
+            readerData.readFlag_1 = 1;
+        }
+
+        // Beginning part of command
+        strcatpgm2ram(readCommand, READ_SINGLE);
+
+        // Concatenate the uid and block
+        strcat(readCommand, uid);
+
+        sprintf(blockHex,"%02x",(int)block);
+        strcat(readCommand, blockHex);
+
+        // Add 0000 for the ending bits
+        strcatpgm2ram(readCommand, END_COM);
+
+        // Do sendToRFID2 because it is already saved to ram
+        sendToRFID2(readCommand);
+
+        // Wait until interrupt finishes
+        while (readerData.readFlag_1 == 1);
+        readerData.availableUIDs = readerData.numUID;
+        readerData.numUID = 0;
     }
-
-    // Beginning part of command
-    strcatpgm2ram(readCommand, READ_SINGLE);
-
-    // Concatenate the uid and block
-    strcat(readCommand, uid);
-    
-    sprintf(blockHex,"%02x",(int)block);
-    strcat(readCommand, blockHex);
-
-    // Add 0000 for the ending bits
-    strcatpgm2ram(readCommand, END_COM);
-
-    // Do sendToRFID2 because it is already saved to ram
-    sendToRFID2(readCommand);
-
-    // Wait until interrupt finishes
-    while (readerData.readFlag_1 == 1);
-
     return;
 }
 
