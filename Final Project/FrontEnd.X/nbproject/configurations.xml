@@ -14,6 +14,7 @@
       <itemPath>motorDriver.h</itemPath>
       <itemPath>game.h</itemPath>
       <itemPath>SRAM.h</itemPath>
+      <itemPath>i2cComm.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -32,6 +33,7 @@
       <itemPath>motorDriver.c</itemPath>
       <itemPath>game.c</itemPath>
       <itemPath>SRAMfront.c</itemPath>
+      <itemPath>i2cComm.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -59,7 +61,6 @@
         </linkerTool>
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
-          <parseOnProdLoad>false</parseOnProdLoad>
           <alternateLoadableFile></alternateLoadableFile>
         </loading>
       </compileType>

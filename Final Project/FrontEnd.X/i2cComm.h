@@ -20,7 +20,9 @@ extern "C" {
     /*
      * Sends the first numBytes bytes of the char array
      */
-    void sendBytes(char *data, int numBytes);
+    void sendBytes();
+
+    void switchToMaster(void);
 
 #ifdef	__cplusplus
 }

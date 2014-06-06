@@ -48,6 +48,7 @@ void interrupt_at_high_vector(void) {
 #pragma code
 
 #pragma interrupt rcISR
+
 void rcISR(void) {
     // The input character from UART2 (the RFID reader)
     unsigned char input;
@@ -62,7 +63,7 @@ void rcISR(void) {
         RCSTA1bits.CREN = 1;
         RCSTA1bits.OERR = 0;
     }
-    */
+     */
     // Read fast by directly looking at RCREG
     input = RCREG2;
     PORTAbits.RA0 = 1;
@@ -93,12 +94,12 @@ void rcISR(void) {
             // Block of square brackets has be read, set the indicator to zero
             readerData.nextBlock = 0;
             PORTAbits.RA0 = 0;
-            
+
             // Disable read 1 flag
             if (readerData.readFlag_1 == 1) {
                 readerData.readFlag_1 = 0;
             }
-            
+
             // Disable write 1 flag
             if (readerData.writeFlag_1 == 1) {
                 readerData.writeFlag_1 = 0;
@@ -121,11 +122,11 @@ void rcISR(void) {
             //Write2USART(input);
         }
 
-    // In config mode, count the line feeds
+        // In config mode, count the line feeds
     } else if (readerData.configFlag == 1) {
-              if (input == '\n') {
-                readerData.lineFeeds++;
-            }
+        if (input == '\n') {
+            readerData.lineFeeds++;
+        }
     } else {
         // Echo back typed character
         //Write2USART(input);
@@ -135,10 +136,8 @@ void rcISR(void) {
     PORTAbits.RA0 = 0;
     // Clear interrupts
     PIR3bits.RC2IF = 0;
+    PIR3bits.SSP2IF =0; // a hack. just clear the i2c iterrupt for now
 }
-
-
-
 
 void main() {
     int i = 0;
@@ -148,8 +147,10 @@ void main() {
 
     // lcd test code
     printMainMenu(&globalData);
-    
+
     while (1) {
+        sendBytes();
+        
         if (!globalData.keyFlag) {
             keypad(&globalData);
         }
@@ -162,7 +163,7 @@ void main() {
 
         }
         // Doing an inventory command from the Build card menu
-        if( globalData.getInventory == TRUE) {
+        if (globalData.getInventory == TRUE) {
             // get the inventory of cards
             inventoryRFID();
 
@@ -171,7 +172,7 @@ void main() {
                 if (readerData.readUID[i][0] != ',') {
                     // Get rid of commas
                     processUID(readerData.readUID[i]);
-                    printrs(0, 24 + 8*i, BLACK, RED, readerData.readUID[i], 1); // print first UID
+                    printrs(0, 24 + 8 * i, BLACK, RED, readerData.readUID[i], 1); // print first UID
                 }
             }
             // Tell UID to be quiet - Works but needs to have at least one uid in this state
@@ -182,7 +183,7 @@ void main() {
             for (j = 0; j < readerData.availableUIDs; j++) {
                 if (readerData.readUID[j][0] != ',') {
                     // Get rid of commas
-                    printrs(0, 24 + 8*i + 8*j, BLACK, RED, readerData.readUID[j], 1); // print first UID
+                    printrs(0, 24 + 8 * i + 8 * j, BLACK, RED, readerData.readUID[j], 1); // print first UID
                 }
             }
             prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
@@ -194,13 +195,16 @@ void main() {
             globalData.xbeeFlag = FALSE;
         }
 
+
+
     }
     return;
-    
+
 
 }
 
 // Reads the UID up until the comma
+
 void processUID(char* uid) {
     int i = 0;
     while (uid[i] != ',') {
@@ -218,6 +222,7 @@ void systemSetup(GlobalState *data) {
     setupPWM();
     setupXbee();
     RFIDSetup();
+    i2CSetup();
 
     data->displayPage = 0;
     data->keyFlag = FALSE;
@@ -232,7 +237,7 @@ void systemSetup(GlobalState *data) {
     data->xbeeFlag = FALSE;
     // Game Related Globals
     data->keyStatus = -1;
-    memset( data->selectMove, 0, sizeof(int) * 4 * 3);
+    memset(data->selectMove, 0, sizeof (int) * 4 * 3);
     data->selectMove[0][1] = 10;
     data->cardSelect[0] = 1;
     data->cardSelect[1] = 0;
@@ -240,8 +245,8 @@ void systemSetup(GlobalState *data) {
     data->cardSelect[3] = 0;
     data->firstTime = TRUE;
 
-    OpenTimer0( TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
-    
+    OpenTimer0(TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
+
     return;
 }
 
@@ -251,7 +256,7 @@ void setupPWM(void) {
     CCPTMRS0 = 0b01000000; // set CCP3 to use Timer 4
     T4CON = 0b00000111; // set timer prescale 1:16, turn on timer4
     PR4 = 0xFF; // PR = 77 for 4kHz (cool sound). set to 0xff because will be
-                // set based on the key pressed
+    // set based on the key pressed
 
 
     CCP3CON = 0b00011100; // set LSB of duty yle, select pwm mode
@@ -295,14 +300,14 @@ void setXbeeNetwork(char* myNetwork) {
     // Exit
 
     // ATWR,AC,CN - Write changes to nonVolatile memory
-            // ATAC - Apply changes
-            // ATCN - Exit config mode
+    // ATAC - Apply changes
+    // ATCN - Exit config mode
     //Carriage return
     putrs1USART("WR,AC,ID\r");
-    while(Busy1USART());    
+    while (Busy1USART());
     while (!DataRdy1USART());
-//
-//    putrs1USART("ATID\r");
-//    while(Busy1USART());
-//    while (!DataRdy1USART());
+    //
+    //    putrs1USART("ATID\r");
+    //    while(Busy1USART());
+    //    while (!DataRdy1USART());
 }
