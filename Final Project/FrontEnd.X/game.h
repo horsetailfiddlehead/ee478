@@ -21,23 +21,23 @@ void multiPlayer(GlobalState* globalData);
 void buildCards(GlobalState* globalData);
 
 // Helper Prototypes
-int findPlayer(void);
+int findPlayer(GlobalState* globalData);
 int gameStatus(void);
 int attack(int attackDamage, int targetScore);
 int selectCard(GlobalState* globalData);
 int pickMove(GlobalState* globalData);
 
 // Xbee Prototypes
-void sendMove();
-int recieveMove();
-void sendScore();
-int recieveScore();
+void sendMove(void);
+void receiveMove(void);
+void sendScore(void);
+int receiveScore(void);
 
 // Game Display Prototypes
 void printGame(GlobalState* globalData);
 void printSelect(GlobalState* globalData);
 void printAttackMenu(GlobalState* globalData, int card);
-void printResults();
+void printResults(void);
 
 /*
 typedef struct _gameData {

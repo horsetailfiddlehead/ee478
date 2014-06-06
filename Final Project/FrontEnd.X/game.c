@@ -26,9 +26,9 @@ void setupGame() {
 void singlePlayer(GlobalState* globalData) {
     // First time playing?
     // Read first time from SRAM
-    if (globalData.firstTime == TRUE) {
+    if (globalData->firstTime == TRUE) {
         printKeyboard(globalData, game.name);
-        globalData.firstTime = FALSE;
+        globalData->firstTime = FALSE;
     }
 
     // Setup new game
@@ -79,7 +79,7 @@ void singlePlayer(GlobalState* globalData) {
     // Display results once there is a lost
     printResults();
 }
-
+/*
 void multiPlayer(GlobalState* globalData) {
     int connect = 0;
 
@@ -101,7 +101,7 @@ void multiPlayer(GlobalState* globalData) {
             // Send Move
             sendMove();
             // Receive new score after opponent takes damage
-            game.oppScore = recieveScore();
+            game.oppScore = receiveScore();
             printGame(globalData);
             prints(0, 10, RED, BLACK, "                    ", 1);
             prints(0, 10, RED, BLACK, "Opponent took damage:", 1);
@@ -109,7 +109,7 @@ void multiPlayer(GlobalState* globalData) {
             integerprint(6, 21, RED, BLACK, game.myMove, 1);
         } else {
             // Receive player move and take damage
-            game.myScore = attack(recieveMove(), game.myScore);
+            game.myScore = attack(receiveMove(), game.myScore);
             prints(0, 10, RED, BLACK, "                    ", 1);
             prints(0, 10, RED, BLACK, "Taken damage:", 1);
             prints(0, 21, RED, BLACK, "-", 1);
@@ -131,6 +131,7 @@ void multiPlayer(GlobalState* globalData) {
         printResults();
     }
 }
+*/
 
 // Program data on the card
 // Monster ID
@@ -153,7 +154,7 @@ void buildCard(GlobalState* globalData) {
 // Sets up connection with other players
 
 int findPlayer(GlobalState* globalData) {
-    printMultiplayerSetup(globalData);
+//    printMultiplayerSetup(globalData);
     return 0;
 }
 
@@ -263,7 +264,7 @@ void sendMove() {
 
 // Xbee: Receive move from opponent
 
-void recieveMove() {
+void receiveMove() {
     game.oppMove = 0;
 }
 
@@ -275,7 +276,7 @@ void sendScore() {
 
 // Xbee: Receive new score from opponent after attacking
 
-int recieveScore() {
+int receiveScore() {
     return 0;
 }
 
@@ -334,13 +335,13 @@ void printKeyboard(GlobalState* globalData, char* name) {
     prints(3, 33, WHITE, BLUE, " K L M N O P Q R S T", 1);
     prints(3, 43, WHITE, BLUE, " U V W X Y Z [ \\ ] ^", 1);
     prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
-    keypad(globalData);
+    keypad(&globalData);
 
     while (globalData->keyPress != 0x0F) {
-        keypad(globalData);
+        keypad(&globalData);
         if (globalData->keyFlag && !globalData->displayedKey) {
-            globalData.keyFlag = FALSE;
-            globalData.displayedKey = TRUE;
+            globalData->keyFlag = FALSE;
+            globalData->displayedKey = TRUE;
 
             switch (globalData->keyPress) {
                 case 0x08:

@@ -25,6 +25,8 @@ extern "C" {
 #include "delays.h"
 #include <adc.h>
 #include <timers.h>
+#include "i2c.h"
+    
     // our headers
 #include "rs232.h"
 #include "keypadDriver.h"
@@ -36,7 +38,7 @@ extern "C" {
 #include "game.h"
 #include "i2cComm.h"
 
-#define FRONT_NOT_BACK 1 // is this the Front end or backend (should move to globals)
+#define FRONT_NOT_BACK 0 // is this the Front end or backend (should move to globals)
 
     enum _myBool {
         FALSE = 0, TRUE = 1
