@@ -22,8 +22,6 @@ extern "C" {
      */
     int sendBytes(char *data, int numBytes);
 
-    void switchToMaster(void);
-
     void i2cISR();
 
 #ifdef	__cplusplus

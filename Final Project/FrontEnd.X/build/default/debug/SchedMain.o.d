@@ -1,5 +1,5 @@
-build/default/debug/SRAMfront.o:  \
-	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/SRAMfront.c  \
+build/default/debug/SchedMain.o:  \
+	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/SchedMain.c  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/rs232.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/keypadDriver.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/LCD.h  \
@@ -7,7 +7,6 @@ build/default/debug/SRAMfront.o:  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/motorDriver.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/game.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/i2cComm.h  \
-	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/SRAM.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/globals.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/startup.h  \
 	C:/Users/castia/Documents/GitHub/ee478/Final\ Project/FrontEnd.X/interrupts.h  \

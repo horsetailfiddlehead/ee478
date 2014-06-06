@@ -9,24 +9,35 @@
 #include "globals.h"
 #include "i2c.h"
 
-#define MASTER_FIRMW 0b00001011 //I2C Firmware Controlled Master mode (slave Idle)
-#define SSPEN 0b00100000  /* Enable serial port and configures SCK, SDO, SDI*/
-#define SSPDIS 0b0000000    // disable serial port
+#define MASTER  0b00001000 //I2C  Master mode
+#define SLAVE   0b00000110 // I2C slave mode, 7-bit address
+#define SSPEN   0b00100000  /* Enable serial port and configures SCK, SDO, SDI*/
+#define SSPDIS  0b11011111   // disable serial port
 #define SLEW_OFF 0b10000000 /* Slew rate disabled for 100kHz mode */
+#define BAUD 0x31;  // master address value for 100kHz baud rate
 
 char i2cAddr;
+Boolean inDataSequence; // 1 if someone is transmitting data
+
+/*******Private prototypes*********************/
+void switchToSlave(void);
+void switchToMaster(void);
+void sendStop(void);
+void sendStart(void);
+/***********************************************/
 
 /*
  * Initialization function for the i2c module
  */
 void i2CSetup() {
     // set the interpic i2c address
-#ifdef FRONT_NOT_BACK
-    i2cAddr = 0xFE; // 0b1111111
+#if FRONT_NOT_BACK
+    i2cAddr = 0xFE; // 8-bit address, 7-bit address is 0x7F
 #else
     i2cAddr = 0x00; // 0b0000000
 #endif
 
+    inDataSequence = FALSE;
 
     // setup D0, D1 as inputs
     TRISDbits.TRISD0 = 1;
@@ -43,60 +54,102 @@ void i2CSetup() {
     PIE3bits.SSP2IE = 1; // MSSP interrupt enable
 
     // configure MSSP2 for i2c communication
-    SSP2CON1 |= SSPDIS; // disable module
+    SSP2CON1 &= SSPDIS; // disable module
     SSP2STAT |= SLEW_OFF;
-    SSP2CON1 |= 0b00001000; // set mode to master mode
-    SSP2CON2 |= 0b00000000; // disable general call interrupt
-    SSP2CON3 |= 0b01000011; // enable stop int, disable start int, addr/data hold
+    SSP2CON1 = MASTER; // set mode to master mode
+    SSP2CON2 = 0b00000000; // disable general call interrupt
+    SSP2CON3 = 0b01100011; // enable stop int, enable start int, addr/data hold
 
     //      CloseI2C2();
     //    OpenI2C2(MASTER, SLEW_OFF);
-    SSP2ADD = 0x31; // set baud rate to 100kHz
+    SSP2ADD = BAUD; // set baud rate to 100kHz
     SSP2CON1 |= SSPEN; // enable module
 
     TRISAbits.RA0 = 0;
     ANSELAbits.ANSA0 = 0;
 }
 
-/* send bytes as the master. Returns a negative number
- * if error occurs during writing, otherwise exits with 0.
+/* send bytes as the master.  checks the status of the bus before entering
+ * master mode. Returns a negative number if error occurs during writing,
+ * otherwise exits with 0. Exit state: slave mode.
  */
 int sendBytes(char *data, int numBytes) {
     int i = 0;
     signed char status = 0;
-    // check if in a data sequence (stop bit sent last)
-    // switch to master mode?
 
-    SSP2CON2bits.SEN = 1; // send start bit
-    while (SSP2CON2bits.SEN == 1); // or use IdleI2C2()
+    // enter masater mode if no data is being sent (stop bit last seen)
+    if (!inDataSequence)
+        switchToMaster(); 
+    else
+        return -1;
+
+    sendStart();
 
     status = WriteI2C2(i2cAddr & 0b11111110); // send address with write
-    if (status < 0) {// if collision, revert to slave, reset data sequence flag to transfer ok
+    if (status > 0) {// if collision, revert to slave, reset data sequence flag to transfer ok
+        sendStop();
+        switchToSlave();
         return status;
     } else { // if no collision,
-        for (i = 0; i < numBytes; i++) { //for num bytes
+        for (i = 0; i < numBytes; i++) { //write out Numbytes of data
             status = WriteI2C2(data[i]);
-            if (status < 0) {// check for ack or WCOL
-                return status; // if nack or wcol, break
+            if (status < 0) {// if nack or wcol, break
+                sendStop();
+                switchToSlave();
+                return status; 
             }
         }
     }
-    SSP2CON2bits.PEN = 1; // send stop
-    while (SSP2CON2bits.PEN == 1);
-    //    // MAYBE? switch to slave mode
-
-    // set address register
-    // switch to RCEN idle
+    sendStop();
+    switchToSlave(); // switch back to slave mode
 }
 
+/*
+ * Sets module to master mode. Note this clears various flags in the module
+ */
 void switchToMaster() {
     // set address reg to baud rate?
     // switch out of RCEN mode?
+    SSP2CON1 &= SSPDIS; // diable module
+    SSP2CON1 = MASTER; // change mode
+    SSP2ADD = BAUD; // Set baud rate
+    SSP2CON1 |= SSPEN; // enable module
 }
 
-//ISR for received data in slave mode
+/*
+ * Sets module to slave mode. Note this clears various flags in the module
+ */
+void switchToSlave() {
+    SSP2CON1 &= SSPDIS; // diable module
+    SSP2CON1 = SLAVE; // change mode
+    SSP2ADD = i2cAddr; // update address buffer
+    SSP2CON1 |= SSPEN; // enable module
+}
 
+/*
+ * Sends a stop bit. Module must be in Master mode
+ */
+void sendStop() {
+    SSP2CON2bits.PEN = 1; // send stop
+    while (SSP2CON2bits.PEN == 1);
+    inDataSequence = FALSE;
+}
+
+/*
+ * Sends a start bit. Module must be in Master mode
+ */
+void sendStart() {
+    SSP2CON2bits.SEN = 1; // send start bit
+    inDataSequence = TRUE;
+    while (SSP2CON2bits.SEN == 1); // or use IdleI2C2()
+}
+
+/*ISR for received data in slave mode
+ *
+ */
 void i2cISR() {
+    // if start bit, inDataSequence = TRUE
+    // if stopbit, inDataSequence = false;
     // ccheck if address
     // dump buffer
     // not address
