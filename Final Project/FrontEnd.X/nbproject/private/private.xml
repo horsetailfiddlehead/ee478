@@ -1,27 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?><project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1">
-        <file>
-            <url>rfidReader.c</url>
-            <line>26</line>
-            <line>86</line>
-            <line>192</line>
-        </file>
-        <file>
-            <url>rfidReader.h</url>
-            <line>15</line>
-        </file>
-        <file>
-            <url>LCD.c</url>
-            <line>681</line>
-        </file>
-<<<<<<< HEAD
-        <file>
-            <url>rfidReader.c</url>
-            <line>24</line>
-            <line>86</line>
-            <line>281</line>
-        </file>
-=======
->>>>>>> a8dec3ce36306c2698c1a159c1aac4ffdd029460
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
 </project-private>

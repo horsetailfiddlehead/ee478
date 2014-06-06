@@ -39,6 +39,8 @@ void processUID(char* uid);
  */
 
 RFIDDriver readerData;
+GlobalState globalData;
+extern I2cDataStruct i2cData;
 
 #pragma code high_vector=0x08
 
@@ -132,25 +134,39 @@ void rcISR(void) {
         //Write2USART(input);
     }
 
+    if (PIR3bits.SSP2IF == 1) { // process i2c interrupt
+        int temp = 0;
+        static unsigned char byteNumber = 0;
+        if (SSP2STATbits.S == 1) { // start condition
+            i2cData.inDataSequence = TRUE;
+        } else if (SSP2STATbits.P) { // stop condition
+            i2cData.inDataSequence = FALSE;
+            i2cData.messageLength = byteNumber;
+            byteNumber = 0;
+        } else if ((SSP2STATbits.D_A == 0) && (SSP2STATbits.BF == 1)) { // check if address
+            temp = SSP2BUF; // get rid of address
+        } else if ((SSP2STATbits.D_A == 1) && (SSP2STATbits.BF == 1)) { // check if data
+            i2cData.i2cData[byteNumber++] = SSP2BUF;
+        }
+        PIR3bits.SSP2IF = 0; // clear the interrupt
+    }
 
     PORTAbits.RA0 = 0;
     // Clear interrupts
     PIR3bits.RC2IF = 0;
-    PIR3bits.SSP2IF =0; // a hack. just clear the i2c iterrupt for now
 }
 
 void main() {
     int i = 0;
     int j = 0;
-    GlobalState globalData;
     systemSetup(&globalData);
 
     // lcd test code
     printMainMenu(&globalData);
 
     while (1) {
-        sendBytes('a', 1);
-        
+        sendBytes(i, 2);
+
         if (!globalData.keyFlag) {
             keypad(&globalData);
         }
@@ -192,6 +208,7 @@ void main() {
             globalData.getInventory = FALSE;
         }
         if (globalData.xbeeFlag == TRUE) {
+
             setXbeeNetwork("4567");
             globalData.xbeeFlag = FALSE;
         }
@@ -209,6 +226,7 @@ void main() {
 void processUID(char* uid) {
     int i = 0;
     while (uid[i] != ',') {
+
         i++;
     }
     uid[i] = '\0';
@@ -253,6 +271,7 @@ void systemSetup(GlobalState *data) {
 
 void setupPWM(void) {
     // configure PWM
+
     TRISBbits.RB5 = 1; // disable PWM output
     CCPTMRS0 = 0b01000000; // set CCP3 to use Timer 4
     T4CON = 0b00000111; // set timer prescale 1:16, turn on timer4
@@ -268,6 +287,7 @@ void setupPWM(void) {
 }
 
 void setupXbee(void) {
+
     TRISAbits.RA1 = 0;
     ANSELAbits.ANSA1 = 0;
     PORTAbits.RA1 = 1;

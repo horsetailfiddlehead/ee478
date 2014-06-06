@@ -7,7 +7,6 @@
  */
 
 #include "globals.h"
-#include "i2c.h"
 
 #define MASTER  0b00001000 //I2C  Master mode
 #define SLAVE   0b00000110 // I2C slave mode, 7-bit address
@@ -16,8 +15,9 @@
 #define SLEW_OFF 0b10000000 /* Slew rate disabled for 100kHz mode */
 #define BAUD 0x31;  // master address value for 100kHz baud rate
 
-char i2cAddr;
-Boolean inDataSequence; // 1 if someone is transmitting data
+//char i2cAddr;
+//Boolean inDataSequence; // 1 if someone is transmitting data
+I2cDataStruct i2cData;
 
 /*******Private prototypes*********************/
 void switchToSlave(void);
@@ -30,14 +30,17 @@ void sendStart(void);
  * Initialization function for the i2c module
  */
 void i2CSetup() {
-    // set the interpic i2c address
+    // setup the struct
 #if FRONT_NOT_BACK
-    i2cAddr = 0xFE; // 8-bit address, 7-bit address is 0x7F
+    i2cData.destAddr = 0xFE; // 8-bit address, 7-bit address is 0x7F
+    i2cData.myAddr = 0x00;
 #else
     i2cAddr = 0x00; // 0b0000000
+    i2cData.myAddr = 0xFE;
 #endif
 
-    inDataSequence = FALSE;
+    i2cData.inDataSequence = FALSE;
+    i2cData.messageLength = 0;
 
     // setup D0, D1 as inputs
     TRISDbits.TRISD0 = 1;
@@ -65,8 +68,6 @@ void i2CSetup() {
     SSP2ADD = BAUD; // set baud rate to 100kHz
     SSP2CON1 |= SSPEN; // enable module
 
-    TRISAbits.RA0 = 0;
-    ANSELAbits.ANSA0 = 0;
 }
 
 /* send bytes as the master.  checks the status of the bus before entering
@@ -78,16 +79,16 @@ int sendBytes(char *data, int numBytes) {
     signed char status = 0;
 
     // enter masater mode if no data is being sent (stop bit last seen)
-    if (!inDataSequence)
+    if (!i2cData.inDataSequence)
         switchToMaster(); 
     else
         return -1;
 
     sendStart();
 
-    status = WriteI2C2(i2cAddr & 0b11111110); // send address with write
+    status = WriteI2C2(i2cData.destAddr & 0b11111110); // send address with write
     if (status > 0) {// if collision, revert to slave, reset data sequence flag to transfer ok
-        sendStop();
+        sendStop(); //TODO: fix conditional
         switchToSlave();
         return status;
     } else { // if no collision,
@@ -122,7 +123,7 @@ void switchToMaster() {
 void switchToSlave() {
     SSP2CON1 &= SSPDIS; // diable module
     SSP2CON1 = SLAVE; // change mode
-    SSP2ADD = i2cAddr; // update address buffer
+    SSP2ADD = i2cData.myAddr; // update address buffer
     SSP2CON1 |= SSPEN; // enable module
 }
 
@@ -132,7 +133,7 @@ void switchToSlave() {
 void sendStop() {
     SSP2CON2bits.PEN = 1; // send stop
     while (SSP2CON2bits.PEN == 1);
-    inDataSequence = FALSE;
+    i2cData.inDataSequence = FALSE;
 }
 
 /*
@@ -140,7 +141,7 @@ void sendStop() {
  */
 void sendStart() {
     SSP2CON2bits.SEN = 1; // send start bit
-    inDataSequence = TRUE;
+    i2cData.inDataSequence = TRUE;
     while (SSP2CON2bits.SEN == 1); // or use IdleI2C2()
 }
 
