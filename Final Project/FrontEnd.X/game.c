@@ -23,87 +23,6 @@ void setupGame() {
     srand(ReadTimer0());
 }
 
-void printKeyboard(GlobalState* globalData, char* name) {
-    short pos[] = {0, 0};
-    short letters = 0;
-    clean(BLUE);
-    prints(0, H-32, WHITE, BLUE, "B-DELETE",1);
-    prints(0, H-24, WHITE, BLUE, "2-UP,8-DOWN",1);
-    prints(0, H-16, WHITE, BLUE, "4-LEFT,6-RIGHT",1);
-    prints(0, H-8, WHITE, BLUE, "D-SEL,#-DONE",1);
-    prints(0, 0, WHITE, BLUE, "NAME?: _ _ _ _",1);
-    drawBox(0, 16, 40, V - 1, 2, WHITE);
-    drawBox(0, 19, 34, V - 1, 1, WHITE);
-    prints(3, 23, WHITE, BLUE, " A B C D E F G H I J", 1);
-    prints(3, 33, WHITE, BLUE, " K L M N O P Q R S T", 1);
-    prints(3, 43, WHITE, BLUE, " U V W X Y Z [ \\ ] ^", 1);
-    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
-    keypad(globalData);
-
-    while (globalData->keyPress != 0x0F) {
-        keypad(globalData);
-        if (globalData->keyFlag && !globalData->displayedKey) {
-            globalData.keyFlag = FALSE;
-            globalData.displayedKey = TRUE;
-
-            switch (globalData->keyPress) {
-                case 0x08:
-                    prints(3+ 12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
-                    if (pos[1] < 2) {
-                        pos[1]++;
-                    }
-                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
-                    break;
-                case 0x02:
-                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
-                    if (pos[1] > 0) {
-                        pos[1]--;
-                    }
-                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
-                    break;
-                case 0x04:
-                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
-                    if (pos[0] > 0) {
-                        pos[0]--;
-                    }
-                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
-                    break;
-                case 0x06:
-                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
-                    if (pos[0] < 9) {
-                        pos[0]++;
-                    }
-                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
-                    break;
-                case 0x0D:
-                    if (letters < 4) {
-                        name[letters] = (char) (65 + pos[0] + 10 * pos[1]);
-                        name[letters + 1] = '\0';
-                        ASCII(42 + 12 * letters, 0, WHITE, BLUE, name[letters], 1);
-                        letters = letters + 1;
-                        if (letters == 4) {
-                            prints(42 + 12 * 5, 0, WHITE, BLUE, "end", 1);
-                        }
-                    }
-                    break;
-                case 0x0B:
-                    if (letters > 0) {
-                        if (letters == 4) {
-                            prints(42 + 12 * 5, 0, WHITE, BLUE, "   ", 1);
-                        }
-                        letters--;
-                        ASCII(42 + 12 * letters, 0, WHITE, BLUE, '_', 1);
-                        name[letters] = '\0';
-                    }
-                    break;
-
-            }
-        }
-    }
-
-}
-
-
 void singlePlayer(GlobalState* globalData) {
     // First time playing?
     // Read first time from SRAM
@@ -162,10 +81,10 @@ void singlePlayer(GlobalState* globalData) {
 }
 
 void multiPlayer(GlobalState* globalData) {
-    int myMove;
-    int oppMove = 0;
     int connect = 0;
+
     setupGame();
+
     // Find other players
     while (!connect) {
         connect = findPlayer();
@@ -178,20 +97,33 @@ void multiPlayer(GlobalState* globalData) {
     while (!game.gameOver && connect) {
         if (game.turn) {
             // Pick Move
-            myMove = pickMove(globalData);
+            game.myMove = pickMove(globalData);
             // Send Move
-            sendMove(myMove);
+            sendMove();
             // Receive new score after opponent takes damage
             game.oppScore = recieveScore();
+            printGame(globalData);
+            prints(0, 10, RED, BLACK, "                    ", 1);
+            prints(0, 10, RED, BLACK, "Opponent took damage:", 1);
+            prints(0, 21, RED, BLACK, "-", 1);
+            integerprint(6, 21, RED, BLACK, game.myMove, 1);
         } else {
             // Receive player move and take damage
             game.myScore = attack(recieveMove(), game.myScore);
+            prints(0, 10, RED, BLACK, "                    ", 1);
+            prints(0, 10, RED, BLACK, "Taken damage:", 1);
+            prints(0, 21, RED, BLACK, "-", 1);
+            integerprint(6, 21, RED, BLACK, game.oppMove, 1);
             // Send new score
-            sendScore(game.myScore);
+            sendScore();
         }
+        prints(0, 45, YELLOW, BLACK, "        ", 1);
+        integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
+        prints(0, 75, WHITE, BLACK, "        ", 1);
+        integerprint(0, 75, WHITE, BLACK, game.oppScore, 1);
         // Check game status
         game.gameOver = gameStatus();
-        !game.turn;
+        game.turn =!game.turn;
     }
     if (!connect) {
         printBSOD();
@@ -220,7 +152,8 @@ void buildCard(GlobalState* globalData) {
 
 // Sets up connection with other players
 
-int findPlayer() {
+int findPlayer(GlobalState* globalData) {
+    printMultiplayerSetup(globalData);
     return 0;
 }
 
@@ -324,20 +257,20 @@ int pickMove(GlobalState* globalData) {
 
 // Xbee: Send move to opponent
 
-int sendMove(int move) {
-    return 0;
+void sendMove() {
+    game.myMove;
 }
 
 // Xbee: Receive move from opponent
 
-int recieveMove() {
-    return 0;
+void recieveMove() {
+    game.oppMove = 0;
 }
 
 // Xbee: Send my score to opponent after taking damage
 
-int sendScore(int score) {
-    return 0;
+void sendScore() {
+    game.myScore;
 }
 
 // Xbee: Receive new score from opponent after attacking
@@ -373,8 +306,100 @@ void printGame(GlobalState* globalData) {
     prints(0, H - 8, WHITE, BLACK, "Press D to continue.", 1);
 }
 
-// Select a card to play
+void printMultiplayerSetup(GlobalState* globalData) {
+    // LCD menu
+    clean(GREEN);
+    drawBoxFill(0, 0, 20, V - 1, GREEN);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    prints(35, 7, WHITE, BLACK, "Main Menu", 1);
+    prints(35, globalData->mainMenuSpots[0], WHITE, GREEN, "Host Game", 1);
+    prints(35, globalData->mainMenuSpots[1], WHITE, GREEN, "Join Game", 1);
+    prints(35, globalData->mainMenuSpots[2], WHITE, GREEN, "Nevermind.", 1);
+    prints(0, H - 8, WHITE, BLUE, "2-UP,8-DOWN,D-ENTER", 1);
+    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, GREEN, ">", 1);
+}
 
+void printKeyboard(GlobalState* globalData, char* name) {
+    short pos[] = {0, 0};
+    short letters = 0;
+    clean(BLUE);
+    prints(0, H-32, WHITE, BLUE, "B-DELETE",1);
+    prints(0, H-24, WHITE, BLUE, "2-UP,8-DOWN",1);
+    prints(0, H-16, WHITE, BLUE, "4-LEFT,6-RIGHT",1);
+    prints(0, H-8, WHITE, BLUE, "D-SEL,#-DONE",1);
+    prints(0, 0, WHITE, BLUE, "NAME?: _ _ _ _",1);
+    drawBox(0, 16, 40, V - 1, 2, WHITE);
+    drawBox(0, 19, 34, V - 1, 1, WHITE);
+    prints(3, 23, WHITE, BLUE, " A B C D E F G H I J", 1);
+    prints(3, 33, WHITE, BLUE, " K L M N O P Q R S T", 1);
+    prints(3, 43, WHITE, BLUE, " U V W X Y Z [ \\ ] ^", 1);
+    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
+    keypad(globalData);
+
+    while (globalData->keyPress != 0x0F) {
+        keypad(globalData);
+        if (globalData->keyFlag && !globalData->displayedKey) {
+            globalData.keyFlag = FALSE;
+            globalData.displayedKey = TRUE;
+
+            switch (globalData->keyPress) {
+                case 0x08:
+                    prints(3+ 12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
+                    if (pos[1] < 2) {
+                        pos[1]++;
+                    }
+                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
+                    break;
+                case 0x02:
+                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
+                    if (pos[1] > 0) {
+                        pos[1]--;
+                    }
+                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
+                    break;
+                case 0x04:
+                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
+                    if (pos[0] > 0) {
+                        pos[0]--;
+                    }
+                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
+                    break;
+                case 0x06:
+                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, " ", 1);
+                    if (pos[0] < 9) {
+                        pos[0]++;
+                    }
+                    prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
+                    break;
+                case 0x0D:
+                    if (letters < 4) {
+                        name[letters] = (char) (65 + pos[0] + 10 * pos[1]);
+                        name[letters + 1] = '\0';
+                        ASCII(42 + 12 * letters, 0, WHITE, BLUE, name[letters], 1);
+                        letters = letters + 1;
+                        if (letters == 4) {
+                            prints(42 + 12 * 5, 0, WHITE, BLUE, "end", 1);
+                        }
+                    }
+                    break;
+                case 0x0B:
+                    if (letters > 0) {
+                        if (letters == 4) {
+                            prints(42 + 12 * 5, 0, WHITE, BLUE, "   ", 1);
+                        }
+                        letters--;
+                        ASCII(42 + 12 * letters, 0, WHITE, BLUE, '_', 1);
+                        name[letters] = '\0';
+                    }
+                    break;
+
+            }
+        }
+    }
+
+}
+
+// Select a card to play
 void printSelect(GlobalState* globalData) {
     // Beep off
     TRISBbits.RB5 = 1;
@@ -393,7 +418,6 @@ void printSelect(GlobalState* globalData) {
 }
 
 // Select an attack.
-
 void printAttackMenu(GlobalState* globalData, int card) {
     // Beep off
     TRISBbits.RB5 = 1;
@@ -416,7 +440,6 @@ void printAttackMenu(GlobalState* globalData, int card) {
 }
 
 // Displays Game Results
-
 void printResults() {
     // Beep off
     TRISBbits.RB5 = 1;

@@ -177,7 +177,7 @@ void main() {
             }
             // Tell UID to be quiet - Works but needs to have at least one uid in this state
             // quietRFID(readerData.readUID[0]);
-            writeRFID(readerData.readUID[0], 0x01, 0xFACEDEAD);
+            writeRFID(readerData.readUID[0], 0x01, 0xFACE, 0xDEAD);
             readRFID(readerData.readUID[0], 0x01);
             // Print out block on to the LCD
             for (j = 0; j < readerData.availableUIDs; j++) {
@@ -188,6 +188,7 @@ void main() {
             }
             prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
             // Turn off inventory flag
+
             globalData.getInventory = FALSE;
         }
         if (globalData.xbeeFlag == TRUE) {

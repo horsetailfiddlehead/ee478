@@ -23,7 +23,7 @@ void pingRFID(void);
 void inventoryRFID(void);
 void quietRFID(char* uid);
 void sendToRFID2(char* myInput);
-void writeRFID(char* uid, char block, unsigned int data);
+void writeRFID(char* uid, char block, int highData, int lowData);
 void readRFID(char* uid, char block);
 
 //void processRFIDCmd(void);

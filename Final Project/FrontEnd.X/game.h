@@ -28,9 +28,9 @@ int selectCard(GlobalState* globalData);
 int pickMove(GlobalState* globalData);
 
 // Xbee Prototypes
-int sendMove(int move);
+void sendMove();
 int recieveMove();
-int sendScore(int score);
+void sendScore();
 int recieveScore();
 
 // Game Display Prototypes
