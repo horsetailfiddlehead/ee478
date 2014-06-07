@@ -29,4 +29,6 @@ difficulty with initial implementation. port outputs were not occurring as expec
 
 6/1: had ongoing issue with RFID reader when moving into the full project. Issue tracked to function calls in ISR causing long context switches. Compiler does not know what variables are needed when doing context switch to function, so saves entire state of program. Solution: reworked program to eliminate function calls (some were echos for debug, other accessed UART register). Could also use compiler instructions to not save values (source: http://www.xargs.com/pic/c18-isr-optim.pdf)
 
+6/4: introduced a global variable FRONT_NOT_BACK that allows for separation of code specific to front end or back end.
+
 6/6: i2c decided to use master/slave switching scheme. both FE and BE stay in Slave mode until needing to transfer data, then swtich to master and send data. If interrupted, reverts to slave and gves an error (function will need to  resend). Also decided to implement slave addr and data clock holds to allow more control wrt accepting commands.
