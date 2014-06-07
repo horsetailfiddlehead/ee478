@@ -11,19 +11,22 @@
 #define HEALTH 100
 
 gameData game;
+Monster myMonsterList[4];
 
 void setupGame() {
     game.myScore = HEALTH;
     game.oppScore = HEALTH;
     game.turn = 0;
     game.gameOver = 0;
-    game.moveName = NULL;
-    game.myMove = 0;
-    game.oppMove = 0;
+    game.myMove = NULL;
+    game.oppMove = NULL;
+    game.myMonster = NULL;
+    game.oppMonster = NULL;
     srand(ReadTimer0());
 }
 
 void singlePlayer(GlobalState* globalData) {
+    int tempScore;
     // First time playing?
     // Read first time from SRAM
     if (globalData->firstTime == TRUE) {
@@ -33,10 +36,11 @@ void singlePlayer(GlobalState* globalData) {
 
     // Setup new game
     setupGame();
+    getCards();// Assume cards already read by interrupts on switches (?)
     game.turn = rand() % 2;
     printGame(globalData);
 
-    // Wait till someone presses A to continue
+    // Wait till someone presses D to continue
     keypad(globalData);
     while (globalData->keyPress != 0x0D) {
         keypad(globalData);
@@ -48,19 +52,42 @@ void singlePlayer(GlobalState* globalData) {
         if (game.turn) {
             game.myMove = pickMove(globalData);
             printGame(globalData);
-            game.oppScore = attack(game.myMove, game.oppScore);
-            prints(0, 10, RED, BLACK, "                    ", 1);
-            prints(0, 10, RED, BLACK, "Opponent took damage:", 1);
-            prints(0, 21, RED, BLACK, "-", 1);
-            integerprint(6, 21, RED, BLACK, game.myMove, 1);
+            tempScore = game.oppScore;
+            game.oppScore = attack(game.myMove, game.myMonster, game.oppScore);
+            if (game.oppScore == tempScore) {
+                prints(0, 10, RED, BLACK, "                    ", 1);
+                prints(0, 18, RED, BLACK, "                    ", 1);
+                prints(0, 10, RED, BLACK, "Missed!", 1);
+            } else {
+                prints(0, 10, RED, BLACK, "                    ", 1);
+                prints(0, 18, RED, BLACK, "                    ", 1);
+                prints(0, 10, RED, BLACK, "Your", 1);
+                printrs(30,10, RED, BLACK, game.myMonster->monsterName, 1);
+                prints(84, 10, RED, BLACK, "used", 1);
+                printrs(0, 18,RED, BLACK, game.myMove->moveName, 1);
+                prints(0, 24, RED, BLACK, "-    ", 1);
+                integerprint(6, 24, RED, BLACK, game.oppScore - tempScore, 1);
+            }
         } else {
-            // Computer randomly picks an attack with damage b/w 0 and 50
-            game.oppMove = rand() % 50 + 1;
-            game.myScore = attack(game.oppMove, game.myScore);
-            prints(0, 10, RED, BLACK, "                    ", 1);
-            prints(0, 10, RED, BLACK, "Taken damage:", 1);
-            prints(0, 21, RED, BLACK, "-", 1);
-            integerprint(6, 21, RED, BLACK, game.oppMove, 1);
+            // Computer randomly picks a monster and attack
+            game.oppMonster = &myMonsterList[rand() %4 ];
+            game.oppMove = &game.oppMonster->movelist[rand() % 3];
+            tempScore = game.myScore;
+            game.myScore = attack(game.oppMove, game.oppMonster, game.myScore);
+            if (game.myScore == tempScore) {
+                prints(0, 10, RED, BLACK, "                    ", 1);
+                prints(0, 18, RED, BLACK, "                    ", 1);
+                prints(0, 10, RED, BLACK, "Missed!", 1);
+            } else {
+                prints(0, 10, RED, BLACK, "                    ", 1);
+                prints(0, 18, RED, BLACK, "                    ", 1);
+                prints(0, 10, RED, BLACK, "Enmy", 1);
+                printrs(30, 10, RED, BLACK, game.oppMonster->monsterName, 1);
+                prints(84, 10, RED, BLACK, "used", 1);
+                printrs(0, 18, RED, BLACK, game.oppMove->moveName, 1);
+                prints(0, 24, RED, BLACK, "-    ", 1);
+                integerprint(6, 24, RED, BLACK, game.myScore - tempScore, 1);
+            }
         }
         prints(0, 45, YELLOW, BLACK, "        ", 1);
         integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
@@ -166,9 +193,22 @@ int gameStatus() {
 
 // Regame.turns new score of player after taking damage
 
-int attack(int attackDamage, int targetScore) {
-    if (attackDamage < targetScore) {
-        return (targetScore - attackDamage);
+int attack(Move* attack, Monster* monster, int targetScore) {
+    int hitPCT = (3*monster->level) + 75;
+    int totalDmg = attack->baseDamage + 2*(monster->level);
+
+    if (hitPCT > (rand() % 101))  {
+
+        if (attack->moveType == monster->monsterType) {
+            totalDmg = (totalDmg*120) / 100;
+        } else if (attack->moveType == (Type)(((3 + monster->monsterType) - 1) % 3)) {
+            totalDmg = (totalDmg*80) / 100;
+        }
+    } else {
+        totalDmg = 0;
+    }
+    if (totalDmg < targetScore) {
+        return (targetScore - totalDmg);
     } else {
         return 0;
     }
@@ -177,9 +217,12 @@ int attack(int attackDamage, int targetScore) {
 // User selects move based off of available cards
 // Regame.turns damage of chosen move
 
-int selectCard(GlobalState* globalData) {
+Monster* selectCard(GlobalState* globalData) {
     printSelect(globalData);
     prints(0, 5, WHITE, RED, "Choose a card by its slot number:", 1);
+
+   
+
     // Waits till valid keypad input
     globalData->keyStatus = 1;
     while (0 != globalData->keyStatus) {
@@ -193,7 +236,7 @@ int selectCard(GlobalState* globalData) {
                 prints(0, 5, WHITE, RED, "                                                 ", 1);
                 prints(0, 5, WHITE, RED, "Invalid input. Please enter a key between 1 to 4:", 1);
                 // No card available
-            } else if (0 == globalData->cardSelect[globalData->keyPress - 1]) {
+            } else if (NULL == &myMonsterList[globalData->keyPress - 1]) {
                 globalData->keyStatus = 2;
                 prints(0, 5, WHITE, RED, "                                ", 1);
                 prints(0, 5, WHITE, RED, "No card found. Please try again:", 1);
@@ -203,16 +246,89 @@ int selectCard(GlobalState* globalData) {
             }
         }
     }
-    return (globalData->keyPress - 1);
+    return &myMonsterList[globalData->keyPress - 1];
+}
+
+void getCards() {
+    strcpypgm2ram(myMonsterList[0].monsterName, "FIREDUDE");
+    myMonsterList[0].monsterID = 0x01;
+    myMonsterList[0].monsterType = FIRE;
+    myMonsterList[0].level = 2;
+    strcpypgm2ram(myMonsterList[0].movelist[0].moveName, "EMBER");
+    myMonsterList[0].movelist[0].baseDamage = 10;
+    myMonsterList[0].movelist[0].moveType = FIRE;
+    myMonsterList[0].movelist[0].uses = 10;
+    strcpypgm2ram(myMonsterList[0].movelist[1].moveName, "SCRATCH");
+    myMonsterList[0].movelist[1].baseDamage = 6;
+    myMonsterList[0].movelist[1].moveType = EARTH;
+    myMonsterList[0].movelist[1].uses = 15;
+    strcpypgm2ram(myMonsterList[0].movelist[2].moveName, "HOTFLAME");
+    myMonsterList[0].movelist[2].baseDamage = 20;
+    myMonsterList[0].movelist[2].moveType = FIRE;
+    myMonsterList[0].movelist[2].uses = 3;
+
+    strcpypgm2ram(myMonsterList[1].monsterName, "EARTHGUY");
+    myMonsterList[1].monsterID = 0x02;
+    myMonsterList[1].monsterType = EARTH;
+    myMonsterList[1].level = 1;
+    strcpypgm2ram(myMonsterList[1].movelist[0].moveName, "PEBBLE");
+    myMonsterList[1].movelist[0].baseDamage = 12;
+    myMonsterList[1].movelist[0].moveType = EARTH;
+    myMonsterList[1].movelist[0].uses = 5;
+    strcpypgm2ram(myMonsterList[1].movelist[1].moveName, "POUND");
+    myMonsterList[1].movelist[1].baseDamage = 3;
+    myMonsterList[1].movelist[1].moveType = EARTH;
+    myMonsterList[1].movelist[1].uses = 20;
+    strcpypgm2ram(myMonsterList[1].movelist[2].moveName, "ROCKSLDE");
+    myMonsterList[1].movelist[2].baseDamage = 30;
+    myMonsterList[1].movelist[2].moveType = EARTH;
+    myMonsterList[1].movelist[2].uses = 2;
+
+
+    strcpypgm2ram(myMonsterList[2].monsterName, "WATERMAN");
+    myMonsterList[2].monsterID = 0x03;
+    myMonsterList[2].monsterType = WATER;
+    myMonsterList[2].level = 1;
+    strcpypgm2ram(myMonsterList[2].movelist[0].moveName, "SQUIRT");
+    myMonsterList[2].movelist[0].baseDamage = 12;
+    myMonsterList[2].movelist[0].moveType = WATER;
+    myMonsterList[2].movelist[0].uses = 7;
+    strcpypgm2ram(myMonsterList[2].movelist[1].moveName, "SCRATCH");
+    myMonsterList[2].movelist[1].baseDamage = 6;
+    myMonsterList[2].movelist[1].moveType = EARTH;
+    myMonsterList[2].movelist[1].uses = 15;
+    strcpypgm2ram(myMonsterList[2].movelist[2].moveName, "SOAK");
+    myMonsterList[2].movelist[2].baseDamage = 15;
+    myMonsterList[2].movelist[2].moveType = WATER;
+    myMonsterList[2].movelist[2].uses = 5;
+
+
 }
 
 // User selects move based off of available cards
 // Regame.turns damage of chosen move
 
-int pickMove(GlobalState* globalData) {
-    int card = selectCard(globalData);
+Move* pickMove(GlobalState* globalData) {
+    Monster* card = selectCard(globalData);
+    game.myMonster = card;
     printAttackMenu(globalData, card);
-    prints(0, 5, WHITE, BLUE, "Please select an attack: ", 1);
+
+    // Print monster selection
+    switch(card->monsterType) {
+        case FIRE:
+            printrs(0,0,WHITE, RED, card->monsterName,1);
+            break;
+        case WATER:
+            printrs(0,0,WHITE, CYAN, card->monsterName,1);
+            break;
+        case EARTH:
+            printrs(0,0,WHITE, BLACK, card->monsterName,1);
+            break;
+    }
+    prints(0,54,WHITE, BLUE, "Lvl:",1);
+    integerprint(0,84, WHITE, BLUE, card->level,1);
+
+    prints(8, 5, WHITE, BLUE, "Please select an attack: ", 1);
     globalData->keyStatus = 1;
     // Checks keypad input and outputs a message to user if incorrect
     while (0 != globalData->keyStatus) {
@@ -221,18 +337,19 @@ int pickMove(GlobalState* globalData) {
             // Keypad input is not valid
             if (((0x0A > globalData->keyPress) || (globalData->keyPress > 0x0D))) {
                 globalData->keyStatus = 1;
-                prints(0, 5, WHITE, BLUE, "                                                            ", 1);
-                prints(0, 5, WHITE, BLUE, "Invalid attack input. Please select from the options below: ", 1);
+                prints(8, 5, WHITE, BLUE, "                                                            ", 1);
+                prints(8, 5, WHITE, BLUE, "Invalid attack input. Please select from the options below: ", 1);
                 // Selected attack does nothing
-            } else if (0 == globalData->selectMove[card][(globalData->keyPress) - 10]) {
+            /*} else if (0 == globalData->selectMove[card][(globalData->keyPress) - 10]) {
                 globalData->keyStatus = 2;
                 prints(0, 5, WHITE, BLUE, "                                                 ", 1);
                 prints(0, 5, WHITE, BLUE, "This will have no effect! Select a better option.", 1);
                 // Input is valid and passes all checks
+               */
             } else {
                 globalData->keyStatus = 0;
-                prints(0, 5, WHITE, BLUE, "                         ", 1);
-                prints(0, 5, WHITE, BLUE, "Please select an attack: ", 1);
+                prints(8, 5, WHITE, BLUE, "                         ", 1);
+                prints(8, 5, WHITE, BLUE, "Please select an attack: ", 1);
             }
         }
     }
@@ -241,13 +358,16 @@ int pickMove(GlobalState* globalData) {
     // Regame.turn the amount of damage the move makes
     switch (globalData->keyPress) {
         case 0x0A:
-            return globalData->selectMove[card][0];
+            card->movelist[0].uses--;
+            return &card->movelist[0];
             break;
         case 0x0B:
-            return globalData->selectMove[card][1];
+            card->movelist[1].uses--;
+            return &card->movelist[1];
             break;
         case 0xC:
-            return globalData->selectMove[card][2];
+            card->movelist[2].uses--;
+            return &card->movelist[2];
             break;
     }
 }
@@ -335,10 +455,10 @@ void printKeyboard(GlobalState* globalData, char* name) {
     prints(3, 33, WHITE, BLUE, " K L M N O P Q R S T", 1);
     prints(3, 43, WHITE, BLUE, " U V W X Y Z [ \\ ] ^", 1);
     prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
-    keypad(&globalData);
+    keypad(globalData);
 
     while (globalData->keyPress != 0x0F) {
-        keypad(&globalData);
+        keypad(globalData);
         if (globalData->keyFlag && !globalData->displayedKey) {
             globalData->keyFlag = FALSE;
             globalData->displayedKey = TRUE;
@@ -420,24 +540,35 @@ void printSelect(GlobalState* globalData) {
 
 // Select an attack.
 void printAttackMenu(GlobalState* globalData, int card) {
+    int i = 0;
     // Beep off
     TRISBbits.RB5 = 1;
 
     // LCD menu
     clean(BLUE);
 
-    // Show attack options and their damage
     prints(0, 40, WHITE, BLUE, "A. Attack with:", 1);
-    integerprint(0, 48, WHITE, BLUE, globalData->selectMove[card][0], 1);
-    prints(25, 48, WHITE, BLUE, "damage", 1);
-
     prints(0, 80, WHITE, BLUE, "B. Attack with: ", 1);
-    integerprint(0, 88, WHITE, BLUE, globalData->selectMove[card][1], 1);
-    prints(25, 88, WHITE, BLUE, "damage", 1);
-
     prints(0, 120, WHITE, BLUE, "C. Attack with: ", 1);
-    integerprint(0, 128, WHITE, BLUE, globalData->selectMove[card][2], 1);
-    prints(25, 128, WHITE, BLUE, "damage", 1);
+
+    for (i = 0; i < 3; i++) {
+        printrs(0, 40*i + 8, WHITE, BLUE, myMonsterList[card].movelist[i].moveName, 1);
+        switch (myMonsterList[card].movelist[i].moveType) {
+            case FIRE:
+                prints(56, 40*i + 8, WHITE, RED, "FIRE", 1);
+                break;
+            case WATER:
+                prints(56, 40*i + 8, WHITE, CYAN, "WATER", 1);
+                break;
+            case EARTH:
+                prints(56, 40*i + 8, WHITE, BLACK, "EARTH", 1);
+                break;
+        }
+        prints(0, 40*i + 16, WHITE, BLUE, "Min damage:", 1);
+        integerprint(72, 40*i + 16, WHITE, BLUE, myMonsterList[card].movelist[i].baseDamage, 1);
+        prints(0, 40*i + 24, WHITE, BLUE, "Uses left:", 1);
+        integerprint(72, 40*i + 24, WHITE, BLUE, myMonsterList[card].movelist[i].uses, 1);
+    }
 }
 
 // Displays Game Results
