@@ -36,7 +36,7 @@ void i2CSetup() {
     i2cData.myAddr = 0x00;
 #else
     i2cData.destAddr = 0x00; // 0b0000000
-    i2cData.myAddr = 0xFF;
+    i2cData.myAddr = 0xFE;
 #endif
 
     i2cData.inDataSequence = FALSE;
@@ -67,10 +67,7 @@ void i2CSetup() {
     SSP2ADD = i2cData.myAddr;
 #endif
     SSP2CON2 = 0b00000000; // disable general call interrupt
-    SSP2CON3 = 0b01100011; // enable stop int, enable start int, addr/data hold
-
-    //      CloseI2C2();
-    //    OpenI2C2(MASTER, SLEW_OFF);
+    SSP2CON3 = 0b01100000; // enable stop int, enable start int, addr/data hold
 
     SSP2CON1 |= SSPEN; // enable module
 
