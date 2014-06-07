@@ -68,72 +68,72 @@ void rcISR(void) {
      */
     // Read fast by directly looking at RCREG
     if (PIR3bits.RC2IF) {
-    input = RCREG2;
-//        PORTAbits.RA0 = 1;
-//         If we are processing an Inventory command
-            if (readerData.invCom == 1 || readerData.readFlag_1 == 1 || readerData.writeFlag_1 == 1) {
-                if (input == 'D' && readerData.nextBlock == 0) {
-                    // Reset the inventory command flag
-                    readerData.invCom = 0;
-    
-                    // Begin reading what is inside a block of square brackets
-    
-                } else if (input == '[') {
-                    // Go to the beginning of the array, indicate that a block is being read
-                    readerData.inputSpot2 = 0;
-                    readerData.nextBlock = 1;
-        //            PORTAbits.RA0 = 1;
-    
-                    // If we are at the end of a block of square brackets
-                } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
-                    // If there is a comma as the first character inside a block, then
-                    // discard what is read.  Otherwise, terminate the string and increment
-                    // the number of UIDs successfully read.
-                    if (readerData.readUID[readerData.numUID][0] != ',' && readerData.writeFlag_1 != 1) {
-                        readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
-                        readerData.numUID++;
-                    }
-    
-                    // Block of square brackets has be read, set the indicator to zero
-                    readerData.nextBlock = 0;
-        //            PORTAbits.RA0 = 0;
-    
-                    // Disable read 1 flag
-                    if (readerData.readFlag_1 == 1) {
-                        readerData.readFlag_1 = 0;
-                    }
-    
-                    // Disable write 1 flag
-                    if (readerData.writeFlag_1 == 1) {
-                        readerData.writeFlag_1 = 0;
-                    }
-    
-                    // Put anything inside of a square bracket into the UID array
-                } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < UID_SIZE && readerData.numUID < MAX_UIDS) {
-                    if (readerData.writeFlag_1 != 1) {
-                        readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
-                        readerData.inputSpot2++;
-                    }
-    
-                    // If we are outside of a block, reset read position and ensure that the block
-                    // state indicator is zero.
-                } else {
-                    readerData.inputSpot2 = 0;
-                    readerData.nextBlock = 0;
-        //            PORTAbits.RA0 = 0;
-                    // Echo back typed character
-                    //Write2USART(input);
+        input = RCREG2;
+        //        PORTAbits.RA0 = 1;
+        //         If we are processing an Inventory command
+        if (readerData.invCom == 1 || readerData.readFlag_1 == 1 || readerData.writeFlag_1 == 1) {
+            if (input == 'D' && readerData.nextBlock == 0) {
+                // Reset the inventory command flag
+                readerData.invCom = 0;
+
+                // Begin reading what is inside a block of square brackets
+
+            } else if (input == '[') {
+                // Go to the beginning of the array, indicate that a block is being read
+                readerData.inputSpot2 = 0;
+                readerData.nextBlock = 1;
+                //            PORTAbits.RA0 = 1;
+
+                // If we are at the end of a block of square brackets
+            } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
+                // If there is a comma as the first character inside a block, then
+                // discard what is read.  Otherwise, terminate the string and increment
+                // the number of UIDs successfully read.
+                if (readerData.readUID[readerData.numUID][0] != ',' && readerData.writeFlag_1 != 1) {
+                    readerData.readUID[readerData.numUID][readerData.inputSpot2] = '\0';
+                    readerData.numUID++;
                 }
-    
-                // In config mode, count the line feeds
-            } else if (readerData.configFlag == 1) {
-                if (input == '\n') {
-                    readerData.lineFeeds++;
+
+                // Block of square brackets has be read, set the indicator to zero
+                readerData.nextBlock = 0;
+                //            PORTAbits.RA0 = 0;
+
+                // Disable read 1 flag
+                if (readerData.readFlag_1 == 1) {
+                    readerData.readFlag_1 = 0;
                 }
+
+                // Disable write 1 flag
+                if (readerData.writeFlag_1 == 1) {
+                    readerData.writeFlag_1 = 0;
+                }
+
+                // Put anything inside of a square bracket into the UID array
+            } else if (readerData.nextBlock == 1 && readerData.inputSpot2 < UID_SIZE && readerData.numUID < MAX_UIDS) {
+                if (readerData.writeFlag_1 != 1) {
+                    readerData.readUID[readerData.numUID][readerData.inputSpot2] = input;
+                    readerData.inputSpot2++;
+                }
+
+                // If we are outside of a block, reset read position and ensure that the block
+                // state indicator is zero.
             } else {
+                readerData.inputSpot2 = 0;
+                readerData.nextBlock = 0;
+                //            PORTAbits.RA0 = 0;
                 // Echo back typed character
                 //Write2USART(input);
             }
+
+            // In config mode, count the line feeds
+        } else if (readerData.configFlag == 1) {
+            if (input == '\n') {
+                readerData.lineFeeds++;
+            }
+        } else {
+            // Echo back typed character
+            //Write2USART(input);
+        }
         PIR3bits.RC2IF = 0;
     }
 
@@ -146,22 +146,22 @@ void rcISR(void) {
             i2cData.messageLength = byteNumber;
             byteNumber = 0;
         } else if ((SSP2STATbits.D_A == 0) && (SSP2STATbits.BF == 1)) { // check if address
-            //            SSP2CON2bits.ACKDT = 0;
-//            SSP2CON1bits.CKP = 1;
+            SSP2CON2bits.ACKDT = 0;
+            SSP2CON1bits.CKP = 1;
             temp = SSP2BUF; // get rid of address
-
+            PORTAbits.AN0 = 1;
         } else if ((SSP2STATbits.D_A == 1) && (SSP2STATbits.BF == 1)) { // check if data
             i2cData.i2cData[byteNumber++] = SSP2BUF;
-//              SSP2CON2bits.ACKDT = 0;
-//            SSP2CON1bits.CKP = 1;
+            SSP2CON2bits.ACKDT = 0;
+            SSP2CON1bits.CKP = 1;
 
-        } else if (SSP2STATbits.S == 1 ) { // start condition
+        } else if (SSP2STATbits.S == 1) { // start condition
             i2cData.inDataSequence = TRUE;
         }
         PIR3bits.SSP2IF = 0; // clear the interrupt
     }
 
-    //    PORTAbits.RA0 = 0;
+    PORTAbits.RA0 = 0;
     // Clear interrupts
 
     PIR3bits.TX2IF = 0;
@@ -170,6 +170,8 @@ void rcISR(void) {
 void main() {
     int i = 0;
     int j = 0;
+        char test[2] = {'2', '\0'};
+
     systemSetup(&globalData);
 
     TRISAbits.RA0 = 0;
@@ -179,12 +181,14 @@ void main() {
     // lcd test code
     printMainMenu(&globalData);
 
+
     while (1) {
 #if FRONT_NOT_BACK
-        char test[2] ={'2', '\0'};
+        
         sendBytes(test, 2);
 #else
         PORTAbits.AN1 = i2cData.inDataSequence;
+        sendBytes(test, 1);
 #endif
         if (!globalData.keyFlag) {
             keypad(&globalData);
