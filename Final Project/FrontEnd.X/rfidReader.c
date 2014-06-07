@@ -88,6 +88,27 @@ void quietRFID(char* uid) {
     return;
 }
 
+#define NAME_LEN 8
+void char8RFID(char* uid, char block, char* myString) {
+    int i = 0;
+    int myNumHigh = 0;
+    int myNumLow = 0;
+
+
+    myNumHigh = (myString[0] << 8) | (myString[1] & 0x0F);
+    myNumLow = (myString[2] << 8) | (myString[3] & 0x0F);
+    writeRFID(uid, block, myNumHigh, myNumLow); // name: first 4 chars left to right FI RE
+
+    myNumHigh = 0;
+    myNumLow = 0;
+
+    myNumHigh = (myString[4] << 8) | (myString[5] & 0x0F);
+    myNumLow = (myString[6] << 8) | (myString[7] & 0x0F);
+    writeRFID(uid, block+1, myNumHigh, myNumLow); // name: last 4 chars left to right  DU DE
+
+
+}
+
 void writeRFID(char* uid, char block, int highData, int lowData) {
     // Holds the command
     char writeCommand[WR_SING_LEN]; // {STAY_QUIET, uid, END_COM};
@@ -355,6 +376,7 @@ void RFIDSetup() {
     readerData.configFlag = 0;
     readerData.availableUIDs = FALSE;
     memset(readerData.readUID, '\0', MAX_UIDS * UID_SIZE * sizeof (char));
+    memset(readerData.readData, '\0', 16*sizeof(char));
     readerData.readFlag_1 = 0;
     readerData.writeFlag_1 = 0;
 

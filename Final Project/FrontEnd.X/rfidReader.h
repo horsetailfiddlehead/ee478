@@ -25,7 +25,7 @@ void quietRFID(char* uid);
 void sendToRFID2(char* myInput);
 void writeRFID(char* uid, char block, int highData, int lowData);
 void readRFID(char* uid, char block);
-
+void char8RFID(char* uid, char block, char* myString);
 //void processRFIDCmd(void);
 
 typedef struct {
@@ -33,6 +33,7 @@ typedef struct {
     // Currently can read only 3 UIDs before we get errors based on the size
     // of the array
     char readUID[MAX_UIDS][UID_SIZE];
+    char readData[16];
 
     short lineFeeds;
     short configFlag;

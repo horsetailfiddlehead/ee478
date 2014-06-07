@@ -51,48 +51,55 @@ void singlePlayer(GlobalState* globalData) {
         // Situation depends on game.turn
         if (game.turn) {
             game.myMove = pickMove(globalData);
+            game.myMove.uses--;
             printGame(globalData);
             tempScore = game.oppScore;
             game.oppScore = attack(game.myMove, game.myMonster, game.oppScore);
             if (game.oppScore == tempScore) {
                 prints(0, 10, RED, BLACK, "                    ", 1);
                 prints(0, 18, RED, BLACK, "                    ", 1);
+                prints(0, 26, RED, BLACK, "                    ", 1);
                 prints(0, 10, RED, BLACK, "Missed!", 1);
             } else {
                 prints(0, 10, RED, BLACK, "                    ", 1);
                 prints(0, 18, RED, BLACK, "                    ", 1);
+                prints(0, 26, RED, BLACK, "                    ", 1);
                 prints(0, 10, RED, BLACK, "Your", 1);
                 printrs(30,10, RED, BLACK, game.myMonster->monsterName, 1);
                 prints(84, 10, RED, BLACK, "used", 1);
                 printrs(0, 18,RED, BLACK, game.myMove->moveName, 1);
-                prints(0, 24, RED, BLACK, "-    ", 1);
-                integerprint(6, 24, RED, BLACK, game.oppScore - tempScore, 1);
+                prints(0, 26, RED, BLACK, "-    ", 1);
+                integerprint(6, 26, RED, BLACK, tempScore - game.oppScore, 1);
             }
         } else {
             // Computer randomly picks a monster and attack
-            game.oppMonster = &myMonsterList[rand() %4 ];
+            game.oppMonster = &myMonsterList[rand() % 4 ];
             game.oppMove = &game.oppMonster->movelist[rand() % 3];
             tempScore = game.myScore;
             game.myScore = attack(game.oppMove, game.oppMonster, game.myScore);
             if (game.myScore == tempScore) {
                 prints(0, 10, RED, BLACK, "                    ", 1);
                 prints(0, 18, RED, BLACK, "                    ", 1);
-                prints(0, 10, RED, BLACK, "Missed!", 1);
+                prints(0, 26, RED, BLACK, "                    ", 1);
+                prints(0, 10, RED, BLACK, "Enmy Missed!", 1);
             } else {
                 prints(0, 10, RED, BLACK, "                    ", 1);
                 prints(0, 18, RED, BLACK, "                    ", 1);
+                prints(0, 26, RED, BLACK, "                    ", 1);
                 prints(0, 10, RED, BLACK, "Enmy", 1);
                 printrs(30, 10, RED, BLACK, game.oppMonster->monsterName, 1);
                 prints(84, 10, RED, BLACK, "used", 1);
                 printrs(0, 18, RED, BLACK, game.oppMove->moveName, 1);
-                prints(0, 24, RED, BLACK, "-    ", 1);
-                integerprint(6, 24, RED, BLACK, game.myScore - tempScore, 1);
+                prints(0, 26, RED, BLACK, "-    ", 1);
+                integerprint(6, 26, RED, BLACK, tempScore - game.myScore, 1);
             }
         }
-        prints(0, 45, YELLOW, BLACK, "        ", 1);
-        integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
-        prints(0, 75, WHITE, BLACK, "        ", 1);
-        integerprint(0, 75, WHITE, BLACK, game.oppScore, 1);
+        prints(0, 40, YELLOW, BLACK, "Your Score: ", 1);
+        prints(0, 55, YELLOW, BLACK, "     ", 1);
+        integerprint(0, 55, YELLOW, BLACK, game.myScore, 1);
+        prints(0, 70, WHITE, BLACK, "Opponent Score: ", 1);
+        prints(0, 85, WHITE, BLACK, "     ", 1);
+        integerprint(0, 85, WHITE, BLACK, game.oppScore, 1);
 
         keypad(globalData);
         while (globalData->keyPress != 0x0D) {
@@ -302,6 +309,23 @@ void getCards() {
     myMonsterList[2].movelist[2].moveType = WATER;
     myMonsterList[2].movelist[2].uses = 5;
 
+    strcpypgm2ram(myMonsterList[3].monsterName, "COMBOGRL");
+    myMonsterList[3].monsterID = 0x04;
+    myMonsterList[3].monsterType = EARTH;
+    myMonsterList[3].level = 3;
+    strcpypgm2ram(myMonsterList[3].movelist[0].moveName, "SOAK");
+    myMonsterList[3].movelist[0].baseDamage = 15;
+    myMonsterList[3].movelist[0].moveType = WATER;
+    myMonsterList[3].movelist[0].uses = 5;
+    strcpypgm2ram(myMonsterList[3].movelist[1].moveName, "PEBBLE");
+    myMonsterList[3].movelist[1].baseDamage = 12;
+    myMonsterList[3].movelist[1].moveType = EARTH;
+    myMonsterList[3].movelist[1].uses = 5;
+    strcpypgm2ram(myMonsterList[3].movelist[2].moveName, "EMBER");
+    myMonsterList[3].movelist[2].baseDamage = 10;
+    myMonsterList[3].movelist[2].moveType = FIRE;
+    myMonsterList[3].movelist[2].uses = 10;
+
 
 }
 
@@ -313,21 +337,6 @@ Move* pickMove(GlobalState* globalData) {
     game.myMonster = card;
     printAttackMenu(globalData, card);
 
-    // Print monster selection
-    switch(card->monsterType) {
-        case FIRE:
-            printrs(0,0,WHITE, RED, card->monsterName,1);
-            break;
-        case WATER:
-            printrs(0,0,WHITE, CYAN, card->monsterName,1);
-            break;
-        case EARTH:
-            printrs(0,0,WHITE, BLACK, card->monsterName,1);
-            break;
-    }
-    prints(0,54,WHITE, BLUE, "Lvl:",1);
-    integerprint(0,84, WHITE, BLUE, card->level,1);
-
     prints(8, 5, WHITE, BLUE, "Please select an attack: ", 1);
     globalData->keyStatus = 1;
     // Checks keypad input and outputs a message to user if incorrect
@@ -335,7 +344,7 @@ Move* pickMove(GlobalState* globalData) {
         keypad(globalData);
         if (globalData->keyPress >= 0) {
             // Keypad input is not valid
-            if (((0x0A > globalData->keyPress) || (globalData->keyPress > 0x0D))) {
+            if (((0x0A > globalData->keyPress) || (globalData->keyPress > 0x0C))) {
                 globalData->keyStatus = 1;
                 prints(8, 5, WHITE, BLUE, "                                                            ", 1);
                 prints(8, 5, WHITE, BLUE, "Invalid attack input. Please select from the options below: ", 1);
@@ -358,15 +367,12 @@ Move* pickMove(GlobalState* globalData) {
     // Regame.turn the amount of damage the move makes
     switch (globalData->keyPress) {
         case 0x0A:
-            card->movelist[0].uses--;
             return &card->movelist[0];
             break;
         case 0x0B:
-            card->movelist[1].uses--;
             return &card->movelist[1];
             break;
         case 0xC:
-            card->movelist[2].uses--;
             return &card->movelist[2];
             break;
     }
@@ -414,15 +420,15 @@ void printGame(GlobalState* globalData) {
     prints(0, 0, YELLOW, BLACK, "NAME: ", 1);
     printrs(36, 0, YELLOW, BLACK, game.name, 1);
     if (game.turn) {
-        prints(0, 10, YELLOW, BLACK, "Your move!", 1);
+        prints(0, 18, YELLOW, BLACK, "Your move!", 1);
     } else {
-        prints(0, 10, YELLOW, BLACK, "Opponent's turn.", 1);
+        prints(0, 18, YELLOW, BLACK, "Opponent's turn.", 1);
     }
 
-    prints(0, 30, YELLOW, BLACK, "Your Score: ", 1);
-    integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
-    prints(0, 60, WHITE, BLACK, "Opponent Score: ", 1);
-    integerprint(0, 75, WHITE, BLACK, game.oppScore, 1);
+    prints(0, 40, YELLOW, BLACK, "Your Score: ", 1);
+    integerprint(0, 55, YELLOW, BLACK, game.myScore, 1);
+    prints(0, 70, WHITE, BLACK, "Opponent Score: ", 1);
+    integerprint(0, 85, WHITE, BLACK, game.oppScore, 1);
 
     prints(0, H - 8, WHITE, BLACK, "Press D to continue.", 1);
 }
@@ -522,24 +528,41 @@ void printKeyboard(GlobalState* globalData, char* name) {
 
 // Select a card to play
 void printSelect(GlobalState* globalData) {
+    int i = 0;
     // Beep off
     TRISBbits.RB5 = 1;
 
     // LCD menu
     clean(RED);
     // Display commands to select a slot - the LED's should indicate if a card is read
-    drawBoxFill(30, 39, 8, 45, BLACK);
-    drawBoxFill(30, 69, 8, 45, BLACK);
-    drawBoxFill(30, 99, 8, 45, BLACK);
-    drawBoxFill(30, 129, 8, 45, BLACK);
-    prints(35, 40, WHITE, BLACK, "Slot 1", 1);
-    prints(35, 70, WHITE, BLACK, "Slot 2", 1);
-    prints(35, 100, WHITE, BLACK, "Slot 3", 1);
-    prints(35, 130, WHITE, BLACK, "Slot 4", 1);
+//    drawBoxFill(15, 29, 26, 85, BLACK)
+    for (i = 0; i < 4; i++) {
+        drawBoxFill(15, 29 + 35*i, 26, 85, BLACK);
+        printrs(20, 38 + 35*i, WHITE, BLACK, myMonsterList[i].monsterName, 1);
+        prints(20, 38 + 8 + 35*i, WHITE, BLACK, "Lvl:", 1);
+        integerprint(38, 38 + 8 + 35*i, WHITE, BLACK, myMonsterList[i].level, 1);
+        switch (myMonsterList[i].monsterType) {
+            case FIRE:
+                drawBoxFill(61, 38 + 8 + 35*i-1, 8, 30, RED);
+                prints(62, 38 + 8 + 35*i, WHITE, RED, "FIRE", 1);
+                break;
+            case WATER:
+                drawBoxFill(61, 38 + 8 + 35*i-1, 8, 35, CYAN);
+                prints(62, 38 + 8 + 35*i, WHITE, CYAN, "WATER", 1);
+                break;
+            case EARTH:
+                prints(62, 38 + 8 + 35*i, WHITE, BLACK, "EARTH", 1);
+                break;
+        }
+    }
+    prints(20, 30, WHITE, BLACK, "Slot 1", 1);
+    prints(20, 65, WHITE, BLACK, "Slot 2", 1);
+    prints(20, 100, WHITE, BLACK, "Slot 3", 1);
+    prints(20, 135, WHITE, BLACK, "Slot 4", 1);
 }
 
 // Select an attack.
-void printAttackMenu(GlobalState* globalData, int card) {
+void printAttackMenu(GlobalState* globalData, Monster* card) {
     int i = 0;
     // Beep off
     TRISBbits.RB5 = 1;
@@ -547,27 +570,49 @@ void printAttackMenu(GlobalState* globalData, int card) {
     // LCD menu
     clean(BLUE);
 
-    prints(0, 40, WHITE, BLUE, "A. Attack with:", 1);
-    prints(0, 80, WHITE, BLUE, "B. Attack with: ", 1);
-    prints(0, 120, WHITE, BLUE, "C. Attack with: ", 1);
+    switch(card->monsterType) {
+        case FIRE:
+            drawBoxFill(0, 31, 8, 48, RED);
+            printrs(0,32,WHITE, RED, card->monsterName,1);
+            break;
+        case WATER:
+            drawBoxFill(0, 31, 8, 48, CYAN);
+            printrs(0,32,WHITE, CYAN, card->monsterName,1);
+            break;
+        case EARTH:
+            drawBoxFill(0, 31, 8, 48, BLACK);
+            printrs(0,32,WHITE, BLACK, card->monsterName,1);
+            break;
+    }
+    prints(54,32,WHITE, BLUE, "Lvl:",1);
+    integerprint(84,32, WHITE, BLUE, card->level,1);
+
+    prints(0, 40, YELLOW, BLUE, "A. Attack with:", 1);
+    prints(0, 80, YELLOW, BLUE, "B. Attack with: ", 1);
+    prints(0, 120, YELLOW, BLUE, "C. Attack with: ", 1);
 
     for (i = 0; i < 3; i++) {
-        printrs(0, 40*i + 8, WHITE, BLUE, myMonsterList[card].movelist[i].moveName, 1);
-        switch (myMonsterList[card].movelist[i].moveType) {
+        switch (card->movelist[i].moveType) {
             case FIRE:
-                prints(56, 40*i + 8, WHITE, RED, "FIRE", 1);
+                drawBoxFill(0, 40+40*i + 8-1, 8, 83, RED);
+                printrs(0, 40+ 40*i + 8, WHITE, RED, card->movelist[i].moveName, 1);
+                prints(54, 40+40*i + 8, WHITE, RED, "FIRE", 1);
                 break;
             case WATER:
-                prints(56, 40*i + 8, WHITE, CYAN, "WATER", 1);
+                drawBoxFill(0, 40+40*i + 8-1, 8, 83, CYAN);
+                printrs(0, 40+ 40*i + 8, WHITE, CYAN, card->movelist[i].moveName, 1);
+                prints(54, 40+40*i + 8, WHITE, CYAN, "WATER", 1);
                 break;
             case EARTH:
-                prints(56, 40*i + 8, WHITE, BLACK, "EARTH", 1);
+                drawBoxFill(0, 40+40*i + 8-1, 8, 83, BLACK);
+                printrs(0, 40+ 40*i + 8, WHITE, BLACK, card->movelist[i].moveName, 1);
+                prints(54, 40+40*i + 8, WHITE, BLACK, "EARTH", 1);
                 break;
         }
-        prints(0, 40*i + 16, WHITE, BLUE, "Min damage:", 1);
-        integerprint(72, 40*i + 16, WHITE, BLUE, myMonsterList[card].movelist[i].baseDamage, 1);
-        prints(0, 40*i + 24, WHITE, BLUE, "Uses left:", 1);
-        integerprint(72, 40*i + 24, WHITE, BLUE, myMonsterList[card].movelist[i].uses, 1);
+        prints(0, 40 + 40*i + 16, WHITE, BLUE, "Min damage:", 1);
+        integerprint(60, 40+ 40*i + 16, YELLOW, BLUE, card->movelist[i].baseDamage, 1);
+        prints(0, 40+ 40*i + 24, WHITE, BLUE, "Uses left:", 1);
+        integerprint(72, 40+ 40*i + 24, YELLOW, BLUE, card->movelist[i].uses, 1);
     }
 }
 

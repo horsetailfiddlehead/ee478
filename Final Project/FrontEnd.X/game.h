@@ -57,7 +57,7 @@ int receiveScore(void);
 // Game Display Prototypes
 void printGame(GlobalState* globalData);
 void printSelect(GlobalState* globalData);
-void printAttackMenu(GlobalState* globalData, int card);
+void printAttackMenu(GlobalState* globalData, Monster* card);
 void printResults(void);
 
 /*
