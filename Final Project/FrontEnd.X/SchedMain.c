@@ -52,11 +52,16 @@ void interrupt_at_high_vector(void) {
 
 void rcISR(void) {
     // The input character from UART2 (the RFID reader)
-#if !FRONT_NOT_BACK
+#if FRONT_NOT_BACK
+
+#else
     unsigned char input;
-    // Read fast by directly looking at RCREG
+    /*
+     * RFID interrupt
+     */
+
     if (PIR3bits.RC2IF) {
-        input = RCREG2;
+        input = RCREG2; // Read fast by directly looking at RCREG
         //        PORTAbits.RA0 = 1;
         //         If we are processing an Inventory command
         if (readerData.invCom == 1 || readerData.readFlag_1 == 1 || readerData.writeFlag_1 == 1) {
@@ -130,6 +135,18 @@ void rcISR(void) {
         }
         PIR3bits.RC2IF = 0;
     }
+        /*
+         * LED status interrupt
+         */
+    else if (INTCONbits.RBIF == 1) {
+
+        // find which port is triggered
+        // set corresponding led status based on current port status
+        // tell rfid moudule to read the card (if needed)
+        // tell led driver to update leds
+        // reset int flag
+
+    }
 #endif
     if (PIR3bits.SSP2IF == 1) { // process i2c interrupt
         int temp = 0;
@@ -154,8 +171,8 @@ void rcISR(void) {
         }
         PIR3bits.SSP2IF = 0; // clear the interrupt
     }
-//
-//    PORTAbits.RA0 = 0;
+    //
+    //    PORTAbits.RA0 = 0;
     // Clear interrupts
 
     PIR3bits.TX2IF = 0;
@@ -164,12 +181,12 @@ void rcISR(void) {
 void main() {
     int i = 0;
     int j = 0;
-        char test[2] = {'2', '\0'};
+    char test[2] = {'2', '\0'};
 
     systemSetup(&globalData);
 
-//    TRISAbits.RA0 = 0;
-//    ANSELAbits.ANSA0 = 0;
+    //    TRISAbits.RA0 = 0;
+    //    ANSELAbits.ANSA0 = 0;
     TRISAbits.RA1 = 0;
     ANSELAbits.ANSA1 = 0;
     // lcd test code
@@ -178,7 +195,7 @@ void main() {
 
     while (1) {
 #if FRONT_NOT_BACK
-        
+
         sendBytes(test, 2);
 #else
         PORTAbits.AN1 = i2cData.inDataSequence;
@@ -196,7 +213,7 @@ void main() {
             processDisplay(&globalData);
 
         }
-                
+
         if (globalData.xbeeFlag == TRUE) {
 
             setXbeeNetwork("4567");
@@ -222,31 +239,31 @@ void main() {
 
             if (readerData.availableUIDs > 0) {
 
-            // block 0 high bits being 0x0000 indicates factory card, not custom
-            // block 0 high bits being 0x0001 indicates custom card
-            // block 0 low bits indicate the game the card is for. 0x0001 is the monster game
+                // block 0 high bits being 0x0000 indicates factory card, not custom
+                // block 0 high bits being 0x0001 indicates custom card
+                // block 0 low bits indicate the game the card is for. 0x0001 is the monster game
                 writeRFID(readerData.readUID[0], 0x00, 0x0000, 0x0001); // 7654 3210
                 writeRFID(readerData.readUID[0], 0x01, 0x0010, 0x0001); // hex 7-5 are for level 0x001 is level 1
-                                                                        // hex 4 is for type 0 1 2 3
-                                                                        // 0x0 fire, 0x1 water, 0x3 earth
-                                                                        // last 4 are monster ID
+                // hex 4 is for type 0 1 2 3
+                // 0x0 fire, 0x1 water, 0x3 earth
+                // last 4 are monster ID
 
                 //writes 8 chars in 2 addresses of memory (0x02 and 0x03 here)
                 char8RFID(readerData.readUID[0], 0x02, "FIREDUDE");
                 writeRFID(readerData.readUID[0], 0x04, 0x0003, 0x0201); // Move list by id, has moves 03, 02, and 01
                 readRFID(readerData.readUID[0], 0x00);
-                printrs(0, 32, BLACK, RED, readerData.readData,1); // print 1st block
+                printrs(0, 32, BLACK, RED, readerData.readData, 1); // print 1st block
                 readRFID(readerData.readUID[0], 0x01);
-                printrs(0, 40, BLACK, RED, readerData.readData,1); // print 2nd block
+                printrs(0, 40, BLACK, RED, readerData.readData, 1); // print 2nd block
                 readRFID(readerData.readUID[0], 0x02);
-                printrs(0, 48, BLACK, RED, readerData.readData,1); // print 3rd block
+                printrs(0, 48, BLACK, RED, readerData.readData, 1); // print 3rd block
                 readRFID(readerData.readUID[0], 0x03);
-                printrs(0, 56, BLACK, RED, readerData.readData,1); // print 4th block
+                printrs(0, 56, BLACK, RED, readerData.readData, 1); // print 4th block
                 readRFID(readerData.readUID[0], 0x04);
-                printrs(0, 64, BLACK, RED, readerData.readData,1); // print 5th block
+                printrs(0, 64, BLACK, RED, readerData.readData, 1); // print 5th block
             }
 
-            
+
             readRFID(readerData.readUID[0], 0x01);
             // Print out block on to the LCD
             for (j = 0; j < readerData.availableUIDs; j++) {
@@ -255,7 +272,7 @@ void main() {
                     printrs(0, 24 + 8 * i + 8 * j, BLACK, RED, readerData.readUID[j], 1); // print first UID
                 }
             }
-            
+
             prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
             // Turn off inventory flag
 
@@ -351,11 +368,11 @@ void setXbeeNetwork(char* myNetwork) {
 
     //Reset Pin- configure these to be outputs
     PORTBbits.RB7 = 0;
-//    PORTAbits.RA1 = 0;
+    //    PORTAbits.RA1 = 0;
     // Delay 10 Instruction cycles, pulse must be at least 200ns;
     Delay10TCYx(5);
     PORTBbits.RB7 = 1;
-//    PORTAbits.RA1 = 1;
+    //    PORTAbits.RA1 = 1;
     while (!DataRdy1USART());
     while (!DataRdy1USART());
     // Reenable Tx

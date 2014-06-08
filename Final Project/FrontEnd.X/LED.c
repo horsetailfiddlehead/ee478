@@ -9,26 +9,25 @@
 unsigned int card;
 unsigned int status;
 
-void LEDinit (void) {
-    // OUTPUT
-    TRISBbits.RB0 = 0;
-    TRISBbits.RB1 = 0;
-    TRISBbits.RB2 = 0;
-    TRISBbits.RB3 = 0;
-    
-    ANSELBbits.ANSB0 = 0;
-    ANSELBbits.ANSB1 = 0;
-    ANSELBbits.ANSB2 = 0;
-    ANSELBbits.ANSB3 = 0;
-    ANSELCbits.ANSC2 = 0;
-    ANSELCbits.ANSC3 = 0;
+/*
+ * Setup the LED Driver
+ */
+void LEDinit(void) {
+    TRISB = 0xF0; // set pins 0:3 as outputs, 4:7 as inputs
+    ANSELB = 0x00; // disable analog input
 
+    WPUB |= 0xF0; // enable internal pullup on card inputs
+    INTCON2bits.RBPU = 0;
 
+    LATB = 0x00; // clear existing mismatch conditions
 
-    TRISAbits.RA7 = 1;
+    IOCB = 0xF0; // enable IOC interrupts on pins B4:B7
+    INTCONbits.RBIE = 1; // enable PortB interrupts
+    INTCON2bits.RBIP = 1;
+    INTCONbits.GIE = 1;
 }
 
-void LEDColor (void) {
+void LEDColor(void) {
     switch (status) {
         case 0:
             // Yellow: Card registered, but not read.
@@ -60,7 +59,7 @@ void LEDColor (void) {
  */
 
 
-void LEDSelect (void) {
+void LEDSelect(void) {
     switch (card) {
         case 0:
             // Select Card Reader 1
