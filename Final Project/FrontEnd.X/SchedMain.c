@@ -187,8 +187,9 @@ void rcISR(void) {
 
         if (SSP2STATbits.P == 1) { // stop condition
             i2cData.inDataSequence = FALSE;
-            i2cData.messageLength = byteNumber;
+            i2cData.inLength = byteNumber;
             byteNumber = 0;
+            globalData.gotI2C = TRUE; // alert the scheduler
         } else if ((SSP2STATbits.D_A == 0) && (SSP2STATbits.BF == 1)) { // check if address
             SSP2CON2bits.ACKDT = 0;
             SSP2CON1bits.CKP = 1;

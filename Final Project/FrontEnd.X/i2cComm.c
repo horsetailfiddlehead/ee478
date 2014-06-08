@@ -54,7 +54,6 @@ void i2CSetup() {
 #endif
 
     i2cData.inDataSequence = FALSE;
-    i2cData.messageLength = 0;
     memset(i2cData.dataIn, '\0', sizeof (char) * MAX_IN_LENGTH);
     memset(i2cData.dataOut, '\0', sizeof (char) * MAX_OUT_LENGTH);
     i2cData.inLength = 0;
@@ -96,6 +95,8 @@ void i2CSetup() {
  */
 void processI2C() {
 #if FRONT_NOT_BACK // receives backends commands
+    int newSlotNum;
+    int i;
     // switch on command
     // parse data into parts
     switch (i2cData.dataIn[0]) {
@@ -103,9 +104,10 @@ void processI2C() {
 
             break;
         case CARD_UID:
-            int newSlotNum = i2cData.dataIn[1]; // slot number
-            // UID
-            // move uid to slot
+            newSlotNum = i2cData.dataIn[1]; // slot number
+            for (i = 2; i < i2cData.inLength; i++) {
+                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
+            }
             break;
         case SUPPLY_CARD_DATA:
 
@@ -156,6 +158,7 @@ void processI2C() {
             break;
     }
 #endif
+
 }
 
 /* send bytes as the master.  checks the status of the bus before entering

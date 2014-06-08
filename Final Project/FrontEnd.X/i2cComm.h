@@ -36,10 +36,9 @@ extern "C" {
         char destAddr;
         char myAddr;
         char dataOut[MAX_OUT_LENGTH]; // data from the i2c
-        char outLength;
+        unsigned char outLength;
         char dataIn[MAX_IN_LENGTH];
-        char inLength;
-        unsigned char messageLength;
+        unsigned char inLength;
     } I2cDataStruct;
 
 #ifdef	__cplusplus

@@ -177,6 +177,7 @@ ${OBJECTDIR}/LED.o: LED.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/xbee.o: xbee.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/xbee.o.d 
+	@${RM} ${OBJECTDIR}/xbee.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/xbee.o   xbee.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/xbee.o 
 	@${FIXDEPS} "${OBJECTDIR}/xbee.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
@@ -273,6 +274,7 @@ ${OBJECTDIR}/LED.o: LED.c  nbproject/Makefile-${CND_CONF}.mk
 ${OBJECTDIR}/xbee.o: xbee.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/xbee.o.d 
+	@${RM} ${OBJECTDIR}/xbee.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE) -p$(MP_PROCESSOR_OPTION) -I"C:/Program Files (x86)/Microchip/mplabc18/v3.46/h" -ms -oa-  -I ${MP_CC_DIR}\\..\\h  -fo ${OBJECTDIR}/xbee.o   xbee.c 
 	@${DEP_GEN} -d ${OBJECTDIR}/xbee.o 
 	@${FIXDEPS} "${OBJECTDIR}/xbee.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c18 
