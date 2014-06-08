@@ -351,6 +351,7 @@ void systemSetup(GlobalState *data) {
     rs232Setup2(); // configure USART2
     rs232Setup1(); // configure USART1
     i2CSetup();
+        RFIDSetup();
 
 #if FRONT_NOT_BACK
     initSPI1();
@@ -359,7 +360,6 @@ void systemSetup(GlobalState *data) {
     setupPWM();
     //setupXbee();
 #else
-    RFIDSetup();
     LEDSetup();
 #endif
 

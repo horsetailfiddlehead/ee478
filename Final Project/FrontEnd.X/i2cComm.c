@@ -97,12 +97,15 @@ void i2CSetup() {
 void processI2C() {
 #if FRONT_NOT_BACK // receives backends commands
     // switch on command
-    switch (i2cData.dataOut[0]) {
+    // parse data into parts
+    switch (i2cData.dataIn[0]) {
         case CARD_CHANGE:
 
             break;
         case CARD_UID:
-
+            int newSlotNum = i2cData.dataIn[1]; // slot number
+            // UID
+            // move uid to slot
             break;
         case SUPPLY_CARD_DATA:
 
