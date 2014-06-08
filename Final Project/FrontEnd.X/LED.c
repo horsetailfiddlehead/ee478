@@ -1,32 +1,42 @@
 #include "globals.h"
 
+/*
+ * Prototypes
+ */
+void LEDSelect(char card, char status);
+void LEDColor(char status);
+
 
 /*
- * Port RC0 = Red
- * Port RC1 = Green
+ * Port RB1 = Red
+ * Port RB0 = Green
  */
 
-LEDDriver ledData;
+LEDDriverStruct ledData;
 
 /*
  * Setup the LED Driver
  */
-void LEDinit(void) {
+void LEDSetup(void) {
     TRISB = 0xF0; // set pins 0:3 as outputs, 4:7 as inputs
     ANSELB = 0x00; // disable analog input
 
     WPUB |= 0xF0; // enable internal pullup on card inputs
     INTCON2bits.RBPU = 0;
 
-    LATB = 0x00; // clear existing mismatch conditions
-
-    IOCB = 0xF0; // enable IOC interrupts on pins B4:B7
-    INTCONbits.RBIE = 1; // enable PortB interrupts
-    INTCON2bits.RBIP = 1;
-    INTCONbits.GIE = 1;
-
     // initialize ledData
-    memset(ledData.ledStatus, 0, sizeof(char) * NUM_SLOTS);
+    memset(ledData.ledStatus, 0x02, sizeof(char) * NUM_SLOTS);
+    updateLEDs();
+    
+    
+    LATB = PORTB ; // clear existing mismatch conditions
+
+    IOCB = 0x30; // enable IOC interrupts on pins B4:B7
+    INTCONbits.RBIE = 1; // enable PortB interrupts
+    INTCON2bits.RBIP = 1; // set priority level to high
+    INTCONbits.GIE = 1; // enable general purpose interrupts
+
+    
 }
 
 
@@ -50,24 +60,24 @@ void LEDColor(char status) {
     switch (status) {
         case 0:
             // Yellow: Card registered, but not read.
-            PORTCbits.RC1 = 1;
-            PORTCbits.RC0 = 1;
+            PORTBbits.RB0 = 1;
+            PORTBbits.RB1 = 1;
             break;
         case 1:
             // Green: Card successfully read.
-            PORTCbits.RC1 = 1; //green
-            PORTCbits.RC0 = 0; //red
+            PORTBbits.RB0 = 1; //green
+            PORTBbits.RB1 = 0; //red
 
             break;
         case 2:
             // Red: Error, card not read.
-            PORTCbits.RC1 = 0;
-            PORTCbits.RC0 = 1;
+            PORTBbits.RB0 = 0;
+            PORTBbits.RB1 = 1;
             break;
         default:
             // : Loading
-            PORTCbits.RC1 = 0;
-            PORTCbits.RC0 = 0;
+            PORTBbits.RB0 = 0;
+            PORTBbits.RB1 = 0;
             break;
     }
 }
@@ -82,26 +92,26 @@ void LEDSelect(char card, char status) {
     switch (card) {
         case 0:
             // Select Card Reader 1
-            PORTCbits.RC3 = 0;
-            PORTCbits.RC2 = 0;
+            PORTBbits.RB3 = 0;
+            PORTBbits.RB2 = 0;
             LEDColor(status);
             break;
         case 1:
             // Select Card Reader 2
-            PORTCbits.RC3 = 0;
-            PORTCbits.RC2 = 1;
+            PORTBbits.RB3 = 0;
+            PORTBbits.RB2 = 1;
             LEDColor(status);
             break;
         case 2:
             // Select Card Reader 3
-            PORTCbits.RC3 = 1;
-            PORTCbits.RC2 = 0;
+            PORTBbits.RB3 = 1;
+            PORTBbits.RB2 = 0;
             LEDColor(status);
             break;
         case 3:
             // Select Card Reader 4
-            PORTCbits.RC3 = 1;
-            PORTCbits.RC2 = 1;
+            PORTBbits.RB3 = 1;
+            PORTBbits.RB2 = 1;
             LEDColor(status);
             break;
         default:

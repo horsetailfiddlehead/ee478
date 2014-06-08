@@ -14,9 +14,12 @@ extern "C" {
 
     typedef struct {
         char ledStatus[NUM_SLOTS]; // each char represents a slot
-    }LEDDriver;
+    }LEDDriverStruct;
 
-    extern LEDDriver ledData;
+    extern LEDDriverStruct ledData;
+
+    void LEDSetup(void);
+    void updateLEDs(void);
 
 #ifdef	__cplusplus
 }

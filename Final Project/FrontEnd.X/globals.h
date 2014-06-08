@@ -60,6 +60,7 @@ extern "C" {
 	int cardSelect[4];
 	int selectMove[4][3];
         Boolean getInventory;
+        Boolean updateLEDFlag;
     } GlobalState;
 
 #ifdef	__cplusplus

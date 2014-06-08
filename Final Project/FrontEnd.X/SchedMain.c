@@ -41,6 +41,7 @@ RFIDDriver readerData;
 GlobalState globalData;
 extern I2cDataStruct i2cData;
 
+
 #pragma code high_vector=0x08
 
 void interrupt_at_high_vector(void) {
@@ -62,7 +63,6 @@ void rcISR(void) {
 
     if (PIR3bits.RC2IF) {
         input = RCREG2; // Read fast by directly looking at RCREG
-        //        PORTAbits.RA0 = 1;
         //         If we are processing an Inventory command
         if (readerData.invCom == 1 || readerData.readFlag_1 == 1 || readerData.writeFlag_1 == 1) {
             if (input == 'D' && readerData.nextBlock == 0) {
@@ -75,7 +75,6 @@ void rcISR(void) {
                 // Go to the beginning of the array, indicate that a block is being read
                 readerData.inputSpot2 = 0;
                 readerData.nextBlock = 1;
-                //            PORTAbits.RA0 = 1;
 
                 // If we are at the end of a block of square brackets
             } else if (input == ']' && readerData.numUID < MAX_UIDS && readerData.nextBlock == 1) {
@@ -92,7 +91,6 @@ void rcISR(void) {
 
                 // Block of square brackets has be read, set the indicator to zero
                 readerData.nextBlock = 0;
-                //            PORTAbits.RA0 = 0;
 
                 // Disable read 1 flag
                 if (readerData.readFlag_1 == 1) {
@@ -119,7 +117,6 @@ void rcISR(void) {
             } else {
                 readerData.inputSpot2 = 0;
                 readerData.nextBlock = 0;
-                //            PORTAbits.RA0 = 0;
                 // Echo back typed character
                 //Write2USART(input);
             }
@@ -139,12 +136,13 @@ void rcISR(void) {
          * LED status interrupt
          */
     else if (INTCONbits.RBIF == 1) {
-
+        PORTCbits.RC4 = 1;
         // find which port is triggered
         // set corresponding led status based on current port status
         // tell rfid moudule to read the card (if needed)
         // tell led driver to update leds
-        // reset int flag
+        INTCONbits.RBIF = 0; // reset int flag
+        PORTCbits.RC4 = 0;
 
     }
 #endif
@@ -187,8 +185,9 @@ void main() {
 
     //    TRISAbits.RA0 = 0;
     //    ANSELAbits.ANSA0 = 0;
-    TRISAbits.RA1 = 0;
-    ANSELAbits.ANSA1 = 0;
+    TRISCbits.RC4 = 0;
+    ANSELCbits.ANSC4 = 0;
+    PORTCbits.RC4 = 1;
     // lcd test code
     printMainMenu(&globalData);
 
@@ -198,9 +197,18 @@ void main() {
 
         sendBytes(test, 2);
 #else
-        PORTAbits.AN1 = i2cData.inDataSequence;
-        sendBytes(test, 1);
+//        PORTAbits.AN1 = i2cData.inDataSequence;
+//        sendBytes(test, 1);
+
+        /*
+         * run LED driver
+         */
+        if (globalData.updateLEDFlag) {
+            globalData.updateLEDFlag = FALSE;
+            updateLEDs();
+        }
 #endif
+
 #if FRONT_NOT_BACK
         if (!globalData.keyFlag) {
             keypad(&globalData);
@@ -310,6 +318,7 @@ void systemSetup(GlobalState *data) {
     setupXbee();
 #else
     RFIDSetup();
+    LEDSetup();
 #endif
 
     data->displayPage = 0;
@@ -332,6 +341,7 @@ void systemSetup(GlobalState *data) {
     data->cardSelect[2] = 0;
     data->cardSelect[3] = 0;
     data->firstTime = TRUE;
+    data->updateLEDFlag = TRUE;
 
     OpenTimer0(TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
 
