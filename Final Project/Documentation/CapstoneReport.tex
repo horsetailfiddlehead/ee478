@@ -22,31 +22,31 @@
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 \usepackage{listings} % For displaying source code
 \lstset{ %
-  language=C,                      % the language of the code
-  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-  basicstyle=\sffamily\fontsize{11}{13.2}\selectfont,        % the size of the fonts that are used for the code
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=t,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen},    % comment style
-  deletekeywords={...},            % if you want to delete keywords from the given language
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  frame=single,                    % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{blue},       % keyword style
-  morekeywords={*,...},            % if you want to add more keywords to the set
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\color{mygray},      % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{mymauve},     % string literal style
-  tabsize=2,                       % sets default tabsize to 2 spaces
-  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+	language=C,                      % the language of the code
+	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+	basicstyle=\sffamily\fontsize{11}{13.2}\selectfont,        % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=t,                    % sets the caption-position to bottom
+	commentstyle=\color{mygreen},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	frame=single,                    % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{blue},       % keyword style
+	morekeywords={*,...},            % if you want to add more keywords to the set
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\color{mygray},      % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	stringstyle=\color{mymauve},     % string literal style
+	tabsize=2,                       % sets default tabsize to 2 spaces
+	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 
 % \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
@@ -95,8 +95,7 @@
 %% Make title and ToC, start page numbering AFTER ToC
 \maketitle
 \thispagestyle{empty}
-\pagebreak
-\tableofcontents
+\pagebreak \tableofcontents
 \listoftables
 \listoffigures
 \thispagestyle{empty}
@@ -112,7 +111,7 @@
 % Once again, this is not a narrative of your experiences as you executed the
 % design.  The abstract should mirror (albeit in a very condensed way) the
 % content of your report.
- 
+
 \section{Introduction}
 % Brief introduction and overview of the purpose of the lab and of the methods
 % and tools used.
@@ -148,23 +147,39 @@
 \end{itemize}
 
 \begin{table}[h]
-		\centering
-		\label{table:ex}
-		\begin{tabular}{llr}
-				\toprule
-				Animal    & Description & Price (\$) \\
-				\midrule
-				Gnat      & per gram    & 13.65      \\
-									& each        & 0.01       \\
-				Gnu       & stuffed     & 92.50      \\
-				Emu       & stuffed     & 33.33      \\
-				Armadillo & frozen      & 8.99       \\
-				\bottomrule
-		\end{tabular}
-		\caption{Example table.}
+	\centering
+	\label{table:ex}
+	\begin{tabular}{llr}
+		\toprule
+		Animal    & Description & Price (\$) \\
+		\midrule
+		Gnat      & per gram    & 13.65      \\
+		& each        & 0.01       \\
+		Gnu       & stuffed     & 92.50      \\
+		Emu       & stuffed     & 33.33      \\
+		Armadillo & frozen      & 8.99       \\
+		\bottomrule
+	\end{tabular}
+	\caption{Example table.}
 \end{table}
 
-\subsection{Software Implementation }
+\subsection{Design Specification\label{sec:designSpec}}
+
+\subsubsection{Design Requirement\label{sec:requirements}}
+
+\subsubsection{Identified Use Cases\label{sec:identifiedUseCases}}
+
+\subsubsection{Detailed Specifications\label{detailedSpec}}
+
+\subsubsection{Functional Decomposition\label{functions}}
+
+\subsection{Hardware Implementation\label{hwImplementation}}
+
+\subsubsection{Top Level Design\label{hwTopLevel}}
+
+\subsubsection{Low Level Design\label{hwLowLevel}}
+
+\subsection{Software Implementation\label{swImplementation}}
 %
 %What is your design????
 %
@@ -175,12 +190,12 @@
 %processes/tasks you have implemented in your design. Explain your design
 %choices.    
 
-\subsubsection{Top level design }
+\subsubsection{Top level design\label{swTopLevel}}
 %
 %Put stuff here about the functional decomposition, system architecture,
 %interaction of parts.
 
-\subsubsection{low level design  }
+\subsubsection{low level design\label{swLowLevel}}
 %
 %task level implementation details here. Control diagram goes here, etc.
 
@@ -194,7 +209,7 @@
 %results, you must include all the answers to all questions raised in the lab.
 \subsection{results }
 
-\subsection{discussion of results }
+\subsection{Discussion of results }
 
 \subsection{Analysis of any Errors }
 %
@@ -203,8 +218,7 @@
 %presentation, discussion, and analysis of the results.  However, it will still
 %be graded separately and must be present.
 
-\subsection{Analysis of problems and issues encountered and what efforts were
-made to identify the root cause of any problems  }
+\subsection{Analysis of Implementation Issues and Workarounds}
 %
 %State any problems you encountered while working on the project. If your
 %project did not work or worked only partially, provide an analysis of why and
@@ -250,14 +264,51 @@ made to identify the root cause of any problems  }
 \pagebreak
 \appendix
 
-\section{Source Code}
 
+\section{Breakdown of Lab Person-hours (Estimated)}
+% Use the '&' to separate columns
+\begin{tabular}{|l|*{4}{r|}}
+	\hline
+	Person & Design Hrs & Code Hrs & Test/Debug Hrs & Documentation Hrs \\ \hline
+	Patrick & x & x & x & x  \\ \hline
+	Alyanna & x & x & x & x \\ \hline
+	Ryan & x & x & x & x  \\ \hline
+\end{tabular}
+
+~\\
+
+By initializing/signing above, I attest that I did in fact work the
+estimated number of hours stated. I also attest, under penalty of shame,
+that the work produced during the lab and contained herein is actually my
+own (as far as I know to be true). If special considerations or
+dispensations are due others or myself, I have indicated them below.
+
+\pagebreak
+
+\section{Hardware Block Diagram\label{fig:hwBlockDiagram}}
+
+\section{Functional Decomposition Diagram\label{fig:funcDecomp}}
+
+\section{State Diagrams}
+\subsection{System State Diagram\label{fig:sysStateDiagram}}
+
+\subsection{General Gameplay State Diagram\label{fig:gameplayDiagram}}
+
+\section{Control Flow Diagrams}
+
+\section{Source Code}
+% We will put code here. Use the format:
+%    \subsection{Main Function}
+%    \lstinputlisting{../code/main.c}
+%
+%    \subsection{Tasks}
+%    \subsubsection{Task Control Blocks}
+%    \lstinputlisting{../code/tcb.h}
 Source code for this project is provided below.
 
-\subsection{The first part}
+\subsection{Front-end Code}
 % \lstinputlisting{source.c}
 
-\subsection{The second part}
+\subsection{Back-end Code}
 % \lstinputlisting{source.c}
-
 \end{document}
