@@ -38,8 +38,9 @@ extern "C" {
 #include "motorDriver.h"
 #include "game.h"
 #include "i2cComm.h"
+#include "xbee.h"
 
-#define FRONT_NOT_BACK 0 // is this the Front end or backend (should move to globals)
+#define FRONT_NOT_BACK 1 // is this the Front end or backend (should move to globals)
 #define CARDSLOT_1 0b00010000
 #define CARDSLOT_2 0b00100000
 #define CARDSLOT_3 0b01000000
@@ -66,7 +67,7 @@ extern "C" {
         int mode;
 	int cardSelect[4];
 	int selectMove[4][3];
-        short game;
+        int game;
         Boolean getInventory;
         Boolean updateLEDFlag;
         char lastCards;
