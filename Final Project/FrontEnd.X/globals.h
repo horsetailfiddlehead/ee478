@@ -40,6 +40,11 @@ extern "C" {
 #include "i2cComm.h"
 
 #define FRONT_NOT_BACK 0 // is this the Front end or backend (should move to globals)
+#define CARDSLOT_1 0b00010000
+#define CARDSLOT_2 0b00100000
+#define CARDSLOT_3 0b01000000
+#define CARDSLOT_4 0b10000000
+
 
     enum _myBool {
         FALSE = 0, TRUE = 1
@@ -61,6 +66,8 @@ extern "C" {
 	int selectMove[4][3];
         Boolean getInventory;
         Boolean updateLEDFlag;
+        char lastCards;
+        char readCard;  // flag indicating which card slot needs to be read
     } GlobalState;
 
 #ifdef	__cplusplus

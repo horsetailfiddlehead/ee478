@@ -131,18 +131,55 @@ void rcISR(void) {
             //Write2USART(input);
         }
         PIR3bits.RC2IF = 0;
-    }
-        /*
+    }/*
          * LED status interrupt
+         * Card slots are:
+         * 0b00010000 = slot 1
+         * 0b00100000 = slot2
+         * 0b01000000 = slot3
+         * 0b10000000 = slot 4
          */
     else if (INTCONbits.RBIF == 1) {
-        PORTCbits.RC4 = 1;
-        // find which port is triggered
+        char presentCards = PORTB;
+
+        PORTDbits.RD4 = 1;
+        globalData.lastCards ^= presentCards; // find which port is triggered
+
         // set corresponding led status based on current port status
         // tell rfid moudule to read the card (if needed)
-        // tell led driver to update leds
+        if (globalData.lastCards & CARDSLOT_1) { //first slot
+            if (presentCards & CARDSLOT_1) { // card is placed
+                ledData.ledStatus[0] = 3;
+                globalData.readCard |= CARDSLOT_1;
+            } else {
+                ledData.ledStatus[0] = 0;
+            }
+        } else if (globalData.lastCards & CARDSLOT_2) { //second slot
+            if (presentCards & CARDSLOT_2) { // card is placed
+                ledData.ledStatus[1] = 0;
+                globalData.readCard |= CARDSLOT_2;
+            } else {
+                ledData.ledStatus[1] = 3;
+            }
+        } else if (globalData.lastCards & CARDSLOT_3) { //third slot
+            if (presentCards & CARDSLOT_3) { // card is placed
+                ledData.ledStatus[2] = 0;
+                globalData.readCard |= CARDSLOT_3;
+            } else {
+                ledData.ledStatus[2] = 3;
+            }
+        } else if (globalData.lastCards & CARDSLOT_4) { // fourth slot
+            if (presentCards & CARDSLOT_4) { // card is placed
+                ledData.ledStatus[3] = 0;
+                globalData.readCard |= CARDSLOT_4;
+            } else {
+                ledData.ledStatus[3] = 3;
+            }
+        }
+        globalData.updateLEDFlag = TRUE; // tell led driver to update leds
+        globalData.lastCards = presentCards;
         INTCONbits.RBIF = 0; // reset int flag
-        PORTCbits.RC4 = 0;
+        PORTDbits.RD4 = 0;
 
     }
 #endif
@@ -185,9 +222,9 @@ void main() {
 
     //    TRISAbits.RA0 = 0;
     //    ANSELAbits.ANSA0 = 0;
-    TRISCbits.RC4 = 0;
-    ANSELCbits.ANSC4 = 0;
-    PORTCbits.RC4 = 1;
+    TRISDbits.RD4 = 0;
+    ANSELDbits.ANSD4 = 0;
+    PORTDbits.RD4 = 1;
     // lcd test code
     printMainMenu(&globalData);
 
@@ -197,8 +234,8 @@ void main() {
 
         sendBytes(test, 2);
 #else
-//        PORTAbits.AN1 = i2cData.inDataSequence;
-//        sendBytes(test, 1);
+        //        PORTAbits.AN1 = i2cData.inDataSequence;
+        //        sendBytes(test, 1);
 
         /*
          * run LED driver
@@ -342,6 +379,8 @@ void systemSetup(GlobalState *data) {
     data->cardSelect[3] = 0;
     data->firstTime = TRUE;
     data->updateLEDFlag = TRUE;
+    data->lastCards = 0;
+    data->readCard = 0;
 
     OpenTimer0(TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
 

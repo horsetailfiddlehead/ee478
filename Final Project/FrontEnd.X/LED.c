@@ -25,7 +25,7 @@ void LEDSetup(void) {
     INTCON2bits.RBPU = 0;
 
     // initialize ledData
-    memset(ledData.ledStatus, 0x02, sizeof(char) * NUM_SLOTS);
+    memset(ledData.ledStatus, 0x03, sizeof(char) * NUM_SLOTS);
     updateLEDs();
     
     
