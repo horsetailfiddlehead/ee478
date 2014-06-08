@@ -36,12 +36,14 @@
       <itemPath>SRAMfront.c</itemPath>
       <itemPath>i2cComm.c</itemPath>
       <itemPath>LED.c</itemPath>
+      <itemPath>xbee.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>xbee.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

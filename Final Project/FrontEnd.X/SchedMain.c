@@ -17,8 +17,6 @@
 // Function prototypes
 void systemSetup(GlobalState *data);
 void setupPWM(void);
-void setXbeeNetwork(char* myNetwork);
-void setupXbee(void);
 
 void processUID(char* uid);
 
@@ -256,9 +254,9 @@ void main() {
         }
 
 #if FRONT_NOT_BACK
-        if (!globalData.keyFlag) {
-            keypad(&globalData);
-        }
+//        if (!globalData.keyFlag) {
+//            keypad(&globalData);
+//        }
 
         mainMenu(&globalData);
         
@@ -359,7 +357,7 @@ void systemSetup(GlobalState *data) {
     initLCD();
     keypadSetup(); // configure keypad
     setupPWM();
- //   setupXbee();
+    //setupXbee();
 #else
     RFIDSetup();
     LEDSetup();
@@ -372,7 +370,7 @@ void systemSetup(GlobalState *data) {
     data->cursorPos = 0;
     // Select Game Menu
     data->mode = -1;
-    data->game = 0;
+    data->game = -1;
     // Find better way to do this
     data->mainMenuSpots[0] = 40;
     data->mainMenuSpots[1] = 80;

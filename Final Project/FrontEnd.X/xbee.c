@@ -1,14 +1,11 @@
 #include "globals.h"
 
-#define FIND_ID "1234"
-#define SEARCH_NET "4444"
-#define PLAY_NET "8765"
-
 char myATMY[5];
 
 void hostGame() {
     char playerID[16] = { 0 };
     char newNetwork[5] = { 0 };
+    setupHost();
     srand(ReadTimer0());
     // Broadcast current ID for players
     while(!DataRdy1USART()) {
@@ -51,6 +48,9 @@ void hostGame() {
 void findGame() {
     char hostID[16] = { 0 };
     char newNetwork[16] = { 0 };
+
+    setupClient();
+
     while(!DataRdy1USART());
     // want between two \r's, so do this twice
     readBytesUntil1USART(hostID, '\r', 16);

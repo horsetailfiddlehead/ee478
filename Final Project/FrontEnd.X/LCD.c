@@ -592,7 +592,7 @@ void integerprint(char x, char y, int color, int background, int integer, char s
 }
 
 // Prints menu for operating system functions
-void printMenu(char* select, int background, int box, int boxBorder, int text, int size) {
+void printMenu(char** select, int background, int box, int boxBorder, int text, int size) {
     int i;
     // Beep off
     TRISBbits.RB5 = 1;
@@ -606,7 +606,7 @@ void printMenu(char* select, int background, int box, int boxBorder, int text, i
     // Write Select Options
     for (i = 0; i < size; i++) {
         // Do I have to deference this pointer?
-        printrs(35, 20 * i + 40, text, background, select[i], 1);
+        prints(35, 20 * i + 40, text, background, select[i], 1);
     }
 }
 
@@ -631,7 +631,7 @@ int processPrintCursor(GlobalState* globalData, int size, int background, int te
                     prints(25, 20 * i + 40, text, background, " ", 1);
 
                     // Find new position of cursor
-                    i = (size + i - 1) % size;
+                    i = ((size + i) - 1) % size;
 
                     // Print cursor in new position
                     prints(25, 20 * i + 40, text, background, ">", 1);
@@ -652,6 +652,11 @@ int processPrintCursor(GlobalState* globalData, int size, int background, int te
                     i = 0xFF;
                     // Break out of while loop - hitting B takes priority
                     globalData->keyPress = 0x0D;
+                    break;
+                case 0x0D:
+                    prints(25, 20 * i + 40, text, background, ">>>", 1);
+                    break;
+                default:
                     break;
             }
         }
@@ -689,15 +694,15 @@ void printSelectGame(GlobalState *globalData) {
     char* selectGame[4] = {"Duel Game", "Clue", "Empty", "Empty"};
 
     printMenu(selectGame, GREEN, YELLOW, BLACK, BLACK, 4);
-    prints(35, 7, BLACK, YELLOW, "Available Games:", 1);
+    prints(25, 7, BLACK, YELLOW, "Available Games:", 1);
     prints(0, H - 8, BLACK, YELLOW, "2-UP,8-DOWN,D-ENTER", 1);
-    globalData->game = processPrintCursor(globalData, 4, YELLOW, BLACK);
 }
 
 // Print blue screen of death
 void printBSOD() {
     // Beep off
     TRISBbits.RB5 = 1;
+    clean(BLUE);
 
     drawBoxFill(30, 39, 8, 60, GRAY);
     prints(35, 40, BLUE, GRAY, " Windows ", 1);
@@ -730,16 +735,21 @@ void printBuildCard1(GlobalState *globalData) {
  */
 
 void mainMenu(GlobalState* globalData) {
-    // If returning from a previous menu, re-print main menu
+//    // If returning from a previous menu, re-print main menu
+//    if(globalData->goBack) {
+//        printMainMenu(globalData);
+//        globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
+//        globalData->goBack = FALSE;
+//    }
+//    // Keep checking cursor until they stop hitting back button
+//    while(globalData->mode == 0xFF) {
+//        globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
+//    }
     if(globalData->goBack) {
         printMainMenu(globalData);
-        globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
         globalData->goBack = FALSE;
     }
-    // Keep checking cursor until they stop hitting back button
-    while(globalData->mode == 0xFF) {
-        globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
-    }
+    globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
     // Switch menus based off of selection
     switch (globalData->mode) {
         // Single Player
@@ -761,19 +771,15 @@ void mainMenu(GlobalState* globalData) {
 void selectGameMenu(GlobalState* globalData) {
     // Print select game menu
     printSelectGame(globalData);
-    globalData->game = processPrintCursor(globalData, 4, YELLOW, BLACK);
-
+    globalData->game = processPrintCursor(globalData, 4, GREEN, BLACK);
     // Run chosen game based off of the multiplayer/single-player mode
     switch (globalData->game) {
         // Game Slot 1
         case 0:
-            switch(globalData->mode) {
-                case 0:
-                    multiPlayer(globalData);
-                    break;
-                case 1:
-                    singlePlayer(globalData);
-                    break;
+            if(0 == globalData->mode) {
+                singlePlayer(globalData);
+            } else {
+                multiPlayer(globalData);
             }
             break;
         // Game Slot 2
@@ -794,6 +800,16 @@ void selectGameMenu(GlobalState* globalData) {
         case 0xFF:
             globalData->goBack = TRUE;
             break;
+    }
+
+    globalData->keyPress = -1;
+    // Continue scanning the keypad until the user hits "D" for enter
+    while (globalData->keyPress != 0x0B) {
+        keypad(globalData);
+        if (globalData->keyFlag && !globalData->displayedKey) {
+            globalData->keyFlag = FALSE;
+            globalData->displayedKey = TRUE;
+        }
     }
     // Return to main menu after finished.
     globalData->goBack = TRUE;

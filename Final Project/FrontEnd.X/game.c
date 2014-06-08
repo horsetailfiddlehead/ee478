@@ -116,7 +116,7 @@ void singlePlayer(GlobalState* globalData) {
 }
 
 void multiPlayer(GlobalState* globalData) {
-  /*  int connect = 0;
+    int connect = 0;
     int hostOrFind = 0; // 0 host game, 1 find game
     char* mySelections[2] = {"Host Game", "Find Game"};
     printMenu(mySelections, BLACK, GRAY, WHITE, YELLOW, 2);
@@ -135,57 +135,56 @@ void multiPlayer(GlobalState* globalData) {
             return;
             break;
     }
-    
+
 
 
     setupGame();
 
-    // Find other players
-    while (!connect) {
-        connect = findPlayer();
-    }
-
-    // NOTE: Need to build something to determine who goes first
-    // Compare Xbee ID's perhaps?
-
-    // Begin game
-    while (!game.gameOver && connect) {
-        if (game.turn) {
-            // Pick Move
-            game.myMove = pickMove(globalData);
-            // Send Move
-            sendMove();
-            // Receive new score after opponent takes damage
-            game.oppScore = receiveScore();
-            printGame(globalData);
-            prints(0, 10, RED, BLACK, "                    ", 1);
-            prints(0, 10, RED, BLACK, "Opponent took damage:", 1);
-            prints(0, 21, RED, BLACK, "-", 1);
-            integerprint(6, 21, RED, BLACK, game.myMove, 1);
-        } else {
-            // Receive player move and take damage
-            game.myScore = attack(receiveMove(), game.myScore);
-            prints(0, 10, RED, BLACK, "                    ", 1);
-            prints(0, 10, RED, BLACK, "Taken damage:", 1);
-            prints(0, 21, RED, BLACK, "-", 1);
-            integerprint(6, 21, RED, BLACK, game.oppMove, 1);
-            // Send new score
-            sendScore();
-        }
-        prints(0, 45, YELLOW, BLACK, "        ", 1);
-        integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
-        prints(0, 75, WHITE, BLACK, "        ", 1);
-        integerprint(0, 75, WHITE, BLACK, game.oppScore, 1);
-        // Check game status
-        game.gameOver = gameStatus();
-        game.turn =!game.turn;
-    } 
-    if (!connect) {
-        printBSOD();
-    } else {
-        printResults();
-    }
-   * */
+//    // Find other players
+//    while (!connect) {
+//        connect = findPlayer();
+//    }
+//
+//    // NOTE: Need to build something to determine who goes first
+//    // Compare Xbee ID's perhaps?
+//
+//    // Begin game
+//    while (!game.gameOver && connect) {
+//        if (game.turn) {
+//            // Pick Move
+//            game.myMove = pickMove(globalData);
+//            // Send Move
+//            sendMove();
+//            // Receive new score after opponent takes damage
+//            game.oppScore = receiveScore();
+//            printGame(globalData);
+//            prints(0, 10, RED, BLACK, "                    ", 1);
+//            prints(0, 10, RED, BLACK, "Opponent took damage:", 1);
+//            prints(0, 21, RED, BLACK, "-", 1);
+//            integerprint(6, 21, RED, BLACK, game.myMove, 1);
+//        } else {
+//            // Receive player move and take damage
+//            game.myScore = attack(receiveMove(), game.myScore);
+//            prints(0, 10, RED, BLACK, "                    ", 1);
+//            prints(0, 10, RED, BLACK, "Taken damage:", 1);
+//            prints(0, 21, RED, BLACK, "-", 1);
+//            integerprint(6, 21, RED, BLACK, game.oppMove, 1);
+//            // Send new score
+//            sendScore();
+//        }
+//        prints(0, 45, YELLOW, BLACK, "        ", 1);
+//        integerprint(0, 45, YELLOW, BLACK, game.myScore, 1);
+//        prints(0, 75, WHITE, BLACK, "        ", 1);
+//        integerprint(0, 75, WHITE, BLACK, game.oppScore, 1);
+//        // Check game status
+//        game.gameOver = gameStatus();
+//        game.turn =!game.turn;
+//    }
+//    if (!connect) {
+//        printBSOD();
+//    } else {
+//        printResults();
+//    }
 }
 
 
