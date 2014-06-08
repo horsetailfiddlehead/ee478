@@ -1,5 +1,5 @@
 //#include "GLOBALS_H"
-#include "globals.h"
+#include <p18f46k22.h>
 #include "SRAM.h"
 #include <delays.h>
 
@@ -52,8 +52,8 @@ void setUpOut () {
 
 void setUpIn () {
     // Set data inputs
-    TRISA = 1;
-    TRISE = 1;
+    TRISA = 0xFF;
+    TRISE = 0xFF;
 }
 
 // Reading data
@@ -85,7 +85,7 @@ int readData (int adx) {
     PORTCbits.RC1 = 0;
     Delay10TCYx(5);
     // Get the first 6 bits of Port A and the first 2 bits of port E
-    myRead = (PORTA & 0x3F) | ((LATE << 6) & 0xC0);
+    myRead = (PORTA & 0x3F) | ((PORTE << 6) & 0xC0);
 //    Delay10TCYx(5);
     // Output Enable
     PORTCbits.RC1 = 1;

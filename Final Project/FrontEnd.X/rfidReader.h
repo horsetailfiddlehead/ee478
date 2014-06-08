@@ -58,6 +58,8 @@ typedef struct {
     
     // Read mode set?
     short readMode;
+    
+    int availableData;
 
     short writeFlag_1;
 } RFIDDriver;
