@@ -199,13 +199,17 @@ void main() {
             keypad(&globalData);
         }
 
-        if (globalData.keyFlag && !globalData.displayedKey) { // TODO this goes into a display function
-            globalData.keyFlag = FALSE;
-            globalData.displayedKey = TRUE;
+        printMainMenu(&globalData);
+        globalData->mode = processPrintCursor(&globalData, 3, BLUE, WHITE);
+//
+//        if (globalData.keyFlag && !globalData.displayedKey) { // TODO this goes into a display function
+//            globalData.keyFlag = FALSE;
+//            globalData.displayedKey = TRUE;
+//
+////            processDisplay(globalData);
+//
+//        }
 
-            processDisplay(&globalData);
-
-        }
         // Doing an inventory command from the Build card menu
         if (globalData.getInventory == TRUE) {
             // get the inventory of cards
@@ -304,12 +308,16 @@ void systemSetup(GlobalState *data) {
     data->displayedKey = FALSE;
     data->keyPress = -1;
     data->cursorPos = 0;
+    // Select Game Menu
+    data->mode = -1;
+    data->game = 0;
     // Find better way to do this
     data->mainMenuSpots[0] = 40;
     data->mainMenuSpots[1] = 80;
     data->mainMenuSpots[2] = 120;
     data->getInventory = FALSE;
     data->xbeeFlag = FALSE;
+    data->goBack = FALSE;
     // Game Related Globals
     data->keyStatus = -1;
     memset(data->selectMove, 0, sizeof (int) * 4 * 3);

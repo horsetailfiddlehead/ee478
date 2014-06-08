@@ -89,25 +89,37 @@ void clean(int color);
 void initLCD(void);
 void ASCII(char x, char y, int color, int background, char letter, char size);
 
+void printMenu(char* select, int background, int box, int boxBorder, int text, int size);
+
 int customColor(int r, int g, int b);
 void drawBoxFill(char x, char y,char height, char width, int color);
 void drawBox(char x, char y, char height, char width, int border, int color);
 
+typedef struct globaldata GlobalState;
+
+// Print Functions
 void prints(char x, char y, int color, int background, const char message[], char size);
 void printrs(char x, char y, int color, int background, char* message, char size);
 void integerprint(char x, char y, int color, int background,int integer, char size);
-
-typedef struct globaldata GlobalState;
+void printMenu(char* select, int background, int box, int boxBorder, int text, int size);
+int processPrintCursor(GlobalState* globalData, int size, int background, int text);
 
 // System Specific functions
-void nextPage(GlobalState* globalData, int cursorPos);
+void mainMenu(GlobalState* globalData);
+void selectGameMenu(GlobalState* globalData);
+
+// System Specific Print Functions
 void printBSOD(void);
 void printMainMenu(GlobalState* globalData);
-void processDisplay(GlobalState* globalData);
+void printSelectGame(GlobalState* globalData);
+
+// Test Purposes
+void printBuildCard1(GlobalState *globalData);
 
 // depreciated
-void box(char x, char y, char high, char breth, int color);
-
+//void box(char x, char y, char high, char breth, int color);
+//void processDisplay(GlobalState* globalData);
+//void nextPage(GlobalState* globalData, int cursorPos);
 
 #ifdef	__cplusplus
 }

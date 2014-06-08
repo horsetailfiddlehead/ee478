@@ -266,6 +266,7 @@ void delay(int x) {
 }
 
 // Sends a "command" to the LCD
+
 void sendcomand(char input) {
     int j = 0;
     PORTC &= ~A0;
@@ -276,6 +277,7 @@ void sendcomand(char input) {
 }
 
 // Sends "data" to the LCD
+
 void senddata(char input) {
     int j = 0;
     PORTC |= A0;
@@ -286,6 +288,7 @@ void senddata(char input) {
 }
 
 // Sets individual pixels at coords x and y  to the given color
+
 void SetPix(char x, char y, int color) {
     char Hig = 0;
     char Low = color & 0x00ff;
@@ -310,7 +313,10 @@ void SetPix(char x, char y, int color) {
     senddata(Hig);
 }
 
+
+
 // Returns a custom color in RGB values
+
 int customColor(int r, int g, int b) {
     return RGB565(r, g, b);
 }
@@ -318,6 +324,7 @@ int customColor(int r, int g, int b) {
 // Draw a border in a box shape at upper left x, y coords
 // Box will be height tall, width wide, have a border of the given size and color
 // of the given color
+
 void drawBox(char x, char y, char height, char width, int border, int color) {
     border -= 1;
     drawBoxFill(x, y, border, width, color);
@@ -327,6 +334,7 @@ void drawBox(char x, char y, char height, char width, int border, int color) {
 }
 
 // Draws a box and fills it in with the given color
+
 void drawBoxFill(char x, char y, char height, char width, int color) {
     char Hig = 0;
     char Low = color & 0x00ff;
@@ -357,6 +365,7 @@ void drawBoxFill(char x, char y, char height, char width, int color) {
 }
 
 // Cleans the entire screen as a certain color
+
 void clean(int color) {
 
     char Hig = 0;
@@ -389,6 +398,7 @@ void clean(int color) {
 }
 
 // Initializes the LCD screen by sending a bajillion commands
+
 void initLCD() {
     PORTB &= ~CS;
     delay(0);
@@ -483,6 +493,7 @@ void initLCD() {
 }
 
 // Looks up the pixels to set when writing ascii character
+
 void ASCII(char x, char y, int color, int background, char letter, char size) {
     char data;
     char q = 0;
@@ -517,6 +528,7 @@ void ASCII(char x, char y, int color, int background, char letter, char size) {
 
 // Each line with size 1 should be around 8 pixels apart, font will wrap around
 // the screen if it's too long
+
 void prints(char x, char y, int color, int background, const char messageOld[], char size) {
     const far rom char* message = (const far rom char*) messageOld;
     while (*message) {
@@ -535,6 +547,7 @@ void prints(char x, char y, int color, int background, const char messageOld[], 
 
 // Each line with size 1 should be around 8 pixels apart, font will wrap around
 // the screen if it's too long
+
 void printrs(char x, char y, int color, int background, char* message, char size) {
     while (*message) {
         ASCII(x, y, color, background, *message++, size);
@@ -547,6 +560,7 @@ void printrs(char x, char y, int color, int background, char* message, char size
 }
 
 // Prints an INT value to the screen
+
 void integerprint(char x, char y, int color, int background, int integer, char size) {
     unsigned char tenthousands = 0;
     unsigned char thousands = 0;
@@ -577,7 +591,217 @@ void integerprint(char x, char y, int color, int background, int integer, char s
     ASCII(x, y, color, background, ones + 48, size);
 }
 
-// Visuals and navigation for main menu
+// Prints menu for operating system functions
+void printMenu(char* select, int background, int box, int boxBorder, int text, int size) {
+    int i;
+
+    // Change background
+    clean(background);
+
+    // Draw Box
+    drawBoxFill(0, 0, 20, V - 1, box);
+    drawBox(0, 0, 20, V - 1, 2, boxBorder);
+
+    // Write Select Options
+    for (i = 0; i < size; i++) {
+        // Do I have to deference this pointer?
+        printrs(35, 20 * i + 40, text, background, select[i], 1);
+    }
+}
+
+// Prints cursor and processes the selection based off of the index i
+// Top of List [ 0 1 2 3] Bottom of List
+int processPrintCursor(GlobalState* globalData, int size, int background, int text) {
+    int i = 0;
+    prints(25, 40, text, background, ">", 1);
+    globalData->keyPress = -1;
+    // Continue scanning the keypad until the user hits "D" for enter
+    while (globalData->keyPress != 0x0D) {
+        // Check keystroke
+        keypad(globalData);
+        if (globalData->keyFlag && !globalData->displayedKey) {
+            globalData->keyFlag = FALSE;
+            globalData->displayedKey = TRUE;
+            // Change index i based off of whether user moves up or down
+            switch (globalData->keyPress) {
+                 // Move up = Press 2
+                case 0x02:
+                    // Clear original cursor
+                    prints(25, 20 * i + 40, text, background, " ", 1);
+
+                    // Find new position of cursor
+                    i = (size + i - 1) % size;
+
+                    // Print cursor in new position
+                    prints(25, 20 * i + 40, text, background, ">", 1);
+                    break;
+                // Move down = Press 8
+                case 0x08:
+                    // Clear original cursor
+                    prints(25, 20 * i + 40, text, background, " ", 1);
+
+                    // Find new position of cursor
+                    i = (i + 1) % size;
+
+                    // Print cursor in new position
+                    prints(25, 20 * i + 40, text, background, ">", 1);
+                    break;
+                // Hit back button "B"
+                case 0x0B:
+                    i = 0xFF;
+                    // Break out of while loop - hitting B takes priority
+                    globalData->keyPress = 0x0D;
+                    break;
+            }
+        }
+    }
+    // Return index to indicate cursor position
+    return i;
+}
+
+/* The following functions are print functions for the operating system of the
+ * device.
+ */
+
+// Prints the main menu
+void printMainMenu(GlobalState* globalData) {
+    // LCD menu
+    // Main Menu Array
+    const rom char *mainMenu[3] = {"Single", "Multiplayer", "Build Card"};
+    printMenu(mainMenu, BLUE, CYAN, WHITE, WHITE, 3);
+    prints(35, 7, WHITE, CYAN, "Main Menu", 1);
+
+    /*
+    clean(BLUE);
+    drawBoxFill(0, 0, 20, V - 1, CYAN);
+    drawBox(0, 0, 20, V - 1, 2, WHITE);
+    
+    prints(35, globalData->mainMenuSpots[0], WHITE, BLUE, "Single Player", 1);
+    prints(35, globalData->mainMenuSpots[1], WHITE, BLUE, "Multiplayer", 1);
+    prints(35, globalData->mainMenuSpots[2], WHITE, BLUE, "Build Cards", 1);
+     */
+    prints(0, H - 8, WHITE, BLUE, "2-UP,8-DOWN,D-ENTER", 1);
+}
+
+// Print menu for selecting available games.
+void printSelectGame(GlobalState *globalData) {
+    char* selectGame[4] = {"Duel Game", "Clue", "Empty", "Empty"};
+
+    printMenu(selectGame, GREEN, YELLOW, BLACK, BLACK, 4);
+    prints(35, 7, BLACK, YELLOW, "Available Games:", 1);
+    prints(0, H - 8, BLACK, YELLOW, "2-UP,8-DOWN,D-ENTER", 1);
+    globalData->game = processPrintCursor(globalData, 4, YELLOW, BLACK);
+}
+
+// Print blue screen of death
+void printBSOD() {
+    // Beep off
+    TRISBbits.RB5 = 1;
+
+    drawBoxFill(30, 39, 8, 60, GRAY);
+    prints(35, 40, BLUE, GRAY, " Windows ", 1);
+
+    prints(0, 50, WHITE, BLUE, "An error has occurred,", 1);
+    prints(0, 58, WHITE, BLUE, "To continue:", 1);
+    prints(0, 74, WHITE, BLUE, "Remove the battery or", 1);
+    prints(0, 82, WHITE, BLUE, "power supply.", 1);
+    prints(0, 98, WHITE, BLUE, "Error: 0E : BFF9B3D4", 1);
+
+    prints(10, 114, WHITE, BLUE, "Dumping memory...", 1);
+    while (1);
+}
+
+// Draws the build card menu, begins an inventory read
+
+void printBuildCard1(GlobalState *globalData) {
+    // first page of build card
+    clean(RED);
+    prints(0, 0, BLACK, RED, "It looks like you want to build a card.", 1);
+    prints(0, 16, BLACK, RED, "Available cards:", 1);
+
+    // Tell system we need to do an inventory command
+    globalData->getInventory = TRUE;
+}
+
+/*
+ * Select Menus for the operating system
+ * Menu goes back to previous menu after being done with a certain process
+ */
+
+void mainMenu(GlobalState* globalData) {
+    // If returning from a previous menu, re-print main menu
+    if(globalData->goBack) {
+        printMainMenu(globalData);
+        globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
+        globalData->goBack = FALSE;
+    }
+    // Keep checking cursor until they stop hitting back button
+    while(globalData->mode == 0xFF) {
+        globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
+    }
+    // Switch menus based off of selection
+    switch (globalData->mode) {
+        // Single Player
+        case 0:
+            selectGameMenu(globalData);
+            break;
+        // Multiplayer
+        case 1:
+            selectGameMenu(globalData);
+            break;
+        // Build Card
+        case 2:
+            printBuildCard1(globalData);
+            break;
+    }
+}
+
+// Select game to play based off of the mode (single/multiplayer)
+void selectGameMenu(GlobalState* globalData) {
+    // Print select game menu
+    printSelectGame(globalData);
+    globalData->game = processPrintCursor(globalData, 4, YELLOW, BLACK);
+
+    // Run chosen game based off of the multiplayer/single-player mode
+    switch (globalData->game) {
+        // Game Slot 1
+        case 0:
+            switch(globalData->mode) {
+                case 0:
+                    multiPlayer(globalData);
+                    break;
+                case 1:
+                    singlePlayer(globalData);
+                    break;
+            }
+            break;
+        // Game Slot 2
+        case 1:
+            clean(BLACK);
+            prints(0, 35, WHITE, BLACK, "In Progress",1);
+            break;
+        // Game Slot 3
+        case 2:
+            printBSOD();
+            break;
+        // Game Slot 4
+        case 3:
+            clean(BLACK);
+            prints(0, 35, WHITE, BLACK, "In Progress",1);
+            break;
+        // Hit Back Button
+        case 0xFF:
+            globalData->goBack = TRUE;
+            break;
+    }
+    // Return to main menu after finished.
+    globalData->goBack = TRUE;
+}
+
+// Depreciated
+
+/*
+// Visuals and navigation for operating system menus
 void processDisplay(GlobalState* globalData) {
     // Different controls for each page being displayed
     switch (globalData->displayPage) {
@@ -601,7 +825,7 @@ void processDisplay(GlobalState* globalData) {
                 // D is the enter key. Figure out the next page
                 case 0x0D:
                     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">>>", 1);
-                    
+
                     // Cursor position determines next page. Add 1 to remove main menu "case 0" from the
                     // list of options when navigating out of the main menu
                     nextPage(globalData, globalData->cursorPos + 1);
@@ -650,65 +874,24 @@ void processDisplay(GlobalState* globalData) {
     }
 }
 
-// Draws the main menu
-void printMainMenu(GlobalState* globalData) {
-    // LCD menu
-    clean(BLUE);
-    drawBoxFill(0, 0, 20, V - 1, CYAN);
-    drawBox(0, 0, 20, V - 1, 2, WHITE);
-    prints(35, 7, WHITE, CYAN, "Main Menu", 1);
-    prints(35, globalData->mainMenuSpots[0], WHITE, BLUE, "Single Player", 1);
-    prints(35, globalData->mainMenuSpots[1], WHITE, BLUE, "Multiplayer", 1);
-    prints(35, globalData->mainMenuSpots[2], WHITE, BLUE, "Build Cards", 1);
-    prints(0, H - 8, WHITE, BLUE, "2-UP,8-DOWN,D-ENTER", 1);
-    prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, BLUE, ">", 1);
-}
-
-void printBSOD() {
-    // Beep off
-    TRISBbits.RB5 = 1;
-
-    drawBoxFill(30, 39, 8, 60, GRAY);
-    prints(35, 40, BLUE, GRAY, " Windows ", 1);
-
-    prints(0, 50, WHITE, BLUE, "An error has occurred,", 1);
-    prints(0, 58, WHITE, BLUE, "To continue:", 1);
-    prints(0, 74, WHITE, BLUE, "Remove the battery or", 1);
-    prints(0, 82, WHITE, BLUE, "power supply.", 1);
-    prints(0, 98, WHITE, BLUE, "Error: 0E : BFF9B3D4", 1);
-
-    prints(10, 114, WHITE, BLUE, "Dumping memory...", 1);
-    while (1);
-}
-
-// Draws the build card menu, begins an inventory read
-void printBuildCard1(GlobalState *globalData) {
-    // first page of build card
-    clean(RED);
-    prints(0, 0, BLACK, RED, "It looks like you want to build a card.", 1);
-    prints(0, 16, BLACK, RED, "Available cards:", 1);
-
-    // Tell system we need to do an inventory command
-    globalData->getInventory = TRUE;
-}
-
 void nextPage(GlobalState* globalData, int cursorPos) {
     // Beep off
     TRISBbits.RB5 = 1;
 
     switch (cursorPos) {
-        // Send a 0 to go to main menu
+            // Send a 0 to go to main menu
         case 0:
             globalData->displayPage = 0;
             printMainMenu(globalData);
             break;
-        // Getting a position of 1 does singleplayer
+            // Getting a position of 1 does singleplayer
         case 1:
             globalData->displayPage = 1;
             // Print singleplayer menu
+            globalData->displayPage = 1;
             singlePlayer(globalData);
             break;
-        // Getting a position of 2 does multiplayer
+            // Getting a position of 2 does multiplayer
         case 2:
             globalData->displayPage = 2;
             // Print multiplayer menu
@@ -716,13 +899,13 @@ void nextPage(GlobalState* globalData, int cursorPos) {
             globalData->xbeeFlag = TRUE;
             prints(0, 0, BLACK, WHITE, "Nothing here. Press B to go back.", 1);
             break;
-        // Getting a position of 3 does build cards
+            // Getting a position of 3 does build cards
         case 3:
             globalData->displayPage = 3;
             // Print build cards menu
             printBuildCard1(globalData);
             break;
-        // Error
+            // Error
         default:
             // BSOD
             clean(BLUE);
@@ -732,16 +915,4 @@ void nextPage(GlobalState* globalData, int cursorPos) {
     }
 }
 
-/* Depreciated
-
-void box(char x, char y, char high, char breth, int color) {
-    char s = 0;
-    char d = 0;
-
-    for (s = y; s < y + high; s++) {
-        for (d = x; d < x + breth; d++) {
-            SetPix(d, s, color);
-        }
-    }
-}
 */
