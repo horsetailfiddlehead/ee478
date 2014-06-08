@@ -186,7 +186,6 @@ void main() {
     // lcd test code
     printMainMenu(&globalData);
 
-
     while (1) {
 #if FRONT_NOT_BACK
         
@@ -199,8 +198,8 @@ void main() {
             keypad(&globalData);
         }
 
-        printMainMenu(&globalData);
-        globalData->mode = processPrintCursor(&globalData, 3, BLUE, WHITE);
+        mainMenu(&globalData);
+        
 //
 //        if (globalData.keyFlag && !globalData.displayedKey) { // TODO this goes into a display function
 //            globalData.keyFlag = FALSE;
@@ -348,51 +347,4 @@ void setupPWM(void) {
     PIR5 = 0b00000000; // clear timer interrupt flag
     TRISBbits.RB5 = 1; //disable PWM output
     SetDCPWM4(50); // Square wave
-}
-
-void setupXbee(void) {
-
-    TRISAbits.RA1 = 0;
-    ANSELAbits.ANSA1 = 0;
-    PORTAbits.RA1 = 1;
-}
-
-void setXbeeNetwork(char* myNetwork) {
-    // Tx set low
-    TXSTA1bits.TXEN1 = 0;
-    PORTCbits.RC6 = 0;
-
-    //Reset Pin- configure these to be outputs
-    //PORTBbits.RB7 = 0;
-    PORTAbits.RA1 = 0;
-    // Delay 10 Instruction cycles, pulse must be at least 200ns;
-    Delay10TCYx(5);
-    //PORTBbits.RB7 = 1;
-    PORTAbits.RA1 = 1;
-    while (!DataRdy1USART());
-    while (!DataRdy1USART());
-    // Reenable Tx
-    TXSTA1bits.TXEN1 = 1;
-    putrs1USART("ATID");
-    while (Busy1USART());
-    putrs1USART(myNetwork);
-    while (Busy1USART());
-    // Config Commands
-    //Carriage return
-    // Config Commands
-    //Carriage return
-    // etc
-    // Exit
-
-    // ATWR,AC,CN - Write changes to nonVolatile memory
-    // ATAC - Apply changes
-    // ATCN - Exit config mode
-    //Carriage return
-    putrs1USART("WR,AC,ID\r");
-    while (Busy1USART());
-    while (!DataRdy1USART());
-    //
-    //    putrs1USART("ATID\r");
-    //    while(Busy1USART());
-    //    while (!DataRdy1USART());
 }

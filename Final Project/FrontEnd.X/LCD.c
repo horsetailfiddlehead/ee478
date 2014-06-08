@@ -594,7 +594,8 @@ void integerprint(char x, char y, int color, int background, int integer, char s
 // Prints menu for operating system functions
 void printMenu(char* select, int background, int box, int boxBorder, int text, int size) {
     int i;
-
+    // Beep off
+    TRISBbits.RB5 = 1;
     // Change background
     clean(background);
 

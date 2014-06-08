@@ -10,6 +10,7 @@
 
 #define HEALTH 100
 
+
 gameData game;
 Monster myMonsterList[4];
 
@@ -116,7 +117,27 @@ void singlePlayer(GlobalState* globalData) {
 
 void multiPlayer(GlobalState* globalData) {
     int connect = 0;
-/*
+    int hostOrFind = 0; // 0 host game, 1 find game
+    char* mySelections[2] = {"Host Game", "Find Game"};
+    printMenu(mySelections, BLACK, GRAY, WHITE, YELLOW, 2);
+    prints(25, 7, YELLOW, GRAY, "Multiplayer", 1);
+    hostOrFind = processPrintCursor(globalData, 2, BLACK, YELLOW);
+    switch (hostOrFind) {
+        case 0:
+            prints(3, 48, YELLOW, GRAY, "Waiting for players...", 1);
+            hostGame();
+            break;
+        case 1:
+            prints(3, 88, YELLOW, GRAY, "Looking for games...", 1);
+            findGame();
+            break;
+        case 0xFF:
+            return;
+            break;
+    }
+    
+
+
     setupGame();
 
     // Find other players
