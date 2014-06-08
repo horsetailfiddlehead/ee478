@@ -6,8 +6,7 @@
  * Port RC1 = Green
  */
 
-unsigned int card;
-unsigned int status;
+LEDDriver ledData;
 
 /*
  * Setup the LED Driver
@@ -25,9 +24,29 @@ void LEDinit(void) {
     INTCONbits.RBIE = 1; // enable PortB interrupts
     INTCON2bits.RBIP = 1;
     INTCONbits.GIE = 1;
+
+    // initialize ledData
+    memset(ledData.ledStatus, 0, sizeof(char) * NUM_SLOTS);
 }
 
-void LEDColor(void) {
+
+/*
+ * Primary led driverr
+ */
+void updateLEDs() {
+    char status = 0;
+    char card = 0;
+    for (card = 0; card < NUM_SLOTS; card++) {
+        status = ledData.ledStatus[card];
+        LEDSelect(card, status);
+    }
+}
+
+
+/*
+ * updates the LEDs with the appropriate status
+ */
+void LEDColor(char status) {
     switch (status) {
         case 0:
             // Yellow: Card registered, but not read.
@@ -59,34 +78,33 @@ void LEDColor(void) {
  */
 
 
-void LEDSelect(void) {
+void LEDSelect(char card, char status) {
     switch (card) {
         case 0:
             // Select Card Reader 1
             PORTCbits.RC3 = 0;
             PORTCbits.RC2 = 0;
-            LEDColor();
+            LEDColor(status);
             break;
         case 1:
             // Select Card Reader 2
             PORTCbits.RC3 = 0;
             PORTCbits.RC2 = 1;
-            LEDColor();
+            LEDColor(status);
             break;
         case 2:
             // Select Card Reader 3
             PORTCbits.RC3 = 1;
             PORTCbits.RC2 = 0;
-            LEDColor();
+            LEDColor(status);
             break;
         case 3:
             // Select Card Reader 4
             PORTCbits.RC3 = 1;
             PORTCbits.RC2 = 1;
-            LEDColor();
+            LEDColor(status);
             break;
         default:
             break;
     }
-
 }
