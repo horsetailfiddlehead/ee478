@@ -113,10 +113,10 @@ void singlePlayer(GlobalState* globalData) {
     // Display results once there is a lost
     printResults();
 }
-/*
+
 void multiPlayer(GlobalState* globalData) {
     int connect = 0;
-
+/*
     setupGame();
 
     // Find other players
@@ -158,14 +158,14 @@ void multiPlayer(GlobalState* globalData) {
         // Check game status
         game.gameOver = gameStatus();
         game.turn =!game.turn;
-    }
+    } */
     if (!connect) {
         printBSOD();
     } else {
         printResults();
     }
 }
-*/
+
 
 // Program data on the card
 // Monster ID

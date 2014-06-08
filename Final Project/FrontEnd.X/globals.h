@@ -55,6 +55,7 @@ extern "C" {
         short displayPage;
         Boolean keyFlag;
         Boolean displayedKey;
+        Boolean goBack;
         Boolean xbeeFlag;
         Boolean firstTime;
         int keyPress;
@@ -62,8 +63,10 @@ extern "C" {
         int cursorPos;
         int mainMenuSpots[3]; // Find better way to do this
         int status;
+        int mode;
 	int cardSelect[4];
 	int selectMove[4][3];
+        short game;
         Boolean getInventory;
         Boolean updateLEDFlag;
         char lastCards;
