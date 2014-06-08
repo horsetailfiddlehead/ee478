@@ -28,7 +28,7 @@
 /*------------------Back End Sends----------------------------*/
 #define CARD_CHANGE         0x01 // Indicates cards in play changed
 #define CARD_UID            0x02 // Sending slot# + UID
-#define SUPPLY_CARD_DATA    0x04 // Sends requested block data
+#define CARD_DATA_BLOCK    0x04 // Sends requested block data
 /*************************************************************/
 
 I2cDataStruct i2cData;
@@ -101,16 +101,21 @@ void processI2C() {
     // parse data into parts
     switch (i2cData.dataIn[0]) {
         case CARD_CHANGE:
-
+            i2cData.dataOut[0] = REQUEST_CARD_UPDATE; // get update
+            i2cData.outLength = 1;
+            globalData.sendI2C = TRUE; // send the command
             break;
         case CARD_UID:
             newSlotNum = i2cData.dataIn[1]; // slot number
-            for (i = 2; i < i2cData.inLength; i++) {
-                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
-            }
+            strncpy(readerData.readUID[newSlotNum], i2cData.dataIn[0], 8); // move UID
+//            for (i = 2; i < i2cData.inLength; i++) {
+//                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
+//            }
             break;
-        case SUPPLY_CARD_DATA:
-
+        case CARD_DATA_BLOCK:
+            globalData.dataSlotNum = i2cData.dataIn[1]; // get the clot number
+            globalData.dataBlockNum = i2cData.dataIn[2]; // get the block number
+            strncpy(globalData.dataBlock, i2cData.dataIn[3], 4);// copy the blcok data
             break;
         case INVALID_COMMAND:
 

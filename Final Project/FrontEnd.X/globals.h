@@ -40,11 +40,13 @@ extern "C" {
 #include "i2cComm.h"
 #include "xbee.h"
 
-#define FRONT_NOT_BACK 1 // is this the Front end or backend (should move to globals)
+#define FRONT_NOT_BACK 0 // is this the Front end or backend (should move to globals)
+
 #define CARDSLOT_1 0b00010000
 #define CARDSLOT_2 0b00100000
 #define CARDSLOT_3 0b01000000
 #define CARDSLOT_4 0b10000000
+#define CARDBLOCKSIZE 4 // in bytes
 
 
     enum _myBool {
@@ -68,7 +70,14 @@ extern "C" {
 	int cardSelect[4];
 	int selectMove[4][3];
         int game;
+
+        /* card block data read in*/
+        unsigned char dataBlockNum;
+        unsigned char dataSlotNum;
+        unsigned char dataBlock[4]; // 32 bits of data
+        
         Boolean getInventory;
+
         Boolean sendI2C; // i2c command prepped for transmission
         Boolean gotI2C; // i2c command was received
 
@@ -76,6 +85,7 @@ extern "C" {
         char lastCards;
         char readCard;  // flag indicating which card slot needs to be read
     } GlobalState;
+    extern GlobalState globalData;
 
 #ifdef	__cplusplus
 }

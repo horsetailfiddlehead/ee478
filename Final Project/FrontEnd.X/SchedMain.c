@@ -391,6 +391,9 @@ void systemSetup(GlobalState *data) {
     data->updateLEDFlag = TRUE;
     data->lastCards = 0;
     data->readCard = 0;
+    data->dataBlockNum = 0;
+    data->dataSlotNum = 0;
+    memset(data->dataBlock, 0, sizeof(char) * CARDBLOCKSIZE);
 
     OpenTimer0(TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
 
