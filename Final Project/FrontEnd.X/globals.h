@@ -26,6 +26,7 @@ extern "C" {
 #include <adc.h>
 #include <timers.h>
 #include "i2c.h"
+#include "LED.h"
     
     // our headers
 #include "rs232.h"

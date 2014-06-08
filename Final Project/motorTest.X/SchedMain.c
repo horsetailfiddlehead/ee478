@@ -182,8 +182,12 @@ void main() {
         
 //        sendBytes(test, 2);
 #else
-        PORTAbits.AN1 = i2cData.inDataSequence;
-        sendBytes(test, 1);
+//        PORTAbits.AN1 = i2cData.inDataSequence;
+//        sendBytes(test, 1);
+        move(512);
+        Delay1KTCYx(2);
+        move(0);
+        Delay1KTCYx(2);
 #endif
 //        if (!globalData.keyFlag) {
 //            keypad(&globalData);

@@ -89,21 +89,27 @@ void quietRFID(char* uid) {
 }
 
 #define NAME_LEN 8
-void char8RFID(char* uid, char block, char* myString) {
+void char8RFID(char* uid, char block, char* myString1) {
     int i = 0;
     int myNumHigh = 0;
     int myNumLow = 0;
+    char myString[9] = { 0 };
+    strcpypgm2ram(myString, myString1);
+    myNumHigh |= (int)myString[0] << 8;
+    myNumHigh |= (int)myString[1];
+    myNumLow |= (int)myString[2] << 8;
+    myNumLow |= (int)myString[3];
 
-
-    myNumHigh = (myString[0] << 8) | (myString[1] & 0x0F);
-    myNumLow = (myString[2] << 8) | (myString[3] & 0x0F);
     writeRFID(uid, block, myNumHigh, myNumLow); // name: first 4 chars left to right FI RE
 
     myNumHigh = 0;
     myNumLow = 0;
 
-    myNumHigh = (myString[4] << 8) | (myString[5] & 0x0F);
-    myNumLow = (myString[6] << 8) | (myString[7] & 0x0F);
+    myNumHigh |= (int)myString[4] << 8;
+    myNumHigh |= (int)myString[5];
+    myNumLow |= (int)myString[6] << 8;
+    myNumLow |= (int)myString[7];
+
     writeRFID(uid, block+1, myNumHigh, myNumLow); // name: last 4 chars left to right  DU DE
 
 
@@ -198,8 +204,6 @@ void readRFID(char* uid, char block) {
 
         // Wait until interrupt finishes
         while (readerData.readFlag_1 == 1);
-        readerData.availableUIDs = readerData.numUID;
-        readerData.numUID = 0;
     }
     return;
 }
@@ -379,6 +383,7 @@ void RFIDSetup() {
     memset(readerData.readData, '\0', 16*sizeof(char));
     readerData.readFlag_1 = 0;
     readerData.writeFlag_1 = 0;
+    readerData.availableData = 0;
 
     // Get RFID attention if not already
     sendToRFID("\n");
