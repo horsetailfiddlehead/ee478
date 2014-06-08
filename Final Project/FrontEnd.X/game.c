@@ -116,7 +116,7 @@ void singlePlayer(GlobalState* globalData) {
 }
 
 void multiPlayer(GlobalState* globalData) {
-    int connect = 0;
+  /*  int connect = 0;
     int hostOrFind = 0; // 0 host game, 1 find game
     char* mySelections[2] = {"Host Game", "Find Game"};
     printMenu(mySelections, BLACK, GRAY, WHITE, YELLOW, 2);
@@ -179,12 +179,13 @@ void multiPlayer(GlobalState* globalData) {
         // Check game status
         game.gameOver = gameStatus();
         game.turn =!game.turn;
-    } */
+    } 
     if (!connect) {
         printBSOD();
     } else {
         printResults();
     }
+   * */
 }
 
 

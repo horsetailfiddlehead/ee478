@@ -39,7 +39,7 @@ extern "C" {
 #include "game.h"
 #include "i2cComm.h"
 
-#define FRONT_NOT_BACK 0 // is this the Front end or backend (should move to globals)
+#define FRONT_NOT_BACK 1 // is this the Front end or backend (should move to globals)
 #define CARDSLOT_1 0b00010000
 #define CARDSLOT_2 0b00100000
 #define CARDSLOT_3 0b01000000
@@ -68,6 +68,9 @@ extern "C" {
 	int selectMove[4][3];
         short game;
         Boolean getInventory;
+        Boolean sendI2C; // i2c command prepped for transmission
+        Boolean gotI2C; // i2c command was received
+
         Boolean updateLEDFlag;
         char lastCards;
         char readCard;  // flag indicating which card slot needs to be read

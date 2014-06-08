@@ -197,7 +197,7 @@ void rcISR(void) {
             temp = SSP2BUF; // get rid of address
             PORTAbits.AN0 = 1;
         } else if ((SSP2STATbits.D_A == 1) && (SSP2STATbits.BF == 1)) { // check if data
-            i2cData.i2cData[byteNumber++] = SSP2BUF;
+            i2cData.dataOut[byteNumber++] = SSP2BUF;
             SSP2CON2bits.ACKDT = 0;
             SSP2CON1bits.CKP = 1;
 
@@ -244,6 +244,16 @@ void main() {
             updateLEDs();
         }
 #endif
+
+        // process pending i2c tasks
+        if (globalData.sendI2C == 1) {
+            sendBytes(i2cData.dataOut, i2cData.outLength);
+            globalData.sendI2C = FALSE;
+        }
+        if (globalData.gotI2C == 1) {
+            processI2C();
+            globalData.gotI2C = FALSE;
+        }
 
 #if FRONT_NOT_BACK
         if (!globalData.keyFlag) {
@@ -349,7 +359,7 @@ void systemSetup(GlobalState *data) {
     initLCD();
     keypadSetup(); // configure keypad
     setupPWM();
-    setupXbee();
+ //   setupXbee();
 #else
     RFIDSetup();
     LEDSetup();

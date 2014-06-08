@@ -8,15 +8,29 @@
 
 #include "globals.h"
 
+/********Configuration Settings*******************************/
 #define MASTER  0b00001000 //I2C  Master mode
 #define SLAVE   0b00000110 // I2C slave mode, 7-bit address
 #define SSPEN   0b00100000  /* Enable serial port and configures SCK, SDO, SDI*/
 #define SSPDIS  0b11011111   // disable serial port
 #define SLEW_OFF 0b10000000 /* Slew rate disabled for 100kHz mode */
-#define BAUD 0x31;  // master address value for 100kHz baud rate
+#define BAUD    0x31;  // master address value for 100kHz baud rate
+/*************Inter-PIC Commands******************************/
+#define INVALID_COMMAND     0xFF //received command is not recognized
+#define RECEIVE_ERROR       0xFE //received command cannot be fulfilled
+#define END_OF_TRANSMISSION 0xFD //
+/*----------------Front End SendS-----------------------------*/
+#define REQUEST_CARD_UPDATE 0x02 // Ask for cards present
+#define REQUEST_CARD_DATA   0x04 //  Requests data from a block
+#define WRITE_CARD_BLOCK    0xFC // Write 32-bit data to card block
+#define WRITE_AFI           0xFB // Write data to Attribute Family Identifier
+#define WRITE_DSFID         0xFA // Write data to Data Structure Format ID
+/*------------------Back End Sends----------------------------*/
+#define CARD_CHANGE         0x01 // Indicates cards in play changed
+#define CARD_UID            0x02 // Sending slot# + UID
+#define SUPPLY_CARD_DATA    0x04 // Sends requested block data
+/*************************************************************/
 
-//char i2cAddr;
-//Boolean inDataSequence; // 1 if someone is transmitting data
 I2cDataStruct i2cData;
 
 /*******Private prototypes*********************/
@@ -41,6 +55,10 @@ void i2CSetup() {
 
     i2cData.inDataSequence = FALSE;
     i2cData.messageLength = 0;
+    memset(i2cData.dataIn, '\0', sizeof (char) * MAX_IN_LENGTH);
+    memset(i2cData.dataOut, '\0', sizeof (char) * MAX_OUT_LENGTH);
+    i2cData.inLength = 0;
+    i2cData.outLength = 0;
 
     // setup D0, D1 as inputs
     TRISDbits.TRISD0 = 1;
@@ -71,6 +89,70 @@ void i2CSetup() {
 
     SSP2CON1 |= SSPEN; // enable module
 
+}
+
+/*
+ * Process received commands
+ */
+void processI2C() {
+#if FRONT_NOT_BACK // receives backends commands
+    // switch on command
+    switch (i2cData.dataOut[0]) {
+        case CARD_CHANGE:
+
+            break;
+        case CARD_UID:
+
+            break;
+        case SUPPLY_CARD_DATA:
+
+            break;
+        case INVALID_COMMAND:
+
+            break;
+        case RECEIVE_ERROR:
+
+            break;
+        case END_OF_TRANSMISSION:
+
+            break;
+        default:
+            i2cData.dataOut[0] = INVALID_COMMAND;
+            i2cData.outLength = 1;
+            break;
+    }
+#else
+    switch (i2cData.dataOut[0]) {
+        case REQUEST_CARD_UPDATE:
+
+            break;
+        case REQUEST_CARD_DATA:
+
+            break;
+        case WRITE_CARD_BLOCK:
+
+            break;
+        case WRITE_AFI:
+
+            break;
+        case WRITE_DSFID:
+
+            break;
+        case INVALID_COMMAND:
+
+            break;
+        case RECEIVE_ERROR:
+
+            break;
+        case END_OF_TRANSMISSION:
+
+            break;
+        default:
+            i2cData.dataOut[0] = INVALID_COMMAND;
+            i2cData.outLength = 1;
+            break;
+    }
+#endif
 }
 
 /* send bytes as the master.  checks the status of the bus before entering
@@ -147,18 +229,4 @@ void sendStart() {
     SSP2CON2bits.SEN = 1; // send start bit
     i2cData.inDataSequence = TRUE;
     while (SSP2CON2bits.SEN == 1); // or use IdleI2C2()
-}
-
-/*ISR for received data in slave mode
- *
- */
-void i2cISR() {
-    // if start bit, inDataSequence = TRUE
-    // if stopbit, inDataSequence = false;
-    // ccheck if address
-    // dump buffer
-    // not address
-    //store into global variable/buffer
-    // set i2c process flag
-    // clear interrupt flag
 }
