@@ -107,7 +107,7 @@ void processI2C() {
             break;
         case CARD_UID:
             slotNum = i2cData.dataIn[1]; // slot number
-            strncpy(readerData.readUID[slotNum], i2cData.dataIn[0], 8); // move UID
+            strncpy(&readerData.readUID[slotNum], &i2cData.dataIn[2], 16); // move UID
             readerData.availableUIDs++;
             if (readerData.availableUIDs < 4) { // get the next card
                 globalData.runGetUpdatedCards = TRUE;
@@ -116,7 +116,7 @@ void processI2C() {
         case CARD_DATA_BLOCK:
             globalData.dataSlotNum = i2cData.dataIn[1]; // get the clot number
             globalData.dataBlockNum = i2cData.dataIn[2]; // get the block number
-            strncpy(globalData.dataBlock, i2cData.dataIn[3], 4); // copy the blcok data
+            strncpy(&globalData.dataBlock[0], &i2cData.dataIn[3], 4); // copy the blcok data
             break;
         case INVALID_COMMAND:
 
@@ -140,7 +140,7 @@ void processI2C() {
             slotNum = i2cData.transmissionNum++; // get our count
             i2cData.dataOut[0] = CARD_UID;
             i2cData.dataOut[1] = slotNum;
-            strncpy(i2cData.dataOut[2], readerData.readUID[slotNum], 8);
+            strncpy(&i2cData.dataOut[2], &readerData.readUID[slotNum], 16);
             i2cData.outLength = 10;
             globalData.sendI2C = TRUE;
             break;
@@ -160,7 +160,7 @@ void processI2C() {
         case WRITE_CARD_BLOCK:
             slotNum = i2cData.dataIn[1]; // get slot
             blockNum = i2cData.dataIn[2]; //get block
-            strncpy(&data[0], i2cData.dataIn[3], 4); // get data bytes
+            strncpy(&data[0], &i2cData.dataIn[3], 4); // get data bytes
             // move to card
             writeRFID(readerData.readUID[slotNum], blockNum, (data[0] << 8 | data[1]), (data[2] << 8 | data[3])); // write
             break;

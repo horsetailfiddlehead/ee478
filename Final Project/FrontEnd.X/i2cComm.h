@@ -13,8 +13,8 @@ extern "C" {
 #endif
 #include "globals.h"
 
-#define MAX_IN_LENGTH 11
-#define MAX_OUT_LENGTH 11
+#define MAX_IN_LENGTH 20
+#define MAX_OUT_LENGTH 20
 
     /*
      * Configures the MSSP2 module for master/slave-idle at 100kHz
