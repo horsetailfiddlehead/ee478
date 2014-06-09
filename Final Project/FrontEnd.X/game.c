@@ -31,7 +31,7 @@ void singlePlayer(GlobalState* globalData) {
     // First time playing?
     // Read first time from SRAM
     if (globalData->firstTime == TRUE) {
-        printKeyboard(globalData, game.name);
+        printKeyboard(globalData, game.name, "NAME?", 5);
         globalData->firstTime = FALSE;
     }
 
@@ -467,15 +467,19 @@ void printMultiplayerSetup(GlobalState* globalData) {
     prints(25, globalData->mainMenuSpots[globalData->cursorPos], WHITE, GREEN, ">", 1);
 }
 
-void printKeyboard(GlobalState* globalData, char* name) {
+void printKeyboard(GlobalState* globalData, char* name, char* inputType, int size) {
     short pos[] = {0, 0};
     short letters = 0;
+	int i = 0;
     clean(BLUE);
     prints(0, H-32, WHITE, BLUE, "B-DELETE",1);
     prints(0, H-24, WHITE, BLUE, "2-UP,8-DOWN",1);
     prints(0, H-16, WHITE, BLUE, "4-LEFT,6-RIGHT",1);
     prints(0, H-8, WHITE, BLUE, "D-SEL,#-DONE",1);
-    prints(0, 0, WHITE, BLUE, "NAME?: _ _ _ _",1);
+    prints(0, 0, WHITE, BLUE, inputType,1);
+	for (i = 0; i < size-1; i++) {
+		prints(12*i, 8, WHITE, BLUE, " _", 1);
+	}
     drawBox(0, 16, 40, V - 1, 2, WHITE);
     drawBox(0, 19, 34, V - 1, 1, WHITE);
     prints(3, 23, WHITE, BLUE, " A B C D E F G H I J", 1);
@@ -520,23 +524,23 @@ void printKeyboard(GlobalState* globalData, char* name) {
                     prints(3+12 * pos[0], 10 * pos[1] + 23, WHITE, BLUE, ">", 1);
                     break;
                 case 0x0D:
-                    if (letters < 4) {
+                    if (letters < size-1) {
                         name[letters] = (char) (65 + pos[0] + 10 * pos[1]);
                         name[letters + 1] = '\0';
-                        ASCII(42 + 12 * letters, 0, WHITE, BLUE, name[letters], 1);
+                        ASCII(6 + 12 * letters, 8, WHITE, BLUE, name[letters], 1);
                         letters = letters + 1;
-                        if (letters == 4) {
+                        if (letters == size-1) {
                             prints(42 + 12 * 5, 0, WHITE, BLUE, "end", 1);
                         }
                     }
                     break;
                 case 0x0B:
                     if (letters > 0) {
-                        if (letters == 4) {
+                        if (letters == size-1) {
                             prints(42 + 12 * 5, 0, WHITE, BLUE, "   ", 1);
                         }
                         letters--;
-                        ASCII(42 + 12 * letters, 0, WHITE, BLUE, '_', 1);
+                        ASCII(6 + 12 * letters, 8, WHITE, BLUE, '_', 1);
                         name[letters] = '\0';
                     }
                     break;
