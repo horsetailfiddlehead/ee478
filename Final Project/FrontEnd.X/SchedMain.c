@@ -59,8 +59,8 @@ void rcISR(void) {
      * RFID interrupt
      */
 
-    if (PIR3bits.RC2IF) {
-        input = RCREG2; // Read fast by directly looking at RCREG
+    if (PIR1bits.RC1IF) {
+        input = RCREG1; // Read fast by directly looking at RCREG
         //         If we are processing an Inventory command
         if (readerData.invCom == 1 || readerData.readFlag_1 == 1 || readerData.writeFlag_1 == 1) {
             if (input == 'D' && readerData.nextBlock == 0) {
@@ -128,7 +128,7 @@ void rcISR(void) {
             // Echo back typed character
             //Write2USART(input);
         }
-        PIR3bits.RC2IF = 0;
+        PIR1bits.RC1IF = 0;
     }/*
          * LED status interrupt
          * Card slots are:
@@ -140,7 +140,6 @@ void rcISR(void) {
     else if (INTCONbits.RBIF == 1) {
         char presentCards = PORTB;
 
-        PORTDbits.RD4 = 1;
         globalData.lastCards ^= presentCards; // find which port is triggered
 
         // set corresponding led status based on current port status
@@ -176,9 +175,8 @@ void rcISR(void) {
         }
         globalData.updateLEDFlag = TRUE; // tell led driver to update leds
         globalData.lastCards = presentCards;
+        PORTB = presentCards;
         INTCONbits.RBIF = 0; // reset int flag
-        PORTDbits.RD4 = 0;
-
     }
 #endif
     if (PIR3bits.SSP2IF == 1) { // process i2c interrupt
@@ -194,7 +192,6 @@ void rcISR(void) {
             SSP2CON2bits.ACKDT = 0;
             SSP2CON1bits.CKP = 1;
             temp = SSP2BUF; // get rid of address
-            PORTAbits.AN0 = 1;
         } else if ((SSP2STATbits.D_A == 1) && (SSP2STATbits.BF == 1)) { // check if data
             i2cData.dataOut[byteNumber++] = SSP2BUF;
             SSP2CON2bits.ACKDT = 0;
@@ -205,8 +202,7 @@ void rcISR(void) {
         }
         PIR3bits.SSP2IF = 0; // clear the interrupt
     }
-    //
-    //    PORTAbits.RA0 = 0;
+
     // Clear interrupts
 
     PIR1bits.TX1IF = 0;
@@ -222,27 +218,33 @@ void main() {
 
     systemSetup(&globalData);
 
-    //    TRISAbits.RA0 = 0;
-    //    ANSELAbits.ANSA0 = 0;
-    TRISDbits.RD4 = 0;
-    ANSELDbits.ANSD4 = 0;
-    PORTDbits.RD4 = 1;
+#if FRONT_NOT_BACK
+//        TRISAbits.RA0 = 0;
+//        ANSELAbits.ANSA0 = 0;
+#else
+//    TRISDbits.RD4 = 0;
+//    ANSELDbits.ANSD4 = 0;
+//    PORTDbits.RD4 = 1;
+#endif
+
     // lcd test code
     printMainMenu(&globalData);
 
     while (1) {
 #if FRONT_NOT_BACK
 
-//        sendBytes(test, 2);
 
         // get the updated cards
         if (globalData.runGetUpdatedCards == 1) {
-         getUpdatedCards();
-         globalData.runGetUpdatedCards = FALSE;
+            getUpdatedCards();
+            globalData.runGetUpdatedCards = FALSE;
         }
 #else
-        //        PORTAbits.AN1 = i2cData.inDataSequence;
-        //        sendBytes(test, 1);
+        // move the reader -- if we had one -- to the proper location
+        if (globalData.readCard != 0) {
+            globalData.readCard = 0;
+            globalData.getInventory = TRUE;
+        }
 
         /*
          * run LED driver
@@ -264,20 +266,20 @@ void main() {
         }
 
 #if FRONT_NOT_BACK
-//        if (!globalData.keyFlag) {
-//            keypad(&globalData);
-//        }
+        //        if (!globalData.keyFlag) {
+        //            keypad(&globalData);
+        //        }
 
         mainMenu(&globalData);
-        
-//
-//        if (globalData.keyFlag && !globalData.displayedKey) { // TODO this goes into a display function
-//            globalData.keyFlag = FALSE;
-//            globalData.displayedKey = TRUE;
-//
-////            processDisplay(globalData);
-//
-//        }
+
+        //
+        //        if (globalData.keyFlag && !globalData.displayedKey) { // TODO this goes into a display function
+        //            globalData.keyFlag = FALSE;
+        //            globalData.displayedKey = TRUE;
+        //
+        ////            processDisplay(globalData);
+        //
+        //        }
 
 
 #else
@@ -291,50 +293,56 @@ void main() {
                 if (readerData.readUID[i][0] != ',') {
                     // Get rid of commas
                     processUID(readerData.readUID[i]);
-                    printrs(0, 24 + 8 * i, BLACK, RED, readerData.readUID[i], 1); // print first UID
+//                    printrs(0, 24 + 8 * i, BLACK, RED, readerData.readUID[i], 1); // print first UID
                 }
             }
+
+            // got inventory, tell frontend
+            i2cData.dataOut[0] = CARD_CHANGE;
+            i2cData.outLength = 1;
+            globalData.sendI2C = TRUE;
+
             // Tell UID to be quiet - Works but needs to have at least one uid in this state
             // quietRFID(readerData.readUID[0]);
 
-            if (readerData.availableUIDs > 0) {
-
-                // block 0 high bits being 0x0000 indicates factory card, not custom
-                // block 0 high bits being 0x0001 indicates custom card
-                // block 0 low bits indicate the game the card is for. 0x0001 is the monster game
-                writeRFID(readerData.readUID[0], 0x00, 0x0000, 0x0001); // 7654 3210
-                writeRFID(readerData.readUID[0], 0x01, 0x0010, 0x0001); // hex 7-5 are for level 0x001 is level 1
-                // hex 4 is for type 0 1 2 3
-                // 0x0 fire, 0x1 water, 0x3 earth
-                // last 4 are monster ID
-
-                //writes 8 chars in 2 addresses of memory (0x02 and 0x03 here)
-                char8RFID(readerData.readUID[0], 0x02, "FIREDUDE");
-                writeRFID(readerData.readUID[0], 0x04, 0x0003, 0x0201); // Move list by id, has moves 03, 02, and 01
-                readRFID(readerData.readUID[0], 0x00);
-                printrs(0, 32, BLACK, RED, readerData.readData, 1); // print 1st block
-                readRFID(readerData.readUID[0], 0x01);
-                printrs(0, 40, BLACK, RED, readerData.readData, 1); // print 2nd block
-                readRFID(readerData.readUID[0], 0x02);
-                printrs(0, 48, BLACK, RED, readerData.readData, 1); // print 3rd block
-                readRFID(readerData.readUID[0], 0x03);
-                printrs(0, 56, BLACK, RED, readerData.readData, 1); // print 4th block
-                readRFID(readerData.readUID[0], 0x04);
-                printrs(0, 64, BLACK, RED, readerData.readData, 1); // print 5th block
-            }
-
-
-            readRFID(readerData.readUID[0], 0x01);
-            // Print out block on to the LCD
-            for (j = 0; j < readerData.availableUIDs; j++) {
-                if (readerData.readUID[j][0] != ',') {
-                    // Get rid of commas
-                    printrs(0, 24 + 8 * i + 8 * j, BLACK, RED, readerData.readUID[j], 1); // print first UID
-                }
-            }
-
-            prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
-            // Turn off inventory flag
+//            if (readerData.availableUIDs > 0) {
+//
+//                // block 0 high bits being 0x0000 indicates factory card, not custom
+//                // block 0 high bits being 0x0001 indicates custom card
+//                // block 0 low bits indicate the game the card is for. 0x0001 is the monster game
+//                writeRFID(readerData.readUID[0], 0x00, 0x0000, 0x0001); // 7654 3210
+//                writeRFID(readerData.readUID[0], 0x01, 0x0010, 0x0001); // hex 7-5 are for level 0x001 is level 1
+//                // hex 4 is for type 0 1 2 3
+//                // 0x0 fire, 0x1 water, 0x3 earth
+//                // last 4 are monster ID
+//
+//                //writes 8 chars in 2 addresses of memory (0x02 and 0x03 here)
+//                char8RFID(readerData.readUID[0], 0x02, "FIREDUDE");
+//                writeRFID(readerData.readUID[0], 0x04, 0x0003, 0x0201); // Move list by id, has moves 03, 02, and 01
+//                readRFID(readerData.readUID[0], 0x00);
+//                printrs(0, 32, BLACK, RED, readerData.readData, 1); // print 1st block
+//                readRFID(readerData.readUID[0], 0x01);
+//                printrs(0, 40, BLACK, RED, readerData.readData, 1); // print 2nd block
+//                readRFID(readerData.readUID[0], 0x02);
+//                printrs(0, 48, BLACK, RED, readerData.readData, 1); // print 3rd block
+//                readRFID(readerData.readUID[0], 0x03);
+//                printrs(0, 56, BLACK, RED, readerData.readData, 1); // print 4th block
+//                readRFID(readerData.readUID[0], 0x04);
+//                printrs(0, 64, BLACK, RED, readerData.readData, 1); // print 5th block
+//            }
+//
+//
+//            readRFID(readerData.readUID[0], 0x01);
+//            // Print out block on to the LCD
+//            for (j = 0; j < readerData.availableUIDs; j++) {
+//                if (readerData.readUID[j][0] != ',') {
+//                    // Get rid of commas
+//                    printrs(0, 24 + 8 * i + 8 * j, BLACK, RED, readerData.readUID[j], 1); // print first UID
+//                }
+//            }
+//
+//            prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
+//            // Turn off inventory flag
 
             globalData.getInventory = FALSE;
         }
@@ -361,7 +369,7 @@ void systemSetup(GlobalState *data) {
     rs232Setup2(); // configure USART2
     rs232Setup1(); // configure USART1
     i2CSetup();
-        RFIDSetup();
+    RFIDSetup();
 
 #if FRONT_NOT_BACK
     initSPI1();
@@ -401,7 +409,7 @@ void systemSetup(GlobalState *data) {
     data->readCard = 0;
     data->dataBlockNum = 0;
     data->dataSlotNum = 0;
-    memset(data->dataBlock, 0, sizeof(char) * CARDBLOCKSIZE);
+    memset(data->dataBlock, 0, sizeof (char) * CARDBLOCKSIZE);
     data->runGetUpdatedCards = FALSE;
 
     OpenTimer0(TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);

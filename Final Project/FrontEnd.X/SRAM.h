@@ -12,9 +12,9 @@
 extern "C" {
 #endif
 
-void SRAMsetUp();
-void setUpIn();
-void setUpOut();
+void SRAMsetUp(void);
+void setUpIn(void);
+void setUpOut(void);
 int readData(int adx);
 void writeData(int adx, int data);
 

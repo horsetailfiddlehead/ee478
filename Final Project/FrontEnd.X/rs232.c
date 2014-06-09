@@ -15,7 +15,11 @@ void rs232Setup1() {
     //  Configure UART, 115200 baud with 20MHz clock.
     //Open1USART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH, 10);
     //  Configure UART, 9600 baud with 20MHz clock.
+#if FRONT_NOT_BACK
     Open1USART(USART_TX_INT_OFF & USART_RX_INT_OFF & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH,129);
+#else
+    Open1USART(USART_TX_INT_OFF & USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH,10);
+#endif
     // Enable Priority
     RCONbits.IPEN = 1;
     // High priority receive interrupt

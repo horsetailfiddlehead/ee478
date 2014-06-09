@@ -15,21 +15,21 @@
 #define SSPDIS  0b11011111   // disable serial port
 #define SLEW_OFF 0b10000000 /* Slew rate disabled for 100kHz mode */
 #define BAUD    0x31;  // master address value for 100kHz baud rate
-/*************Inter-PIC Commands******************************/
-#define INVALID_COMMAND     0xFF //received command is not recognized
-#define RECEIVE_ERROR       0xFE //received command cannot be fulfilled
-#define END_OF_TRANSMISSION 0xFD //
-/*----------------Front End SendS-----------------------------*/
-#define REQUEST_CARD_UPDATE 0x02 // Ask for cards present
-#define REQUEST_CARD_DATA   0x04 //  Requests data from a block
-#define WRITE_CARD_BLOCK    0xFC // Write 32-bit data to card block
-#define WRITE_AFI           0xFB // Write data to Attribute Family Identifier
-#define WRITE_DSFID         0xFA // Write data to Data Structure Format ID
-/*------------------Back End Sends----------------------------*/
-#define CARD_CHANGE         0x01 // Indicates cards in play changed
-#define CARD_UID            0x02 // Sending slot# + UID
-#define CARD_DATA_BLOCK    0x04 // Sends requested block data
-/*************************************************************/
+///*************Inter-PIC Commands******************************/
+//#define INVALID_COMMAND     0xFF //received command is not recognized
+//#define RECEIVE_ERROR       0xFE //received command cannot be fulfilled
+//#define END_OF_TRANSMISSION 0xFD //
+///*----------------Front End SendS-----------------------------*/
+//#define REQUEST_CARD_UPDATE 0x02 // Ask for cards present
+//#define REQUEST_CARD_DATA   0x04 //  Requests data from a block
+//#define WRITE_CARD_BLOCK    0xFC // Write 32-bit data to card block
+//#define WRITE_AFI           0xFB // Write data to Attribute Family Identifier
+//#define WRITE_DSFID         0xFA // Write data to Data Structure Format ID
+///*------------------Back End Sends----------------------------*/
+//#define CARD_CHANGE         0x01 // Indicates cards in play changed
+//#define CARD_UID            0x02 // Sending slot# + UID
+//#define CARD_DATA_BLOCK    0x04 // Sends requested block data
+///*************************************************************/
 
 I2cDataStruct i2cData;
 
@@ -77,13 +77,10 @@ void i2CSetup() {
     // configure MSSP2 for i2c communication
     SSP2CON1 &= SSPDIS; // disable module
     SSP2STAT |= SLEW_OFF;
-#if FRONT_NOT_BACK
-    SSP2CON1 = MASTER; // set mode to master mode
-    SSP2ADD = BAUD; // set baud rate to 100kHz
-#else
+
     SSP2CON1 = SLAVE;
     SSP2ADD = i2cData.myAddr;
-#endif
+
     SSP2CON2 = 0b00000000; // disable general call interrupt
     SSP2CON3 = 0b01100011; // enable stop int, enable start int, addr/data hold
 

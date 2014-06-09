@@ -16,6 +16,7 @@
       <itemPath>SRAM.h</itemPath>
       <itemPath>i2cComm.h</itemPath>
       <itemPath>LED.h</itemPath>
+      <itemPath>xbee.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -43,7 +44,6 @@
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <itemPath>xbee.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

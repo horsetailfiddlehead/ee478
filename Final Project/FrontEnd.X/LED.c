@@ -18,10 +18,10 @@ LEDDriverStruct ledData;
  * Setup the LED Driver
  */
 void LEDSetup(void) {
-    TRISB = 0xF0; // set pins 0:3 as outputs, 4:7 as inputs
+    TRISB = 0x30; //0xF0; // set pins 0:3 as outputs, 4:7 as inputs
     ANSELB = 0x00; // disable analog input
 
-    WPUB |= 0xF0; // enable internal pullup on card inputs
+    WPUB |= 0x30; //0xF0; // enable internal pullup on card inputs
     INTCON2bits.RBPU = 0;
 
     // initialize ledData
@@ -31,7 +31,7 @@ void LEDSetup(void) {
     PORTB = 0;
     LATB = PORTB ; // clear existing mismatch conditions
 
-    IOCB = 0xF0; // enable IOC interrupts on pins B4:B7
+    IOCB = 0x30; //0xF0; // enable IOC interrupts on pins B4:B7
     INTCONbits.RBIE = 1; // enable PortB interrupts
     INTCON2bits.RBIP = 1; // set priority level to high
     INTCONbits.GIE = 1; // enable general purpose interrupts

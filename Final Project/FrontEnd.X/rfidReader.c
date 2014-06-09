@@ -295,8 +295,8 @@ void sendToRFID(char* myString) {
     // Send character by character
     while (!inputFinished) {
         if (myInput[i] != '\0') {
-            while (Busy2USART());
-            Write2USART(myInput[i]);
+            while (Busy1USART());
+            Write1USART(myInput[i]);
             i++;
         } else {
             inputFinished = 1;
@@ -318,8 +318,8 @@ void sendToRFID2(char* myInput) {
     int i = 0;
     while (!inputFinished) {
         if (myInput[i] != '\0') {
-            while (Busy2USART());
-            Write2USART(myInput[i]);
+            while (Busy1USART());
+            Write1USART(myInput[i]);
             i++;
         } else {
             inputFinished = 1;
