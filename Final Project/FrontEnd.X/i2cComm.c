@@ -59,6 +59,7 @@ void i2CSetup() {
     i2cData.inLength = 0;
     i2cData.outLength = 0;
     i2cData.transmissionNum = 0;
+    i2cData.transmitting = 0;
 
     // setup D0, D1 as inputs
     TRISDbits.TRISD0 = 1;
@@ -82,7 +83,7 @@ void i2CSetup() {
     SSP2ADD = i2cData.myAddr;
 
     SSP2CON2 = 0b00000000; // disable general call interrupt
-    SSP2CON3 = 0b01100011; // enable stop int, enable start int, addr/data hold
+    SSP2CON3 = 0b01100000; // enable stop int, enable start int, addr/data hold
 
     SSP2CON1 |= SSPEN; // enable module
 
@@ -102,14 +103,12 @@ void processI2C() {
     switch (i2cData.dataIn[0]) {
         case CARD_CHANGE:
             globalData.runGetUpdatedCards = TRUE;
-            readerData.availableUIDs;
+            readerData.availableUIDs = 0;
             break;
         case CARD_UID:
             slotNum = i2cData.dataIn[1]; // slot number
             strncpy(readerData.readUID[slotNum], i2cData.dataIn[0], 8); // move UID
-            //            for (i = 2; i < i2cData.inLength; i++) {
-            //                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
-            //            }
+            readerData.availableUIDs++;
             if (readerData.availableUIDs < 4) { // get the next card
                 globalData.runGetUpdatedCards = TRUE;
             }
@@ -134,10 +133,11 @@ void processI2C() {
             break;
     }
 #else
-    switch (i2cData.dataOut[0]) {
+    switch (i2cData.dataIn[0]) {
         case REQUEST_CARD_UPDATE:
             //send all four cards TODO:
             // need to make sure all of these are sent somehow
+            slotNum = i2cData.transmissionNum++; // get our count
             i2cData.dataOut[0] = CARD_UID;
             i2cData.dataOut[1] = slotNum;
             strncpy(i2cData.dataOut[2], readerData.readUID[slotNum], 8);
@@ -161,8 +161,8 @@ void processI2C() {
             slotNum = i2cData.dataIn[1]; // get slot
             blockNum = i2cData.dataIn[2]; //get block
             strncpy(&data[0], i2cData.dataIn[3], 4); // get data bytes
-             // move to card
-             writeRFID(readerData.readUID[slotNum], blockNum, (data[0]<<8 | data[1]), (data[2]<<8 | data[3]));       // write
+            // move to card
+            writeRFID(readerData.readUID[slotNum], blockNum, (data[0] << 8 | data[1]), (data[2] << 8 | data[3])); // write
             break;
         case WRITE_AFI:
 
@@ -198,10 +198,12 @@ int sendBytes(char *data, int numBytes) {
     signed char status = 0;
 
     // enter masater mode if no data is being sent (stop bit last seen)
-    if (!i2cData.inDataSequence)
+    if (!i2cData.inDataSequence) {
         switchToMaster();
-    else
+
+    } else {
         return -1;
+    }
 
     sendStart();
 
@@ -234,6 +236,7 @@ void switchToMaster() {
     SSP2CON1 = MASTER; // change mode
     SSP2ADD = BAUD; // Set baud rate
     SSP2CON1 |= SSPEN; // enable module
+    i2cData.transmitting = 1;
 }
 
 /*
@@ -244,6 +247,7 @@ void switchToSlave() {
     SSP2CON1 = SLAVE; // change mode
     SSP2ADD = i2cData.myAddr; // update address buffer
     SSP2CON1 |= SSPEN; // enable module
+    i2cData.transmitting = 0;
 }
 
 /*
@@ -265,10 +269,11 @@ void sendStart() {
 }
 
 //Front end only: requests the updated cards from the backend
+
 void getUpdatedCards() {
 #if FRONT_NOT_BACK
     i2cData.dataOut[0] = REQUEST_CARD_UPDATE; // get update
-            i2cData.outLength = 1;
-            globalData.sendI2C = TRUE; // send the command
+    i2cData.outLength = 1;
+    globalData.sendI2C = TRUE; // send the command
 #endif
 }

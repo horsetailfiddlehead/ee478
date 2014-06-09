@@ -385,6 +385,7 @@ void RFIDSetup() {
     readerData.writeFlag_1 = 0;
     readerData.availableData = 0;
 
+
 #if !FRONT_NOT_BACK
     // Get RFID attention if not already
     sendToRFID("\n");

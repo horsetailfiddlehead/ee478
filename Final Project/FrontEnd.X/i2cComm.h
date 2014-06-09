@@ -13,8 +13,8 @@ extern "C" {
 #endif
 #include "globals.h"
 
-#define MAX_IN_LENGTH 8
-#define MAX_OUT_LENGTH 8
+#define MAX_IN_LENGTH 11
+#define MAX_OUT_LENGTH 11
 
     /*
      * Configures the MSSP2 module for master/slave-idle at 100kHz
@@ -40,6 +40,7 @@ extern "C" {
         char dataIn[MAX_IN_LENGTH];
         unsigned char inLength;
         int transmissionNum; // the curent transmission length
+        char transmitting; // are we transmitting
     } I2cDataStruct;
 
     /*************Inter-PIC Commands******************************/
