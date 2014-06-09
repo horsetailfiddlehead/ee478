@@ -40,7 +40,7 @@ extern "C" {
 #include "i2cComm.h"
 #include "xbee.h"
 
-#define FRONT_NOT_BACK 0 // is this the Front end or backend (should move to globals)
+#define FRONT_NOT_BACK 1 // is this the Front end or backend (should move to globals)
 
 #define CARDSLOT_1 0b00010000
 #define CARDSLOT_2 0b00100000
@@ -70,11 +70,15 @@ extern "C" {
 	int cardSelect[4];
 	int selectMove[4][3];
         int game;
+        int newDisplay;
+        int newGame;
+        int newKeyboard;
+        int doneKeyboard;
 
         /* card block data read in*/
         unsigned char dataBlockNum;
         unsigned char dataSlotNum;
-        unsigned char dataBlock[4]; // 32 bits of data
+        unsigned char dataBlock[16]; // 32 bits of data
         
         Boolean getInventory;
 

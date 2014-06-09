@@ -24,6 +24,8 @@ typedef struct _gameData {
     int oppScore;
     short turn;
     int gameOver;
+    int monSel;
+    int moveSel;
     Monster* myMonster;
     Monster* oppMonster;
     Move* myMove;
@@ -33,20 +35,22 @@ typedef struct _gameData {
 
 void setupGame();
 
-void printKeyboard(GlobalState* globalData, char* name);
+void processKeyboard(GlobalState* globalData, char* name, int size);
+void printKeyboard(GlobalState* globalData, char* inputType, int size);
 
 // Game Prototypes
 void singlePlayer(GlobalState* globalData);
 void multiPlayer(GlobalState* globalData);
 void buildCards(GlobalState* globalData);
 void getCards(void);
+void buildCard(GlobalState* globalData, int sel);
 
 // Helper Prototypes
 int findPlayer(GlobalState* globalData);
 int gameStatus(void);
 int attack(Move* attack, Monster* monster, int targetScore);
-Monster* selectCard(GlobalState* globalData);
-Move* pickMove(GlobalState* globalData);
+void selectCard(GlobalState* globalData);
+void pickMove(GlobalState* globalData);
 
 // Xbee Prototypes
 void sendMove(void);
@@ -59,7 +63,7 @@ void printGame(GlobalState* globalData);
 void printSelect(GlobalState* globalData);
 void printAttackMenu(GlobalState* globalData, Monster* card);
 void printResults(void);
-
+Move getMoveFromList(char id);
 /*
 typedef struct _gameData {
     int myScore;

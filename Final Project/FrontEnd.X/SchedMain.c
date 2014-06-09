@@ -195,8 +195,8 @@ void rcISR(void) {
         } else if ((SSP2STATbits.D_A == 0) && (SSP2STATbits.BF == 1)) { // check if address
             //            SSP2CON2bits.ACKDT = 0;
             //            SSP2CON1bits.CKP = 1;
-//            i2cData.dataOut[byteNumber++] = SSP2BUF;
-                        temp = SSP2BUF; // get rid of address
+            //            i2cData.dataOut[byteNumber++] = SSP2BUF;
+            temp = SSP2BUF; // get rid of address
         } else if ((SSP2STATbits.D_A == 1) && (SSP2STATbits.BF == 1)) { // check if data
             i2cData.dataIn[byteNumber++] = SSP2BUF;
             //            SSP2CON2bits.ACKDT = 0;
@@ -213,7 +213,7 @@ void rcISR(void) {
 
     // Clear interrupts
 
-//    PIR1bits.TX1IF = 0;
+    //    PIR1bits.TX1IF = 0;
     PIR1bits.RC1IF = 0;
     PIR3bits.TX2IF = 0;
     PIR3bits.RC2IF = 0;
@@ -229,14 +229,15 @@ void main() {
 #if FRONT_NOT_BACK
     TRISAbits.RA0 = 0;
     ANSELAbits.ANSA0 = 0;
+
+    printMainMenu(&globalData);
 #else
     //    TRISDbits.RD4 = 0;
     //    ANSELDbits.ANSD4 = 0;
     //    PORTDbits.RD4 = 1;
 #endif
 
-    //    // lcd test code
-    //    printMainMenu(&globalData);
+
 
     while (1) {
 #if FRONT_NOT_BACK
@@ -271,6 +272,160 @@ void main() {
         }
 
 #if FRONT_NOT_BACK
+        if (!globalData.keyFlag) {
+            // Check keystroke
+            keypad(&globalData);
+        }
+
+        if (globalData.keyFlag && !globalData.displayedKey) {
+            globalData.keyFlag = FALSE;
+            globalData.displayedKey = TRUE;
+
+            switch (globalData.displayPage) {
+                case 0: // main menu
+                    processPrintCursor(&globalData, 3, BLUE, WHITE);
+                    if (globalData.newDisplay == 1) {
+                        globalData.newDisplay = 0;
+                        switch (globalData.cursorPos) {
+                            case 0: // go to singleplayer
+                                globalData.displayPage = 1;
+                                printSelectGame(&globalData);
+                                break;
+                            case 1: // multi
+                                globalData.displayPage = 2;
+                                printSelectGame(&globalData);
+                                break;
+                            case 2: // build
+                                globalData.displayPage = 3;
+                                printBuild(&globalData);
+                                break;
+                            case 0xFF: // back
+                                globalData.displayPage = 0;
+                                break;
+                            default:
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                        }
+                    }
+                    break;
+                case 1: // display sp game menu
+                    processPrintCursor(&globalData, 4, GREEN, BLACK);
+                    if (globalData.newDisplay == 1) {
+                        globalData.newDisplay = 0;
+                        switch (globalData.cursorPos) {
+                            case 0: // go to monster game
+                                globalData.displayPage = 4;
+                                singlePlayer(&globalData);
+                                break;
+                            case 1: // go to clue
+                                globalData.displayPage = 5;
+                                clean(BLACK);
+                                prints(0, 35, WHITE, BLACK, "In Progress", 1);
+                                break;
+                            case 2: // go to error
+                                globalData.displayPage = 6;
+                                printBSOD();
+                                break;
+                            case 3: // go to error
+                                clean(BLACK);
+                                prints(0, 35, WHITE, BLACK, "In Progress", 1);
+                                globalData.displayPage = 7;
+                                break;
+                            default:
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                        }
+                        globalData.cursorPos = 0;
+                    }
+                    break;
+                case 2: // display mp game menu
+                    processPrintCursor(&globalData, 4, GREEN, BLACK);
+                    if (globalData.newDisplay == 1) {
+                        globalData.newDisplay = 0;
+                        switch (globalData.cursorPos) {
+                            case 0: // go to monster game
+                                globalData.displayPage = 4;
+                                printSelectGame(&globalData);
+                                break;
+                            case 1: // go to clue
+                                globalData.displayPage = 5;
+                                clean(BLACK);
+                                prints(0, 35, WHITE, BLACK, "In Progress", 1);
+                                break;
+                            case 2: // go to error
+                                globalData.displayPage = 6;
+                                printBSOD();
+                                break;
+                            case 3: // go to error
+                                clean(BLACK);
+                                prints(0, 35, WHITE, BLACK, "In Progress", 1);
+                                globalData.displayPage = 7;
+                                break;
+                            default:
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                        }
+                        globalData.cursorPos = 0;
+                    }
+                    break;
+                case 3: // build cards
+                    processPrintCursor(&globalData, 4, RED, BLACK);
+                    if (globalData.newDisplay == 1) {
+                        globalData.newDisplay = 0;
+                        switch (globalData.cursorPos) {
+                            case 0: // go to monster game
+                                buildCard(&globalData, 0);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            case 1: // go to clue
+                                buildCard(&globalData, 1);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            case 2: // go to error
+                                buildCard(&globalData, 2);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            case 3: // go to error
+                                buildCard(&globalData, 3);
+                                clean(BLACK);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            default:
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                        }
+                        globalData.cursorPos = 0;
+                    }
+                    break;
+                case 4: // singleplayer monster
+                    singlePlayer(&globalData);
+                    break;
+                case 5: // clue sp
+                    break;
+                case 6: // bsod
+                    break;
+                case 7: // in progress, b goes back
+                    if (globalData.keyPress == 0x0B) {
+                        globalData.displayPage = 0;
+                        printMainMenu(&globalData);
+                    }
+                    break;
+            }
+        }
+
+
         //        if (!globalData.keyFlag) {
         //            keypad(&globalData);
         //        }
@@ -291,9 +446,9 @@ void main() {
         //Doing an inventory command from the Build card menu
         if (globalData.readCard != 0) {
 
-//            globalData.getInventory = TRUE;
-//        }
-//        if (globalData.getInventory == TRUE) {
+            //            globalData.getInventory = TRUE;
+            //        }
+            //        if (globalData.getInventory == TRUE) {
             // get the inventory of cards
             inventoryRFID();
 
@@ -354,7 +509,7 @@ void main() {
             //            prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
             //            // Turn off inventory flag
 
-//            globalData.getInventory = FALSE;
+            //            globalData.getInventory = FALSE;
             globalData.readCard = 0;
         }
 #endif
@@ -424,7 +579,11 @@ void systemSetup(GlobalState *data) {
     data->runGetUpdatedCards = FALSE;
     data->gotI2C = 0;
     data->sendI2C = 0;
-
+    data->displayPage = 0;
+    data->newDisplay = 0;
+    data->newGame = 1;
+    data->newKeyboard = 1;
+    data->doneKeyboard = 0;
     OpenTimer0(TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
 
     return;

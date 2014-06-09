@@ -45,7 +45,7 @@ extern "C" {
 #define ST7735_FRMCTR1 0xB1
 #define ST7735_FRMCTR2 0xB2
 #define ST7735_FRMCTR3 0xB3
-#define ST7735_INVCTR  0xB4
+    #define ST7735_INVCTR  0xB4
 #define ST7735_DISSET5 0xB6
 
 #define ST7735_PWCTR1  0xC0
@@ -101,7 +101,8 @@ void prints(char x, char y, int color, int background, const char message[], cha
 void printrs(char x, char y, int color, int background, char* message, char size);
 void integerprint(char x, char y, int color, int background,int integer, char size);
 void printMenu(char** select, int background, int box, int boxBorder, int text, int size);
-int processPrintCursor(GlobalState* globalData, int size, int background, int text);
+void processPrintCursor(GlobalState* globalData, int size, int background, int text);
+
 
 // System Specific functions
 void mainMenu(GlobalState* globalData);
@@ -111,6 +112,7 @@ void selectGameMenu(GlobalState* globalData);
 void printBSOD(void);
 void printMainMenu(GlobalState* globalData);
 void printSelectGame(GlobalState* globalData);
+void printBuild(GlobalState *globalData);
 
 // Test Purposes
 void printBuildCard1(GlobalState *globalData);
