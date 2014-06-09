@@ -13,6 +13,9 @@ extern "C" {
 #endif
     #include "globals.h"
 
+#define MAX_IN_LENGTH 8
+#define MAX_OUT_LENGTH 8
+
     /*
      * Configures the MSSP2 module for master/slave-idle at 100kHz
      */
@@ -23,14 +26,20 @@ extern "C" {
      */
     int sendBytes(char *data, int numBytes);
 
-    void i2cISR();
+    /*
+     * Processes received data and commands
+     */
+    void processI2C();
 
     typedef struct i2cDataStruct {
         char inDataSequence;
         char destAddr;
         char myAddr;
-        char i2cData[8]; // data from the i2c
-        unsigned char messageLength;
+        char dataOut[MAX_OUT_LENGTH]; // data from the i2c
+        unsigned char outLength;
+        char dataIn[MAX_IN_LENGTH];
+        unsigned char inLength;
+        int transmissionNum; // the curent transmission length
     } I2cDataStruct;
 
 #ifdef	__cplusplus

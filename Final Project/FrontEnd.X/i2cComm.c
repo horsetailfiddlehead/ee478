@@ -8,15 +8,29 @@
 
 #include "globals.h"
 
+/********Configuration Settings*******************************/
 #define MASTER  0b00001000 //I2C  Master mode
 #define SLAVE   0b00000110 // I2C slave mode, 7-bit address
 #define SSPEN   0b00100000  /* Enable serial port and configures SCK, SDO, SDI*/
 #define SSPDIS  0b11011111   // disable serial port
 #define SLEW_OFF 0b10000000 /* Slew rate disabled for 100kHz mode */
-#define BAUD 0x31;  // master address value for 100kHz baud rate
+#define BAUD    0x31;  // master address value for 100kHz baud rate
+/*************Inter-PIC Commands******************************/
+#define INVALID_COMMAND     0xFF //received command is not recognized
+#define RECEIVE_ERROR       0xFE //received command cannot be fulfilled
+#define END_OF_TRANSMISSION 0xFD //
+/*----------------Front End SendS-----------------------------*/
+#define REQUEST_CARD_UPDATE 0x02 // Ask for cards present
+#define REQUEST_CARD_DATA   0x04 //  Requests data from a block
+#define WRITE_CARD_BLOCK    0xFC // Write 32-bit data to card block
+#define WRITE_AFI           0xFB // Write data to Attribute Family Identifier
+#define WRITE_DSFID         0xFA // Write data to Data Structure Format ID
+/*------------------Back End Sends----------------------------*/
+#define CARD_CHANGE         0x01 // Indicates cards in play changed
+#define CARD_UID            0x02 // Sending slot# + UID
+#define CARD_DATA_BLOCK    0x04 // Sends requested block data
+/*************************************************************/
 
-//char i2cAddr;
-//Boolean inDataSequence; // 1 if someone is transmitting data
 I2cDataStruct i2cData;
 
 /*******Private prototypes*********************/
@@ -40,7 +54,11 @@ void i2CSetup() {
 #endif
 
     i2cData.inDataSequence = FALSE;
-    i2cData.messageLength = 0;
+    memset(i2cData.dataIn, '\0', sizeof (char) * MAX_IN_LENGTH);
+    memset(i2cData.dataOut, '\0', sizeof (char) * MAX_OUT_LENGTH);
+    i2cData.inLength = 0;
+    i2cData.outLength = 0;
+    i2cData.transmissionNum = 0;
 
     // setup D0, D1 as inputs
     TRISDbits.TRISD0 = 1;
@@ -70,6 +88,106 @@ void i2CSetup() {
     SSP2CON3 = 0b01100011; // enable stop int, enable start int, addr/data hold
 
     SSP2CON1 |= SSPEN; // enable module
+
+}
+
+/*
+ * Process received commands
+ */
+void processI2C() {
+    unsigned int slotNum;
+    unsigned int i;
+    unsigned char blockNum;
+    unsigned char data[4];
+#if FRONT_NOT_BACK // receives backends commands
+    // switch on command
+    // parse data into parts
+    switch (i2cData.dataIn[0]) {
+        case CARD_CHANGE:
+            globalData.runGetUpdatedCards = TRUE;
+            readerData.availableUIDs;
+            break;
+        case CARD_UID:
+            slotNum = i2cData.dataIn[1]; // slot number
+            strncpy(readerData.readUID[slotNum], i2cData.dataIn[0], 8); // move UID
+            //            for (i = 2; i < i2cData.inLength; i++) {
+            //                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
+            //            }
+            if (readerData.availableUIDs < 4) { // get the next card
+                globalData.runGetUpdatedCards = TRUE;
+            }
+            break;
+        case CARD_DATA_BLOCK:
+            globalData.dataSlotNum = i2cData.dataIn[1]; // get the clot number
+            globalData.dataBlockNum = i2cData.dataIn[2]; // get the block number
+            strncpy(globalData.dataBlock, i2cData.dataIn[3], 4); // copy the blcok data
+            break;
+        case INVALID_COMMAND:
+
+            break;
+        case RECEIVE_ERROR:
+
+            break;
+        case END_OF_TRANSMISSION:
+
+            break;
+        default:
+            i2cData.dataOut[0] = INVALID_COMMAND;
+            i2cData.outLength = 1;
+            break;
+    }
+#else
+    switch (i2cData.dataOut[0]) {
+        case REQUEST_CARD_UPDATE:
+            //send all four cards TODO:
+            // need to make sure all of these are sent somehow
+            i2cData.dataOut[0] = CARD_UID;
+            i2cData.dataOut[1] = slotNum;
+            strncpy(i2cData.dataOut[2], readerData.readUID[slotNum], 8);
+            i2cData.outLength = 10;
+            globalData.sendI2C = TRUE;
+            break;
+        case REQUEST_CARD_DATA:
+            slotNum = i2cData.dataIn[1]; // get the requested slot
+            blockNum = i2cData.dataIn[2]; // get the requested block
+            i2cData.dataOut[0] = CARD_DATA_BLOCK; // cmd
+            i2cData.dataOut[1] = slotNum; // slot
+            i2cData.dataOut[2] = blockNum; // block
+
+            for (i = 3; i < 7; i++) {// read from sram
+                i2cData.dataOut[i] = readData(256 * slotNum + 4 * blockNum + (i - 3));
+            }// format response
+            i2cData.outLength = 7;
+            globalData.sendI2C = TRUE; // send the data
+            break;
+        case WRITE_CARD_BLOCK:
+            slotNum = i2cData.dataIn[1]; // get slot
+            blockNum = i2cData.dataIn[2]; //get block
+            strncpy(&data[0], i2cData.dataIn[3], 4); // get data bytes
+             // move to card
+             writeRFID(readerData.readUID[slotNum], blockNum, (data[0]<<8 | data[1]), (data[2]<<8 | data[3]));       // write
+            break;
+        case WRITE_AFI:
+
+            break;
+        case WRITE_DSFID:
+
+            break;
+        case INVALID_COMMAND:
+
+            break;
+        case RECEIVE_ERROR:
+
+            break;
+        case END_OF_TRANSMISSION:
+
+            break;
+        default:
+            i2cData.dataOut[0] = INVALID_COMMAND;
+            i2cData.outLength = 1;
+            break;
+    }
+#endif
 
 }
 
@@ -149,16 +267,11 @@ void sendStart() {
     while (SSP2CON2bits.SEN == 1); // or use IdleI2C2()
 }
 
-/*ISR for received data in slave mode
- *
- */
-void i2cISR() {
-    // if start bit, inDataSequence = TRUE
-    // if stopbit, inDataSequence = false;
-    // ccheck if address
-    // dump buffer
-    // not address
-    //store into global variable/buffer
-    // set i2c process flag
-    // clear interrupt flag
+//Front end only: requests the updated cards from the backend
+void getUpdatedCards() {
+#if FRONT_NOT_BACK
+    i2cData.dataOut[0] = REQUEST_CARD_UPDATE; // get update
+            i2cData.outLength = 1;
+            globalData.sendI2C = TRUE; // send the command
+#endif
 }
