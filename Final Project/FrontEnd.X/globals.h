@@ -78,7 +78,7 @@ extern "C" {
         /* card block data read in*/
         unsigned char dataBlockNum;
         unsigned char dataSlotNum;
-        unsigned char dataBlock[4]; // 32 bits of data
+        unsigned char dataBlock[16]; // 32 bits of data
         
         Boolean getInventory;
 

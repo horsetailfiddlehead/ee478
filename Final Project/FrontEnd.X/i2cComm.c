@@ -116,7 +116,7 @@ void processI2C() {
         case CARD_DATA_BLOCK:
             globalData.dataSlotNum = i2cData.dataIn[1]; // get the clot number
             globalData.dataBlockNum = i2cData.dataIn[2]; // get the block number
-            strncpy(&globalData.dataBlock[0], &i2cData.dataIn[3], 4); // copy the blcok data
+            strncpy(&globalData.dataBlock[0], &i2cData.dataIn[3], 8); // copy the blcok data
             break;
         case INVALID_COMMAND:
 
@@ -150,11 +150,12 @@ void processI2C() {
             i2cData.dataOut[0] = CARD_DATA_BLOCK; // cmd
             i2cData.dataOut[1] = slotNum; // slot
             i2cData.dataOut[2] = blockNum; // block
-
-            for (i = 3; i < 7; i++) {// read from sram
-                i2cData.dataOut[i] = readData(256 * slotNum + 4 * blockNum + (i - 3));
-            }// format response
-            i2cData.outLength = 7;
+            readRFID(readerData.readUID[slotNum], blockNum);
+            strncpy((char*)&i2cData.dataOut[3],(char*) &readerData.readData[2], 8);
+//            for (i = 3; i < 7; i++) {// read from sram
+//                i2cData.dataOut[i] = readData(256 * slotNum + 4 * blockNum + (i - 3));
+//            }// format response
+            i2cData.outLength = 11;
             globalData.sendI2C = TRUE; // send the data
             break;
         case WRITE_CARD_BLOCK:

@@ -195,8 +195,8 @@ void rcISR(void) {
         } else if ((SSP2STATbits.D_A == 0) && (SSP2STATbits.BF == 1)) { // check if address
             //            SSP2CON2bits.ACKDT = 0;
             //            SSP2CON1bits.CKP = 1;
-//            i2cData.dataOut[byteNumber++] = SSP2BUF;
-                        temp = SSP2BUF; // get rid of address
+            //            i2cData.dataOut[byteNumber++] = SSP2BUF;
+            temp = SSP2BUF; // get rid of address
         } else if ((SSP2STATbits.D_A == 1) && (SSP2STATbits.BF == 1)) { // check if data
             i2cData.dataIn[byteNumber++] = SSP2BUF;
             //            SSP2CON2bits.ACKDT = 0;
@@ -213,7 +213,7 @@ void rcISR(void) {
 
     // Clear interrupts
 
-//    PIR1bits.TX1IF = 0;
+    //    PIR1bits.TX1IF = 0;
     PIR1bits.RC1IF = 0;
     PIR3bits.TX2IF = 0;
     PIR3bits.RC2IF = 0;
@@ -229,7 +229,7 @@ void main() {
 #if FRONT_NOT_BACK
     TRISAbits.RA0 = 0;
     ANSELAbits.ANSA0 = 0;
-    
+
     printMainMenu(&globalData);
 #else
     //    TRISDbits.RD4 = 0;
@@ -297,6 +297,7 @@ void main() {
                                 break;
                             case 2: // build
                                 globalData.displayPage = 3;
+                                printBuild(&globalData);
                                 break;
                             case 0xFF: // back
                                 globalData.displayPage = 0;
@@ -371,7 +372,42 @@ void main() {
                     }
                     break;
                 case 3: // build cards
-                    buildCard(&globalData);
+                    processPrintCursor(&globalData, 4, RED, BLACK);
+                    if (globalData.newDisplay == 1) {
+                        globalData.newDisplay = 0;
+                        switch (globalData.cursorPos) {
+                            case 0: // go to monster game
+                                buildCard(&globalData, 0);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            case 1: // go to clue
+                                buildCard(&globalData, 1);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            case 2: // go to error
+                                buildCard(&globalData, 2);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            case 3: // go to error
+                                buildCard(&globalData, 3);
+                                clean(BLACK);
+                                prints(140, 35, BLACK, RED, "DONE", 1);
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                            default:
+                                globalData.displayPage = 0;
+                                printMainMenu(&globalData);
+                                break;
+                        }
+                        globalData.cursorPos = 0;
+                    }
                     break;
                 case 4: // singleplayer monster
                     singlePlayer(&globalData);
@@ -410,9 +446,9 @@ void main() {
         //Doing an inventory command from the Build card menu
         if (globalData.readCard != 0) {
 
-//            globalData.getInventory = TRUE;
-//        }
-//        if (globalData.getInventory == TRUE) {
+            //            globalData.getInventory = TRUE;
+            //        }
+            //        if (globalData.getInventory == TRUE) {
             // get the inventory of cards
             inventoryRFID();
 
@@ -473,7 +509,7 @@ void main() {
             //            prints(0, H - 8, BLACK, RED, "Press B to go back.", 1);
             //            // Turn off inventory flag
 
-//            globalData.getInventory = FALSE;
+            //            globalData.getInventory = FALSE;
             globalData.readCard = 0;
         }
 #endif

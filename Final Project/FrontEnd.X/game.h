@@ -43,6 +43,7 @@ void singlePlayer(GlobalState* globalData);
 void multiPlayer(GlobalState* globalData);
 void buildCards(GlobalState* globalData);
 void getCards(void);
+void buildCard(GlobalState* globalData, int sel);
 
 // Helper Prototypes
 int findPlayer(GlobalState* globalData);
@@ -62,7 +63,7 @@ void printGame(GlobalState* globalData);
 void printSelect(GlobalState* globalData);
 void printAttackMenu(GlobalState* globalData, Monster* card);
 void printResults(void);
-
+Move getMoveFromList(char id);
 /*
 typedef struct _gameData {
     int myScore;

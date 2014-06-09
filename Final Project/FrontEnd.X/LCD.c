@@ -688,6 +688,15 @@ void printSelectGame(GlobalState *globalData) {
     prints(0, H - 8, BLACK, YELLOW, "2-UP,8-DOWN,D-ENTER", 1);
 }
 
+void printBuild(GlobalState *globalData) {
+    char* selectGame[4] = {"FIREDUDE", "EARTHGUY", "WATERMAN", "DRPECKOL"};
+
+    printMenu(selectGame, RED, BLACK, BLUE, WHITE, 4);
+    prints(25, 7, BLACK, BLUE, "Make a card:", 1);
+    prints(25, 40, BLACK, GREEN, ">", 1);
+    prints(0, H - 8, BLACK, YELLOW, "2-UP,8-DOWN,D-ENTER", 1);
+}
+
 // Print blue screen of death
 void printBSOD() {
     // Beep off

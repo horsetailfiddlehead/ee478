@@ -103,6 +103,7 @@ void integerprint(char x, char y, int color, int background,int integer, char si
 void printMenu(char** select, int background, int box, int boxBorder, int text, int size);
 void processPrintCursor(GlobalState* globalData, int size, int background, int text);
 
+
 // System Specific functions
 void mainMenu(GlobalState* globalData);
 void selectGameMenu(GlobalState* globalData);
@@ -111,6 +112,7 @@ void selectGameMenu(GlobalState* globalData);
 void printBSOD(void);
 void printMainMenu(GlobalState* globalData);
 void printSelectGame(GlobalState* globalData);
+void printBuild(GlobalState *globalData);
 
 // Test Purposes
 void printBuildCard1(GlobalState *globalData);
