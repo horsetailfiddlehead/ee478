@@ -146,32 +146,32 @@ void rcISR(void) {
         // set corresponding led status based on current port status
         // tell rfid moudule to read the card (if needed)
         if (globalData.lastCards & CARDSLOT_1) { //first slot
-            if (presentCards & CARDSLOT_1) { // card is placed
-                ledData.ledStatus[0] = 3;
+            if (!(presentCards & CARDSLOT_1)) { // card is placed
+                ledData.ledStatus[0] = 0;
                 globalData.readCard |= CARDSLOT_1;
             } else {
-                ledData.ledStatus[0] = 0;
+                ledData.ledStatus[0] = 3;
             }
         } else if (globalData.lastCards & CARDSLOT_2) { //second slot
-            if (presentCards & CARDSLOT_2) { // card is placed
-                ledData.ledStatus[1] = 3;
+            if (!(presentCards & CARDSLOT_2)) { // card is placed
+                ledData.ledStatus[1] = 0;
                 globalData.readCard |= CARDSLOT_2;
             } else {
-                ledData.ledStatus[1] = 0;
+                ledData.ledStatus[1] = 3;
             }
         } else if (globalData.lastCards & CARDSLOT_3) { //third slot
-            if (presentCards & CARDSLOT_3) { // card is placed
-                ledData.ledStatus[2] = 3;
+            if (!(presentCards & CARDSLOT_3)) { // card is placed
+                ledData.ledStatus[2] = 0;
                 globalData.readCard |= CARDSLOT_3;
             } else {
-                ledData.ledStatus[2] = 0;
+                ledData.ledStatus[2] = 3;
             }
         } else if (globalData.lastCards & CARDSLOT_4) { // fourth slot
-            if (presentCards & CARDSLOT_4) { // card is placed
-                ledData.ledStatus[3] = 3;
+            if (!(presentCards & CARDSLOT_4)) { // card is placed
+                ledData.ledStatus[3] = 0;
                 globalData.readCard |= CARDSLOT_4;
             } else {
-                ledData.ledStatus[3] = 0;
+                ledData.ledStatus[3] = 3;
             }
         }
         globalData.updateLEDFlag = TRUE; // tell led driver to update leds
