@@ -15,6 +15,8 @@ extern "C" {
 #include "globals.h"
     
 #define FIND_ID "1234"
+#define PLAYER_ID "5555"
+#define HOST_ID "6666"
 #define SEARCH_NET "4444"
 #define PLAY_NET "8765"
 

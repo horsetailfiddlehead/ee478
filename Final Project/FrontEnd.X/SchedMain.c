@@ -208,7 +208,10 @@ void rcISR(void) {
     //    PORTAbits.RA0 = 0;
     // Clear interrupts
 
+    PIR1bits.TX1IF = 0;
+    PIR1bits.RC1IF = 0;
     PIR3bits.TX2IF = 0;
+    PIR3bits.RC2IF = 0;
 }
 
 void main() {
@@ -229,7 +232,7 @@ void main() {
     while (1) {
 #if FRONT_NOT_BACK
 
-        sendBytes(test, 2);
+        //sendBytes(test, 2);
 #else
         //        PORTAbits.AN1 = i2cData.inDataSequence;
         //        sendBytes(test, 1);
@@ -347,7 +350,6 @@ void systemSetup(GlobalState *data) {
     initLCD();
     keypadSetup(); // configure keypad
     setupPWM();
-    //setupXbee();
 #else
     RFIDSetup();
     LEDSetup();

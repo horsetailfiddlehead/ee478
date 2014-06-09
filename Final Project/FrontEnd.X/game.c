@@ -119,6 +119,7 @@ void multiPlayer(GlobalState* globalData) {
     int connect = 0;
     int hostOrFind = 0; // 0 host game, 1 find game
     char* mySelections[2] = {"Host Game", "Find Game"};
+    setupXbee();
     printMenu(mySelections, BLACK, GRAY, WHITE, YELLOW, 2);
     prints(25, 7, YELLOW, GRAY, "Multiplayer", 1);
     hostOrFind = processPrintCursor(globalData, 2, BLACK, YELLOW);
