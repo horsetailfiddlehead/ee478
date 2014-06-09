@@ -38,6 +38,7 @@
       <itemPath>i2cComm.c</itemPath>
       <itemPath>LED.c</itemPath>
       <itemPath>xbee.c</itemPath>
+      <itemPath>SRAMback.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

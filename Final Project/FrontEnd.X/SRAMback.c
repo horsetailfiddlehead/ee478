@@ -3,6 +3,12 @@
 #include "SRAM.h"
 #include <delays.h>
 
+/*
+ * SRAM for the backend
+ */
+
+#if !FRONT_NOT_BACK
+
 unsigned short OE;
 unsigned short WE;
 unsigned short store;
@@ -26,44 +32,45 @@ void SRAMsetUp() {
     ANSELAbits.ANSA0 = 0;
     ANSELAbits.ANSA1 = 0;
     ANSELAbits.ANSA2 = 0;
-	ANSELAbits.ANSA5 = 0;
+    ANSELAbits.ANSA5 = 0;
     ANSELEbits.ANSE0 = 0;
     ANSELEbits.ANSE1 = 0;
     ANSELEbits.ANSE2 = 0;
 
-	ANSELCbits.ANSC3 = 0;
+    ANSELCbits.ANSC3 = 0;
     ANSELCbits.ANSC2 = 0;
     //ANSELCbits.ANSC1 = 0; NOT NEEDED FOR PORT C
 
     setUpIn();
 }
 
-void setUpOut () {
+void setUpOut() {
     // Set data outputs
     TRISAbits.TRISA0 = 0;
-	TRISAbits.TRISA1 = 0;
-	TRISAbits.TRISA2 = 0;
-	TRISAbits.TRISA4 = 0;
-	TRISAbits.TRISA5 = 0;
-	TRISAbits.TRISA6 = 0;
+    TRISAbits.TRISA1 = 0;
+    TRISAbits.TRISA2 = 0;
+    TRISAbits.TRISA4 = 0;
+    TRISAbits.TRISA5 = 0;
+    TRISAbits.TRISA6 = 0;
     TRISE &= 0b11111000;
-	TRISCbits.TRISC0 = 0;
+    TRISCbits.TRISC0 = 0;
 }
 
-void setUpIn () {
+void setUpIn() {
     // Set data inputs
     TRISAbits.TRISA0 = 1;
-	TRISAbits.TRISA1 = 1;
-	TRISAbits.TRISA2 = 1;
-	TRISAbits.TRISA4 = 1;
-	TRISAbits.TRISA5 = 1;
-	TRISAbits.TRISA6 = 1;
-    TRISE = 1;
-	TRISCbits.TRISC0 = 1;
+    TRISAbits.TRISA1 = 1;
+    TRISAbits.TRISA2 = 1;
+    TRISAbits.TRISA4 = 1;
+    TRISAbits.TRISA5 = 1;
+    TRISAbits.TRISA6 = 1;
+    TRISE = 0xFF;
+    TRISCbits.TRISC0 = 1;
 }
 
 // Reading data
-int readData (int adx) {
+
+int readData(int adx) {
     int myRead = 0;
     SRAMsetUp();
     setUpOut();
@@ -78,7 +85,7 @@ int readData (int adx) {
     LATEbits.LATE1 = (adx >> 6) & 0x01; // problem?
     LATEbits.LATE2 = (adx >> 7) & 0x01; // problem?
     PORTAbits.RA6 = (adx >> 8) & 0x01;
-	PORTCbits.RC0 = (adx >> 9) & 0x01;
+    PORTCbits.RC0 = (adx >> 9) & 0x01;
 
     // Store in MAR
     PORTCbits.RC1 = 0;
@@ -91,10 +98,10 @@ int readData (int adx) {
     PORTCbits.RC2 = 0;
     Delay10TCYx(5);
     // Get the first 3 bits of Port A, bits 4-5 of port A, and the first 3 bits of port E
-    myRead = (PORTA & 0x07) | ((PORTA & 0x18) >> 1) | ((LATE & 0x07) << 5)
-//    Delay10TCYx(5);
-    // Output Enable
-    PORTCbits.RC2 = 1;
+    myRead = (PORTA & 0x07) | ((PORTA & 0x18) >> 1) | ((PORTE & 0x07) << 5);
+            //    Delay10TCYx(5);
+            // Output Enable
+            PORTCbits.RC2 = 1;
 
     return myRead;
 
@@ -103,6 +110,7 @@ int readData (int adx) {
 
 
 // Writing data
+
 void writeData(int adx, int data) {
     SRAMsetUp();
     setUpOut();
@@ -117,8 +125,8 @@ void writeData(int adx, int data) {
     LATEbits.LATE1 = (adx >> 6) & 0x01; // problem?
     LATEbits.LATE2 = (adx >> 7) & 0x01; // problem?
     PORTAbits.RA6 = (adx >> 8) & 0x01;
-	PORTCbits.RC0 = (adx >> 9) & 0x01;
-	
+    PORTCbits.RC0 = (adx >> 9) & 0x01;
+
     // Store in MAR
     PORTCbits.RC1 = 0;
     PORTCbits.RC1 = 1;
@@ -131,7 +139,7 @@ void writeData(int adx, int data) {
     PORTAbits.RA5 = (data >> 4) & 0x01;
     LATEbits.LATE0 = (data >> 5) & 0x01; // problem?
     LATEbits.LATE1 = (data >> 6) & 0x01; // problem?
-	LATEbits.LATE2 = (data >> 7) & 0x01; // problem?
+    LATEbits.LATE2 = (data >> 7) & 0x01; // problem?
 
     // Write Enable
     PORTCbits.RC3 = 0;
@@ -139,3 +147,4 @@ void writeData(int adx, int data) {
     PORTCbits.RC3 = 1;
 }
 
+#endif

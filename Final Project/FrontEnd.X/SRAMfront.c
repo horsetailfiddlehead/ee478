@@ -3,6 +3,11 @@
 #include "SRAM.h"
 #include <delays.h>
 
+/*
+ * This is used only for the Frontend
+ */
+
+#if FRONT_NOT_BACK
 unsigned short OE;
 unsigned short WE;
 unsigned short store;
@@ -132,4 +137,4 @@ void writeData(int adx, int data) {
     //Delay10TCYx(10);
     PORTCbits.RC2 = 1;
 }
-
+#endif
