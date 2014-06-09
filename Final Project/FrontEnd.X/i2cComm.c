@@ -151,13 +151,17 @@ void processI2C() {
             i2cData.dataOut[2] = blockNum; // block
 
             for (i = 3; i < 7; i++) {// read from sram
-                i2cData.dataOut[i] = readData(256 * slotNum + 4 * blockNum + (i-3));
+                i2cData.dataOut[i] = readData(256 * slotNum + 4 * blockNum + (i - 3));
             }// format response
 
             globalData.sendI2C = TRUE; // send the data
             break;
         case WRITE_CARD_BLOCK:
-
+            slotNum = i2cData.dataIn[1]; // get slot
+            blockNum = i2cData.dataIn[2]; //get block
+            strncpy(&data[0], i2cData.dataIn[3], 4); // get data bytes
+             // move to card
+             writeRFID(readerData.readUID[slotNum], blockNum, (data[0]<<8 | data[1]), (data[2]<<8 | data[3]));       // write
             break;
         case WRITE_AFI:
 
