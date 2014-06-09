@@ -9,7 +9,7 @@
 
 %%% PAGE DIMENSIONS
 \usepackage{geometry}
-\geometry{a4paper}
+\geometry{letterpaper}
 \geometry{margin=1in} % 1in page margin
 
 %%% COLOR AND GRAPHICS
@@ -56,7 +56,9 @@
 \usepackage{array}    % for better arrays (eg matrices) in maths
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
-\usepackage{subfig}   % make it possible to include more than one captioned figure/table in a single float
+%\usepackage{subfig}   % make it possible to include more than one captioned figure/table in a single float
+\usepackage{subcaption}
+\usepackage{adjustbox}
 
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -74,7 +76,7 @@
 
 %%% ToC (table of contents) APPEARANCE
 \usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
-\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\usepackage[titles]{tocloft} % Alter the style of the Table of Contents
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
@@ -127,14 +129,14 @@
 % incorporating extra features or capabilities, please describe them clearly in
 % this section.
 
-\begin{itemize}[$$]
+\begin{itemize}
 	\item Overall summary description of the module - 2-3 paragraphs maximum
 		(explanation of use cases goes here)
 
-		\begin{itemize}[$$]
+		\begin{itemize}
 			\item Specification of the public interface to the module
 
-				\begin{itemize}[$\bullet$]
+				\begin{itemize}
 					\item Inputs
 					\item Outputs
 					\item Side effects
@@ -148,7 +150,6 @@
 
 \begin{table}[h]
 	\centering
-	\label{table:ex}
 	\begin{tabular}{llr}
 		\toprule
 		Animal    & Description & Price (\$) \\
@@ -160,7 +161,8 @@
 		Armadillo & frozen      & 8.99       \\
 		\bottomrule
 	\end{tabular}
-	\caption{Example table.}
+	\caption{Example table}
+	\label{table:ex}
 \end{table}
 
 \subsection{Design Specification\label{sec:designSpec}}
@@ -190,12 +192,12 @@
 %processes/tasks you have implemented in your design. Explain your design
 %choices.    
 
-\subsubsection{Top level design\label{swTopLevel}}
+\subsubsection{Top Level Design\label{swTopLevel}}
 %
 %Put stuff here about the functional decomposition, system architecture,
 %interaction of parts.
 
-\subsubsection{low level design\label{swLowLevel}}
+\subsubsection{Low Level Design\label{swLowLevel}}
 %
 %task level implementation details here. Control diagram goes here, etc.
 
@@ -207,11 +209,11 @@
 %
 %In addition to a detailed discussion and analysis of your project and your
 %results, you must include all the answers to all questions raised in the lab.
-\subsection{results }
+\subsection{Results }
 
-\subsection{Discussion of results }
+\subsection{Discussion of Results }
 
-\subsection{Analysis of any Errors }
+\subsection{Analysis of Any Errors }
 %
 %This one is obvious. Do this section as appropriate.  If it improves the flow,
 %it does not need to be a separate section and may be included in the
@@ -285,17 +287,117 @@ dispensations are due others or myself, I have indicated them below.
 
 \pagebreak
 
-\section{Hardware Block Diagram\label{fig:hwBlockDiagram}}
+\section{Hardware Diagrams\label{appendix:hwDiagrams}}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/BlockDiagram.png}
+	\caption{High level block diagram of the system hardware components}
+	\label{fig:highLevelBlockDiagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/SRAMHardwareBlock.png}
+	\caption{Block diagram of the SRAM hardware system}
+	\label{fig:sramBlockDiagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4in]{images/PinOuts.png}
+	\caption{Pinouts to the front- and back-end microcontrollers}
+	\label{fig:pinoutDiagram}
+\end{figure}
 
 \section{Functional Decomposition Diagram\label{fig:funcDecomp}}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/funDecomp.png}
+	\caption{Software functional decomposition showing the major functional divisions and tasks}
+	\label{fig:funDecomp}
+\end{figure}
+
 \section{State Diagrams}
 \subsection{System State Diagram\label{fig:sysStateDiagram}}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{images/overallSystemDiagram.png}
+		\caption{}
+		\label{fig:sysStates}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{images/OSStates.png}
+		\caption{}
+		\label{fig:statesLegend}
+	\end{subfigure}
+	\caption{State diagram of the primary operating system.
+		Figure~\ref{fig:sysStates} shows the states while
+		Figure~\ref{fig:statesLegend} provides a legend}
+	\label{fig:systemStateDiagram}
+\end{figure}
 
-\subsection{General Gameplay State Diagram\label{fig:gameplayDiagram}}
+\subsection{General Gameplay State Diagram\label{appendix:gameplayDiagram}}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/gamePlayState.png}
+	\caption{State diagram of basic turn-based game}
+	\label{fig:gamePlayState}
+\end{figure}
 
 \section{Control Flow Diagrams}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/keypadDataFlow.png}
+	\caption{Keypad response}
+	\label{fig:keypadDataFlow}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/reactionDataFlow.png}
+	\caption{Card Reaction LEDs}
+	\label{fig:cardReactionDataFlow}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/RFIDreaderDataFlow.png}
+	\caption{RFID tag reader subsystem}
+	\label{fig:rfidDataFlow}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{\textwidth}
+	\includegraphics[width=\textwidth]{images/I2CReceiveDataCtrlFlow.png}
+	\caption{}
+	\label{fig:i2cReceiveFlow}
+	\end{subfigure}
+
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{images/I2CSendCtrlFlow.png}
+		\caption{}
+		\label{fig:i2cSendFlow}
+	\end{subfigure}
+	\caption{I2C communication between microcontrollers. Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
+	\label{fig:i2cCtrlFlow}
+\end{figure}
+
+\section{Project Schedule\label{appendix:ganttChart}}
+\begin{figure}[H]
+	\centering
+	\begin{adjustbox} {rotate=90,center}
+		\includegraphics[width=\textwidth]{images/NewGantt.pdf}
+	\end{adjustbox}
+	\caption{Project Gantt Chart}
+	\label{fig:ganttChart}
+\end{figure}
+
+\clearpage
 \section{Source Code}
 % We will put code here. Use the format:
 %    \subsection{Main Function}
@@ -306,9 +408,62 @@ dispensations are due others or myself, I have indicated them below.
 %    \lstinputlisting{../code/tcb.h}
 Source code for this project is provided below.
 
-\subsection{Front-end Code}
-% \lstinputlisting{source.c}
+\subsection{System Scheduler}
+The system-wide global definitions and variables are also given here for convenience.
+\lstinputlisting{../FrontEnd.X/globals.h}
+\lstinputlisting{../FrontEnd.X/interrupts.h}
+\lstinputlisting{../FrontEnd.X/SchedMain.c}
 
-\subsection{Back-end Code}
-% \lstinputlisting{source.c}
+\subsection{Creating Cards}
+\lstinputlisting{../FrontEnd.X/buildCard.c}
+
+\subsection{Example Game}
+Both a single player and multiplayer version of the same game are provided.
+\lstinputlisting{../FrontEnd.X/game.h}
+\lstinputlisting{../FrontEnd.X/game.c}
+
+\subsection{I$^2$C InterPIC Communication}
+\lstinputlisting{../FrontEnd.X/i2cComm.h}
+\lstinputlisting{../FrontEnd.X/i2cComm.c}
+
+\subsection{Keypad Driver}
+\lstinputlisting{../FrontEnd.X/keypadDriver.h}
+\lstinputlisting{../FrontEnd.X/keypadDriver.c}
+
+\subsection{LCD Driver}
+\lstinputlisting{../FrontEnd.X/LCD.h}
+\lstinputlisting{../FrontEnd.X/LCD.c}
+
+\subsection{Card Reaction Control}
+\lstinputlisting{../FrontEnd.X/LED.h}
+\lstinputlisting{../FrontEnd.X/LED.c}
+
+\subsection{Motor Driver}
+\textit{Note: This feature was not implemented in the final product}
+\lstinputlisting{../FrontEnd.X/motorDriver.h}
+\lstinputlisting{../FrontEnd.X/motorDriver.c}
+
+\subsection{RFID Reader Driver}
+\lstinputlisting{../FrontEnd.X/rfidReader.h}
+\lstinputlisting{../FrontEnd.X/rfidReader.c}
+
+\subsection{EIA-232 Serial Connection}
+\lstinputlisting{../FrontEnd.X/rs232.h}
+\lstinputlisting{../FrontEnd.X/rs232.c}
+
+\subsection{SRAM Primary Memory}
+\textit{Note: There are two different files for each microcontroller due to hardware configurations}
+\lstinputlisting{../FrontEnd.X/SRAM.h}
+\lstinputlisting{../FrontEnd.X/SRAMfront.c}
+\lstinputlisting{../FrontEnd.X/SRAMback.c}
+
+\subsection{SPI Initialization}
+\textit{Note: SPI used for communication with the LCD display}
+\lstinputlisting{../FrontEnd.X/startup.h}
+\lstinputlisting{../FrontEnd.X/startup.c}
+
+\subsection{Wireless Connectivity via Xbee}
+\lstinputlisting{../FrontEnd.X/xbee.h}
+\lstinputlisting{../FrontEnd.X/xbee.c}
+
 \end{document}
