@@ -230,7 +230,13 @@ void main() {
     while (1) {
 #if FRONT_NOT_BACK
 
-        sendBytes(test, 2);
+//        sendBytes(test, 2);
+
+        // get the updated cards
+        if (globalData.runGetUpdatedCards == 1) {
+         getUpdatedCards();
+         globalData.runGetUpdatedCards = FALSE;
+        }
 #else
         //        PORTAbits.AN1 = i2cData.inDataSequence;
         //        sendBytes(test, 1);
@@ -394,6 +400,7 @@ void systemSetup(GlobalState *data) {
     data->dataBlockNum = 0;
     data->dataSlotNum = 0;
     memset(data->dataBlock, 0, sizeof(char) * CARDBLOCKSIZE);
+    data->runGetUpdatedCards = FALSE;
 
     OpenTimer0(TIMER_INT_OFF & T0_SOURCE_INT & T0_PS_1_32);
 
@@ -416,3 +423,4 @@ void setupPWM(void) {
     TRISBbits.RB5 = 1; //disable PWM output
     SetDCPWM4(50); // Square wave
 }
+

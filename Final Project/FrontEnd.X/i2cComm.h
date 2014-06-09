@@ -39,6 +39,7 @@ extern "C" {
         unsigned char outLength;
         char dataIn[MAX_IN_LENGTH];
         unsigned char inLength;
+        int transmissionNum; // the curent transmission length
     } I2cDataStruct;
 
 #ifdef	__cplusplus

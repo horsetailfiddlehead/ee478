@@ -58,6 +58,7 @@ void i2CSetup() {
     memset(i2cData.dataOut, '\0', sizeof (char) * MAX_OUT_LENGTH);
     i2cData.inLength = 0;
     i2cData.outLength = 0;
+    i2cData.transmissionNum = 0;
 
     // setup D0, D1 as inputs
     TRISDbits.TRISD0 = 1;
@@ -103,16 +104,18 @@ void processI2C() {
     // parse data into parts
     switch (i2cData.dataIn[0]) {
         case CARD_CHANGE:
-            i2cData.dataOut[0] = REQUEST_CARD_UPDATE; // get update
-            i2cData.outLength = 1;
-            globalData.sendI2C = TRUE; // send the command
+            globalData.runGetUpdatedCards = TRUE;
+            readerData.availableUIDs;
             break;
         case CARD_UID:
-            newSlotNum = i2cData.dataIn[1]; // slot number
-            strncpy(readerData.readUID[newSlotNum], i2cData.dataIn[0], 8); // move UID
+            slotNum = i2cData.dataIn[1]; // slot number
+            strncpy(readerData.readUID[slotNum], i2cData.dataIn[0], 8); // move UID
             //            for (i = 2; i < i2cData.inLength; i++) {
             //                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
             //            }
+            if (readerData.availableUIDs < 4) { // get the next card
+                globalData.runGetUpdatedCards = TRUE;
+            }
             break;
         case CARD_DATA_BLOCK:
             globalData.dataSlotNum = i2cData.dataIn[1]; // get the clot number
@@ -141,6 +144,7 @@ void processI2C() {
             i2cData.dataOut[0] = CARD_UID;
             i2cData.dataOut[1] = slotNum;
             strncpy(i2cData.dataOut[2], readerData.readUID[slotNum], 8);
+            i2cData.outLength = 10;
             globalData.sendI2C = TRUE;
             break;
         case REQUEST_CARD_DATA:
@@ -153,7 +157,7 @@ void processI2C() {
             for (i = 3; i < 7; i++) {// read from sram
                 i2cData.dataOut[i] = readData(256 * slotNum + 4 * blockNum + (i - 3));
             }// format response
-
+            i2cData.outLength = 7;
             globalData.sendI2C = TRUE; // send the data
             break;
         case WRITE_CARD_BLOCK:
@@ -261,4 +265,13 @@ void sendStart() {
     SSP2CON2bits.SEN = 1; // send start bit
     i2cData.inDataSequence = TRUE;
     while (SSP2CON2bits.SEN == 1); // or use IdleI2C2()
+}
+
+//Front end only: requests the updated cards from the backend
+void getUpdatedCards() {
+#if FRONT_NOT_BACK
+    i2cData.dataOut[0] = REQUEST_CARD_UPDATE; // get update
+            i2cData.outLength = 1;
+            globalData.sendI2C = TRUE; // send the command
+#endif
 }

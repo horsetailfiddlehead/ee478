@@ -53,7 +53,7 @@ typedef struct {
     // If the user input was a single block read command
     short readFlag_1;
 
-    // Are the UIDs available to read?
+    // Are the UIDs available to read? Number of available UIDS
     int availableUIDs;
     
     // Read mode set?
