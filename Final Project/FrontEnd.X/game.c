@@ -741,7 +741,7 @@ void printSelect(GlobalState* globalData) {
     //    drawBoxFill(15, 29, 26, 85, BLACK)
     for (i = 0; i < 4; i++) {
         drawBoxFill(15, 29 + 35 * i, 26, 85, BLACK);
-        if ( i != 4) {
+        if ( i != 3) {
             printrs(20, 38 + 35 * i, WHITE, BLACK, myMonsterList[i].monsterName, 1);
             prints(20, 38 + 8 + 35 * i, WHITE, BLACK, "Lvl:", 1);
             integerprint(38, 38 + 8 + 35 * i, WHITE, BLACK, myMonsterList[i].level, 1);
