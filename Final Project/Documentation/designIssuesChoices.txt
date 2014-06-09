@@ -18,6 +18,21 @@ Choice reduces PIC outputs from 8 to 4 pins. Also chose to use only red/green be
 6/4: excessive voltage noise ~40-5-kHz on 3.3v power rail. Prevented proper operation of XBee (or sounds). Traced to Voltage regulator. 10uF bypass cap
 reduced levels to manageable limits, alloing correct operation of xbee and sounds.
 
+6/8: Decided to remove the motor driver due to lack of time incorporating into
+project. The software was written, just not enough time to test and
+incorporate. Not particularly concerned because of DLP built-in option
+
+6/9: hex buffers originally planned for clock buffering were not capable of
+driving outputs at 20MHz.
+
+XBee requires 3.3V power, all other components needed 5V. Could hav used less
+voltage on others, but would decrease performance. Solution was linear drop
+out regulator.
+
+Had difficulty properly resetting PICs. Solution was a change in the startup
+sequence. Turned off power supply to PICs before removing PICKit3 and forced a
+POR via MCLR pin to ensure PICs started correctly.
+
 Software
 
 5/24: Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function.
@@ -36,3 +51,15 @@ difficulty with initial implementation. port outputs were not occurring as expec
 6/7: Potential issue identified when  card is removed and replaced with new card. No way for front end to know it needs to update. two potential solutions: keep a "dirty bit" like flag to mark changes, or just resend entire board. Decided to resend entire board because it is simplest method without needing more overhead
 
 6/7: interpic communication scheme: a transmission consists of a command byte, plus additional information depending on the command. See interpic document
+
+6/7: opted to use the same backbone scheduler, scheme, and drivers for both
+sides of the device. Use of #if-else-endif to separate front/back specific
+capabilities. This required careful implementation and scheduler ordering.
+Example: the inventory command was sent twice, rather than once. re organzied
+how flags were tested and cleared to remove asserting key flags multiple times
+(the cuase of the double transmissions).
+
+6/8: designed i2c in manner differently than expected by game program. Game
+needed to be reconfigured to work with interrupts and scheduler. Primarily the
+use of while loops to poll and freeze program flow.
+
