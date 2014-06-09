@@ -32,3 +32,7 @@ difficulty with initial implementation. port outputs were not occurring as expec
 6/4: introduced a global variable FRONT_NOT_BACK that allows for separation of code specific to front end or back end.
 
 6/6: i2c decided to use master/slave switching scheme. both FE and BE stay in Slave mode until needing to transfer data, then swtich to master and send data. If interrupted, reverts to slave and gves an error (function will need to  resend). Also decided to implement slave addr and data clock holds to allow more control wrt accepting commands.
+
+6/7: Potential issue identified when  card is removed and replaced with new card. No way for front end to know it needs to update. two potential solutions: keep a "dirty bit" like flag to mark changes, or just resend entire board. Decided to resend entire board because it is simplest method without needing more overhead
+
+6/7: interpic communication scheme: a transmission consists of a command byte, plus additional information depending on the command. See interpic document
