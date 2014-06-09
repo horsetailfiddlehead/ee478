@@ -94,9 +94,11 @@ void i2CSetup() {
  * Process received commands
  */
 void processI2C() {
+    unsigned int slotNum;
+    unsigned int i;
+    unsigned char blockNum;
+    unsigned char data[4];
 #if FRONT_NOT_BACK // receives backends commands
-    int newSlotNum;
-    int i;
     // switch on command
     // parse data into parts
     switch (i2cData.dataIn[0]) {
@@ -108,14 +110,14 @@ void processI2C() {
         case CARD_UID:
             newSlotNum = i2cData.dataIn[1]; // slot number
             strncpy(readerData.readUID[newSlotNum], i2cData.dataIn[0], 8); // move UID
-//            for (i = 2; i < i2cData.inLength; i++) {
-//                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
-//            }
+            //            for (i = 2; i < i2cData.inLength; i++) {
+            //                readerData.readUID[newSlotNum][i] = i2cData.dataIn[i]; // move uid to slot
+            //            }
             break;
         case CARD_DATA_BLOCK:
             globalData.dataSlotNum = i2cData.dataIn[1]; // get the clot number
             globalData.dataBlockNum = i2cData.dataIn[2]; // get the block number
-            strncpy(globalData.dataBlock, i2cData.dataIn[3], 4);// copy the blcok data
+            strncpy(globalData.dataBlock, i2cData.dataIn[3], 4); // copy the blcok data
             break;
         case INVALID_COMMAND:
 
@@ -134,10 +136,25 @@ void processI2C() {
 #else
     switch (i2cData.dataOut[0]) {
         case REQUEST_CARD_UPDATE:
-
+            //send all four cards TODO:
+            // need to make sure all of these are sent somehow
+            i2cData.dataOut[0] = CARD_UID;
+            i2cData.dataOut[1] = slotNum;
+            strncpy(i2cData.dataOut[2], readerData.readUID[slotNum], 8);
+            globalData.sendI2C = TRUE;
             break;
         case REQUEST_CARD_DATA:
+            slotNum = i2cData.dataIn[1]; // get the requested slot
+            blockNum = i2cData.dataIn[2]; // get the requested block
+            i2cData.dataOut[0] = CARD_DATA_BLOCK; // cmd
+            i2cData.dataOut[1] = slotNum; // slot
+            i2cData.dataOut[2] = blockNum; // block
 
+            for (i = 3; i < 7; i++) {// read from sram
+                i2cData.dataOut[i] = readData(256 * slotNum + 4 * blockNum + (i-3));
+            }// format response
+
+            globalData.sendI2C = TRUE; // send the data
             break;
         case WRITE_CARD_BLOCK:
 
