@@ -154,24 +154,24 @@ void rcISR(void) {
             }
         } else if (globalData.lastCards & CARDSLOT_2) { //second slot
             if (presentCards & CARDSLOT_2) { // card is placed
-                ledData.ledStatus[1] = 0;
+                ledData.ledStatus[1] = 3;
                 globalData.readCard |= CARDSLOT_2;
             } else {
-                ledData.ledStatus[1] = 3;
+                ledData.ledStatus[1] = 0;
             }
         } else if (globalData.lastCards & CARDSLOT_3) { //third slot
             if (presentCards & CARDSLOT_3) { // card is placed
-                ledData.ledStatus[2] = 0;
+                ledData.ledStatus[2] = 3;
                 globalData.readCard |= CARDSLOT_3;
             } else {
-                ledData.ledStatus[2] = 3;
+                ledData.ledStatus[2] = 0;
             }
         } else if (globalData.lastCards & CARDSLOT_4) { // fourth slot
             if (presentCards & CARDSLOT_4) { // card is placed
-                ledData.ledStatus[3] = 0;
+                ledData.ledStatus[3] = 3;
                 globalData.readCard |= CARDSLOT_4;
             } else {
-                ledData.ledStatus[3] = 3;
+                ledData.ledStatus[3] = 0;
             }
         }
         globalData.updateLEDFlag = TRUE; // tell led driver to update leds

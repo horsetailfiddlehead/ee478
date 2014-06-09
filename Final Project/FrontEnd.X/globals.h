@@ -40,7 +40,7 @@ extern "C" {
 #include "i2cComm.h"
 #include "xbee.h"
 
-#define FRONT_NOT_BACK 1 // is this the Front end or backend (should move to globals)
+#define FRONT_NOT_BACK 0 // is this the Front end or backend (should move to globals)
 
 #define CARDSLOT_1 0b00010000
 #define CARDSLOT_2 0b00100000
