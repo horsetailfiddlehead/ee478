@@ -28,10 +28,10 @@ void LEDSetup(void) {
     memset(ledData.ledStatus, 0x03, sizeof(char) * NUM_SLOTS);
     updateLEDs();
     
-    
+    PORTB = 0;
     LATB = PORTB ; // clear existing mismatch conditions
 
-    IOCB = 0x30; // enable IOC interrupts on pins B4:B7
+    IOCB = 0xF0; // enable IOC interrupts on pins B4:B7
     INTCONbits.RBIE = 1; // enable PortB interrupts
     INTCON2bits.RBIP = 1; // set priority level to high
     INTCONbits.GIE = 1; // enable general purpose interrupts
