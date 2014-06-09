@@ -162,7 +162,7 @@ void processI2C() {
             blockNum = i2cData.dataIn[2]; //get block
             strncpy(&data[0], &i2cData.dataIn[3], 4); // get data bytes
             // move to card
-            writeRFID(readerData.readUID[slotNum], blockNum, (data[0] << 8 | data[1]), (data[2] << 8 | data[3])); // write
+            writeRFID(readerData.readUID[slotNum], blockNum, ((int)data[0] << 8 | (int)data[1]), ((int)data[2] << 8 | (int)data[3])); // write
             break;
         case WRITE_AFI:
 

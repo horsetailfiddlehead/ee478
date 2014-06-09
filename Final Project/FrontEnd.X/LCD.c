@@ -612,58 +612,46 @@ void printMenu(char** select, int background, int box, int boxBorder, int text, 
 
 // Prints cursor and processes the selection based off of the index i
 // Top of List [ 0 1 2 3] Bottom of List
-int processPrintCursor(GlobalState* globalData, int size, int background, int text) {
-    int i = 0;
-    prints(25, 40, text, background, ">", 1);
-    globalData->keyPress = -1;
-    // Continue scanning the keypad until the user hits "D" for enter
-    while (globalData->keyPress != 0x0D) {
-        // Check keystroke
-        keypad(globalData);
-        if (globalData->keyFlag && !globalData->displayedKey) {
-            globalData->keyFlag = FALSE;
-            globalData->displayedKey = TRUE;
-            // Change index i based off of whether user moves up or down
-            switch (globalData->keyPress) {
-                 // Move up = Press 2
-                case 0x02:
-                    // Clear original cursor
-                    prints(25, 20 * i + 40, text, background, " ", 1);
 
-                    // Find new position of cursor
-                    i = ((size + i) - 1) % size;
+void processPrintCursor(GlobalState* globalData, int size, int background, int text) {
 
-                    // Print cursor in new position
-                    prints(25, 20 * i + 40, text, background, ">", 1);
-                    break;
-                // Move down = Press 8
-                case 0x08:
-                    // Clear original cursor
-                    prints(25, 20 * i + 40, text, background, " ", 1);
+    switch (globalData->keyPress) {
+            // Move up = Press 2
+        case 0x02:
+            // Clear original cursor
+            prints(25, 20 * globalData->cursorPos + 40, text, background, " ", 1);
 
-                    // Find new position of cursor
-                    i = (i + 1) % size;
+            // Find new position of cursor
+            globalData->cursorPos = ((size + globalData->cursorPos) - 1) % size;
 
-                    // Print cursor in new position
-                    prints(25, 20 * i + 40, text, background, ">", 1);
-                    break;
-                // Hit back button "B"
-                case 0x0B:
-                    i = 0xFF;
-                    // Break out of while loop - hitting B takes priority
-                    globalData->keyPress = 0x0D;
-                    break;
-                case 0x0D:
-                    prints(25, 20 * i + 40, text, background, ">>>", 1);
-                    break;
-                default:
-                    break;
-            }
-        }
+            // Print cursor in new position
+            prints(25, 20 * globalData->cursorPos + 40, text, background, ">", 1);
+            break;
+            // Move down = Press 8
+        case 0x08:
+            // Clear original cursor
+            prints(25, 20 * globalData->cursorPos + 40, text, background, " ", 1);
+
+            // Find new position of cursor
+            globalData->cursorPos = (globalData->cursorPos + 1) % size;
+
+            // Print cursor in new position
+            prints(25, 20 * globalData->cursorPos + 40, text, background, ">", 1);
+            break;
+            // Hit back button "B"
+        case 0x0B:
+            globalData->cursorPos = 0xFF;
+            globalData->newDisplay = 1;
+            break;
+        case 0x0D:
+            prints(25, 20 * globalData->cursorPos + 40, text, background, ">>>", 1);
+            globalData->newDisplay = 1;
+            break;
+        default:
+            break;
     }
-    // Return index to indicate cursor position
-    return i;
 }
+
 
 /* The following functions are print functions for the operating system of the
  * device.
@@ -673,9 +661,10 @@ int processPrintCursor(GlobalState* globalData, int size, int background, int te
 void printMainMenu(GlobalState* globalData) {
     // LCD menu
     // Main Menu Array
-    const rom char *mainMenu[3] = {"Single", "Multiplayer", "Build Card"};
+    const rom char *mainMenu[3] = {"Singleplayer", "Multiplayer", "Build Card"};
     printMenu(mainMenu, BLUE, CYAN, WHITE, WHITE, 3);
     prints(35, 7, WHITE, CYAN, "Main Menu", 1);
+    prints(25, 40, WHITE, BLUE, ">", 1);
 
     /*
     clean(BLUE);
@@ -695,6 +684,7 @@ void printSelectGame(GlobalState *globalData) {
 
     printMenu(selectGame, GREEN, YELLOW, BLACK, BLACK, 4);
     prints(25, 7, BLACK, YELLOW, "Available Games:", 1);
+    prints(25, 40, BLACK, GREEN, ">", 1);
     prints(0, H - 8, BLACK, YELLOW, "2-UP,8-DOWN,D-ENTER", 1);
 }
 
@@ -749,7 +739,7 @@ void mainMenu(GlobalState* globalData) {
         printMainMenu(globalData);
         globalData->goBack = FALSE;
     }
-    globalData->mode = processPrintCursor(globalData, 3, BLUE, WHITE);
+    processPrintCursor(globalData, 3, BLUE, WHITE);
     // Switch menus based off of selection
     switch (globalData->mode) {
         // Single Player
@@ -771,7 +761,7 @@ void mainMenu(GlobalState* globalData) {
 void selectGameMenu(GlobalState* globalData) {
     // Print select game menu
     printSelectGame(globalData);
-    globalData->game = processPrintCursor(globalData, 4, GREEN, BLACK);
+   processPrintCursor(globalData, 4, GREEN, BLACK);
     // Run chosen game based off of the multiplayer/single-player mode
     switch (globalData->game) {
         // Game Slot 1
