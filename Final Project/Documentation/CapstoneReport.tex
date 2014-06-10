@@ -59,6 +59,7 @@
 %\usepackage{subfig}   % make it possible to include more than one captioned figure/table in a single float
 \usepackage{subcaption}
 \usepackage{adjustbox}
+\usepackage{placeins} % allows for use of \FloatBarrier to prevent floats from moving past line.
 
 %%% HEADERS & FOOTERS
 %\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -118,18 +119,11 @@
 % Brief introduction and overview of the purpose of the lab and of the methods
 % and tools used.
 
-\section{Discussion of the Lab}
 
 % This section should include the following:
 
-\subsection{Design Specification}
-
-% In this subsection you will textually describe your client's requirements.
-% What does he or she need in the project you are developing.  If you are
-% incorporating extra features or capabilities, please describe them clearly in
-% this section.
-
-A reference to Table~\ref{table:ex} and one to the Design Specification, Section~\ref{sec:designSpec}.
+\textbf{These are some example of how to cite and use bullet points}
+A reference to Table~\ref{tab:bomTable} and one to the Design Specification, Section~\ref{sec:designSpec}.
 
 \begin{itemize}
 	\item Overall summary description of the module - 2-3 paragraphs maximum
@@ -150,45 +144,75 @@ A reference to Table~\ref{table:ex} and one to the Design Specification, Section
 		\end{itemize}
 \end{itemize}
 
-\begin{table}[h]
-	\begin{tabular}{llll}
-		\textbf{Item}         & \textbf{Cost} & \textbf{Quantity} & \textbf{Total Cost} \\
-		TI RFID Tags          & 0.91          & 20                & 18.20               \\
-		RFID Reader/Writer    & 50            & 3                 & 150                 \\
-		Xbee Wireless Chips   & 30            & 2                 & 60                  \\
-		PLA Makerbot Filament & 48            & 1                 & 48                  \\
-		GAL22V10D             & 3.5           & 4                 & 14                  \\
-		PICKit 3              & 45            & 2                 & 90                  \\
-		SRAM                  & 4             & 2                 & 8                   \\
-		3.3 Voltage Regulator & 3.22          & 2                 & 6.44                \\
-		Lever Switches        & 2.5           & 6                 & 15                  \\
-		16-key Numeric Keypad & 7.5           & 2                 & 15                  \\
-		128x169 Color LCD     & 17            & 2                 & 34                  \\
-		PIC Microcontrollers  & 7.7           & 4                 & 30.8                \\
-		RGB Common Cathode    & 4             & 8                 & 12                  \\
-		(EXTRA)               &               &                   &                     \\
-		(EXTRA)               &               &                   &                     \\
-		(EXTRA)               &               &                   &                    
-	\end{tabular}
-\end{table}
 
-\subsection{Design Specification\label{sec:designSpec}} 
+\section{Design Specification}\label{sec:designSpec} 
+% In this subsection you will textually describe your client's requirements.
+% What does he or she need in the project you are developing.  If you are
+% incorporating extra features or capabilities, please describe them clearly in
+% this section.
 
-\subsubsection{Design Requirement\label{sec:requirements}} % Patrick , additions by Alyanna, Ryan
+\subsubsection{Design Overview}
+This system is a RFID-based gaming system. A user is able to play alone against a computer, or can play with other users owning a system using a multiplayer connection feature. Additionally, users can create their own customized cards using a third built-in function of the device.
 
-\subsubsection{Identified Use Cases\label{sec:identifiedUseCases}} % Alyanna
+\subsection{Design Requirements}\label{sec:requirements} % Patrick , additions by Alyanna, Ryan
+\subsubsection{Environmental Requirements}
 
-\subsubsection{Detailed Specifications\label{detailedSpec}} % Ryan
+The device must operate in an indoor/outdoor environment with relative
+humidity consistent with desert and tropical environments. It must be durable
+enough to withstand various types of users, especially small children.  The
+unit is to be portable and battery operated.
 
-\subsubsection{Functional Decomposition\label{functions}} % Patrick
+\subsubsection{System Input and Output Requirements}
 
-\subsection{Hardware Implementation\label{hwImplementation}} 
+The system must be capable of accepting several different types of signals and inputs:
 
-\subsubsection{Top Level Design\label{hwTopLevel}} % Patrick
+\begin{itemize}
+	\item Standard frequencies used for close-range or Near-Field Communication Radio Frequency Identification (RFID) devices
+	\item Standard frequencies used for commercial wireless communication standards such as wifi networks
+	\item User input from a keypad to navigate menus, enter commands, and provide other alphanumeric information
+	\item When in multiplayer mode, communication and commands from other players must be accepted and responded to.
+\end{itemize}
 
-\subsubsection{Low Level Design\label{hwLowLevel}} % Patrick
+The system must be capable of providing the following outputs:
+\begin{itemize}
+	\item Display information about the current game state through an LCD screen
+	\item Provide status information of individual cards placed on the game board
+	\item Send commands to other systems when in multiplayer mode
+	\item Send wireless signals to program RFID-enabled cards
+\end{itemize}
 
-\subsection{Software Implementation\label{swImplementation}}
+\subsubsection{User Interface}
+
+The system must support the following modes of operation:
+
+\begin{description}
+	\item[Single Player:] Allows the user to select from, and play, single player games. Upon entering Single Player mode, the system prompts the user to select a game to play from those stored in memory. Selecting a valid game loads the game from memory and begins game execution.
+	\item[Multiplayer:] Allows the user to select and play multiplayer games. Upon entering Multiplayer mode, the system activates wireless communication and attempts to connect to other users in Multiplayer mode. Once a connection is established, the users select a multiplayer game on both systems and gameplay begins.
+	\item[Build Card:] Allows the user to create custom cards for a game. The data stored will vary based on game requirements. All cards must contain unique card serial numbers or identifing ID numbers, and a code that specifies which games the card is valid for.
+\end{description}
+
+The system must also have the following buttons, switches or interface devices:
+
+\begin{itemize}
+	\item 16-button keypad with alphanumeric character labels
+	\item Reset button that when pressed causes a soft reset of the system
+	\item Power button that turns the system on and off
+	\item An LCD screen viewable from several angles. The screen must be viewable indoors and in overcast conditions
+\end{itemize}
+
+\subsection{Identified Use Cases}\label{sec:identifiedUseCases} % Alyanna
+
+\subsection{Detailed Specifications}\label{detailedSpec} % Ryan
+
+\subsection{Functional Decomposition}\label{functions} % Patrick
+
+\section{Hardware Implementation}\label{hwImplementation} 
+
+\subsection{Top Level Design}\label{hwTopLevel} % Patrick
+
+\subsection{Low Level Design}\label{hwLowLevel} % Patrick
+
+\section{Software Implementation}\label{swImplementation}
 %
 %What is your design????
 %
@@ -199,12 +223,12 @@ A reference to Table~\ref{table:ex} and one to the Design Specification, Section
 %processes/tasks you have implemented in your design. Explain your design
 %choices.    
 
-\subsubsection{Top Level Design\label{swTopLevel}} % Alyanna
+\subsection{Top Level Design}\label{swTopLevel} % Alyanna
 %
 %Put stuff here about the functional decomposition, system architecture,
 %interaction of parts.
 
-\subsubsection{Low Level Design\label{swLowLevel}} % Alyanna
+\subsection{Low Level Design}\label{swLowLevel} % Alyanna
 %
 %task level implementation details here. Control diagram goes here, etc.
 
@@ -296,183 +320,219 @@ dispensations are due others or myself, I have indicated them below.
 
 \pagebreak
 
-\section{Hardware Diagrams\label{appendix:hwDiagrams}}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{images/BlockDiagram.png}
-	\caption{High level block diagram of the system hardware components}
-	\label{fig:highLevelBlockDiagram}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{images/SRAMHardwareBlock.png}
-	\caption{Block diagram of the SRAM hardware system}
-	\label{fig:sramBlockDiagram}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=4in]{images/PinOuts.png}
-	\caption{Pinouts to the front- and back-end microcontrollers}
-	\label{fig:pinoutDiagram}
-\end{figure}
-
-\section{Functional Decomposition Diagram\label{fig:funcDecomp}}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{images/funDecomp.png}
-	\caption{Software functional decomposition showing the major functional divisions and tasks}
-	\label{fig:funDecomp}
-\end{figure}
-
-\section{State Diagrams}
-\subsection{System State Diagram\label{fig:sysStateDiagram}}
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}{0.48\textwidth}
-		\includegraphics[width=\textwidth]{images/overallSystemDiagram.png}
-		\caption{}
-		\label{fig:sysStates}
-	\end{subfigure}
-	~
-	\begin{subfigure}{0.48\textwidth}
-		\includegraphics[width=\textwidth]{images/OSStates.png}
-		\caption{}
-		\label{fig:statesLegend}
-	\end{subfigure}
-	\caption{State diagram of the primary operating system.
-		Figure~\ref{fig:sysStates} shows the states while
-		Figure~\ref{fig:statesLegend} provides a legend}
-	\label{fig:systemStateDiagram}
-\end{figure}
-
-\subsection{General Gameplay State Diagram\label{appendix:gameplayDiagram}}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{images/gamePlayState.png}
-	\caption{State diagram of basic turn-based game}
-	\label{fig:gamePlayState}
-\end{figure}
-
-\section{Control Flow Diagrams}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.75\textwidth]{images/keypadDataFlow.png}
-	\caption{Keypad response}
-	\label{fig:keypadDataFlow}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{images/reactionDataFlow.png}
-	\caption{Card Reaction LEDs}
-	\label{fig:cardReactionDataFlow}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{images/RFIDreaderDataFlow.png}
-	\caption{RFID tag reader subsystem}
-	\label{fig:rfidDataFlow}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}{\textwidth}
-	\includegraphics[width=\textwidth]{images/I2CReceiveDataCtrlFlow.png}
-	\caption{}
-	\label{fig:i2cReceiveFlow}
-	\end{subfigure}
-
-	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{images/I2CSendCtrlFlow.png}
-		\caption{}
-		\label{fig:i2cSendFlow}
-	\end{subfigure}
-	\caption{I2C communication between microcontrollers. Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
-	\label{fig:i2cCtrlFlow}
-\end{figure}
-
-\section{Project Schedule\label{appendix:ganttChart}}
-\begin{figure}[H]
-	\centering
-	\begin{adjustbox} {rotate=90,center}
-		\includegraphics[width=\textwidth]{images/NewGantt.pdf}
-	\end{adjustbox}
-	\caption{Project Gantt Chart}
-	\label{fig:ganttChart}
-\end{figure}
-
-\clearpage
-\section{Source Code}
-% We will put code here. Use the format:
-%    \subsection{Main Function}
-%    \lstinputlisting{../code/main.c}
+%\section{Bill of Materials\label{appendix:bom}}
+%Table~\ref{tab:bomTable} lists the bill of materials for the construction of one system.
 %
-%    \subsection{Tasks}
-%    \subsubsection{Task Control Blocks}
-%    \lstinputlisting{../code/tcb.h}
-Source code for this project is provided below.
-
-\subsection{System Scheduler}
-The system-wide global definitions and variables are also given here for convenience.
-\lstinputlisting{../FrontEnd.X/globals.h}
-\lstinputlisting{../FrontEnd.X/interrupts.h}
-\lstinputlisting{../FrontEnd.X/SchedMain.c}
-
-\subsection{Creating Cards}
-\lstinputlisting{../FrontEnd.X/buildCard.c}
-
-\subsection{Example Game}
-Both a single player and multiplayer version of the same game are provided.
-\lstinputlisting{../FrontEnd.X/game.h}
-\lstinputlisting{../FrontEnd.X/game.c}
-
-\subsection{I$^2$C InterPIC Communication}
-\lstinputlisting{../FrontEnd.X/i2cComm.h}
-\lstinputlisting{../FrontEnd.X/i2cComm.c}
-
-\subsection{Keypad Driver}
-\lstinputlisting{../FrontEnd.X/keypadDriver.h}
-\lstinputlisting{../FrontEnd.X/keypadDriver.c}
-
-\subsection{LCD Driver}
-\lstinputlisting{../FrontEnd.X/LCD.h}
-\lstinputlisting{../FrontEnd.X/LCD.c}
-
-\subsection{Card Reaction Control}
-\lstinputlisting{../FrontEnd.X/LED.h}
-\lstinputlisting{../FrontEnd.X/LED.c}
-
-\subsection{Motor Driver}
-\textit{Note: This feature was not implemented in the final product}
-\lstinputlisting{../FrontEnd.X/motorDriver.h}
-\lstinputlisting{../FrontEnd.X/motorDriver.c}
-
-\subsection{RFID Reader Driver}
-\lstinputlisting{../FrontEnd.X/rfidReader.h}
-\lstinputlisting{../FrontEnd.X/rfidReader.c}
-
-\subsection{EIA-232 Serial Connection}
-\lstinputlisting{../FrontEnd.X/rs232.h}
-\lstinputlisting{../FrontEnd.X/rs232.c}
-
-\subsection{SRAM Primary Memory}
-\textit{Note: There are two different files for each microcontroller due to hardware configurations}
-\lstinputlisting{../FrontEnd.X/SRAM.h}
-\lstinputlisting{../FrontEnd.X/SRAMfront.c}
-\lstinputlisting{../FrontEnd.X/SRAMback.c}
-
-\subsection{SPI Initialization}
-\textit{Note: SPI used for communication with the LCD display}
-\lstinputlisting{../FrontEnd.X/startup.h}
-\lstinputlisting{../FrontEnd.X/startup.c}
-
-\subsection{Wireless Connectivity via Xbee}
-\lstinputlisting{../FrontEnd.X/xbee.h}
-\lstinputlisting{../FrontEnd.X/xbee.c}
-
-\end{document}
+%\begin{table}[h]
+%	\begin{tabular}{llll}
+%		\multicolumn{4} {c} {\textbf{Bill of Materials}} \\
+%		\toprule
+%		\textbf{Item}                         & \textbf{Unit Cost} & \textbf{Quantity} & \textbf{Total Cost} \\ \midrule
+%		TI HI-Plus RFID Tags                  & 0.91          & 20                & 18.20               \\
+%		DLP-RFID2 RFID Reader/Writer          & 50            & 3                 & 150                 \\
+%		Xbee S1 Wireless Chips                & 30            & 2                 & 60                  \\
+%		PLA Makerbot Filament                 & 48            & 1                 & 48                  \\
+%		GAL22V10D                             & 3.5           & 4                 & 14                  \\
+%		PICKit 3                              & 45            & 2                 & 90                  \\
+%		CY7C128A SRAM                         & 4             & 2                 & 8                   \\
+%		3.3 Volt Linear Regulator             & 3.22          & 2                 & 6.44                \\
+%		Lever Switch, micro SPDT, momentary   & 2.5           & 6                 & 15                  \\
+%		16-key Numeric Keypad                 & 7.5           & 2                 & 15                  \\
+%		128x169 Color LCD                     & 17            & 2                 & 34                  \\
+%		PIC18F46K22 Microcontrollers          & 7.7           & 4                 & 30.8                \\
+%		RGB LED, Common Cathode               & 4             & 8                 & 12                  \\
+%		(EXTRA)                               &               &                   &                     \\
+%		(EXTRA)                               &               &                   &                     \\
+%		(EXTRA)                               &               &                   &                     \\ \bottomrule
+%		Total Cost                            &               &                   &                    
+%	\end{tabular}
+%	\caption{\label{tab:bomTable}}
+%\end{table}
+%
+%\FloatBarrier
+%\section{Hardware Diagrams\label{appendix:hwDiagrams}}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\textwidth]{images/BlockDiagram.png}
+%	\caption{High level block diagram of the system hardware components}
+%	\label{fig:highLevelBlockDiagram}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{images/SRAMHardwareBlock.png}
+%	\caption{Block diagram of the SRAM hardware system}
+%	\label{fig:sramBlockDiagram}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[height=4in]{images/PinOuts.png}
+%	\caption{Pinouts to the front- and back-end microcontrollers}
+%	\label{fig:pinoutDiagram}
+%\end{figure}
+%
+%\FloatBarrier
+%\section{Functional Decomposition Diagram\label{fig:funcDecomp}}
+%
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\textwidth]{images/funDecomp.png}
+%	\caption{Software functional decomposition showing the major functional divisions and tasks}
+%	\label{fig:funDecomp}
+%\end{figure}
+%
+%\FloatBarrier
+%\section{State Diagrams}
+%\FloatBarrier
+%\subsection{System State Diagram\label{fig:sysStateDiagram}}
+%\begin{figure}[H]
+%	\centering
+%	\begin{subfigure}{0.48\textwidth}
+%		\includegraphics[width=\textwidth]{images/overallSystemDiagram.png}
+%		\caption{}
+%		\label{fig:sysStates}
+%	\end{subfigure}
+%	~
+%	\begin{subfigure}{0.48\textwidth}
+%		\includegraphics[width=\textwidth]{images/OSStates.png}
+%		\caption{}
+%		\label{fig:statesLegend}
+%	\end{subfigure}
+%	\caption{State diagram of the primary operating system.
+%		Figure~\ref{fig:sysStates} shows the states while
+%		Figure~\ref{fig:statesLegend} provides a legend}
+%		\label{fig:systemStateDiagram}
+%	\end{figure}
+%
+%	\FloatBarrier
+%	\subsection{General Gameplay State Diagram\label{appendix:gameplayDiagram}}
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/gamePlayState.png}
+%		\caption{State diagram of basic turn-based game}
+%		\label{fig:gamePlayState}
+%	\end{figure}
+%
+%	\FloatBarrier
+%	\section{Control Flow Diagrams}
+%
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=0.75\textwidth]{images/keypadDataFlow.png}
+%		\caption{Keypad response}
+%		\label{fig:keypadDataFlow}
+%	\end{figure}
+%
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{images/reactionDataFlow.png}
+%		\caption{Card Reaction LEDs}
+%		\label{fig:cardReactionDataFlow}
+%	\end{figure}
+%
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=0.8\textwidth]{images/RFIDreaderDataFlow.png}
+%		\caption{RFID tag reader subsystem}
+%		\label{fig:rfidDataFlow}
+%	\end{figure}
+%
+%	\begin{figure}[H]
+%		\centering
+%		\begin{subfigure}{\textwidth}
+%			\includegraphics[width=\textwidth]{images/I2CReceiveDataCtrlFlow.png}
+%			\caption{}
+%			\label{fig:i2cReceiveFlow}
+%		\end{subfigure}
+%
+%		\begin{subfigure}{\textwidth}
+%			\includegraphics[width=\textwidth]{images/I2CSendCtrlFlow.png}
+%			\caption{}
+%			\label{fig:i2cSendFlow}
+%		\end{subfigure}
+%		\caption{I2C communication between microcontrollers. Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
+%		\label{fig:i2cCtrlFlow}
+%	\end{figure}
+%
+%	\FloatBarrier
+%	\section{Project Schedule\label{appendix:ganttChart}}
+%	\begin{figure}[H]
+%		\centering
+%		\begin{adjustbox} {rotate=90,center}
+%			\includegraphics[width=\textwidth]{images/NewGantt.pdf}
+%		\end{adjustbox}
+%		\caption{Project Gantt Chart}
+%		\label{fig:ganttChart}
+%	\end{figure}
+%
+%	\clearpage
+%	\section{Source Code}
+%% We will put code here. Use the format:
+%%    \subsection{Main Function}
+%%    \lstinputlisting{../code/main.c}
+%%
+%%    \subsection{Tasks}
+%%    \subsubsection{Task Control Blocks}
+%%    \lstinputlisting{../code/tcb.h}
+%	Source code for this project is provided below.
+%
+%	\subsection{System Scheduler}
+%	The system-wide global definitions and variables are also given here for convenience.
+%	\lstinputlisting{../FrontEnd.X/globals.h}
+%	\lstinputlisting{../FrontEnd.X/interrupts.h}
+%	\lstinputlisting{../FrontEnd.X/SchedMain.c}
+%
+%	\subsection{Creating Cards}
+%	\lstinputlisting{../FrontEnd.X/buildCard.c}
+%
+%	\subsection{Example Game}
+%	Both a single player and multiplayer version of the same game are provided.
+%	\lstinputlisting{../FrontEnd.X/game.h}
+%	\lstinputlisting{../FrontEnd.X/game.c}
+%
+%	\subsection{I$^2$C InterPIC Communication}
+%	\lstinputlisting{../FrontEnd.X/i2cComm.h}
+%	\lstinputlisting{../FrontEnd.X/i2cComm.c}
+%
+%	\subsection{Keypad Driver}
+%	\lstinputlisting{../FrontEnd.X/keypadDriver.h}
+%	\lstinputlisting{../FrontEnd.X/keypadDriver.c}
+%
+%	\subsection{LCD Driver}
+%	\lstinputlisting{../FrontEnd.X/LCD.h}
+%	\lstinputlisting{../FrontEnd.X/LCD.c}
+%
+%	\subsection{Card Reaction Control}
+%	\lstinputlisting{../FrontEnd.X/LED.h}
+%	\lstinputlisting{../FrontEnd.X/LED.c}
+%
+%	\subsection{Motor Driver}
+%	\textit{Note: This feature was not implemented in the final product}
+%	\lstinputlisting{../FrontEnd.X/motorDriver.h}
+%	\lstinputlisting{../FrontEnd.X/motorDriver.c}
+%
+%	\subsection{RFID Reader Driver}
+%	\lstinputlisting{../FrontEnd.X/rfidReader.h}
+%	\lstinputlisting{../FrontEnd.X/rfidReader.c}
+%
+%	\subsection{EIA-232 Serial Connection}
+%	\lstinputlisting{../FrontEnd.X/rs232.h}
+%	\lstinputlisting{../FrontEnd.X/rs232.c}
+%
+%	\subsection{SRAM Primary Memory}
+%	\textit{Note: There are two different files for each microcontroller due to hardware configurations}
+%	\lstinputlisting{../FrontEnd.X/SRAM.h}
+%	\lstinputlisting{../FrontEnd.X/SRAMfront.c}
+%	\lstinputlisting{../FrontEnd.X/SRAMback.c}
+%
+%	\subsection{SPI Initialization}
+%	\textit{Note: SPI used for communication with the LCD display}
+%	\lstinputlisting{../FrontEnd.X/startup.h}
+%	\lstinputlisting{../FrontEnd.X/startup.c}
+%
+%	\subsection{Wireless Connectivity via Xbee}
+%	\lstinputlisting{../FrontEnd.X/xbee.h}
+%	\lstinputlisting{../FrontEnd.X/xbee.c}
+%
+	\end{document}
