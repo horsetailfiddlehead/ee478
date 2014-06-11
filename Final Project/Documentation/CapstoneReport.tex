@@ -353,7 +353,7 @@ A user will be provided with a deck of RFID cards that contain data about whatev
 \begin{itemize}
 	\item Read/Write Cards: 
 		\begin{itemize}
-			\item Communicate w/ DLP: The chosen RFID reader is the DLP-RFID2 reader/writer module. The system must communicate with this reader using the RS-232 protocol at TTL voltage levels. The communication link must be at 115200 Baud, 8-bits, 1 stop bit, and no parity check. The commands to the RFID reader are specified in TRF7960_ISO15693_protocol.pdf 
+			\item Communicate w/ DLP: The chosen RFID reader is the DLP-RFID2 reader/writer module. The system must communicate with this reader using the RS-232 protocol at TTL voltage levels. The communication link must be at 115200 Baud, 8-bits, 1 stop bit, and no parity check. The commands to the RFID reader are specified in TRF7960\_ISO15693\_protocol.pdf 
 			\item Traverse card data: The system must read up to five cards
 			\item Quantity of Cards: The Reader must be able to read and write to 5 cards at a time.
 			\item Write Card: Data must be written to the card according to the ISO 15693 standard. The structure of data contained on the card may vary with the game associated with the card. The following data locations must be present:
@@ -363,7 +363,7 @@ A user will be provided with a deck of RFID cards that contain data about whatev
 					\item Display name – The name of the card as displayed to the user
 					\item Associated Programs – A code that identifies the card as valid for a specific game set.
 				\end{itemize}
-			\end{itemize}
+		\end{itemize}
 	\item Access Database
 		\begin{itemize}
 			\item Read Data to SRAM: The system must be capable of requesting data from the SRAM using a byte-addressing scheme. The returned data must be received as an 8-bit word in parallel.
@@ -381,14 +381,15 @@ A user will be provided with a deck of RFID cards that contain data about whatev
 					\item Player options
 				\end{itemize}
 			\item Card Reactions: When a card is placed on the reader, the system must acknowledge the card through a series of LEDs. If the card is read/accepted as valid, green appears. If the card cannot be read, red appears. Additional colors may indicate other statuses
-\item External Communications (ExtCom): 
-a.	Xbee: The system must be capable of maintaining a connection with another system using the XBee wireless standard over a minimum distance of 5 feet. Data transmission must occur at 250kbs. 
-b.	RS-232 connection: The system must be capable of maintaining an EIA-232 serial connection with an external computer system. Data sent must be at 9600 baud, 8-bit, 1-stop bit, and no priority.
-c.	Wireless Driver: The driver must be capable of sending commands to initiate connections, acknowledge received data, sending data, and terminating a connection
-d.	RS-232 Driver: The driver must be capable of sending strings of data up to 20 characters in length. The encoding must use the extended ASCII table.
+		\end{itemize}
+	\item External Communications (ExtCom): 
+		a.	Xbee: The system must be capable of maintaining a connection with another system using the XBee wireless standard over a minimum distance of 5 feet. Data transmission must occur at 250kbs. 
+		b.	RS-232 connection: The system must be capable of maintaining an EIA-232 serial connection with an external computer system. Data sent must be at 9600 baud, 8-bit, 1-stop bit, and no priority.
+		c.	Wireless Driver: The driver must be capable of sending commands to initiate connections, acknowledge received data, sending data, and terminating a connection
+		d.	RS-232 Driver: The driver must be capable of sending strings of data up to 20 characters in length. The encoding must use the extended ASCII table.
 \end{itemize}
 
- 
+
 \subsection{Functional Decomposition}\label{functions} % Patrick
 
 Figure~\ref{fig:funDecomp} in Appendix~\ref{fig:funcDecomp} gives a hierarchy
@@ -488,28 +489,28 @@ The software implementation for the RFID interaction suite consisted of developi
 			\item Execute Game: After a game flag has been set, the game would run until a player has finished.
 		\end{itemize}
 	\item Read/Write Cards
-		\begin(itemize)
+		\begin{itemize}
 			\item Scan for New Cards: During game mode or build card mode, the system would scan for new cards via the RFID reader/writer.
 			\item Write Card: During the "build card" part of the game, the user would be able to write data to the cards through the RFID reader/writer. The user would have the ability to add a name and attack moves to the card through the external keypad and the in-game keyboard.
 			\item Read card: During game mode, the system would check for available cards to work with. If a player was in the middle of a duel, the system would scan for new cards to use for gameplay. If a reader was trying to build new cards, the system would look for available cards to be modified.
-		\end(itemize)
+		\end{itemize}
 	\item Access Database
-		\begin(itemize)
+		\begin{itemize}
 			\item Read Data to SRAM: Reads game-relevent data. For example, when a game is to be loaded, the system load the game from the SRAM. Or if the computer were to read in a monster during a single player duel game, it would access the database of monsters.
 			\item Write Data to SRAM: Writes new game data. If new monsters or games were to be added to the system, it would be written to the SRAM for future use.
 			\item Look Up / Reference Table: Used as a reference for memory locations of data in the SRAM \(i.e. ''Phone book''\).
-		\end(itemize)
+		\end{itemize}
 	\item External Communication
-		\begin(itemize)
+		\begin{itemize}
 			\item RS232 Driver: The back end of the system uses the USART to communicate with the Xbee wireless chips and RFID drivers. Information was sent out or recieved by the system through these peripherals.
 			\item Wireless Driver: In addition to the RS232, a driver for the Xbee wireless had to be implemented to allow the system to communicate with other users during the multiplayer game.
-		\end(itemize)	
+		\end{itemize}	
 	\item User Interaction
-		\begin(itemize)
+		\begin{itemize}
 			\item Read Keypad: A driver was made to read key presses from the user. Different parts of the system could read the keypad using functions built in this driver.
 			\item Display: An LCD driver was modified to develo
 			\item Card Reaction: An LED driver was made to control the LED lights of the RFID interaction suite. This would indicate to the user whether a card had been properly registered or not, based off of the color of the lights.
-		\end(itemize)
+		\end{itemize}
 \end{itemize}
 
 
@@ -523,12 +524,12 @@ A major software component of the RFID interaction suite were the built in games
 
 \begin{itemize}
 	\item LCD.c and LCD.h
-		\item The majority of documentation for our ST7735 1.8 TFT LCD screen did not include example code for how to use the screen. Most tutorials or example code \(i.e. Adafruit\) assumed that the user would be programming on an Arduino UNO, which had built in libraries for fonts and shapes. The link below features code found on Google which interfaces the LCD with a PIC microcontroller using the chip's SPI function. However the code was not optomized, thus LCD.c and LCD.h are modified versions of the code. The original drawBox function in LCD.c created a box pixel by pixel - it would take a beginning pixel location and an ending pixel location, causing load times to take longer. The new box function takes the beginning and end coordinates for the box and fills everything in between by printing out pixels all at once. Another function printrs was made to take a char pointer to a string and print it out on the LCD. A major advantage to using this example code was that it already built a font library for the LCD screen. Had the group not utilized this, they would have taken time defining the pixel structure for every possible character. 
-		\item Original Code (unmodified): https://sites.google.com/site/arduinomega2560projects/microchip-pic/level-3/st7735-1-8-tft
-	\end {itemize}
+	\item The majority of documentation for our ST7735 1.8 TFT LCD screen did not include example code for how to use the screen. Most tutorials or example code \(i.e. Adafruit\) assumed that the user would be programming on an Arduino UNO, which had built in libraries for fonts and shapes. The link below features code found on Google which interfaces the LCD with a PIC microcontroller using the chip's SPI function. However the code was not optomized, thus LCD.c and LCD.h are modified versions of the code. The original drawBox function in LCD.c created a box pixel by pixel - it would take a beginning pixel location and an ending pixel location, causing load times to take longer. The new box function takes the beginning and end coordinates for the box and fills everything in between by printing out pixels all at once. Another function printrs was made to take a char pointer to a string and print it out on the LCD. A major advantage to using this example code was that it already built a font library for the LCD screen. Had the group not utilized this, they would have taken time defining the pixel structure for every possible character. 
+	\item Original Code (unmodified): https://sites.google.com/site/arduinomega2560projects/microchip-pic/level-3/st7735-1-8-tft
+\end {itemize}
 
 % Insert State Machine for Game Here	
-	
+
 \begin{itemize}
 	\item Game.c and Game.h
 		\begin{itemize}
@@ -863,24 +864,24 @@ one system.
 			\label{fig:i2cSendFlow}
 		\end{subfigure}
 		\caption{I2C communication between microcontrollers.
-		Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and
-		Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
-		\label{fig:i2cCtrlFlow}
-	\end{figure}
+			Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and
+			Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
+			\label{fig:i2cCtrlFlow}
+		\end{figure}
 
-	\FloatBarrier
-	\section{Project Schedule}\label{appendix:ganttChart}
-	\begin{figure}[h]
-		\centering
-		\begin{adjustbox} {rotate=90,center}
-		\includegraphics[height=0.7\textwidth]{images/NewGantt.png}
-	\end{adjustbox}
-	\caption{Project Gantt Chart}
-	\label{fig:ganttChart}
- \end{figure}
+		\FloatBarrier
+		\section{Project Schedule}\label{appendix:ganttChart}
+		\begin{figure}[h]
+			\centering
+			\begin{adjustbox} {rotate=90,center}
+				\includegraphics[height=0.7\textwidth]{images/NewGantt.png}
+			\end{adjustbox}
+			\caption{Project Gantt Chart}
+			\label{fig:ganttChart}
+		\end{figure}
 
-	\clearpage
-	\section{Source Code}
+		\clearpage
+		\section{Source Code}
  %We will put code here. Use the format:
 %		\subsection{Main Function}
 %    \lstinputlisting{../code/main.c}
@@ -888,7 +889,7 @@ one system.
 %    \subsection{Tasks}
 %    \subsubsection{Task Control Blocks}
 %    \lstinputlisting{../code/tcb.h}
-	Source code for this project is provided below.
+		Source code for this project is provided below.
 %
 %	\subsection{System Scheduler}
 %	The system-wide global definitions and variables are also given here for
@@ -950,4 +951,4 @@ one system.
 %	\lstinputlisting{../FrontEnd.X/xbee.h}
 %	\lstinputlisting{../FrontEnd.X/xbee.c}
 %
-	\end{document}
+		\end{document}
