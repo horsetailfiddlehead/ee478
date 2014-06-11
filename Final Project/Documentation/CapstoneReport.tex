@@ -115,35 +115,16 @@
 % design.  The abstract should mirror (albeit in a very condensed way) the
 % content of your report.
 
+For the final capstone group built a digital card-gaming device, also known as a RFID interaction suite. Using RFID technology, RFID cards were written that stored data on a monster and its attack moves. These cards then could be used in a card dueling game - when a player placed the card on the RFID scanner, they could use the monster in the game against their opponent. The RFID interaction suite has 3 modes of gameplay: single player, multiplayer, and building cards. It uses Xbee wireless to communicate with other players in multiplayer mode. Input from the user is taken through a 4x4 keypad, and output is shown through an 128x160 bit LCD screen. The SRAM was used to store game data and monster data. Since the system uses PIC18546K22 microcontrollers to control all peripherals such as the LCD and Xbee, drivers had to made to use them. Add In the end, not all features were implemented to the system due to time constraints and unforseen errors, but the basic foundation of reading and writing to RFID cards and displaying the game was functional.
+
 \section{Introduction}
 % Brief introduction and overview of the purpose of the lab and of the methods
 % and tools used.
-
-
 % This section should include the following:
 
-\textbf{These are some example of how to cite and use bullet points}
-A reference to Table~\ref{tab:bomTable} and one to the Design Specification, Section~\ref{sec:designSpec}.
+Skylanders are a popular toy for children - they are action figures that have RFID tags in them which store data about the action figure. These figures can be placed on a gaming console to be used during a video game. The popularity of these games was the inspiration for this project, though the group wanted to make it more portable than the typical gaming device. The RFID interaction suite is a prototype for a portable system that is capable of reading and writing data to cards with RFID tags inside them, similar to the popular Skylanders action figure.
 
-\begin{itemize}
-	\item Overall summary description of the module - 2-3 paragraphs maximum
-		(explanation of use cases goes here)
-
-		\begin{itemize}
-			\item Specification of the public interface to the module
-
-				\begin{itemize}
-					\item Inputs
-					\item Outputs
-					\item Side effects
-				\end{itemize}
-
-			\item Psuedo English description of algorithms, functions, or procedures
-			\item Timing constraints
-			\item Error handling
-		\end{itemize}
-\end{itemize}
-
+The main component of this project are the RFID tags. Using a DLP RFID reader/writer, data can be read and written to cards with RFID tags. The operation is similar to the RFID tags used in bus passes and access cards. For the purpose of this project, data on monsters and their moves was written into the RFID tags. During card duel gameplay, these cards could be read and used against their opponent. Users could select their monster with using a keypad and witness the game status through a color LCD screen. Multiplayer games were communicated through Xbees, and and game data was stored in the SRAM. The system was seperated into two parts - the front end and the back end. The front end takes user input and displays data - this is the part the user can see. The back end manages the RFID system.
 
 \section{Design Specification}\label{sec:designSpec} 
 % In this subsection you will textually describe your client's requirements.
@@ -657,6 +638,8 @@ The RFID interaction suite meets the following standards:
 
 \subsection{Discussion of Results } % Alyanna
 
+All components were functional at the end 
+
 \subsection{Analysis of Any Errors } % Ryan
 %
 %This one is obvious. Do this section as appropriate.  If it improves the flow,
@@ -722,6 +705,10 @@ main menu and redraw it.
 %the
 %original requirements, 2-3 paragraphs maximum unless specified otherwise
 
+At a high level, the duel disk RFID system allows users to wirelessly play card games with another through XBee wireless. Cards that have RFID tags in them are placed on an RFID scanner to choose the next move.  There are 3 different modes for playing: single player, multiplayer, and deck building. Players are able to see game data through a display on the device and enter their own data through the keyboard. 
+
+We will be testing the system for its ability to read multiple RFID tags and send data to another player’s device. Communication should not lag and the data received/sent should be accurate. We will also be testing the user interface for its ability to read user input and output data on a display. Again, the data received and sent between the user and the system should be accurate, and the display should consistently update as new data is received about the game.
+
 \subsection{Test Specification} % Patrick
 %
 %Annotated description of what is to be tested and the test limits.  This
@@ -731,15 +718,49 @@ main menu and redraw it.
 %Note, this does not specify test implementation...this is what to do, not how
 %to do it.
 
+The following items are to be tested:
+\begin{enumerate}
+	\list RFID Reader / Writer
+		\begin{itemise}
+			\list Reading a single/multiplayer RFID tags
+			\list Overwriting current RFID tag data with new data
+		\end{itemize}
+	\list System Hardware (SRAM, PIC, etc.)
+		\begin{itemize}
+			\list i2c: Front end and Back end PICs are able to exchange data between each other
+			\list RS232 / UART: Able to send commands through UART/RS232 for RFID and Xbee drivers
+			\list Read/Write to SRAM: Able to read and write data to the SRAM
+			\list LED lights up when a card has been read - changes color to indicate status of card reading.
+		\end{itemize}
+	\list Xbee Wireless Communication
+		\begin{itemize}
+			\list Join game: Join a game hosted by another player
+			\list Host game: Broadcast ATID for other players to connect
+			\list Receive data: Able to receive data concerning scores and moves between players
+			\list Send data: Able to send out data concerning scores and moves between players
+		\end{itemize}
+	\list System Peripherals (keyboard and display)
+		\begin{itemize}
+			\list Correctly takes in user input through keypad
+			\list Correct action happens as a result of a keypress
+			\list Correctly displays data
+			\list Frequently updates display as game data is modified
+		\end{itemize}
+	\list Game Mode
+			\begin{itemize}
+			\list Single player works as described in software implementation
+			\list Multiplayer works as described in software implementation
+			\list Build card works as defined in software implementation
+		\end{itemize}
+\end{enumerate}
+
+
 \subsection{Test Cases} % Alyanna
 %
 %Annotated description of how your system is to be tested against the test
 %limits
 %Note, this does specify test implementation...this is not what to do, this is
 %how to do it based upon the test specification.
-
-
-
 
 \section{Summary and Conclusion}
 %
@@ -758,23 +779,11 @@ main menu and redraw it.
 % Include comments and reflections on the capstone. What went well, what could
 % be improved next time, What was enjoyable and/or challenging.
 
-This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent
-reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was
-for Arduinio shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tags
-were a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
+This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was for Arduinio shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tagswere a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
 
-With all this new technology, the group broke down building and testing into separate components. The intention was to put everything
-together at the end and make a scheduler to fire off every function at a particular time. This was the first development flaw - assuming
-everything would work when put together. There was miscommunication over how the scheduler would work that many functions with while 
-loops had to be redone using flags. A better method would have been to consistently putting components together once their functionality
-was verified separately. Additionally, another PICKit 3 should have been bought for use during testing - with only one PICKit, components
-had to be tested and debugged one at a time after programming. The ability to consistently load the program into PICs and observe the results
-would have reduced the time for debugging and testing each individual part.
+With all this new technology, the group broke down building and testing into separate components. The intention was to put everything together at the end and make a scheduler to fire off every function at a particular time. This was the first development flaw - assuming everything would work when put together. There was miscommunication over how the scheduler would work that many functions with while loops had to be redone using flags. A better method would have been to consistently putting components together once their functionality was verified separately. Additionally, another PICKit 3 should have been bought for use during testing - with only one PICKit, components had to be tested and debugged one at a time after programming. The ability to consistently load the program into PICs and observe the results would have reduced the time for debugging and testing each individual part.
 
-The original intent of the project was to have a working motor that would move the
-RFID reader to read multiple cards. Another feature was that he user would also be able to make custom cards
-with their own ID, attack names, moves, and type. Due to time constraints and testing, these idea had
-to be scrapped in the final implementation. Future implementations should include these features.
+The original intent of the project was to have a working motor that would move the RFID reader to read multiple cards. Another feature was that he user would also be able to make custom cards with their own ID, attack names, moves, and type. Due to time constraints and testing, these idea had to be scrapped in the final implementation. Future implementations should include these features.
 
 \pagebreak
 \appendix
