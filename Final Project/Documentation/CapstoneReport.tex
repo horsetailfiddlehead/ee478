@@ -642,6 +642,75 @@ The system was able to successfully read and write RFID cards at the time of the
 
 Upon system startup, the user is treated to the main menu, from which they can choose singleplayer, multiplayer, or build cards.  The user presses the 2, and 8 keys on the keypad move up and down the menu, and presses the D key to select a menu option.  When the user selects either singleplayer or multiplayer, they are shown a second menu from which they can choose Duel Game, Clue, or two empty slots.  The only slot that shows something other than an ``In progress'' screen is the Duel game option from the Singleplayer menu.  At any time, the user can place a card on the RFID reader and press down the switch to force the back-end PIC to read the card into the system.  After doing so, the Duel Game can read that card during gameplay.  The following pictures depict the singleplayer game.
 
+\FloatBarrier
+	\subsection{Reading RFID Cards}\label{appendix:read}}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/photos/breadBoardedSystem}
+		\caption{Breadboard of the final system}
+		\label{fig:breadboard}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/photos/inventory.jpeg}
+		\caption{Build Card Inventory showing available cards}
+		\label{fig:inventory}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/main_menu.jpeg}
+		\caption{Main Menu Screen}
+		\label{fig:mainMenu}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/photos/picture1.jpeg}
+		\caption{Display Keyboard}
+		\label{fig:keyboard1}
+	\end{figure}	
+	
+	\FloatBarrier
+	\subsection{Write RFID command sequence}\label{appendix:writeCards}}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/photos/picture2.jpeg}
+		\caption{Screen for current game status}
+		\label{fig:gameState}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/photos/picture3.jpeg}
+		\caption{Display of opponent's move}
+		\label{fig:displayOpponent}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/photos/picture4.jpeg}
+		\caption{Display of Select Monster Menu}
+		\label{fig:attackMenu}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/photos/picture5.jpeg}
+		\caption{Display of Attack Menu}
+		\label{fig:attackMenu1}
+	\end{figure}
+	
+	The image below shows that data has been written to a card - the RX and TX match data in the bus lines.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardwriteRFID.png}
+		\caption{Writing data from RFID module}
+		\label{fig:write2}
+	\end{figure}
+
 Functionality of the RFID read system can be shown in the oscilloscope screenshots.
 	\FloatBarrier
 	\subsection{Reading RFID Cards}\label{appendix:read}}
