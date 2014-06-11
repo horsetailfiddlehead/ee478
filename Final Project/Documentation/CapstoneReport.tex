@@ -285,7 +285,7 @@ Reading of RFID cards will be done by sending standard control strings, such as 
 	\label{Tab:DLP RFID-2 input commands}
 \end{table}
 
-The system will also accept user input from a keypad that will determine which mode to set the game in: single player, multiplayer, or card building. It will also allow the user to navigate the menu screens and select their next move. The controls for navigation can be found in Table~\ref{Tab:controlsTable}.
+The system shall accept user input from a keypad that will determine which mode to set the game in: single player, multiplayer, or card building. It will also allow the user to navigate the menu screens and select their next move. The controls for navigation can be found in Table~\ref{Tab:controlsTable}.
 
 \begin{table}[h]
 	\begin{tabular}{ll}
@@ -344,7 +344,7 @@ The user must be able to select the following using the keypad on the front pane
 		\end{itemize}
 \end{itemize}
 
-Game mode can be selected through a menu screen on the LCD display – the user will be able to navigate the menu with a keypad. Similar to a gaming device, the power will be controlled by a switch and reset will be a push button. Game output will be displayed on an LCD display.  Such a display must be readable from several angles.  The front panel of the system can be found in Figure~\ref{fig:exampleFrontPanel}.
+Game mode can be selected through a menu screen on the LCD display – the user will be able to navigate the menu with a keypad using the controls outlined in Table~\ref{Tab:controlsTable}.  A user would use those controls to scroll through menu options and select them. The front panel of the system can be found in Figure~\ref{fig:exampleFrontPanel}.
 
 \subsubsection{System Functional Description}\label{sysFunctDesc}
 
@@ -381,14 +381,38 @@ A user will be provided with a deck of RFID cards that contain data about whatev
 					\item Player options
 				\end{itemize}
 			\item Card Reactions: When a card is placed on the reader, the system must acknowledge the card through a series of LEDs. If the card is read/accepted as valid, green appears. If the card cannot be read, red appears. Additional colors may indicate other statuses
-\item External Communications (ExtCom): 
-a.	Xbee: The system must be capable of maintaining a connection with another system using the XBee wireless standard over a minimum distance of 5 feet. Data transmission must occur at 250kbs. 
-b.	RS-232 connection: The system must be capable of maintaining an EIA-232 serial connection with an external computer system. Data sent must be at 9600 baud, 8-bit, 1-stop bit, and no priority.
-c.	Wireless Driver: The driver must be capable of sending commands to initiate connections, acknowledge received data, sending data, and terminating a connection
-d.	RS-232 Driver: The driver must be capable of sending strings of data up to 20 characters in length. The encoding must use the extended ASCII table.
+		\end{itemize}	
+	\item External Communications (ExtCom): 
+		\begin{itemize}
+			\item Xbee: The system must be capable of maintaining a connection with another system using the XBee wireless standard over a minimum distance of 5 feet. Data transmission must occur at 250kbs. Communication from processor to Xbee will happen via USART at 9600 baud. 
+			\item RS-232 connection: The system must be capable of maintaining an EIA-232 serial connection with an external computer system. Data sent must be at 115200 baud, 8-bit, 1-stop bit, and no priority.
+			\item Wireless Driver: The driver must be capable of sending commands to initiate connections, acknowledge received data, sending data, and terminating a connection
+			\item RS-232 Driver: The driver must be capable of sending strings of data up to 20 characters in length. The encoding must use the extended ASCII table.
+		\end{itemize}
 \end{itemize}
 
+\subsubsection{Operating Specifications}\label{opSpec}
+
+The system must operate in a standard commercial or household environment
+
+\begin{description}
+	\item[Temperature Range:] 0-60C (32-140F)
+	\item[Humidity:] Humidity 30-60% non-condensing
+	\item[Power:] 5 VDC
+\end{description}
  
+\subsubsection{Reliability and Safety Standards}\label{safety}
+
+The RFID scanner must comply with the following safety standards
+
+\begin{description}
+	\item[UL: None] There are no underwriter's laboratory certifications that must be met for this device 
+	\item[FCC Part 15, subparts A, C for Low Power Devices]  The system must operate in safe radio frequency conditions at all times.
+	\item[ISO 15963 (RFID)] The ISO15963 protocol must be followed for all RFID interaction.
+\end{description}
+
+The MTBF will be a minimum of 1,000 hours
+
 \subsection{Functional Decomposition}\label{functions} % Patrick
 
 \section{Hardware Implementation}\label{hwImplementation} 
@@ -550,6 +574,16 @@ A major software component of the RFID interaction suite was the scheduler and t
 		
 \end{itemize}
 
+
+\section{Meeting Standards}
+
+The RFID interaction suite meets the following standards:
+
+\begin{description}
+	\item[UL: None] There are no underwriter's laboratory certifications that must be met, so the system is okay there.
+	\item[FCC Part 15, subparts A, C for Low Power Devices]  The system must operate in safe radio frequency conditions at all times.  The system meets these standards because it uses the DLP-RFID2 module, and the Xbee wireless module.  Both of these devices follow FCC standards, and the RFID interaction suite does not make any hardware modifications to the antennas or RF output of the devices.  Because of this, the RFID interaction suite follows these standards as well.
+	\item[ISO 15963 (RFID)] The ISO15963 protocol must be followed for all RFID interaction.  The DLP-RFID2 receives commands from the user via UART and then translates them to the ISO15963 protocol to interact with RFID tag.  Since this module is used in the RFID interaction suite, the protocol is followed in the system as a whole.
+\end{description}
 
 \section{Presentation, Discussion, and Analysis of the Results}
 %
@@ -845,7 +879,91 @@ one system.
 %		Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
 %		\label{fig:i2cCtrlFlow}
 %	\end{figure}
+%	\FloatBarrier
+%	\section{Oscilloscope Readings}\label{appendix:scopeReadings}
+%	\FloatBarrier
+%	\subsection{Inventory Command Sequence}\label{appendix:inventory}}
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/inventorytoI2C.png}
+%		\caption{A whole inventory command}
+%		\label{fig:inventory0}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/inventoryToRFID.png}
+%		\caption{The portion of the inventory command that talks to the RFID reader}
+%		\label{fig:inventory1}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/UIDrx.png}
+%		\caption{The UID being received from the DLP-RFID2}
+%		\label{fig:inventory2}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/UIDI2c.png}
+%		\caption{The UID being transferred through I2C between PICs}
+%		\label{fig:inventory3}
+%	\end{figure}
+%	
+%	\FloatBarrier
+%	\subsection{Reading RFID Cards}\label{appendix:read}}
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQ.png}
+%		\caption{A whole read card command}
+%		\label{fig:read0}
+%	\end{figure}
 %
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQI2c.png}
+%		\caption{Sending an I2C request for reading a card block}
+%		\label{fig:read1}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQRFID.png}
+%		\caption{Sending a read block command to the RFID module}
+%		\label{fig:read2}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQRXI2c.png}
+%		\caption{Receiving a block from the RFID module and sending it through I2C between PICs}
+%		\label{fig:read3}
+%	\end{figure}	
+%	
+%	\FloatBarrier
+%	\subsection{Write RFID command sequence}\label{appendix:writeCards}}
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/cardwritesequence.png}
+%		\caption{An entire card writing sequence}
+%		\label{fig:write0}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/cardwriteblockI2C.png}
+%		\caption{Sending a write block command through I2C to the RFID writer}
+%		\label{fig:write1}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=\textwidth]{images/scopeimages/cardwriteRFID.png}
+%		\caption{Writing data from RFID module}
+%		\label{fig:write2}
+%	\end{figure}
+%	
 %	\FloatBarrier
 %	\section{Project Schedule\label{appendix:ganttChart}}
 %	\begin{figure}[h]
