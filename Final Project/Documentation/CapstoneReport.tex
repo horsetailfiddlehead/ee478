@@ -164,13 +164,18 @@ unit is to be portable and battery operated.
 
 \subsubsection{System Input and Output Requirements}
 
-The system must be capable of accepting several different types of signals and inputs:
+The system must be capable of accepting several different types of signals and
+inputs:
 
 \begin{itemize}
-	\item Standard frequencies used for close-range or Near-Field Communication Radio Frequency Identification (RFID) devices
-	\item Standard frequencies used for commercial wireless communication standards such as wifi networks
-	\item User input from a keypad to navigate menus, enter commands, and provide other alphanumeric information
-	\item When in multiplayer mode, communication and commands from other players must be accepted and responded to.
+	\item Standard frequencies used for close-range or Near-Field Communication
+		Radio Frequency Identification (RFID) devices
+	\item Standard frequencies used for commercial wireless communication
+		standards such as wifi networks
+	\item User input from a keypad to navigate menus, enter commands, and provide
+		other alphanumeric information
+	\item When in multiplayer mode, communication and commands from other players
+		must be accepted and responded to.
 \end{itemize}
 
 The system must be capable of providing the following outputs:
@@ -215,11 +220,25 @@ The system must support the following modes of operation:
 		and attempts to connect to other users in Multiplayer mode. Once a
 		connection is established, the users select a multiplayer game on both
 		systems and gameplay begins.
-	\item[Build Card:] Allows the user to create custom cards for a game. The
-		data stored will vary based on game requirements. All cards must contain
-		unique card serial numbers or identifing ID numbers, and a code that
-		specifies which games the card is valid for.
+	\item[Build Card:] Allows the user to create custom cards for a game. To
+		create a custom card, the user will input the data via the keypad. The data
+		stored will vary based on game requirements. All cards must contain unique
+		card serial numbers or identifing ID numbers, and a code that specifies
+		which games the card is valid for.
 \end{description}
+
+In all three modes, the user will be instructed by the programmed game to place
+a card in the RFID reading area to interact with the game and control events. 
+
+\subsubsection{Operating Requirements}
+
+The system must operate in a standard commercial or household environment. The system must be portable, wearable on the user's arm, and operate on an internal power supply.
+
+\subsubsection{Reliablility and Safety Requirements}
+
+The system must be compliance with communication and electromagnetic radiation
+standards including those from the U.S. Federal Communication Committee, and
+applicable state and federal child safety laws.
 
 \subsection{Identified Use Cases}\label{sec:identifiedUseCases} % Alyanna
 
@@ -239,7 +258,8 @@ The system must support the following modes of operation:
 %
 %Present your design starting from a top level functional view and potentially
 %block diagram or high level architecture.  Refine that view to present and
-%explain each of the modules that comprise the major functional blocks.  Discuss
+%explain each of the modules that comprise the major functional blocks.
+%Discuss
 %the flow of control through the design.  Identify and discuss the specific
 %processes/tasks you have implemented in your design. Explain your design
 %choices.    
@@ -255,7 +275,8 @@ The system must support the following modes of operation:
 
 \section{Presentation, Discussion, and Analysis of the Results}
 %
-%Based upon the execution of your design, present your results. Explain them and
+%Based upon the execution of your design, present your results. Explain them
+%and
 %what was expected, and draw any conclusions (for example, did this prove your
 %design worked).
 %
@@ -272,9 +293,30 @@ The system must support the following modes of operation:
 %presentation, discussion, and analysis of the results.  However, it will still
 %be graded separately and must be present.
 
-The biggest problem with the final version of this project that was present at demo time was the fact that the multiplayer features were not implemented.  There was test code that correctly configured the Xbee modules for multiplayer, but they were not completely implemented with the game.  The reason for this was because when the $I^2C$ system was implemented, the entire game had to be modified to run within the scheduler, when it was just a single function before.  $I^2C$ communication is controlled by the system's interrupt handler, and certain flags are set depending on whether data is being sent or received.  Those flags have to be processed, and a game that is running in a function and taking control of the entire system would not allow for those flags to be processed.  The time it took to port the game over to running completely within the scheduler made it impossible to get the multiplayer functions completely implemented and working in time.
+The biggest problem with the final version of this project that was present at
+demo time was the fact that the multiplayer features were not implemented.
+There was test code that correctly configured the Xbee modules for multiplayer,
+but they were not completely implemented with the game.  The reason for this
+was because when the $I^2C$ system was implemented, the entire game had to be
+modified to run within the scheduler, when it was just a single function
+before.  $I^2C$ communication is controlled by the system's interrupt handler,
+and certain flags are set depending on whether data is being sent or received.
+Those flags have to be processed, and a game that is running in a function and
+taking control of the entire system would not allow for those flags to be
+processed.  The time it took to port the game over to running completely within
+the scheduler made it impossible to get the multiplayer functions completely
+implemented and working in time.
 
-Another problem at the time of the demo was that card reading was not 100\% functional.  The system had four distinct sets of data that could be successfully written to a card using the ``Build Cards'' option from the system's main menu, but the data was not being displayed properly in the singleplayer game.  Data coming from the card over the $I^2C$ connection was confirmed to be correct, but the game was not interpreting and displaying the information correctly to the user.  This was also a matter of running out of time.  For the same reasons as above (converting the game to be run within the flag-based scheduler) the RFID reading still had some kinks to work out at the time of the demo.  Those problems were that:
+Another problem at the time of the demo was that card reading was not 100\%
+functional.  The system had four distinct sets of data that could be
+successfully written to a card using the ``Build Cards'' option from the
+system's main menu, but the data was not being displayed properly in the
+singleplayer game.  Data coming from the card over the $I^2C$ connection was
+confirmed to be correct, but the game was not interpreting and displaying the
+information correctly to the user.  This was also a matter of running out of
+time.  For the same reasons as above (converting the game to be run within the
+flag-based scheduler) the RFID reading still had some kinks to work out at the
+time of the demo.  Those problems were that:
 
 \begin{itemize}
 	\item Monster type was being read incorrectly
@@ -282,9 +324,19 @@ Another problem at the time of the demo was that card reading was not 100\% func
 	\item Complete attack list was not implemented
 \end{itemize}
 
-For demo purposes, only the first attack would be read and it would be copied to all three attack slots.  Only the ``FAIL'' attack ID was programmed to be read, and if the ID did not match the ``FAIL'' attack's ID, then it was interpreted as a ``SCRATCH'' attack.  This function worked correctly, but the rest of the attack IDs were not implemented.  The monster's level was correctly read as well.
+For demo purposes, only the first attack would be read and it would be copied
+to all three attack slots.  Only the ``FAIL'' attack ID was programmed to be
+read, and if the ID did not match the ``FAIL'' attack's ID, then it was
+interpreted as a ``SCRATCH'' attack.  This function worked correctly, but the
+rest of the attack IDs were not implemented.  The monster's level was correctly
+read as well.
 
-Finally, there was an error when finishing a singleplayer game.  When the game was complete, the main menu was not being properly displayed.  Once again, the problem was time, and the main menu's controls were still functional.  Another menu could be loaded by navigating the invisible menu and choosing an option, letting that screen load, and then pressing the ``B'' key to return back to the main menu and redraw it.
+Finally, there was an error when finishing a singleplayer game.  When the game
+was complete, the main menu was not being properly displayed.  Once again, the
+problem was time, and the main menu's controls were still functional.  Another
+menu could be loaded by navigating the invisible menu and choosing an option,
+letting that screen load, and then pressing the ``B'' key to return back to the
+main menu and redraw it.
 
 \subsection{Analysis of Implementation Issues and Workarounds} % Patrick
 %
@@ -295,7 +347,8 @@ Finally, there was an error when finishing a singleplayer game.  When the game w
 
 \section{Test Plan } % Ryan
 %
-%Overall summary of what needs to be tested to ensure that your design meets the
+%Overall summary of what needs to be tested to ensure that your design meets
+%the
 %original requirements, 2-3 paragraphs maximum unless specified otherwise
 
 \subsection{Test Specification} % Patrick
@@ -319,7 +372,8 @@ Finally, there was an error when finishing a singleplayer game.  When the game w
 %You should know these sections very well, no need to explain.  Note, however,
 %that they are two different sections.  The summary is just that, a summary of
 %your project.  It should loosely mirror the abstract with a bit more detail.
-%The conclusion concludes the report, potentially adds information that is often
+%The conclusion concludes the report, potentially adds information that is
+%often
 %outside the main thrust of the report, and may offer suggestions or
 %recommendations about the project.
 
@@ -356,7 +410,8 @@ dispensations are due others or myself, I have indicated them below.
 \pagebreak
 
 \section{Bill of Materials\label{appendix:bom}}
-Table~\ref{tab:bomTable} lists the bill of materials for the construction of one system.
+Table~\ref{tab:bomTable} lists the bill of materials for the construction of
+one system.
 
 \begin{table}[h]
 	\begin{tabular}{llll}
@@ -413,7 +468,8 @@ Table~\ref{tab:bomTable} lists the bill of materials for the construction of one
 %\begin{figure}[H]
 %	\centering
 %	\includegraphics[width=\textwidth]{images/funDecomp.png}
-%	\caption{Software functional decomposition showing the major functional divisions and tasks}
+%	\caption{Software functional decomposition showing the major functional
+%	divisions and tasks}
 %	\label{fig:funDecomp}
 %\end{figure}
 %
@@ -486,7 +542,9 @@ Table~\ref{tab:bomTable} lists the bill of materials for the construction of one
 %			\caption{}
 %			\label{fig:i2cSendFlow}
 %		\end{subfigure}
-%		\caption{I2C communication between microcontrollers. Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
+%		\caption{I2C communication between microcontrollers.
+%		Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and
+%		Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
 %		\label{fig:i2cCtrlFlow}
 %	\end{figure}
 %
@@ -513,7 +571,8 @@ Table~\ref{tab:bomTable} lists the bill of materials for the construction of one
 %	Source code for this project is provided below.
 %
 %	\subsection{System Scheduler}
-%	The system-wide global definitions and variables are also given here for convenience.
+%	The system-wide global definitions and variables are also given here for
+%	convenience.
 %	\lstinputlisting{../FrontEnd.X/globals.h}
 %	\lstinputlisting{../FrontEnd.X/interrupts.h}
 %	\lstinputlisting{../FrontEnd.X/SchedMain.c}
@@ -556,7 +615,8 @@ Table~\ref{tab:bomTable} lists the bill of materials for the construction of one
 %	\lstinputlisting{../FrontEnd.X/rs232.c}
 %
 %	\subsection{SRAM Primary Memory}
-%	\textit{Note: There are two different files for each microcontroller due to hardware configurations}
+%	\textit{Note: There are two different files for each microcontroller due to
+%	hardware configurations}
 %	\lstinputlisting{../FrontEnd.X/SRAM.h}
 %	\lstinputlisting{../FrontEnd.X/SRAMfront.c}
 %	\lstinputlisting{../FrontEnd.X/SRAMback.c}
