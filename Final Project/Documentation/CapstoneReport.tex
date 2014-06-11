@@ -242,6 +242,10 @@ applicable state and federal child safety laws.
 
 \subsection{Identified Use Cases}\label{sec:identifiedUseCases} % Alyanna
 
+The user interacted with the system through the game. In the figure below, a user would interact with the system through single player,
+multiplayer, or build card mode. In a single player game, the user would play against a computer. In a build card game, the user would be working
+with the system to create/modify cards. Should a user be in multiplayer mode, they would interact with another using using the system during gameplay.
+
 \subsection{Detailed Specifications}\label{detailedSpec} % Ryan
 
 \subsection{Functional Decomposition}\label{functions} % Patrick
@@ -269,9 +273,106 @@ applicable state and federal child safety laws.
 %Put stuff here about the functional decomposition, system architecture,
 %interaction of parts.
 
+The software implementation for the RFID interaction suite consisted of developing the game for a user to play \(and for the developers to test\). The system took input from the Xbee, RFID tags, and keyboard. Data would be outputted through the LCD screen. Below is a figure depicting the overall software for the RFID interaction suite. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/funDecomp.png}
+	\caption{Software functional decomposition showing the major functional divisions and tasks}
+	\label{fig:funDecomp}
+\end{figure}
+
+\begin{itemize}
+	\item Play Game
+		\begin{itemize}
+			\item Load Game: The program would have to load the correct game based off of user input through the keypad. The system is told which game to select based off of a set flag.
+			\item Execute Game: After a game flag has been set, the game would run until a player has finished.
+		\end{itemize}
+	\item Read/Write Cards
+		\begin(itemize)
+			\item Scan for New Cards: During game mode or build card mode, the system would scan for new cards via the RFID reader/writer.
+			\item Write Card: During the "build card" part of the game, the user would be able to write data to the cards through the RFID reader/writer. The user would have the ability to add a name and attack moves to the card through the external keypad and the in-game keyboard.
+			\item Read card: During game mode, the system would check for available cards to work with. If a player was in the middle of a duel, the system would scan for new cards to use for gameplay. If a reader was trying to build new cards, the system would look for available cards to be modified.
+		\end(itemize)
+	\item Access Database
+		\begin(itemize)
+			\item Read Data to SRAM: Reads game-relevent data. For example, when a game is to be loaded, the system load the game from the SRAM. Or if the computer were to read in a monster during a single player duel game, it would access the database of monsters.
+			\item Write Data to SRAM: Writes new game data. If new monsters or games were to be added to the system, it would be written to the SRAM for future use.
+			\item Look Up / Reference Table: Used as a reference for memory locations of data in the SRAM \(i.e. ''Phone book''\).
+		\end(itemize)
+	\item External Communication
+		\begin(itemize)
+			\item RS232 Driver: The back end of the system uses the USART to communicate with the Xbee wireless chips and RFID drivers. Information was sent out or recieved by the system through these peripherals.
+			\item Wireless Driver: In addition to the RS232, a driver for the Xbee wireless had to be implemented to allow the system to communicate with other users during the multiplayer game.
+		\end(itemize)	
+	\item User Interaction
+		\begin(itemize)
+			\item Read Keypad: A driver was made to read key presses from the user. Different parts of the system could read the keypad using functions built in this driver.
+			\item Display: An LCD driver was modified to develo
+			\item Card Reaction: An LED driver was made to control the LED lights of the RFID interaction suite. This would indicate to the user whether a card had been properly registered or not, based off of the color of the lights.
+		\end(itemize)
+\end{itemize}
+
+
 \subsection{Low Level Design}\label{swLowLevel} % Alyanna
 %
 %task level implementation details here. Control diagram goes here, etc.
+
+
+
+A major software component of the RFID interaction suite were the built in games.
+
+\begin{itemize}
+	\item LCD.c and LCD.h
+		\item The majority of documentation for our ST7735 1.8 TFT LCD screen did not include example code for how to use the screen. Most tutorials or example code \(i.e. Adafruit\) assumed that the user would be programming on an Arduino UNO, which had built in libraries for fonts and shapes. The link below features code found on Google which interfaces the LCD with a PIC microcontroller using the chip's SPI function. However the code was not optomized, thus LCD.c and LCD.h are modified versions of the code. The original drawBox function in LCD.c created a box pixel by pixel - it would take a beginning pixel location and an ending pixel location, causing load times to take longer. The new box function takes the beginning and end coordinates for the box and fills everything in between by printing out pixels all at once. Another function printrs was made to take a char pointer to a string and print it out on the LCD. A major advantage to using this example code was that it already built a font library for the LCD screen. Had the group not utilized this, they would have taken time defining the pixel structure for every possible character. 
+		\item Original Code (unmodified): https://sites.google.com/site/arduinomega2560projects/microchip-pic/level-3/st7735-1-8-tft
+	\end {itemize}
+
+% Insert State Machine for Game Here	
+	
+\begin{itemize}
+	\item Game.c and Game.h
+		\begin{itemize}
+			\item Single Player: Single player mode followed the direction of the state machine diagram. All random variables were seeded to a system timer on the PIC.
+			\item Multiplayer:
+			\item Build Cards: 
+		\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Multiplayer Game
+		\begin{itemize}
+			\item Specification of the public interface to the module
+
+				\begin{itemize}
+					\item Inputs
+					\item Outputs
+					\item Side effects
+				\end{itemize}
+
+			\item Psuedo English description of algorithms, functions, or procedures
+			\item Timing constraints
+			\item Error handling
+		\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Build Card Game
+
+		\begin{itemize}
+			\item Specification of the public interface to the module
+
+				\begin{itemize}
+					\item Inputs
+					\item Outputs
+					\item Side effects
+				\end{itemize}
+
+			\item Psuedo English description of algorithms, functions, or procedures
+			\item Timing constraints
+			\item Error handling
+		\end{itemize}
+\end{itemize}
 
 \section{Presentation, Discussion, and Analysis of the Results}
 %
@@ -367,6 +468,9 @@ main menu and redraw it.
 %Note, this does specify test implementation...this is not what to do, this is
 %how to do it based upon the test specification.
 
+
+
+
 \section{Summary and Conclusion}
 %
 %You should know these sections very well, no need to explain.  Note, however,
@@ -384,6 +488,23 @@ main menu and redraw it.
 % Include comments and reflections on the capstone. What went well, what could
 % be improved next time, What was enjoyable and/or challenging.
 
+This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent
+reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was
+for Arduinio shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tags
+were a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
+
+With all this new technology, the group broke down building and testing into separate components. The intention was to put everything
+together at the end and make a scheduler to fire off every function at a particular time. This was the first development flaw - assuming
+everything would work when put together. There was miscommunication over how the scheduler would work that many functions with while 
+loops had to be redone using flags. A better method would have been to consistently putting components together once their functionality
+was verified separately. Additionally, another PICKit 3 should have been bought for use during testing - with only one PICKit, components
+had to be tested and debugged one at a time after programming. The ability to consistently load the program into PICs and observe the results
+would have reduced the time for debugging and testing each individual part.
+
+The original intent of the project was to have a working motor that would move the
+RFID reader to read multiple cards. Another feature was that he user would also be able to make custom cards
+with their own ID, attack names, moves, and type. Due to time constraints and testing, these idea had
+to be scrapped in the final implementation. Future implementations should include these features.
 
 \pagebreak
 \appendix
