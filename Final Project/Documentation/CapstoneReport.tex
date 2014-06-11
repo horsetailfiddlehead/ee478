@@ -266,6 +266,7 @@ The system must support the measurement of the following kinds of signals:
 	\item Frequency in the standard 13.56 MHz range for close range RFID signals
 	\item Frequency in the 2.4 GHz range for wireless communication with Xbee modules
 	\item It will follow protocols from ISO 15693 for RFIDs
+	\item User input via the 16-character keypad.
 \end{itemize}
 
 Reading of RFID cards will be done by sending standard control strings, such as “0108000304FF0000” (for “ping”) to the DLP-RFID2.  These strings will allow control over read and write functions on the device.  These strings will be programmed into a driver on a microcontroller.  Each RFID tag will have an identifier so that its information can be looked up in the system’s memory.   These strings are sent through a 115200 baud UART connection and are detailed in Table~\ref{Tab:DLP RFID-2 input commands}.
@@ -324,6 +325,7 @@ The system will respond to cards being placed in the card reader area.  The card
 	\label{Tab:LEDTable}
 \end{table}
 
+When the system is in multiplayer mode, data must be sent wirelessly to another device. This data consists of players’ scores, current cards in play for the game, etc.  The LCD display will show information about the second player, like player name, in addition to information relevant to the game. 
 
 \subsubsection{User Interface}\label{UI}
 
@@ -342,8 +344,51 @@ The user must be able to select the following using the keypad on the front pane
 		\end{itemize}
 \end{itemize}
 
-When the system is in multiplayer mode, data must be sent wirelessly to another device. This data consists of players’ scores, current cards in play for the game, etc.  The LCD display will show information about the second player, like player name, in addition to information relevant to the game. 
+Game mode can be selected through a menu screen on the LCD display – the user will be able to navigate the menu with a keypad. Similar to a gaming device, the power will be controlled by a switch and reset will be a push button. Game output will be displayed on an LCD display.  Such a display must be readable from several angles.  The front panel of the system can be found in Figure~\ref{fig:exampleFrontPanel}.
 
+\subsubsection{System Functional Description}\label{sysFunctDesc}
+
+A user will be provided with a deck of RFID cards that contain data about whatever game the user wants to play.  These cards would be used in the RFID reading device that would be worn by the user on their arm.  First, the user must choose using the keypad what game mode they would like to play: single player, multiplayer, or card building.  In all three modes, the user will be instructed by the programmed game to place a card in the RFID reading area to interact with the game and control events. In multiplayer mode the user would have to find the other user they would like to play with and connect to their game using the wireless features of the system.  In card building mode, the user would be able to enter data via the keypad to program their own data onto whichever RFID card they choose.  A block diagram for the system can be found in Figure~\ref{fig:highLevelBlockDiagram}.  The system functionality is described below.
+
+\begin{itemize}
+	\item Read/Write Cards: 
+		\begin{itemize}
+			\item Communicate w/ DLP: The chosen RFID reader is the DLP-RFID2 reader/writer module. The system must communicate with this reader using the RS-232 protocol at TTL voltage levels. The communication link must be at 115200 Baud, 8-bits, 1 stop bit, and no parity check. The commands to the RFID reader are specified in TRF7960_ISO15693_protocol.pdf 
+			\item Traverse card data: The system must read up to five cards
+			\item Quantity of Cards: The Reader must be able to read and write to 5 cards at a time.
+			\item Write Card: Data must be written to the card according to the ISO 15693 standard. The structure of data contained on the card may vary with the game associated with the card. The following data locations must be present:
+				\begin{itemize}
+					\item Unique card Identifier (UID) – A serial number uniquely identifying the card from all other cards
+					\item Card name – The name of the card
+					\item Display name – The name of the card as displayed to the user
+					\item Associated Programs – A code that identifies the card as valid for a specific game set.
+				\end{itemize}
+			\end{itemize}
+	\item Access Database
+		\begin{itemize}
+			\item Read Data to SRAM: The system must be capable of requesting data from the SRAM using a byte-addressing scheme. The returned data must be received as an 8-bit word in parallel.
+			\item Write data to SRAM: The system must be capable of requesting data from the SRAM using a byte-scheme. Data must be sent as an 8-bit word in parallel.
+			\item Lookup/reference Table:
+		\end{itemize}
+	\item User Interaction
+		\begin{itemize}
+			\item Read Keypad: The system must read user keypad input with a maximum lag time of 250 ms.  
+			\item Display: The system must display the following
+				\begin{itemize}		
+					\item Simple graphics
+					\item Score
+					\item Game instructions
+					\item Player options
+				\end{itemize}
+			\item Card Reactions: When a card is placed on the reader, the system must acknowledge the card through a series of LEDs. If the card is read/accepted as valid, green appears. If the card cannot be read, red appears. Additional colors may indicate other statuses
+\item External Communications (ExtCom): 
+a.	Xbee: The system must be capable of maintaining a connection with another system using the XBee wireless standard over a minimum distance of 5 feet. Data transmission must occur at 250kbs. 
+b.	RS-232 connection: The system must be capable of maintaining an EIA-232 serial connection with an external computer system. Data sent must be at 9600 baud, 8-bit, 1-stop bit, and no priority.
+c.	Wireless Driver: The driver must be capable of sending commands to initiate connections, acknowledge received data, sending data, and terminating a connection
+d.	RS-232 Driver: The driver must be capable of sending strings of data up to 20 characters in length. The encoding must use the extended ASCII table.
+\end{itemize}
+
+ 
 \subsection{Functional Decomposition}\label{functions} % Patrick
 
 \section{Hardware Implementation}\label{hwImplementation} 
