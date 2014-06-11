@@ -242,8 +242,153 @@ applicable state and federal child safety laws.
 
 \subsection{Identified Use Cases}\label{sec:identifiedUseCases} % Alyanna
 
-\subsection{Detailed Specifications}\label{detailedSpec} % Ryan
+The user interacted with the system through the game. In the figure below, a user would interact with the system through single player,
+multiplayer, or build card mode. In a single player game, the user would play against a computer. In a build card game, the user would be working
+with the system to create/modify cards. Should a user be in multiplayer mode, they would interact with another using using the system during gameplay.
 
+\subsection{Detailed Specifications}\label{detailedSpec} % Ryan
+\subsubsection{System Description}\label{designSystemSpec}
+
+This specification describes and defines the basic requirements for a wearable digital card-gaming device. The device will house 1 DLP-RFID2 reader module that will take data from RFID cards. As cards are placed on the device, a 4-inch linear servo will move the reader to scan each card and use it in a game of the user’s choosing. The user has the option of doing a single player, multiplayer, or build their own card deck. In multiplayer mode, the user would be able to wirelessly communicate with one other player in possession of another device via the Xbee wireless module.
+
+\subsubsection{Specification of External Environment}\label{designExtEnv}
+The device is to be operated in an indoor/outdoor environment with relative humidity consistent with desert and tropical environments. It must be durable enough to withstand various types of users, especially small children.  The unit is to be portable and battery operated.
+
+\begin{description}
+	\item[Temperature Range:] 0-60C (32-140F)
+	\item[Humidity:] Humidity 30-60% non-condensing
+\end{description}
+
+\subsubsection{System Inputs}\label{inputs}
+The system must support the measurement of the following kinds of signals:
+
+\begin{itemize}
+	\item Frequency in the standard 13.56 MHz range for close range RFID signals
+	\item Frequency in the 2.4 GHz range for wireless communication with Xbee modules
+	\item It will follow protocols from ISO 15693 for RFIDs
+	\item User input via the 16-character keypad.
+\end{itemize}
+
+Reading of RFID cards will be done by sending standard control strings, such as “0108000304FF0000” (for “ping”) to the DLP-RFID2.  These strings will allow control over read and write functions on the device.  These strings will be programmed into a driver on a microcontroller.  Each RFID tag will have an identifier so that its information can be looked up in the system’s memory.   These strings are sent through a 115200 baud UART connection and are detailed in Table~\ref{Tab:DLP RFID-2 input commands}.
+
+\begin{table}[h]
+	\begin{tabular}{ll}
+		\multicolumn{2}{c}{\textbf{DLP RFID-2 Commands}}                                     \\
+		\textbf{Description}                & \textbf{String}                                \\
+		Inventory (Find cards in range)     & 010B000304140601000000                         \\
+		Set data in/out to user memory      & 010C00030410002101020000                       \\
+		AGC mode (Alternating Gain Control) & 0109000304F0000000                             \\
+		Write to block                      & 0113000304182220{[}UID{]}{[}BLOCK{]}{[}DATA{]} \\
+		Read block                          & 0117000304186221                              
+	\end{tabular}
+	\caption{Command strings to control the RFID reader.}
+	\label{Tab:DLP RFID-2 input commands}
+\end{table}
+
+The system will also accept user input from a keypad that will determine which mode to set the game in: single player, multiplayer, or card building. It will also allow the user to navigate the menu screens and select their next move. The controls for navigation can be found in Table~\ref{Tab:controlsTable}.
+
+\begin{table}[h]
+	\begin{tabular}{ll}
+		\multicolumn{2}{c}{\textbf{User Keypad Input}} \\
+		\textbf{Command}         & \textbf{Key}        \\
+		Move Up                  & 2                   \\
+		Move Down                & 8                   \\
+		Move Left                & 4                   \\
+		Move Right               & 6                   \\
+		Select/Enter             & D                   \\
+		Back/Return              & B                  
+	\end{tabular}
+	\caption{Controls to navigate through the system's menus.}
+	\label{Tab:controlsTable}
+\end{table}
+
+If the system is in multiplayer mode, it must receive game data from the device of another player and modify the user's game state based on that data. The shared data consists of players’ scores, current cards on the field, etc.
+
+The connection between two systems must be implement the IEEE 802.15.4 wireless networking protocol. To identify potential connections, the system must send a “ping” command followed by a unique system identification number (a serial number). The system then waits three seconds for any response. If no valid response occurs, the system recommences the search sequence up to five times. A system responding to a connection request waits until the connection request ends then sends the ID of the system it wishes to connect followed by its own system ID. The system then waits for confirmation of the request from the other system. During game play, the system sending data transmits the ID of the second system's Xbee, followed by the data.
+
+\subsubsection{System Outputs}\label{outputs}
+
+The system must display information about the current game state and the reading from the RFID signal on an LCD display.  The display will show a menu that will allow a user to navigate through options using a keypad.  When a game is being played, the display will show information relevant to the game, such as simple graphics, scores, instructions, and player moves.
+
+The system will respond to cards being placed in the card reader area.  The card will be physically “locked in” until the user decides to place another card in its place.  An LED will also indicate that a card has been correctly placed and read, according to Table~\ref{Tab:LEDTable}.
+
+\begin{table}[h]
+	\begin{tabular}{ll}
+		\multicolumn{2}{c}{\textbf{LED Color Indications}} \\
+		\textbf{Card Status}           & \textbf{Color}    \\
+		Card placed and recognized     & Green             \\
+		Card placed, not read          & Yellow            \\
+		Error reading card             & Red               \\
+		No card placed                 & Off              
+	\end{tabular}
+	\caption{Status of LED lights based on RFID read state}
+	\label{Tab:LEDTable}
+\end{table}
+
+When the system is in multiplayer mode, data must be sent wirelessly to another device. This data consists of players’ scores, current cards in play for the game, etc.  The LCD display will show information about the second player, like player name, in addition to information relevant to the game. 
+
+\subsubsection{User Interface}\label{UI}
+
+The user must be able to select the following using the keypad on the front panel of the instrument:
+
+\begin{itemize}
+	\item Mode
+		\begin{itemize}
+			\item Singleplayer
+			\item Multiplayer
+			\item Build Cards
+		\end{itemize}
+	\item Card Reader
+		\begin{itemize}
+			\item Physical space to place cards
+		\end{itemize}
+\end{itemize}
+
+Game mode can be selected through a menu screen on the LCD display – the user will be able to navigate the menu with a keypad. Similar to a gaming device, the power will be controlled by a switch and reset will be a push button. Game output will be displayed on an LCD display.  Such a display must be readable from several angles.  The front panel of the system can be found in Figure~\ref{fig:exampleFrontPanel}.
+
+\subsubsection{System Functional Description}\label{sysFunctDesc}
+
+A user will be provided with a deck of RFID cards that contain data about whatever game the user wants to play.  These cards would be used in the RFID reading device that would be worn by the user on their arm.  First, the user must choose using the keypad what game mode they would like to play: single player, multiplayer, or card building.  In all three modes, the user will be instructed by the programmed game to place a card in the RFID reading area to interact with the game and control events. In multiplayer mode the user would have to find the other user they would like to play with and connect to their game using the wireless features of the system.  In card building mode, the user would be able to enter data via the keypad to program their own data onto whichever RFID card they choose.  A block diagram for the system can be found in Figure~\ref{fig:highLevelBlockDiagram}.  The system functionality is described below.
+
+\begin{itemize}
+	\item Read/Write Cards: 
+		\begin{itemize}
+			\item Communicate w/ DLP: The chosen RFID reader is the DLP-RFID2 reader/writer module. The system must communicate with this reader using the RS-232 protocol at TTL voltage levels. The communication link must be at 115200 Baud, 8-bits, 1 stop bit, and no parity check. The commands to the RFID reader are specified in TRF7960_ISO15693_protocol.pdf 
+			\item Traverse card data: The system must read up to five cards
+			\item Quantity of Cards: The Reader must be able to read and write to 5 cards at a time.
+			\item Write Card: Data must be written to the card according to the ISO 15693 standard. The structure of data contained on the card may vary with the game associated with the card. The following data locations must be present:
+				\begin{itemize}
+					\item Unique card Identifier (UID) – A serial number uniquely identifying the card from all other cards
+					\item Card name – The name of the card
+					\item Display name – The name of the card as displayed to the user
+					\item Associated Programs – A code that identifies the card as valid for a specific game set.
+				\end{itemize}
+			\end{itemize}
+	\item Access Database
+		\begin{itemize}
+			\item Read Data to SRAM: The system must be capable of requesting data from the SRAM using a byte-addressing scheme. The returned data must be received as an 8-bit word in parallel.
+			\item Write data to SRAM: The system must be capable of requesting data from the SRAM using a byte-scheme. Data must be sent as an 8-bit word in parallel.
+			\item Lookup/reference Table:
+		\end{itemize}
+	\item User Interaction
+		\begin{itemize}
+			\item Read Keypad: The system must read user keypad input with a maximum lag time of 250 ms.  
+			\item Display: The system must display the following
+				\begin{itemize}		
+					\item Simple graphics
+					\item Score
+					\item Game instructions
+					\item Player options
+				\end{itemize}
+			\item Card Reactions: When a card is placed on the reader, the system must acknowledge the card through a series of LEDs. If the card is read/accepted as valid, green appears. If the card cannot be read, red appears. Additional colors may indicate other statuses
+\item External Communications (ExtCom): 
+a.	Xbee: The system must be capable of maintaining a connection with another system using the XBee wireless standard over a minimum distance of 5 feet. Data transmission must occur at 250kbs. 
+b.	RS-232 connection: The system must be capable of maintaining an EIA-232 serial connection with an external computer system. Data sent must be at 9600 baud, 8-bit, 1-stop bit, and no priority.
+c.	Wireless Driver: The driver must be capable of sending commands to initiate connections, acknowledge received data, sending data, and terminating a connection
+d.	RS-232 Driver: The driver must be capable of sending strings of data up to 20 characters in length. The encoding must use the extended ASCII table.
+\end{itemize}
+
+ 
 \subsection{Functional Decomposition}\label{functions} % Patrick
 
 Figure~\ref{fig:funDecomp} in Appendix~\ref{fig:funcDecomp} gives a hierarchy
@@ -327,9 +472,106 @@ The functions are explained below:
 %Put stuff here about the functional decomposition, system architecture,
 %interaction of parts.
 
+The software implementation for the RFID interaction suite consisted of developing the game for a user to play \(and for the developers to test\). The system took input from the Xbee, RFID tags, and keyboard. Data would be outputted through the LCD screen. Below is a figure depicting the overall software for the RFID interaction suite. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/funDecomp.png}
+	\caption{Software functional decomposition showing the major functional divisions and tasks}
+	\label{fig:funDecomp}
+\end{figure}
+
+\begin{itemize}
+	\item Play Game
+		\begin{itemize}
+			\item Load Game: The program would have to load the correct game based off of user input through the keypad. The system is told which game to select based off of a set flag.
+			\item Execute Game: After a game flag has been set, the game would run until a player has finished.
+		\end{itemize}
+	\item Read/Write Cards
+		\begin(itemize)
+			\item Scan for New Cards: During game mode or build card mode, the system would scan for new cards via the RFID reader/writer.
+			\item Write Card: During the "build card" part of the game, the user would be able to write data to the cards through the RFID reader/writer. The user would have the ability to add a name and attack moves to the card through the external keypad and the in-game keyboard.
+			\item Read card: During game mode, the system would check for available cards to work with. If a player was in the middle of a duel, the system would scan for new cards to use for gameplay. If a reader was trying to build new cards, the system would look for available cards to be modified.
+		\end(itemize)
+	\item Access Database
+		\begin(itemize)
+			\item Read Data to SRAM: Reads game-relevent data. For example, when a game is to be loaded, the system load the game from the SRAM. Or if the computer were to read in a monster during a single player duel game, it would access the database of monsters.
+			\item Write Data to SRAM: Writes new game data. If new monsters or games were to be added to the system, it would be written to the SRAM for future use.
+			\item Look Up / Reference Table: Used as a reference for memory locations of data in the SRAM \(i.e. ''Phone book''\).
+		\end(itemize)
+	\item External Communication
+		\begin(itemize)
+			\item RS232 Driver: The back end of the system uses the USART to communicate with the Xbee wireless chips and RFID drivers. Information was sent out or recieved by the system through these peripherals.
+			\item Wireless Driver: In addition to the RS232, a driver for the Xbee wireless had to be implemented to allow the system to communicate with other users during the multiplayer game.
+		\end(itemize)	
+	\item User Interaction
+		\begin(itemize)
+			\item Read Keypad: A driver was made to read key presses from the user. Different parts of the system could read the keypad using functions built in this driver.
+			\item Display: An LCD driver was modified to develo
+			\item Card Reaction: An LED driver was made to control the LED lights of the RFID interaction suite. This would indicate to the user whether a card had been properly registered or not, based off of the color of the lights.
+		\end(itemize)
+\end{itemize}
+
+
 \subsection{Low Level Design}\label{swLowLevel} % Alyanna
 %
 %task level implementation details here. Control diagram goes here, etc.
+
+
+
+A major software component of the RFID interaction suite were the built in games.
+
+\begin{itemize}
+	\item LCD.c and LCD.h
+		\item The majority of documentation for our ST7735 1.8 TFT LCD screen did not include example code for how to use the screen. Most tutorials or example code \(i.e. Adafruit\) assumed that the user would be programming on an Arduino UNO, which had built in libraries for fonts and shapes. The link below features code found on Google which interfaces the LCD with a PIC microcontroller using the chip's SPI function. However the code was not optomized, thus LCD.c and LCD.h are modified versions of the code. The original drawBox function in LCD.c created a box pixel by pixel - it would take a beginning pixel location and an ending pixel location, causing load times to take longer. The new box function takes the beginning and end coordinates for the box and fills everything in between by printing out pixels all at once. Another function printrs was made to take a char pointer to a string and print it out on the LCD. A major advantage to using this example code was that it already built a font library for the LCD screen. Had the group not utilized this, they would have taken time defining the pixel structure for every possible character. 
+		\item Original Code (unmodified): https://sites.google.com/site/arduinomega2560projects/microchip-pic/level-3/st7735-1-8-tft
+	\end {itemize}
+
+% Insert State Machine for Game Here	
+	
+\begin{itemize}
+	\item Game.c and Game.h
+		\begin{itemize}
+			\item Single Player: Single player mode followed the direction of the state machine diagram. All random variables were seeded to a system timer on the PIC.
+			\item Multiplayer:
+			\item Build Cards: 
+		\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Multiplayer Game
+		\begin{itemize}
+			\item Specification of the public interface to the module
+
+				\begin{itemize}
+					\item Inputs
+					\item Outputs
+					\item Side effects
+				\end{itemize}
+
+			\item Psuedo English description of algorithms, functions, or procedures
+			\item Timing constraints
+			\item Error handling
+		\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Build Card Game
+
+		\begin{itemize}
+			\item Specification of the public interface to the module
+
+				\begin{itemize}
+					\item Inputs
+					\item Outputs
+					\item Side effects
+				\end{itemize}
+
+			\item Psuedo English description of algorithms, functions, or procedures
+			\item Timing constraints
+			\item Error handling
+		\end{itemize}
+\end{itemize}
 
 \section{Presentation, Discussion, and Analysis of the Results}
 %
@@ -425,6 +667,9 @@ main menu and redraw it.
 %Note, this does specify test implementation...this is not what to do, this is
 %how to do it based upon the test specification.
 
+
+
+
 \section{Summary and Conclusion}
 %
 %You should know these sections very well, no need to explain.  Note, however,
@@ -442,6 +687,23 @@ main menu and redraw it.
 % Include comments and reflections on the capstone. What went well, what could
 % be improved next time, What was enjoyable and/or challenging.
 
+This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent
+reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was
+for Arduinio shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tags
+were a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
+
+With all this new technology, the group broke down building and testing into separate components. The intention was to put everything
+together at the end and make a scheduler to fire off every function at a particular time. This was the first development flaw - assuming
+everything would work when put together. There was miscommunication over how the scheduler would work that many functions with while 
+loops had to be redone using flags. A better method would have been to consistently putting components together once their functionality
+was verified separately. Additionally, another PICKit 3 should have been bought for use during testing - with only one PICKit, components
+had to be tested and debugged one at a time after programming. The ability to consistently load the program into PICs and observe the results
+would have reduced the time for debugging and testing each individual part.
+
+The original intent of the project was to have a working motor that would move the
+RFID reader to read multiple cards. Another feature was that he user would also be able to make custom cards
+with their own ID, attack names, moves, and type. Due to time constraints and testing, these idea had
+to be scrapped in the final implementation. Future implementations should include these features.
 
 \pagebreak
 \appendix
