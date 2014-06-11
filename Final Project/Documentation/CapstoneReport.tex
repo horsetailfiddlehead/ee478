@@ -251,6 +251,20 @@ The system must also have the following buttons, switches or interface devices:
 %presentation, discussion, and analysis of the results.  However, it will still
 %be graded separately and must be present.
 
+The biggest problem with the final version of this project that was present at demo time was the fact that the multiplayer features were not implemented.  There was test code that correctly configured the Xbee modules for multiplayer, but they were not completely implemented with the game.  The reason for this was because when the $I^2C$ system was implemented, the entire game had to be modified to run within the scheduler, when it was just a single function before.  $I^2C$ communication is controlled by the system's interrupt handler, and certain flags are set depending on whether data is being sent or received.  Those flags have to be processed, and a game that is running in a function and taking control of the entire system would not allow for those flags to be processed.  The time it took to port the game over to running completely within the scheduler made it impossible to get the multiplayer functions completely implemented and working in time.
+
+Another problem at the time of the demo was that card reading was not 100\% functional.  The system had four distinct sets of data that could be successfully written to a card using the ``Build Cards'' option from the system's main menu, but the data was not being displayed properly in the singleplayer game.  Data coming from the card over the $I^2C$ connection was confirmed to be correct, but the game was not interpreting and displaying the information correctly to the user.  This was also a matter of running out of time.  For the same reasons as above (converting the game to be run within the flag-based scheduler) the RFID reading still had some kinks to work out at the time of the demo.  Those problems were that:
+
+\begin{itemize}
+	\item Monster type was being read incorrectly
+	\item Monster name was being displayed incorrectly
+	\item Complete attack list was not implemented
+\end{itemize}
+
+For demo purposes, only the first attack would be read and it would be copied to all three attack slots.  Only the ``FAIL'' attack ID was programmed to be read, and if the ID did not match the ``FAIL'' attack's ID, then it was interpreted as a ``SCRATCH'' attack.  This function worked correctly, but the rest of the attack IDs were not implemented.  The monster's level was correctly read as well.
+
+Finally, there was an error when finishing a singleplayer game.  When the game was complete, the main menu was not being properly displayed.  Once again, the problem was time, and the main menu's controls were still functional.  Another menu could be loaded by navigating the invisible menu and choosing an option, letting that screen load, and then pressing the ``B'' key to return back to the main menu and redraw it.
+
 \subsection{Analysis of Implementation Issues and Workarounds} % Patrick
 %
 %State any problems you encountered while working on the project. If your
