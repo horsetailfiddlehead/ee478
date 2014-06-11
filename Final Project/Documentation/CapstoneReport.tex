@@ -602,10 +602,7 @@ A major software component of the RFID interaction suite was the scheduler and t
 		
 		\item RSS232.c
 		
-		\item SRAMback.c and SRAMfront.c
-		
-		
-		
+		\item SRAMback.c and SRAMfront.c	
 \end{itemize}
 
 
@@ -628,15 +625,67 @@ The RFID interaction suite meets the following standards:
 %
 %In addition to a detailed discussion and analysis of your project and your
 %results, you must include all the answers to all questions raised in the lab.
-\subsection{Results } % Ryan
+\subsection{Presentation and Discussion of Resulta} % Ryan
 
 The system was able to successfully read and write RFID cards at the time of the demo.  However, multiplayer was not implemented, and there were still a few glitches in menu navigation and card interpretation.  The details of these can be found in the Analysis of Any Errors section.
 
-Upon system startup, the user is treated to the main menu, from which they can choose singleplayer, multiplayer, or build cards.  The user presses the 2, and 8 keys on the keypad move up and down the menu, and presses the D key to select a menu option.  When the user selects either singleplayer or multiplayer, they are shown a second menu from which they can choose Duel Game, Clue, or two empty slots.  The only slot that shows something other than an ``In progress'' screen is the Duel game option from the Singleplayer menu.  At any time, the user can place a card on the RFID reader and press down the switch to force the back-end PIC to read the card into the system.  After doing so, the Duel Game can read that card duing gameplay.  The following pictures depict the singleplayer game.
+Upon system startup, the user is treated to the main menu, from which they can choose singleplayer, multiplayer, or build cards.  The user presses the 2, and 8 keys on the keypad move up and down the menu, and presses the D key to select a menu option.  When the user selects either singleplayer or multiplayer, they are shown a second menu from which they can choose Duel Game, Clue, or two empty slots.  The only slot that shows something other than an ``In progress'' screen is the Duel game option from the Singleplayer menu.  At any time, the user can place a card on the RFID reader and press down the switch to force the back-end PIC to read the card into the system.  After doing so, the Duel Game can read that card during gameplay.  The following pictures depict the singleplayer game.
 
-\subsection{Discussion of Results } % Alyanna
+Functionality of the RFID read system can be shown in the oscilloscope screenshots.
+	\FloatBarrier
+	\subsection{Reading RFID Cards}\label{appendix:read}}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQ.png}
+		\caption{A whole read card command}
+		\label{fig:read0}
+	\end{figure}
 
-All components were functional at the end 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQI2c.png}
+		\caption{Sending an I2C request for reading a card block}
+		\label{fig:read1}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQRFID.png}
+		\caption{Sending a read block command to the RFID module}
+		\label{fig:read2}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardreadSEQRXI2c.png}
+		\caption{Receiving a block from the RFID module and sending it through I2C between PICs}
+		\label{fig:read3}
+	\end{figure}	
+	
+	\FloatBarrier
+	\subsection{Write RFID command sequence}\label{appendix:writeCards}}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardwritesequence.png}
+		\caption{An entire card writing sequence}
+		\label{fig:write0}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardwriteblockI2C.png}
+		\caption{Sending a write block command through I2C to the RFID writer}
+		\label{fig:write1}
+	\end{figure}
+	
+	The image below shows that data has been written to a card - the RX and TX match data in the bus lines.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/scopeimages/cardwriteRFID.png}
+		\caption{Writing data from RFID module}
+		\label{fig:write2}
+	\end{figure}
 
 \subsection{Analysis of Any Errors } % Ryan
 %
@@ -819,7 +868,7 @@ The following items are to be tested:
 % Include comments and reflections on the capstone. What went well, what could
 % be improved next time, What was enjoyable and/or challenging.
 
-This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was for Arduinio shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tagswere a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
+This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was for Arduino shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tags were a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
 
 With all this new technology, the group broke down building and testing into separate components. The intention was to put everything together at the end and make a scheduler to fire off every function at a particular time. This was the first development flaw - assuming everything would work when put together. There was miscommunication over how the scheduler would work that many functions with while loops had to be redone using flags. A better method would have been to consistently putting components together once their functionality was verified separately. Additionally, another PICKit 3 should have been bought for use during testing - with only one PICKit, components had to be tested and debugged one at a time after programming. The ability to consistently load the program into PICs and observe the results would have reduced the time for debugging and testing each individual part.
 
