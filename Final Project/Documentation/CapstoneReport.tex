@@ -246,6 +246,64 @@ applicable state and federal child safety laws.
 
 \subsection{Functional Decomposition}\label{functions} % Patrick
 
+Figure~\ref{fig:funDecomp} in Appendix~\ref{fig:funcDecomp} gives a hierarchy
+of the system software functions. Each function in the functional diagram has a
+corresponding software task.
+
+The functions are explained below:
+
+\begin{description}
+	\item[Play Game] Loads and begins execution of the requested game.
+	\item[System Scheduler] The system scheduler monitors the state of the system
+		and calls system functions as necessary. On system power on or power on
+		reset, the scheduler intitializes system variables and calls the setup()
+		function of each task.
+	\item[Read/Write Cards] Formats and sends commands to the RFID reader. The
+		task also processes the raw data from the RFID reader and stores the card
+		UID and card memory data for later retrieval by other tasks.
+	\item[Access Database] Reads and writes data to the local SRAM. The Access
+		Database task determines where each byte of data is written and writes or
+		requests the data from the memory. The Access Task also maintains a
+		reference table of game data corresponding to the moves, types, etc.
+		corresponding to data encoded on the RFID cards.
+	\item[User Interaction] User interaction involves three functions: Keypad,
+		Display, and Card Reaction.
+		\begin{description}
+			\item[Keypad] The keypad driver determines which key the user has
+				pressed, if any.
+			\item[Display] The display driver interfaces with the LCD over an Serial
+				Peripheral Interface (SPI) to draw game menus and screens. The display
+				driver also formats text strings and numbers from the game for display
+				on the screen.
+			\item[Card Reactions] The Card Reaction task determines when a card had
+				been placed onto the board, tells the system to read and process the
+				card, and sets the card status LEDs.
+			\item[LED Driver] This task changes the output of the LEDs based upon the
+				read status of the cards.
+		\end{description}
+	\item[Communication] Communication includes three tasks: external serial
+		communication via RS-232, external wireless communication via 2.4GHz wifi,
+		and internal InterPIC communicaton via $I^2C$
+		\begin{description}
+			\item[Serial Driver] The serial driver sets up the serial RS-232
+				connection port. The task also processes incoming serial data, saving
+				the result to system memory and alerting the scheduler to run
+				subsequent tasks.
+			\item[Wireless Driver] The wireless driver configures the XBee module,
+				sets up the person-to-person communication link and formats incoming
+				and outgoing data between the game and XBee module.
+			\item[InterPIC Driver] The InterPIC driver configures the $I^2C$ port and
+				sends data over the $I^2C$ connection. The driver wraps and unwraps
+				data sent over the connection in the $I^2C$ protocol. Each once
+				unwrapped, the command is interpretted, data is stored for system use,
+				and the scheduler is alerted to call other tasks.
+		\end{description}
+	\item[Build Card] The Build Card function prompts the user to input
+		customizing options then encodes the responses for storage on an RFID card.
+		Once data is properly encoded, the task instructs the InterPIC Driver to
+		write the data to the RFID card through the RFID reader.
+\end{description}
+
 \section{Hardware Implementation}\label{hwImplementation} 
 
 \subsection{Top Level Design}\label{hwTopLevel} % Patrick
@@ -439,136 +497,136 @@ one system.
 	\caption{\label{tab:bomTable}}
 \end{table}
 
-%\FloatBarrier
-%\section{Hardware Diagrams\label{appendix:hwDiagrams}}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=\textwidth]{images/BlockDiagram.png}
-%	\caption{High level block diagram of the system hardware components}
-%	\label{fig:highLevelBlockDiagram}
-%\end{figure}
+\FloatBarrier
+\section{Hardware Diagrams}\label{appendix:hwDiagrams}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/BlockDiagram.png}
+	\caption{High level block diagram of the system hardware components}
+	\label{fig:highLevelBlockDiagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/SRAMHardwareBlock.png}
+	\caption{Block diagram of the SRAM hardware system}
+	\label{fig:sramBlockDiagram}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4in]{images/PinOuts.png}
+	\caption{Pinouts to the front- and back-end microcontrollers}
+	\label{fig:pinoutDiagram}
+\end{figure}
+
+\FloatBarrier
+\section{Functional Decomposition Diagram}\label{fig:funcDecomp}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/funDecomp.png}
+	\caption{Software functional decomposition showing the major functional
+	divisions and tasks}
+	\label{fig:funDecomp}
+\end{figure}
+
+\FloatBarrier
+\section{State Diagrams}
+\FloatBarrier
+\subsection{System State Diagram}\label{fig:sysStateDiagram}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{images/overallSystemDiagram.png}
+		\caption{}
+		\label{fig:sysStates}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{images/OSStates.png}
+		\caption{}
+		\label{fig:statesLegend}
+	\end{subfigure}
+	\caption{State diagram of the primary operating system.
+		Figure~\ref{fig:sysStates} shows the states while
+		Figure~\ref{fig:statesLegend} provides a legend}
+		\label{fig:systemStateDiagram}
+	\end{figure}
+
+	\FloatBarrier
+	\subsection{General Gameplay State Diagram}\label{appendix:gameplayDiagram}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/gamePlayState.png}
+		\caption{State diagram of basic turn-based game}
+		\label{fig:gamePlayState}
+	\end{figure}
+
+	\FloatBarrier
+	\section{Control Flow Diagrams}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\textwidth]{images/keypadDataFlow.png}
+		\caption{Keypad response}
+		\label{fig:keypadDataFlow}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{images/reactionDataFlow.png}
+		\caption{Card Reaction LEDs}
+		\label{fig:cardReactionDataFlow}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{images/RFIDreaderDataFlow.png}
+		\caption{RFID tag reader subsystem}
+		\label{fig:rfidDataFlow}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{\textwidth}
+			\includegraphics[width=\textwidth]{images/I2CReceiveDataCtrlFlow.png}
+			\caption{}
+			\label{fig:i2cReceiveFlow}
+		\end{subfigure}
+
+		\begin{subfigure}{\textwidth}
+			\includegraphics[width=\textwidth]{images/I2CSendCtrlFlow.png}
+			\caption{}
+			\label{fig:i2cSendFlow}
+		\end{subfigure}
+		\caption{I2C communication between microcontrollers.
+		Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and
+		Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
+		\label{fig:i2cCtrlFlow}
+	\end{figure}
+
+	\FloatBarrier
+	\section{Project Schedule}\label{appendix:ganttChart}
+	\begin{figure}[h]
+		\centering
+		\begin{adjustbox} {rotate=90,center}
+		\includegraphics[height=0.7\textwidth]{images/NewGantt.png}
+	\end{adjustbox}
+	\caption{Project Gantt Chart}
+	\label{fig:ganttChart}
+ \end{figure}
+
+	\clearpage
+	\section{Source Code}
+ %We will put code here. Use the format:
+%		\subsection{Main Function}
+%    \lstinputlisting{../code/main.c}
 %
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{images/SRAMHardwareBlock.png}
-%	\caption{Block diagram of the SRAM hardware system}
-%	\label{fig:sramBlockDiagram}
-%\end{figure}
-%
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[height=4in]{images/PinOuts.png}
-%	\caption{Pinouts to the front- and back-end microcontrollers}
-%	\label{fig:pinoutDiagram}
-%\end{figure}
-%
-%\FloatBarrier
-%\section{Functional Decomposition Diagram\label{fig:funcDecomp}}
-%
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=\textwidth]{images/funDecomp.png}
-%	\caption{Software functional decomposition showing the major functional
-%	divisions and tasks}
-%	\label{fig:funDecomp}
-%\end{figure}
-%
-%\FloatBarrier
-%\section{State Diagrams}
-%\FloatBarrier
-%\subsection{System State Diagram\label{fig:sysStateDiagram}}
-%\begin{figure}[H]
-%	\centering
-%	\begin{subfigure}{0.48\textwidth}
-%		\includegraphics[width=\textwidth]{images/overallSystemDiagram.png}
-%		\caption{}
-%		\label{fig:sysStates}
-%	\end{subfigure}
-%	~
-%	\begin{subfigure}{0.48\textwidth}
-%		\includegraphics[width=\textwidth]{images/OSStates.png}
-%		\caption{}
-%		\label{fig:statesLegend}
-%	\end{subfigure}
-%	\caption{State diagram of the primary operating system.
-%		Figure~\ref{fig:sysStates} shows the states while
-%		Figure~\ref{fig:statesLegend} provides a legend}
-%		\label{fig:systemStateDiagram}
-%	\end{figure}
-%
-%	\FloatBarrier
-%	\subsection{General Gameplay State Diagram\label{appendix:gameplayDiagram}}
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=\textwidth]{images/gamePlayState.png}
-%		\caption{State diagram of basic turn-based game}
-%		\label{fig:gamePlayState}
-%	\end{figure}
-%
-%	\FloatBarrier
-%	\section{Control Flow Diagrams}
-%
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=0.75\textwidth]{images/keypadDataFlow.png}
-%		\caption{Keypad response}
-%		\label{fig:keypadDataFlow}
-%	\end{figure}
-%
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=0.8\textwidth]{images/reactionDataFlow.png}
-%		\caption{Card Reaction LEDs}
-%		\label{fig:cardReactionDataFlow}
-%	\end{figure}
-%
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[width=0.8\textwidth]{images/RFIDreaderDataFlow.png}
-%		\caption{RFID tag reader subsystem}
-%		\label{fig:rfidDataFlow}
-%	\end{figure}
-%
-%	\begin{figure}[H]
-%		\centering
-%		\begin{subfigure}{\textwidth}
-%			\includegraphics[width=\textwidth]{images/I2CReceiveDataCtrlFlow.png}
-%			\caption{}
-%			\label{fig:i2cReceiveFlow}
-%		\end{subfigure}
-%
-%		\begin{subfigure}{\textwidth}
-%			\includegraphics[width=\textwidth]{images/I2CSendCtrlFlow.png}
-%			\caption{}
-%			\label{fig:i2cSendFlow}
-%		\end{subfigure}
-%		\caption{I2C communication between microcontrollers.
-%		Figure~\ref{fig:i2cReceiveFlow} shows the flow for received data and
-%		Figure~\ref{fig:i2cSendFlow} shows the flow for transmitted data.}
-%		\label{fig:i2cCtrlFlow}
-%	\end{figure}
-%
-%	\FloatBarrier
-%	\section{Project Schedule\label{appendix:ganttChart}}
-%	\begin{figure}[h]
-%		\centering
-%		\begin{adjustbox} {rotate=90,center}
-% 		\includegraphics[height=0.7\textwidth]{images/NewGantt.png}
-% 	\end{adjustbox}
-% 	\caption{Project Gantt Chart}
-% 	\label{fig:ganttChart}
-% \end{figure}
-%
-%	\clearpage
-%	\section{Source Code}
-% We will put code here. Use the format:
-%    \subsection{Main Function}
-%%    \lstinputlisting{../code/main.c}
-%%
-%%    \subsection{Tasks}
-%%    \subsubsection{Task Control Blocks}
-%%    \lstinputlisting{../code/tcb.h}
-%	Source code for this project is provided below.
+%    \subsection{Tasks}
+%    \subsubsection{Task Control Blocks}
+%    \lstinputlisting{../code/tcb.h}
+	Source code for this project is provided below.
 %
 %	\subsection{System Scheduler}
 %	The system-wide global definitions and variables are also given here for
@@ -577,7 +635,7 @@ one system.
 %	\lstinputlisting{../FrontEnd.X/interrupts.h}
 %	\lstinputlisting{../FrontEnd.X/SchedMain.c}
 %
-%	\subsection{Creating Cards}
+%	\subsection{Build Cards}
 %	\lstinputlisting{../FrontEnd.X/buildCard.c}
 %
 %	\subsection{Example Game}
@@ -610,7 +668,7 @@ one system.
 %	\lstinputlisting{../FrontEnd.X/rfidReader.h}
 %	\lstinputlisting{../FrontEnd.X/rfidReader.c}
 %
-%	\subsection{EIA-232 Serial Connection}
+%	\subsection{RS-232 Serial Connection}
 %	\lstinputlisting{../FrontEnd.X/rs232.h}
 %	\lstinputlisting{../FrontEnd.X/rs232.c}
 %
