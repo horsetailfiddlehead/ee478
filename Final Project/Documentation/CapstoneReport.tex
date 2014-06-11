@@ -459,9 +459,7 @@ The software implementation for the RFID interaction suite consisted of developi
 %
 %task level implementation details here. Control diagram goes here, etc.
 
-
-
-A major software component of the RFID interaction suite were the built in games.
+A major software component of the RFID interaction suite was the scheduler and the built in game.
 
 \begin{itemize}
 	\item LCD.c and LCD.h
@@ -535,15 +533,21 @@ A major software component of the RFID interaction suite were the built in games
 				\begin{itemize}
 					\item selectCard: 
 					\item pickMove: Similar to selectCard, pickMove showed the user what attack moves were available based off of the selected card.
-					\item processKeyboard: Since the 4x4 keypad was limited in options for characters, a software keyboard was created. Users could scroll through the characters on the screen using the external keypad and enter a 5 character string. Characters were selected based off of the position of the cursor and added to an empty string called names\[\] - when the system read a \# from the keypad, it would add a backslash 0 to indicate the array was a string. This keyboard was used for creating a player name or customizations on in the build card interface.
+					\item processKeyboard: Since the 4x4 keypad was limited in options for characters, a software keyboard was created. Users could scroll through the characters on the screen using the external keypad and enter a 5 character string. Characters were selected based off of the position of the cursor and added to an empty string called names{} - when the system read a \# from the keypad, it would add a backslash 0 to indicate the array was a string. This keyboard was used for creating a player name or customizations on in the build card interface.
 					\item Print Functions: Many print functions were created to print different screens for the game using functions from LCD.c. For example, printSelect printed out the menu for selecting cards while printGame printed the current game status, showing off the scores and turns.
 				\end{itemize}
 		\end{itemize}
 		
-		
 		\item keypadDriver.c and keypadDriver.h
 		
-		\item
+		\item i2cComm.c
+		
+		\item RSS232.c
+		
+		\item SRAMback.c and SRAMfront.c
+		
+		
+		
 \end{itemize}
 
 
