@@ -115,35 +115,16 @@
 % design.  The abstract should mirror (albeit in a very condensed way) the
 % content of your report.
 
+For the final capstone group built a digital card-gaming device, also known as a RFID interaction suite. Using RFID technology, RFID cards were written that stored data on a monster and its attack moves. These cards then could be used in a card dueling game - when a player placed the card on the RFID scanner, they could use the monster in the game against their opponent. The RFID interaction suite has 3 modes of gameplay: single player, multiplayer, and building cards. It uses Xbee wireless to communicate with other players in multiplayer mode. Input from the user is taken through a 4x4 keypad, and output is shown through an 128x160 bit LCD screen. The SRAM was used to store game data and monster data. Since the system uses PIC18546K22 microcontrollers to control all peripherals such as the LCD and Xbee, drivers had to made to use them. Add In the end, not all features were implemented to the system due to time constraints and unforseen errors, but the basic foundation of reading and writing to RFID cards and displaying the game was functional.
+
 \section{Introduction}
 % Brief introduction and overview of the purpose of the lab and of the methods
 % and tools used.
-
-
 % This section should include the following:
 
-\textbf{These are some example of how to cite and use bullet points}
-A reference to Table~\ref{tab:bomTable} and one to the Design Specification, Section~\ref{sec:designSpec}.
+Skylanders are a popular toy for children - they are action figures that have RFID tags in them which store data about the action figure. These figures can be placed on a gaming console to be used during a video game. The popularity of these games was the inspiration for this project, though the group wanted to make it more portable than the typical gaming device. The RFID interaction suite is a prototype for a portable system that is capable of reading and writing data to cards with RFID tags inside them, similar to the popular Skylanders action figure.
 
-\begin{itemize}
-	\item Overall summary description of the module - 2-3 paragraphs maximum
-		(explanation of use cases goes here)
-
-		\begin{itemize}
-			\item Specification of the public interface to the module
-
-				\begin{itemize}
-					\item Inputs
-					\item Outputs
-					\item Side effects
-				\end{itemize}
-
-			\item Psuedo English description of algorithms, functions, or procedures
-			\item Timing constraints
-			\item Error handling
-		\end{itemize}
-\end{itemize}
-
+The main component of this project are the RFID tags. Using a DLP RFID reader/writer, data can be read and written to cards with RFID tags. The operation is similar to the RFID tags used in bus passes and access cards. For the purpose of this project, data on monsters and their moves was written into the RFID tags. During card duel gameplay, these cards could be read and used against their opponent. Users could select their monster with using a keypad and witness the game status through a color LCD screen. Multiplayer games were communicated through Xbees, and and game data was stored in the SRAM. The system was seperated into two parts - the front end and the back end. The front end takes user input and displays data - this is the part the user can see. The back end manages the RFID system.
 
 \section{Design Specification}\label{sec:designSpec} 
 % In this subsection you will textually describe your client's requirements.
@@ -353,7 +334,7 @@ A user will be provided with a deck of RFID cards that contain data about whatev
 \begin{itemize}
 	\item Read/Write Cards: 
 		\begin{itemize}
-			\item Communicate w/ DLP: The chosen RFID reader is the DLP-RFID2 reader/writer module. The system must communicate with this reader using the RS-232 protocol at TTL voltage levels. The communication link must be at 115200 Baud, 8-bits, 1 stop bit, and no parity check. The commands to the RFID reader are specified in TRF7960_ISO15693_protocol.pdf 
+			\item Communicate w/ DLP: The chosen RFID reader is the DLP-RFID2 reader/writer module. The system must communicate with this reader using the RS-232 protocol at TTL voltage levels. The communication link must be at 115200 Baud, 8-bits, 1 stop bit, and no parity check. The commands to the RFID reader are specified in TRF7960\_ISO15693\_protocol.pdf 
 			\item Traverse card data: The system must read up to five cards
 			\item Quantity of Cards: The Reader must be able to read and write to 5 cards at a time.
 			\item Write Card: Data must be written to the card according to the ISO 15693 standard. The structure of data contained on the card may vary with the game associated with the card. The following data locations must be present:
@@ -363,7 +344,7 @@ A user will be provided with a deck of RFID cards that contain data about whatev
 					\item Display name – The name of the card as displayed to the user
 					\item Associated Programs – A code that identifies the card as valid for a specific game set.
 				\end{itemize}
-			\end{itemize}
+		\end{itemize}
 	\item Access Database
 		\begin{itemize}
 			\item Read Data to SRAM: The system must be capable of requesting data from the SRAM using a byte-addressing scheme. The returned data must be received as an 8-bit word in parallel.
@@ -415,6 +396,64 @@ The MTBF will be a minimum of 1,000 hours
 
 \subsection{Functional Decomposition}\label{functions} % Patrick
 
+Figure~\ref{fig:funDecomp} in Appendix~\ref{fig:funcDecomp} gives a hierarchy
+of the system software functions. Each function in the functional diagram has a
+corresponding software task.
+
+The functions are explained below:
+
+\begin{description}
+	\item[Play Game] Loads and begins execution of the requested game.
+	\item[System Scheduler] The system scheduler monitors the state of the system
+		and calls system functions as necessary. On system power on or power on
+		reset, the scheduler intitializes system variables and calls the setup()
+		function of each task.
+	\item[Read/Write Cards] Formats and sends commands to the RFID reader. The
+		task also processes the raw data from the RFID reader and stores the card
+		UID and card memory data for later retrieval by other tasks.
+	\item[Access Database] Reads and writes data to the local SRAM. The Access
+		Database task determines where each byte of data is written and writes or
+		requests the data from the memory. The Access Task also maintains a
+		reference table of game data corresponding to the moves, types, etc.
+		corresponding to data encoded on the RFID cards.
+	\item[User Interaction] User interaction involves three functions: Keypad,
+		Display, and Card Reaction.
+		\begin{description}
+			\item[Keypad] The keypad driver determines which key the user has
+				pressed, if any.
+			\item[Display] The display driver interfaces with the LCD over an Serial
+				Peripheral Interface (SPI) to draw game menus and screens. The display
+				driver also formats text strings and numbers from the game for display
+				on the screen.
+			\item[Card Reactions] The Card Reaction task determines when a card had
+				been placed onto the board, tells the system to read and process the
+				card, and sets the card status LEDs.
+			\item[LED Driver] This task changes the output of the LEDs based upon the
+				read status of the cards.
+		\end{description}
+	\item[Communication] Communication includes three tasks: external serial
+		communication via RS-232, external wireless communication via 2.4GHz wifi,
+		and internal InterPIC communicaton via $I^2C$
+		\begin{description}
+			\item[Serial Driver] The serial driver sets up the serial RS-232
+				connection port. The task also processes incoming serial data, saving
+				the result to system memory and alerting the scheduler to run
+				subsequent tasks.
+			\item[Wireless Driver] The wireless driver configures the XBee module,
+				sets up the person-to-person communication link and formats incoming
+				and outgoing data between the game and XBee module.
+			\item[InterPIC Driver] The InterPIC driver configures the $I^2C$ port and
+				sends data over the $I^2C$ connection. The driver wraps and unwraps
+				data sent over the connection in the $I^2C$ protocol. Each once
+				unwrapped, the command is interpretted, data is stored for system use,
+				and the scheduler is alerted to call other tasks.
+		\end{description}
+	\item[Build Card] The Build Card function prompts the user to input
+		customizing options then encodes the responses for storage on an RFID card.
+		Once data is properly encoded, the task instructs the InterPIC Driver to
+		write the data to the RFID card through the RFID reader.
+\end{description}
+
 \section{Hardware Implementation}\label{hwImplementation} 
 
 \subsection{Top Level Design}\label{hwTopLevel} % Patrick
@@ -454,28 +493,28 @@ The software implementation for the RFID interaction suite consisted of developi
 			\item Execute Game: After a game flag has been set, the game would run until a player has finished.
 		\end{itemize}
 	\item Read/Write Cards
-		\begin(itemize)
+		\begin{itemize}
 			\item Scan for New Cards: During game mode or build card mode, the system would scan for new cards via the RFID reader/writer.
 			\item Write Card: During the "build card" part of the game, the user would be able to write data to the cards through the RFID reader/writer. The user would have the ability to add a name and attack moves to the card through the external keypad and the in-game keyboard.
 			\item Read card: During game mode, the system would check for available cards to work with. If a player was in the middle of a duel, the system would scan for new cards to use for gameplay. If a reader was trying to build new cards, the system would look for available cards to be modified.
-		\end(itemize)
+		\end{itemize}
 	\item Access Database
-		\begin(itemize)
+		\begin{itemize}
 			\item Read Data to SRAM: Reads game-relevent data. For example, when a game is to be loaded, the system load the game from the SRAM. Or if the computer were to read in a monster during a single player duel game, it would access the database of monsters.
 			\item Write Data to SRAM: Writes new game data. If new monsters or games were to be added to the system, it would be written to the SRAM for future use.
 			\item Look Up / Reference Table: Used as a reference for memory locations of data in the SRAM \(i.e. ''Phone book''\).
-		\end(itemize)
+		\end{itemize}
 	\item External Communication
-		\begin(itemize)
+		\begin{itemize}
 			\item RS232 Driver: The back end of the system uses the USART to communicate with the Xbee wireless chips and RFID drivers. Information was sent out or recieved by the system through these peripherals.
 			\item Wireless Driver: In addition to the RS232, a driver for the Xbee wireless had to be implemented to allow the system to communicate with other users during the multiplayer game.
-		\end(itemize)	
+		\end{itemize}	
 	\item User Interaction
-		\begin(itemize)
+		\begin{itemize}
 			\item Read Keypad: A driver was made to read key presses from the user. Different parts of the system could read the keypad using functions built in this driver.
 			\item Display: An LCD driver was modified to develo
 			\item Card Reaction: An LED driver was made to control the LED lights of the RFID interaction suite. This would indicate to the user whether a card had been properly registered or not, based off of the color of the lights.
-		\end(itemize)
+		\end{itemize}
 \end{itemize}
 
 
@@ -487,38 +526,38 @@ A major software component of the RFID interaction suite was the scheduler and t
 
 \begin{itemize}
 	\item LCD.c and LCD.h
-		\item The majority of documentation for our ST7735 1.8 TFT LCD screen did not include example code for how to use the screen. Most tutorials or example code \(i.e. Adafruit\) assumed that the user would be programming on an Arduino UNO, which had built in libraries for fonts and shapes. The link below features code found on Google which interfaces the LCD with a PIC microcontroller using the chip's SPI function. However the code was not optomized, thus LCD.c and LCD.h are modified versions of the code. The original drawBox function in LCD.c created a box pixel by pixel - it would take a beginning pixel location and an ending pixel location, causing load times to take longer. The new box function takes the beginning and end coordinates for the box and fills everything in between by printing out pixels all at once. Another function printrs was made to take a char pointer to a string and print it out on the LCD. A major advantage to using this example code was that it already built a font library for the LCD screen. Had the group not utilized this, they would have taken time defining the pixel structure for every possible character. 
-		\item Original Code (unmodified): https://sites.google.com/site/arduinomega2560projects/microchip-pic/level-3/st7735-1-8-tft
-	\end {itemize}
+	\item The majority of documentation for our ST7735 1.8 TFT LCD screen did not include example code for how to use the screen. Most tutorials or example code \(i.e. Adafruit\) assumed that the user would be programming on an Arduino UNO, which had built in libraries for fonts and shapes. The link below features code found on Google which interfaces the LCD with a PIC microcontroller using the chip's SPI function. However the code was not optomized, thus LCD.c and LCD.h are modified versions of the code. The original drawBox function in LCD.c created a box pixel by pixel - it would take a beginning pixel location and an ending pixel location, causing load times to take longer. The new box function takes the beginning and end coordinates for the box and fills everything in between by printing out pixels all at once. Another function printrs was made to take a char pointer to a string and print it out on the LCD. A major advantage to using this example code was that it already built a font library for the LCD screen. Had the group not utilized this, they would have taken time defining the pixel structure for every possible character. 
+	\item Original Code (unmodified): https://sites.google.com/site/arduinomega2560projects/microchip-pic/level-3/st7735-1-8-tft
+\end {itemize}
 
 % Insert State Machine for Game Here	
-	
+
 \begin{itemize}
 	\item Game.c and Game.h
 		\begin{itemize}
 			\item Game.h was a header file which defined the following structures for running the game:
-				\begin(itemize)
+				\begin{itemize}
 					\item Types: This structure defined element types for card monsters, which was indicated by an integer.
 						\begin{itemize}
 							\item Fire Type\= 0
 							\item Water Type \= 1
 							\item Earth Type \= 2
-						\end
+						\end {itemize}
 					\item Move: Each card had a set of attack moves to be used during the card duel game. This structure defines characteristics for each move, which can be modified by the user during the build card mode.
 						\begin{itemize}
 							\item char moveName\[9\] \= A nine character array which would store the name of a move/
 							\item Type moveType \= Element type of the move, which can be fire, water or earth. Different move types have more damage against opposite elements. For example, a fire type is hurt more by a water type attack, etc.
 							\item int baseDamage \= The maximum amount of possible damage for the move
 							\item int uses \= Number of times a move can be used - during game mode, this number decreases as the same move is used. Once it hits 0, a user can no longer us the same attack.
-						\end
+						\end{itemize}
 					\item Monster: Each card represented a particular monster that could be selected during the game.
 						\begin{itemize}
 							\item char monsterName\[9\] \= Customizable name for the card, defined by the user.
 							\item int monsterID \= A unique ID for a card; standardizes the card so the system can look it up quickly, despite what custom name is. Cannot be modified by user.
 							\item int level \= Level of the monster, used for determining the success rate of an attack, talked about more in the pickMove function.
-							\item Type monsterType \= Element type of the monster, relevant during game play mode. If a monster is hit with an attack of the opposite element \(ex. fire and water), then the monster will take more damage because of it's type.
+							\item Type monsterType \= Element type of the monster, relevant during game play mode. If a monster is hit with an attack of the opposite element (ex. fire and water), then the monster will take more damage because of it's type.
 							\item Move movelist \= An array that held how many moves were available in the card. Each card had a maximum of 3 moves.
-						\end
+						\end{itemize}
 					\item gameData:
 						\begin{itemize}
 							\item int myScore \= User's score; beginning score is 100. Updated as user experiences an attack from an opponent.
@@ -531,9 +570,9 @@ A major software component of the RFID interaction suite was the scheduler and t
 							\item Move* myMove \= User's selected attack to be used during their turn
 							\item Move* oppmove\= Opponent's move received by the user during the opponent's turn
 							\item char name\[5\] \= Name of the user playing during a game; this is defined during the initial execution of a game and is selected through a software keyboard
-						\end
+						\end {itemize}
 					\item Additionally, all functions in game.c have access to globalData which is shared among all components.
-				\end
+				\end {itemize}
 			\item Single Player: Single player mode followed the direction of the state machine diagram. Gameplay is as follows:
 					\begin{enumerate}
 						\item At the start of a game, the system randomly picks who goes first - the user or the computer. Afterwards, it would read in whatever cards through the getCard function, so that monsters are available for the player to use. If it is the user's first time playing, the system will prompt the user to enter a name using the processKeyboard helper function. This name would then be stored in gameData -> name.
@@ -543,14 +582,16 @@ A major software component of the RFID interaction suite was the scheduler and t
 						\item However, if an attack was successful, the total amount of damage would be subtracted from myScore and the LCD display would update.
 						\item During every game, helper function gameStatus was called to check whether the game was over. It compared the oppScore and myScore to 0, and if either of them were equal it would change gameOver in game data to equal 1, indicating someone lost.
 						\item  Once game was over, printResults would be executed to display the results of the game, based off of the scores.
+					\end{enumerate}
 			\item Multiplayer: Structure of gameplay is essentially the same as single player, however instead of playing against a computer, the opponent is another player using a seperate system. Thus the following changes are made:
-					\begin(enumerate)
+					\begin{enumerate}
 						\item At the start of the game, the user would be given the option of hosting a game or finding a game to join. The temporary variable hostOrFind would indicate 0 for hosting a game or 1 for finding a game to join.
 						\item The system would then set up the Xbee to either host a game or join a game using the setupXbee helper function, thus establishing a connection with the user. 
 						\item Once a connection was made, game play would continue like single player mode. 
-						\item During the user's turn, they would have to send moves over Xbee to the player, and receive the resulting score from the opponent. The received score would be stored in oppScore. 
-						\item During an opponent's turn, the user would wait to receive a move over Xbee from the other player. Upon receiving it, the user would take damage based off of the element and level of the monster/move. The user would then update its myScore and send the new score over Xbee to the other player.
-					\end
+						\item During the user's turn, they would have to send moves over Xbee to the player, and receive the resulting score from the opponent. The recieved score would be stored in oppScore. 
+						\item During an opponent's turn, the user would wait to receive a move over Xbee from the other player. Upon recieving it, the user would take damage based off of the element and level of the monster/move. The user would then update its myScore and send the new score over Xbee to the other player.
+					\end {enumerate}
+
 			% RYAN GO DO THIS
 			\item Build Cards: This function takes two arguments, a pointer to the global data structure, and a selection integer called sel that is determined by the build cards menu in the scheduler.  A switch - case statement is run that determines what data to send over I2C to the RFID card.  If sel is a 0, a FIREDUDE will be written to the card, if sel is 1 an EARTHGUY is written to the card, if sel is a 2, a WATERMAN is written to the card, and if sel is 3 a DRPECKOL is written to the card.  The commands to write the information is sent with the sendBytes() function by constructing a special I2C packet containing a WRITE_CARD_BLOCK command, a card slot number, a rfid data block to write to, and the the monster's type, level, and movelist.  The specific settings for how the packet is created can be found in the buildCard() function of the game.c file in Appendix~\ref{appendix:examplegame}.
 		\end{itemize}
@@ -594,6 +635,8 @@ The system was able to successfully read and write RFID cards at the time of the
 Upon system startup, the user is treated to the main menu, from which they can choose singleplayer, multiplayer, or build cards.  The user presses the 2, and 8 keys on the keypad move up and down the menu, and presses the D key to select a menu option.  When the user selects either singleplayer or multiplayer, they are shown a second menu from which they can choose Duel Game, Clue, or two empty slots.  The only slot that shows something other than an ``In progress'' screen is the Duel game option from the Singleplayer menu.  At any time, the user can place a card on the RFID reader and press down the switch to force the back-end PIC to read the card into the system.  After doing so, the Duel Game can read that card duing gameplay.  The following pictures depict the singleplayer game.
 
 \subsection{Discussion of Results } % Alyanna
+
+All components were functional at the end 
 
 \subsection{Analysis of Any Errors } % Ryan
 %
@@ -677,6 +720,10 @@ main menu and redraw it.
 %the
 %original requirements, 2-3 paragraphs maximum unless specified otherwise
 
+At a high level, the duel disk RFID system allows users to wirelessly play card games with another through XBee wireless. Cards that have RFID tags in them are placed on an RFID scanner to choose the next move.  There are 3 different modes for playing: single player, multiplayer, and deck building. Players are able to see game data through a display on the device and enter their own data through the keyboard. 
+
+We will be testing the system for its ability to read multiple RFID tags and send data to another player’s device. Communication should not lag and the data received/sent should be accurate. We will also be testing the user interface for its ability to read user input and output data on a display. Again, the data received and sent between the user and the system should be accurate, and the display should consistently update as new data is received about the game.
+
 \subsection{Test Specification} % Patrick
 %
 %Annotated description of what is to be tested and the test limits.  This
@@ -685,6 +732,43 @@ main menu and redraw it.
 %
 %Note, this does not specify test implementation...this is what to do, not how
 %to do it.
+
+The following items are to be tested:
+\begin{enumerate}
+	\list RFID Reader / Writer
+		\begin{itemise}
+			\list Reading a single/multiplayer RFID tags
+			\list Overwriting current RFID tag data with new data
+		\end{itemize}
+	\list System Hardware (SRAM, PIC, etc.)
+		\begin{itemize}
+			\list i2c: Front end and Back end PICs are able to exchange data between each other
+			\list RS232 / UART: Able to send commands through UART/RS232 for RFID and Xbee drivers
+			\list Read/Write to SRAM: Able to read and write data to the SRAM
+			\list LED lights up when a card has been read - changes color to indicate status of card reading.
+		\end{itemize}
+	\list Xbee Wireless Communication
+		\begin{itemize}
+			\list Join game: Join a game hosted by another player
+			\list Host game: Broadcast ATID for other players to connect
+			\list Receive data: Able to receive data concerning scores and moves between players
+			\list Send data: Able to send out data concerning scores and moves between players
+		\end{itemize}
+	\list System Peripherals (keyboard and display)
+		\begin{itemize}
+			\list Correctly takes in user input through keypad
+			\list Correct action happens as a result of a keypress
+			\list Correctly displays data
+			\list Frequently updates display as game data is modified
+		\end{itemize}
+	\list Game Mode
+			\begin{itemize}
+			\list Single player works as described in software implementation
+			\list Multiplayer works as described in software implementation
+			\list Build card works as defined in software implementation
+		\end{itemize}
+\end{enumerate}
+
 
 \subsection{Test Cases} % Alyanna
 %
@@ -717,6 +801,7 @@ main menu and redraw it.
 \end{itemize}
 
 
+
 \section{Summary and Conclusion}
 %
 %You should know these sections very well, no need to explain.  Note, however,
@@ -734,23 +819,11 @@ main menu and redraw it.
 % Include comments and reflections on the capstone. What went well, what could
 % be improved next time, What was enjoyable and/or challenging.
 
-This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent
-reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was
-for Arduinio shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tags
-were a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
+This project had many hardware components that were new to the group. There was little documentation to gooff of and previous capstone projects had not done anything similar to our design requirements. Much of the project was spent reading documentation and figuring out how to design drivers compatible with the PICs, since most available documentation was for Arduinio shields. Using the LCD and Xbee was more difficult since online tutorials referenced the Arduino shield. RFID tagswere a completely new piece of hardware to work with with little documentation that the group had to contact the company for help.
 
-With all this new technology, the group broke down building and testing into separate components. The intention was to put everything
-together at the end and make a scheduler to fire off every function at a particular time. This was the first development flaw - assuming
-everything would work when put together. There was miscommunication over how the scheduler would work that many functions with while 
-loops had to be redone using flags. A better method would have been to consistently putting components together once their functionality
-was verified separately. Additionally, another PICKit 3 should have been bought for use during testing - with only one PICKit, components
-had to be tested and debugged one at a time after programming. The ability to consistently load the program into PICs and observe the results
-would have reduced the time for debugging and testing each individual part.
+With all this new technology, the group broke down building and testing into separate components. The intention was to put everything together at the end and make a scheduler to fire off every function at a particular time. This was the first development flaw - assuming everything would work when put together. There was miscommunication over how the scheduler would work that many functions with while loops had to be redone using flags. A better method would have been to consistently putting components together once their functionality was verified separately. Additionally, another PICKit 3 should have been bought for use during testing - with only one PICKit, components had to be tested and debugged one at a time after programming. The ability to consistently load the program into PICs and observe the results would have reduced the time for debugging and testing each individual part.
 
-The original intent of the project was to have a working motor that would move the
-RFID reader to read multiple cards. Another feature was that he user would also be able to make custom cards
-with their own ID, attack names, moves, and type. Due to time constraints and testing, these idea had
-to be scrapped in the final implementation. Future implementations should include these features.
+The original intent of the project was to have a working motor that would move the RFID reader to read multiple cards. Another feature was that he user would also be able to make custom cards with their own ID, attack names, moves, and type. Due to time constraints and testing, these idea had to be scrapped in the final implementation. Future implementations should include these features.
 
 \pagebreak
 \appendix
@@ -1020,6 +1093,7 @@ one system.
 %%    \subsubsection{Task Control Blocks}
 %%    \lstinputlisting{../code/tcb.h}
 %	Source code for this project is provided below.
+>>>>>>> 217a29d6e5936256e5dadff677cb7ed92e2b8465
 %
 %	\subsection{System Scheduler}
 %	The system-wide global definitions and variables are also given here for
@@ -1028,7 +1102,7 @@ one system.
 %	\lstinputlisting{../FrontEnd.X/interrupts.h}
 %	\lstinputlisting{../FrontEnd.X/SchedMain.c}
 %
-%	\subsection{Creating Cards}
+%	\subsection{Build Cards}
 %	\lstinputlisting{../FrontEnd.X/buildCard.c}
 %
 %	\subsection{Example Game}\label{appendix:examplegame}
@@ -1061,7 +1135,7 @@ one system.
 %	\lstinputlisting{../FrontEnd.X/rfidReader.h}
 %	\lstinputlisting{../FrontEnd.X/rfidReader.c}
 %
-%	\subsection{EIA-232 Serial Connection}
+%	\subsection{RS-232 Serial Connection}
 %	\lstinputlisting{../FrontEnd.X/rs232.h}
 %	\lstinputlisting{../FrontEnd.X/rs232.c}
 %
@@ -1081,4 +1155,4 @@ one system.
 %	\lstinputlisting{../FrontEnd.X/xbee.h}
 %	\lstinputlisting{../FrontEnd.X/xbee.c}
 %
-	\end{document}
+		\end{document}
