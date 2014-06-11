@@ -456,9 +456,20 @@ The functions are explained below:
 
 \section{Hardware Implementation}\label{hwImplementation} 
 
-\subsection{Top Level Design}\label{hwTopLevel} % Patrick
+The following diagram shows the pinout for the two PICS being used in the system.
 
-\subsection{Low Level Design}\label{hwLowLevel} % Patrick
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/PinOuts.png}
+	\caption{Pinout of the two PICS used in the system}
+	\label{fig:hardwarediagram}
+\end{figure}
+
+On the front end, the A bank and E bank were used send data to the SRAM.  Controls for the SRAM were on ports C0 through C2.  The SCK signal for the Display's SPI connection is on pin C3.  Ports D0 and D1 are used for I2C communication on both PICs.  The Xbee was controlled with ports B7, C7, and C6, since C7 and C6 are the USART2 output pins, while B7 was the only available GPIO pin that could be used to reset the Xbee into configuration mode.  Pin B5 is a PWM output that controls the beeping sound of the buzzer behind the keypad.  The keypad inputs come from pins B0 - B3, and the Keypad outputs are on D4, D5, D2, and D3.  Finally, additional controls for the display are on pins C4 and 5.
+
+The Back end also uses the A and E banks for the SRAM, but A3 was reserved for the motor control.  Thus, all of the SRAM control signals were moved down one pin to C1 through C3.  I2C is still on D0 and D1.  The switches that indicated a card was pushed down were on pins B4-B7, and the outputs to the LED lights were controlled from pins B0 - B3.  Pins D5-7 were reserved for more motor control.  Finally, the DLP RFID 2 was on pins C7 and C6 because that was the other USART module that could be used.
+
+The Xbee had to utilize a 3.3v level shifter in order to work, which introduced a lot of noise.  This was bypassed by puttin a 10 uF capacitor between the 3.3v and ground signals.  To control the LEDs, the back end sent signals to a GAL chip that decoded commands into colors and specific leds to light up.
 
 \section{Software Implementation}\label{swImplementation}
 %
