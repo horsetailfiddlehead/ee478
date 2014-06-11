@@ -183,14 +183,6 @@ The system must be capable of providing the following outputs:
 
 \subsubsection{User Interface}
 
-The system must support the following modes of operation:
-
-\begin{description}
-	\item[Single Player:] Allows the user to select from, and play, single player games. Upon entering Single Player mode, the system prompts the user to select a game to play from those stored in memory. Selecting a valid game loads the game from memory and begins game execution.
-	\item[Multiplayer:] Allows the user to select and play multiplayer games. Upon entering Multiplayer mode, the system activates wireless communication and attempts to connect to other users in Multiplayer mode. Once a connection is established, the users select a multiplayer game on both systems and gameplay begins.
-	\item[Build Card:] Allows the user to create custom cards for a game. The data stored will vary based on game requirements. All cards must contain unique card serial numbers or identifing ID numbers, and a code that specifies which games the card is valid for.
-\end{description}
-
 The system must also have the following buttons, switches or interface devices:
 
 \begin{itemize}
@@ -199,6 +191,35 @@ The system must also have the following buttons, switches or interface devices:
 	\item Power button that turns the system on and off
 	\item An LCD screen viewable from several angles. The screen must be viewable indoors and in overcast conditions
 \end{itemize}
+
+An example User interface is shown in Figure~\ref{fig:exampleFrontPanel}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/exampleFrontPanel.png}
+	\caption{An example front panel layout for the system}
+	\label{fig:exampleFrontPanel}
+\end{figure}
+
+\subsubsection{Functional Requirement}
+
+The system must support the following modes of operation:
+
+\begin{description}
+	\item[Single Player:] Allows the user to select from, and play, single player
+		games. Upon entering Single Player mode, the system prompts the user to
+		select a game to play from those stored in memory. Selecting a valid game
+		loads the game from memory and begins game execution.
+	\item[Multiplayer:] Allows the user to select and play multiplayer games.
+		Upon entering Multiplayer mode, the system activates wireless communication
+		and attempts to connect to other users in Multiplayer mode. Once a
+		connection is established, the users select a multiplayer game on both
+		systems and gameplay begins.
+	\item[Build Card:] Allows the user to create custom cards for a game. The
+		data stored will vary based on game requirements. All cards must contain
+		unique card serial numbers or identifing ID numbers, and a code that
+		specifies which games the card is valid for.
+\end{description}
 
 \subsection{Identified Use Cases}\label{sec:identifiedUseCases} % Alyanna
 
@@ -320,35 +341,35 @@ dispensations are due others or myself, I have indicated them below.
 
 \pagebreak
 
-%\section{Bill of Materials\label{appendix:bom}}
-%Table~\ref{tab:bomTable} lists the bill of materials for the construction of one system.
-%
-%\begin{table}[h]
-%	\begin{tabular}{llll}
-%		\multicolumn{4} {c} {\textbf{Bill of Materials}} \\
-%		\toprule
-%		\textbf{Item}                         & \textbf{Unit Cost} & \textbf{Quantity} & \textbf{Total Cost} \\ \midrule
-%		TI HI-Plus RFID Tags                  & 0.91          & 20                & 18.20               \\
-%		DLP-RFID2 RFID Reader/Writer          & 50            & 3                 & 150                 \\
-%		Xbee S1 Wireless Chips                & 30            & 2                 & 60                  \\
-%		PLA Makerbot Filament                 & 48            & 1                 & 48                  \\
-%		GAL22V10D                             & 3.5           & 4                 & 14                  \\
-%		PICKit 3                              & 45            & 2                 & 90                  \\
-%		CY7C128A SRAM                         & 4             & 2                 & 8                   \\
-%		3.3 Volt Linear Regulator             & 3.22          & 2                 & 6.44                \\
-%		Lever Switch, micro SPDT, momentary   & 2.5           & 6                 & 15                  \\
-%		16-key Numeric Keypad                 & 7.5           & 2                 & 15                  \\
-%		128x169 Color LCD                     & 17            & 2                 & 34                  \\
-%		PIC18F46K22 Microcontrollers          & 7.7           & 4                 & 30.8                \\
-%		RGB LED, Common Cathode               & 4             & 8                 & 12                  \\
-%		(EXTRA)                               &               &                   &                     \\
-%		(EXTRA)                               &               &                   &                     \\
-%		(EXTRA)                               &               &                   &                     \\ \bottomrule
-%		Total Cost                            &               &                   &                    
-%	\end{tabular}
-%	\caption{\label{tab:bomTable}}
-%\end{table}
-%
+\section{Bill of Materials\label{appendix:bom}}
+Table~\ref{tab:bomTable} lists the bill of materials for the construction of one system.
+
+\begin{table}[h]
+	\begin{tabular}{llll}
+		\multicolumn{4} {c} {\textbf{Bill of Materials}} \\
+		\toprule
+		\textbf{Item}                         & \textbf{Unit Cost} & \textbf{Quantity} & \textbf{Total Cost} \\ \midrule
+		TI HI-Plus RFID Tags                  & 0.91          & 20                & 18.20               \\
+		DLP-RFID2 RFID Reader/Writer          & 50            & 3                 & 150                 \\
+		Xbee S1 Wireless Chips                & 30            & 2                 & 60                  \\
+		PLA Makerbot Filament                 & 48            & 1                 & 48                  \\
+		GAL22V10D                             & 3.5           & 4                 & 14                  \\
+		PICKit 3                              & 45            & 2                 & 90                  \\
+		CY7C128A SRAM                         & 4             & 2                 & 8                   \\
+		3.3 Volt Linear Regulator             & 3.22          & 2                 & 6.44                \\
+		Lever Switch, micro SPDT, momentary   & 2.5           & 6                 & 15                  \\
+		16-key Numeric Keypad                 & 7.5           & 2                 & 15                  \\
+		128x169 Color LCD                     & 17            & 2                 & 34                  \\
+		PIC18F46K22 Microcontrollers          & 7.7           & 4                 & 30.8                \\
+		RGB LED, Common Cathode               & 4             & 8                 & 12                  \\
+		(EXTRA)                               &               &                   &                     \\
+		(EXTRA)                               &               &                   &                     \\
+		(EXTRA)                               &               &                   &                     \\ \bottomrule
+		Total Cost                            &               &                   &                    
+	\end{tabular}
+	\caption{\label{tab:bomTable}}
+\end{table}
+
 %\FloatBarrier
 %\section{Hardware Diagrams\label{appendix:hwDiagrams}}
 %\begin{figure}[H]
@@ -457,19 +478,19 @@ dispensations are due others or myself, I have indicated them below.
 %
 %	\FloatBarrier
 %	\section{Project Schedule\label{appendix:ganttChart}}
-%	\begin{figure}[H]
+%	\begin{figure}[h]
 %		\centering
 %		\begin{adjustbox} {rotate=90,center}
-%			\includegraphics[width=\textwidth]{images/NewGantt.pdf}
-%		\end{adjustbox}
-%		\caption{Project Gantt Chart}
-%		\label{fig:ganttChart}
-%	\end{figure}
+% 		\includegraphics[height=0.7\textwidth]{images/NewGantt.png}
+% 	\end{adjustbox}
+% 	\caption{Project Gantt Chart}
+% 	\label{fig:ganttChart}
+% \end{figure}
 %
 %	\clearpage
 %	\section{Source Code}
-%% We will put code here. Use the format:
-%%    \subsection{Main Function}
+% We will put code here. Use the format:
+%    \subsection{Main Function}
 %%    \lstinputlisting{../code/main.c}
 %%
 %%    \subsection{Tasks}
