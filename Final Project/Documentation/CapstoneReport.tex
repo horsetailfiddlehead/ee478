@@ -555,28 +555,28 @@ A major software component of the RFID interaction suite was the scheduler and t
 	\item Game.c and Game.h
 		\begin{itemize}
 			\item Game.h was a header file which defined the following structures for running the game:
-				\begin(itemize)
+				\begin{itemize}
 					\item Types: This structure defined element types for card monsters, which was indicated by an integer.
 						\begin{itemize}
 							\item Fire Type\= 0
 							\item Water Type \= 1
 							\item Earth Type \= 2
-						\end
+						\end {itemize}
 					\item Move: Each card had a set of attack moves to be used during the card duel game. This structure defines characteristics for each move, which can be modified by the user during the build card mode.
 						\begin{itemize}
 							\item char moveName\[9\] \= A nine character array which would store the name of a move/
 							\item Type moveType \= Element type of the move, which can be fire, water or earth. Different move types have more damage against opposite elements. For example, a fire type is hurt more by a water type attack, etc.
 							\item int baseDamage \= The maximum amount of possible damage for the move
 							\item int uses \= Number of times a move can be used - during game mode, this number decreases as the same move is used. Once it hits 0, a user can no longer us the same attack.
-						\end
+						\end{itemize}
 					\item Monster: Each card represented a particular monster that could be selected during the game.
 						\begin{itemize}
 							\item char monsterName\[9\] \= Customizable name for the card, defined by the user.
 							\item int monsterID \= A unique ID for a card; standardizes the card so the system can look it up quickly, despite what custom name is. Cannot be modified by user.
 							\item int level \= Level of the monster, used for determining the success rate of an attack, talked about more in the pickMove function.
-							\item Type monsterType \= Element type of the monster, relevant during game play mode. If a monster is hit with an attack of the opposite element \(ex. fire and water), then the monster will take more damage because of it's type.
+							\item Type monsterType \= Element type of the monster, relevant during game play mode. If a monster is hit with an attack of the opposite element (ex. fire and water), then the monster will take more damage because of it's type.
 							\item Move movelist \= An array that held how many moves were available in the card. Each card had a maximum of 3 moves.
-						\end
+						\end{itemize}
 					\item gameData:
 						\begin{itemize}
 							\item int myScore \= User's score; beginning score is 100. Updated as user experiences an attack from an opponent.
@@ -589,9 +589,9 @@ A major software component of the RFID interaction suite was the scheduler and t
 							\item Move* myMove \= User's selected attack to be used during their turn
 							\item Move* oppmove\= Opponent's move received by the user during the opponent's turn
 							\item char name\[5\] \= Name of the user playing during a game; this is defined during the initial execution of a game and is selected through a software keyboard
-						\end
+						\end {itemize}
 					\item Additionally, all functions in game.c have access to globalData which is shared among all components.
-				\end
+				\end {itemize}
 			\item Single Player: Single player mode followed the direction of the state machine diagram. Gameplay is as follows:
 					\begin{enumerate}
 						\item At the start of a game, the system randomly picks who goes first - the user or the computer. Afterwards, it would read in whatever cards through the getCard function, so that monsters are available for the player to use. If it is the user's first time playing, the system will prompt the user to enter a name using the processKeyboard helper function. This name would then be stored in gameData -> name.
@@ -601,14 +601,15 @@ A major software component of the RFID interaction suite was the scheduler and t
 						\item However, if an attack was successful, the total amount of damage would be subtracted from myScore and the LCD display would update.
 						\item During every game, helper function gameStatus was called to check whether the game was over. It compared the oppScore and myScore to 0, and if either of them were equal it would change gameOver in game data to equal 1, indicating someone lost.
 						\item  Once game was over, printResults would be executed to display the results of the game, based off of the scores.
+					\end{enumerate}
 			\item Multiplayer: Structure of gameplay is essentially the same as single player, however instead of playing against a computer, the opponent is another player using a seperate system. Thus the following changes are made:
-					\begin(enumerate)
+					\begin{enumerate}
 						\item At the start of the game, the user would be given the option of hosting a game or finding a game to join. The temporary variable hostOrFind would indicate 0 for hosting a game or 1 for finding a game to join.
 						\item The system would then set up the Xbee to either host a game or join a game using the setupXbee helper function, thus establishing a connection with the user. 
 						\item Once a connection was made, game play would continue like single player mode. 
 						\item During the user's turn, they would have to send moves over Xbee to the player, and receive the resulting score from the opponent. The recieved score would be stored in oppScore. 
 						\item During an opponent's turn, the user would wait to receive a move over Xbee from the other player. Upon recieving it, the user would take damage based off of the element and level of the monster/move. The user would then update its myScore and send the new score over Xbee to the other player.
-					\end
+					\end {enumerate}
 			% RYAN GO DO THIS
 			\item Build Cards:
 			\item Helper Functions:
