@@ -333,46 +333,78 @@ A major software component of the RFID interaction suite were the built in games
 \begin{itemize}
 	\item Game.c and Game.h
 		\begin{itemize}
-			\item Single Player: Single player mode followed the direction of the state machine diagram. All random variables were seeded to a system timer on the PIC.
-			\item Multiplayer:
-			\item Build Cards: 
-		\end{itemize}
-\end{itemize}
-
-\begin{itemize}
-	\item Multiplayer Game
-		\begin{itemize}
-			\item Specification of the public interface to the module
-
+			\item Game.h was a header file which defined the following structures for running the game:
+				\begin(itemize)
+					\item Types: This structure defined element types for card monsters, which was indicated by an integer.
+						\begin{itemize}
+							\item Fire Type\= 0
+							\item Water Type \= 1
+							\item Earth Type \= 2
+						\end
+					\item Move: Each card had a set of attack moves to be used during the card duel game. This structure defines characteristics for each move, which can be modified by the user during the build card mode.
+						\begin{itemize}
+							\item char moveName\[9\] \= A nine character array which would store the name of a move/
+							\item Type moveType \= Element type of the move, which can be fire, water or earth. Different move types have more damage against opposite elements. For example, a fire type is hurt more by a water type attack, etc.
+							\item int baseDamage \= The maximum amount of possible damage for the move
+							\item int uses \= Number of times a move can be used - during game mode, this number decreases as the same move is used. Once it hits 0, a user can no longer us the same attack.
+						\end
+					\item Monster: Each card represented a particular monster that could be selected during the game.
+						\begin{itemize}
+							\item char monsterName\[9\] \= Customizable name for the card, defined by the user.
+							\item int monsterID \= A unique ID for a card; standardizes the card so the system can look it up quickly, despite what custom name is. Cannot be modified by user.
+							\item int level \= Level of the monster, used for determining the success rate of an attack, talked about more in the pickMove function.
+							\item Type monsterType \= Element type of the monster, relevant during game play mode. If a monster is hit with an attack of the opposite element \(ex. fire and water), then the monster will take more damage because of it's type.
+							\item Move movelist \= An array that held how many moves were available in the card. Each card had a maximum of 3 moves.
+						\end
+					\item gameData:
+						\begin{itemize}
+							\item int myScore \= User's score; beginning score is 100. Updated as user experiences an attack from an opponent.
+							\item int oppScore \= Opponent's score; beginning score is 100. Updated as user executes a successful attack.
+							\item short turn \= Keeps track of who's turn it is during the game
+							\item int gameOver \= Checks current game status, a 1 meant the game was over while 0 meant the game was still happening
+							\item int monSel \= Selected card defined by user
+							\item int moveSel \= Selected move defined by user
+							\item Monster* myMonster\= A pointer to the monster that has been selected - enables access for all its traits as defined by the monster structure, like name, move, etc.
+							\item Move* myMove \= User's selected attack to be used during their turn
+							\item Move* oppmove\= Opponent's move received by the user during the opponent's turn
+							\item char name\[5\] \= Name of the user playing during a game; this is defined during the initial execution of a game and is selected through a software keyboard
+						\end
+					\item Additionally, all functions in game.c have access to globalData which is shared among all components.
+				\end
+			\item Single Player: Single player mode followed the direction of the state machine diagram. Gameplay is as follows:
+					\begin{enumerate}
+						\item At the start of a game, the system randomly picks who goes first - the user or the computer. Afterwards, it would read in whatever cards through the getCard function, so that monsters are available for the player to use. If it is the user's first time playing, the system will prompt the user to enter a name using the processKeyboard helper function. This name would then be stored in gameData -> name.
+						\item During the user's turn, they would select a card to play and pick a move to attack their opponent. This is done in the selectCard and pickMove helper functions, updating monSel, moveSel, and myMove in gameData. The effectiveness of the attack is based off of the monster level, and the total amount of damage of the attack is based off of the element. 
+						\item Once the total damage has been determined, the game would then subtract this amount from the oppScore in gameData, and the display would be updated to reflect the change. 
+						\item When it was not the user's turn, the user would wait for the computer to randomly select a move, thus modifying oppMove. The computer has access to all monsters that have been loaded on the SRAM, thus having access to all sorts of attacks. The success rate of the attack is also randomized, so it is possible for the computer to miss. All random variables were seeded to a software system timer on the PIC to ensure random numbers occurred every time it was called.
+						\item However, if an attack was successful, the total amount of damage would be subtracted from myScore and the LCD display would update.
+						\item During every game, helper function gameStatus was called to check whether the game was over. It compared the oppScore and myScore to 0, and if either of them were equal it would change gameOver in game data to equal 1, indicating someone lost.
+						\item  Once game was over, printResults would be executed to display the results of the game, based off of the scores.
+			\item Multiplayer: Structure of gameplay is essentially the same as single player, however instead of playing against a computer, the opponent is another player using a seperate system. Thus the following changes are made:
+					\begin(enumerate)
+						\item At the start of the game, the user would be given the option of hosting a game or finding a game to join. The temporary variable hostOrFind would indicate 0 for hosting a game or 1 for finding a game to join.
+						\item The system would then set up the Xbee to either host a game or join a game using the setupXbee helper function, thus establishing a connection with the user. 
+						\item Once a connection was made, game play would continue like single player mode. 
+						\item During the user's turn, they would have to send moves over Xbee to the player, and receive the resulting score from the opponent. The recieved score would be stored in oppScore. 
+						\item During an opponent's turn, the user would wait to receive a move over Xbee from the other player. Upon recieving it, the user would take damage based off of the element and level of the monster/move. The user would then update its myScore and send the new score over Xbee to the other player.
+					\end
+			% RYAN GO DO THIS
+			\item Build Cards:
+			\item Helper Functions:
 				\begin{itemize}
-					\item Inputs
-					\item Outputs
-					\item Side effects
+					\item selectCard: 
+					\item pickMove: Similar to selectCard, pickMove showed the user what attack moves were available based off of the selected card.
+					\item processKeyboard: Since the 4x4 keypad was limited in options for characters, a software keyboard was created. Users could scroll through the characters on the screen using the external keypad and enter a 5 character string. Characters were selected based off of the position of the cursor and added to an empty string called names\[\] - when the system read a \# from the keypad, it would add a backslash 0 to indicate the array was a string. This keyboard was used for creating a player name or customizations on in the build card interface.
+					\item Print Functions: Many print functions were created to print different screens for the game using functions from LCD.c. For example, printSelect printed out the menu for selecting cards while printGame printed the current game status, showing off the scores and turns.
 				\end{itemize}
-
-			\item Psuedo English description of algorithms, functions, or procedures
-			\item Timing constraints
-			\item Error handling
 		\end{itemize}
+		
+		
+		\item keypadDriver.c and keypadDriver.h
+		
+		\item
 \end{itemize}
 
-\begin{itemize}
-	\item Build Card Game
-
-		\begin{itemize}
-			\item Specification of the public interface to the module
-
-				\begin{itemize}
-					\item Inputs
-					\item Outputs
-					\item Side effects
-				\end{itemize}
-
-			\item Psuedo English description of algorithms, functions, or procedures
-			\item Timing constraints
-			\item Error handling
-		\end{itemize}
-\end{itemize}
 
 \section{Presentation, Discussion, and Analysis of the Results}
 %
