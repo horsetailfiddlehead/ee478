@@ -548,18 +548,11 @@ A major software component of the RFID interaction suite was the scheduler and t
 						\item At the start of the game, the user would be given the option of hosting a game or finding a game to join. The temporary variable hostOrFind would indicate 0 for hosting a game or 1 for finding a game to join.
 						\item The system would then set up the Xbee to either host a game or join a game using the setupXbee helper function, thus establishing a connection with the user. 
 						\item Once a connection was made, game play would continue like single player mode. 
-						\item During the user's turn, they would have to send moves over Xbee to the player, and receive the resulting score from the opponent. The recieved score would be stored in oppScore. 
-						\item During an opponent's turn, the user would wait to receive a move over Xbee from the other player. Upon recieving it, the user would take damage based off of the element and level of the monster/move. The user would then update its myScore and send the new score over Xbee to the other player.
+						\item During the user's turn, they would have to send moves over Xbee to the player, and receive the resulting score from the opponent. The received score would be stored in oppScore. 
+						\item During an opponent's turn, the user would wait to receive a move over Xbee from the other player. Upon receiving it, the user would take damage based off of the element and level of the monster/move. The user would then update its myScore and send the new score over Xbee to the other player.
 					\end
 			% RYAN GO DO THIS
-			\item Build Cards:
-			\item Helper Functions:
-				\begin{itemize}
-					\item selectCard: 
-					\item pickMove: Similar to selectCard, pickMove showed the user what attack moves were available based off of the selected card.
-					\item processKeyboard: Since the 4x4 keypad was limited in options for characters, a software keyboard was created. Users could scroll through the characters on the screen using the external keypad and enter a 5 character string. Characters were selected based off of the position of the cursor and added to an empty string called names{} - when the system read a \# from the keypad, it would add a backslash 0 to indicate the array was a string. This keyboard was used for creating a player name or customizations on in the build card interface.
-					\item Print Functions: Many print functions were created to print different screens for the game using functions from LCD.c. For example, printSelect printed out the menu for selecting cards while printGame printed the current game status, showing off the scores and turns.
-				\end{itemize}
+			\item Build Cards: This function takes two arguments, a pointer to the global data structure, and a selection integer called sel that is determined by the build cards menu in the scheduler.  A switch - case statement is run that determines what data to send over I2C to the RFID card.  If sel is a 0, a FIREDUDE will be written to the card, if sel is 1 an EARTHGUY is written to the card, if sel is a 2, a WATERMAN is written to the card, and if sel is 3 a DRPECKOL is written to the card.  The commands to write the information is sent with the sendBytes() function by constructing a special I2C packet containing a WRITE_CARD_BLOCK command, a card slot number, a rfid data block to write to, and the the monster's type, level, and movelist.  The specific settings for how the packet is created can be found in the buildCard() function of the game.c file in Appendix~\ref{appendix:examplegame}.
 		\end{itemize}
 		
 		\item keypadDriver.c and keypadDriver.h
@@ -595,6 +588,10 @@ The RFID interaction suite meets the following standards:
 %In addition to a detailed discussion and analysis of your project and your
 %results, you must include all the answers to all questions raised in the lab.
 \subsection{Results } % Ryan
+
+The system was able to successfully read and write RFID cards at the time of the demo.  However, multiplayer was not implemented, and there were still a few glitches in menu navigation and card interpretation.  The details of these can be found in the Analysis of Any Errors section.
+
+Upon system startup, the user is treated to the main menu, from which they can choose singleplayer, multiplayer, or build cards.  The user presses the 2, and 8 keys on the keypad move up and down the menu, and presses the D key to select a menu option.  When the user selects either singleplayer or multiplayer, they are shown a second menu from which they can choose Duel Game, Clue, or two empty slots.  The only slot that shows something other than an ``In progress'' screen is the Duel game option from the Singleplayer menu.  At any time, the user can place a card on the RFID reader and press down the switch to force the back-end PIC to read the card into the system.  After doing so, the Duel Game can read that card duing gameplay.  The following pictures depict the singleplayer game.
 
 \subsection{Discussion of Results } % Alyanna
 
@@ -656,6 +653,23 @@ main menu and redraw it.
 %project did not work or worked only partially, provide an analysis of why and
 %what efforts were made to identify the root cause of any problems. \\
 %
+\subsubsection{Hardware Issues}
+\begin{itemize}
+	\item Discovered there are not enough UART and SSP modules on current (PIC18f22k25) Microcontrollers. Solution: purchased a PIC with more UART,SSP modules from the same family. Also gives us more GPIO pins to work with
+	\item XBee requires 3.3V power, all other components needed 5V. Could have used less voltage on other peripherals, but that would decrease performance. Solution was to use a linear drop out regulator.
+	\item  Excessive voltage noise ~40-5-kHz on 3.3v power rail. Prevented proper operation of the XBee (or sounds). The problem was traced to the Voltage regulator. A 10uF bypass cap reduced levels to manageable limits.
+	\item Hex buffers originally planned for clock buffering were not capable of driving outputs at 20MHz. Solution is that the buffers were not needed to drive the clock signal.
+	\item Decided to remove the motor driver due to lack of time to incorporate it into the project. The software was written, but there was not enough time to test and incorporate it. Not particularly concerned because of DLP built-in option to add an external antenna in a non-prototype device.
+\end{itemize}
+
+\subsubsection{Software Issues}
+\begin{itemize}
+	\item Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function. A difficulty with initial implementation was that outputs were not occurring as expected. It was fixed by moving to different port bank, using different polling scheme, and explicitly disabling analog inputs.
+	\item Decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
+	\item Decided to poll the keypad when expecting user input. Using passing a pointer to global data variables.
+	\item Designed i2c in manner differently than what was expected by game program. Game needed to be reconfigured to work with interrupts and scheduler. Primarily the use of while loops to poll and freeze program flow and do not allow for $I^2C$ interrupts to be handled.
+\end{itemize}
+
 
 \section{Test Plan } % Ryan
 %
@@ -679,7 +693,28 @@ main menu and redraw it.
 %Note, this does specify test implementation...this is not what to do, this is
 %how to do it based upon the test specification.
 
-
+\begin{itemize}
+	\item Front End
+		\begin{itemize}
+			\item Keypad can be moved only to the options presented in menus.
+			\item Only the 2, 4, 6, 8, D, and B keys navigate the menu during regular operation.
+			\item All menu options can be selected and navigated through
+			\item Only slots 1-4 can be selected as valid ``Monsters'' in the Duel Game
+			\item Only moves A-C can be selected as valid moves in the Duel Game
+			\item Damage values are correctly calculated and positive numbers in the Duel Game
+			\item Check that score never drops below zero in the Duel Game
+			\item 
+			\item I2C connection supports sending of RFID card UIDs, read block commands, and write block commands.
+			
+		\end{itemize}
+	\item Back End
+			\begin{itemize}
+			\item Keypad scanner polls each row, deducing which key is pressed. Tests showed function runs < 450us so no reason to try to optimize function. A difficulty with initial implementation was that outputs were not occurring as expected. It was fixed by moving to different port bank, using different polling scheme, and explicitly disabling analog inputs.
+			\item Decided to use simple deterministic, non-preemptive scheduler. Global variables are held in a single data struct accessible by all functions
+			\item Decided to poll the keypad when expecting user input. Using passing a pointer to global data variables.
+			\item Designed i2c in manner differently than what was expected by game program. Game needed to be reconfigured to work with interrupts and scheduler. Primarily the use of while loops to poll and freeze program flow and do not allow for $I^2C$ interrupts to be handled.
+		\end{itemize}
+\end{itemize}
 
 
 \section{Summary and Conclusion}
@@ -726,9 +761,9 @@ to be scrapped in the final implementation. Future implementations should includ
 \begin{tabular}{|l|*{4}{r|}}
 	\hline
 	Person & Design Hrs & Code Hrs & Test/Debug Hrs & Documentation Hrs \\ \hline
-	Patrick & x & x & x & x  \\ \hline
-	Alyanna & x & x & x & x \\ \hline
-	Ryan & x & x & x & x  \\ \hline
+	Patrick & 35 & 35 & 35 & 5  \\ \hline
+	Alyanna & 35 & 35 & 35 & 5 \\ \hline
+	Ryan & 35 & 35 & 35 & 5  \\ \hline
 \end{tabular}
 
 ~\\
@@ -996,7 +1031,7 @@ one system.
 %	\subsection{Creating Cards}
 %	\lstinputlisting{../FrontEnd.X/buildCard.c}
 %
-%	\subsection{Example Game}
+%	\subsection{Example Game}\label{appendix:examplegame}
 %	Both a single player and multiplayer version of the same game are provided.
 %	\lstinputlisting{../FrontEnd.X/game.h}
 %	\lstinputlisting{../FrontEnd.X/game.c}
