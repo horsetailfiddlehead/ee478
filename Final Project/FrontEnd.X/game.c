@@ -410,13 +410,16 @@ int attack(Move* attack, Monster* monster, int targetScore) {
 
 void selectCard(GlobalState* globalData) {
     static int displayed = 0;
+    static int gotStuff = 0;
 
     // Beep off
     TRISBbits.RB5 = 1;
     if (displayed == 0) {
         displayed = 1;
-        printSelect(globalData);
-        prints(0, 5, WHITE, RED, "Choose a card by its slot number:", 1);
+    }
+
+    if (gotStuff == 0) {
+        gotStuff = printSelect(globalData);
     } else {
 
         if ((0 == globalData->keyPress || globalData->keyPress > 5)) {
@@ -437,6 +440,7 @@ void selectCard(GlobalState* globalData) {
             }
             game.monSel = 1;
             displayed = 0;
+            gotStuff = 0;
         }
     }
 }
@@ -494,23 +498,23 @@ void getCards() {
     myMonsterList[2].movelist[2].moveType = WATER;
     myMonsterList[2].movelist[2].uses = 5;
 
-//    strcpypgm2ram(myMonsterList[3].monsterName, "COMBOGRL");
-//    myMonsterList[3].monsterID = 0x04;
-//    myMonsterList[3].monsterType = EARTH;
-//    myMonsterList[3].level = 3;
-//    strcpypgm2ram(myMonsterList[3].movelist[0].moveName, "SOAK");
-//    myMonsterList[3].movelist[0].baseDamage = 15;
-//    myMonsterList[3].movelist[0].moveType = WATER;
-//    myMonsterList[3].movelist[0].uses = 5;
-//    strcpypgm2ram(myMonsterList[3].movelist[1].moveName, "PEBBLE");
-//    myMonsterList[3].movelist[1].baseDamage = 12;
-//    myMonsterList[3].movelist[1].moveType = EARTH;
-//    myMonsterList[3].movelist[1].uses = 5;
-//    strcpypgm2ram(myMonsterList[3].movelist[2].moveName, "EMBER");
-//    myMonsterList[3].movelist[2].baseDamage = 10;
-//    myMonsterList[3].movelist[2].moveType = FIRE;
-//    myMonsterList[3].movelist[2].uses = 10;
-   
+    //    strcpypgm2ram(myMonsterList[3].monsterName, "COMBOGRL");
+    //    myMonsterList[3].monsterID = 0x04;
+    //    myMonsterList[3].monsterType = EARTH;
+    //    myMonsterList[3].level = 3;
+    //    strcpypgm2ram(myMonsterList[3].movelist[0].moveName, "SOAK");
+    //    myMonsterList[3].movelist[0].baseDamage = 15;
+    //    myMonsterList[3].movelist[0].moveType = WATER;
+    //    myMonsterList[3].movelist[0].uses = 5;
+    //    strcpypgm2ram(myMonsterList[3].movelist[1].moveName, "PEBBLE");
+    //    myMonsterList[3].movelist[1].baseDamage = 12;
+    //    myMonsterList[3].movelist[1].moveType = EARTH;
+    //    myMonsterList[3].movelist[1].uses = 5;
+    //    strcpypgm2ram(myMonsterList[3].movelist[2].moveName, "EMBER");
+    //    myMonsterList[3].movelist[2].baseDamage = 10;
+    //    myMonsterList[3].movelist[2].moveType = FIRE;
+    //    myMonsterList[3].movelist[2].uses = 10;
+
 
 
 }
@@ -729,19 +733,23 @@ void processKeyboard(GlobalState* globalData, char* name, int size) {
 
 // Select a card to play
 
-void printSelect(GlobalState* globalData) {
+int printSelect(GlobalState* globalData) {
     char myCommand[16];
+    static int gotDefaults = 0;
     int i = 0;
     // Beep off
     TRISBbits.RB5 = 1;
 
-    // LCD menu
-    clean(RED);
+
     // Display commands to select a slot - the LED's should indicate if a card is read
     //    drawBoxFill(15, 29, 26, 85, BLACK)
-    for (i = 0; i < 4; i++) {
-        drawBoxFill(15, 29 + 35 * i, 26, 85, BLACK);
-        if ( i != 3) {
+    if (gotDefaults == 0) {
+                // LCD menu
+        clean(RED);
+        prints(0, 5, WHITE, RED, "Choose a card by its slot number:", 1);
+        globalData->myRequestStatus = 0;
+        for (i = 0; i < 3; i++) {
+            drawBoxFill(15, 29 + 35 * i, 26, 85, BLACK);
             printrs(20, 38 + 35 * i, WHITE, BLACK, myMonsterList[i].monsterName, 1);
             prints(20, 38 + 8 + 35 * i, WHITE, BLACK, "Lvl:", 1);
             integerprint(38, 38 + 8 + 35 * i, WHITE, BLACK, myMonsterList[i].level, 1);
@@ -758,84 +766,96 @@ void printSelect(GlobalState* globalData) {
                     prints(62, 38 + 8 + 35 * i, WHITE, BLACK, "EARTH", 1);
                     break;
             }
-        } else {
-            myCommand[0] = REQUEST_CARD_DATA; // Write 32-bit data to card block
-            myCommand[1] = 0x00; // slot
-            myCommand[2] = 0x00; // block
-            sendBytes(myCommand, 3);
-            customMoster.monsterName[0] = (char)(((globalData->dataBlock[0] - '0') << 4) | ((globalData->dataBlock[1] -'0')));
-            customMoster.monsterName[1] = (char)(((globalData->dataBlock[2] - '0') << 4) | ((globalData->dataBlock[3] -'0')));
-            customMoster.monsterName[2] = (char)(((globalData->dataBlock[4] - '0') << 4) | ((globalData->dataBlock[5] -'0')));
-            customMoster.monsterName[3] = (char)(((globalData->dataBlock[6] - '0') << 4) | ((globalData->dataBlock[7] -'0')));
-            Delay1KTCYx(250);
-            myCommand[0] = REQUEST_CARD_DATA; // Write 32-bit data to card block
-            myCommand[1] = 0x00; // slot
-            myCommand[2] = 0x01; // block
-            sendBytes(myCommand, 3);
-            strcpy(customMoster.monsterName, globalData->dataBlock);
-            customMoster.monsterName[4] = (char) (((globalData->dataBlock[0] - '0') << 4) | ((globalData->dataBlock[1] - '0')));
-            customMoster.monsterName[5] = (char) (((globalData->dataBlock[2] - '0') << 4) | ((globalData->dataBlock[3] - '0')));
-            customMoster.monsterName[6] = (char) (((globalData->dataBlock[4] - '0') << 4) | ((globalData->dataBlock[5] - '0')));
-            customMoster.monsterName[7] = (char) (((globalData->dataBlock[6] - '0') << 4) | ((globalData->dataBlock[7] - '0')));
-            customMoster.monsterName[8] = '\0';
-            Delay1KTCYx(250);
-            myCommand[0] = REQUEST_CARD_DATA; // Write 32-bit data to card block
-            myCommand[1] = 0x00; // slot
-            myCommand[2] = 0x02; // block
-            sendBytes(myCommand, 3);
-            Delay1KTCYx(250);
-            customMoster.monsterType = (Type) (globalData->dataBlock[0] - '0');
-            customMoster.level = (globalData->dataBlock[3] - '0');
-            customMoster.movelist[0] = getMoveFromList(globalData->dataBlock[4]);
-            customMoster.movelist[1] = getMoveFromList(globalData->dataBlock[4]);
-            customMoster.movelist[2] = getMoveFromList(globalData->dataBlock[4]);
-
-
-            printrs(20, 38 + 35 * i, WHITE, BLACK, customMoster.monsterName, 1);
-            prints(20, 38 + 8 + 35 * i, WHITE, BLACK, "Lvl:", 1);
-            integerprint(38, 38 + 8 + 35 * i, WHITE, BLACK, customMoster.level, 1);
-            switch (customMoster.monsterType) {
-                case FIRE:
-                    drawBoxFill(61, 38 + 8 + 35 * i - 1, 8, 30, RED);
-                    prints(62, 38 + 8 + 35 * i, WHITE, RED, "FIRE", 1);
-                    break;
-                case WATER:
-                    drawBoxFill(61, 38 + 8 + 35 * i - 1, 8, 35, CYAN);
-                    prints(62, 38 + 8 + 35 * i, WHITE, CYAN, "WATER", 1);
-                    break;
-                case EARTH:
-                    prints(62, 38 + 8 + 35 * i, WHITE, BLACK, "EARTH", 1);
-                    break;
-            }
-
-
-//            0 0       0 1     1 0       02
-//
-//            30 30    30 31    31 30    30 32
-//
-//            Delay1KTCYx(250);
-//            myCommand[0] = WRITE_CARD_BLOCK; // Write 32-bit data to card block
-//            myCommand[1] = 0x00; // slot
-//            myCommand[2] = 0x02; // block
-//
-//            myCommand[3] = 0x00; // type
-//            myCommand[4] = 0x01; // level
-//            myCommand[5] = 0x10; // mov1mov2 scratch,ember
-//            myCommand[6] = 0x02; // mov3 blank, hotflame
-//            sendBytes(myCommand, 7);
-
-
         }
+        gotDefaults = 1;
     }
-    prints(20, 30, WHITE, BLACK, "Slot 1", 1);
-    prints(20, 65, WHITE, BLACK, "Slot 2", 1);
-    prints(20, 100, WHITE, BLACK, "Slot 3", 1);
-    prints(20, 135, WHITE, BLACK, "Slot 4", 1);
+
+    if (globalData->myRequestStatus == 0) {
+        myCommand[0] = REQUEST_CARD_DATA; // Write 32-bit data to card block
+        myCommand[1] = 0x00; // slot
+        myCommand[2] = 0x00; // block
+        sendBytes(myCommand, 3);
+        Delay1KTCYx(250);
+    } else if (globalData->myRequestStatus == 1) {
+        customMoster.monsterName[0] = (char) (((globalData->dataBlock[0] - '0') << 4) | ((globalData->dataBlock[1] - '0')&0x0F));
+        customMoster.monsterName[1] = (char) (((globalData->dataBlock[2] - '0') << 4) | ((globalData->dataBlock[3] - '0')&0x0F));
+        customMoster.monsterName[2] = (char) (((globalData->dataBlock[4] - '0') << 4) | ((globalData->dataBlock[5] - '0')&0x0F));
+        customMoster.monsterName[3] = (char) (((globalData->dataBlock[6] - '0') << 4) | ((globalData->dataBlock[7] - '0')&0x0F));
+
+        myCommand[0] = REQUEST_CARD_DATA; // Write 32-bit data to card block
+        myCommand[1] = 0x00; // slot
+        myCommand[2] = 0x01; // block
+        sendBytes(myCommand, 3);
+        Delay1KTCYx(250);
+    } else if (globalData->myRequestStatus == 2) {
+        customMoster.monsterName[4] = (char) (((globalData->dataBlock[0] - '0') << 4) | ((globalData->dataBlock[1] - '0')&0x0F));
+        customMoster.monsterName[5] = (char) (((globalData->dataBlock[2] - '0') << 4) | ((globalData->dataBlock[3] - '0')&0x0F));
+        customMoster.monsterName[6] = (char) (((globalData->dataBlock[4] - '0') << 4) | ((globalData->dataBlock[5] - '0')&0x0F));
+        customMoster.monsterName[7] = (char) (((globalData->dataBlock[6] - '0') << 4) | ((globalData->dataBlock[7] - '0')&0x0F));
+        customMoster.monsterName[8] = '\0';
+
+        myCommand[0] = REQUEST_CARD_DATA; // Write 32-bit data to card block
+        myCommand[1] = 0x00; // slot
+        myCommand[2] = 0x02; // block
+        sendBytes(myCommand, 3);
+        Delay1KTCYx(250);
+    } else if (globalData->myRequestStatus == 3) {
+        customMoster.monsterType = (Type) (globalData->dataBlock[0] - '0');
+        customMoster.level = (globalData->dataBlock[3] - '0');
+        customMoster.movelist[0] = getMoveFromList(globalData->dataBlock[4]);
+        customMoster.movelist[1] = getMoveFromList(globalData->dataBlock[4]);
+        customMoster.movelist[2] = getMoveFromList(globalData->dataBlock[4]);
+
+        drawBoxFill(15, 29 + 35 * 3, 26, 85, BLACK);
+        printrs(20, 38 + 35 * 3, WHITE, BLACK, customMoster.monsterName, 1);
+        prints(20, 38 + 8 + 35 * 3, WHITE, BLACK, "Lvl:", 1);
+        integerprint(38, 38 + 8 + 35 * 3, WHITE, BLACK, customMoster.level, 1);
+        switch (customMoster.monsterType) {
+            case FIRE:
+                drawBoxFill(61, 38 + 8 + 35 * 3 - 1, 8, 30, RED);
+                prints(62, 38 + 8 + 35 * 3, WHITE, RED, "FIRE", 1);
+                break;
+            case WATER:
+                drawBoxFill(61, 38 + 8 + 35 * 3 - 1, 8, 35, CYAN);
+                prints(62, 38 + 8 + 35 * 3, WHITE, CYAN, "WATER", 1);
+                break;
+            case EARTH:
+                prints(62, 38 + 8 + 35 * 3, WHITE, BLACK, "EARTH", 1);
+                break;
+        }
+        globalData->myRequestStatus = 0;
+        gotDefaults = 0;
+        prints(20, 30, WHITE, BLACK, "Slot 1", 1);
+        prints(20, 65, WHITE, BLACK, "Slot 2", 1);
+        prints(20, 100, WHITE, BLACK, "Slot 3", 1);
+        prints(20, 135, WHITE, BLACK, "Slot 4", 1);
+        return 1;
+    }
+    return 0;
 }
+
+
+    //            0 0       0 1     1 0       02
+    //
+    //            30 30    30 31    31 30    30 32
+    //
+    //            Delay1KTCYx(250);
+    //            myCommand[0] = WRITE_CARD_BLOCK; // Write 32-bit data to card block
+    //            myCommand[1] = 0x00; // slot
+    //            myCommand[2] = 0x02; // block
+    //
+    //            myCommand[3] = 0x00; // type
+    //            myCommand[4] = 0x01; // level
+    //            myCommand[5] = 0x10; // mov1mov2 scratch,ember
+    //            myCommand[6] = 0x02; // mov3 blank, hotflame
+    //            sendBytes(myCommand, 7);
+
+
+
 
 Move getMoveFromList(char id) {
     Move newMove;
-    switch(id) {
+    switch (id) {
         case 'F':
             strcpypgm2ram(newMove.moveName, "FAIL");
             newMove.baseDamage = 100;

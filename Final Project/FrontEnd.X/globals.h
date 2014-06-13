@@ -56,6 +56,7 @@ extern "C" {
 
     typedef struct globaldata {
         short displayPage;
+        short myRequestStatus;
         Boolean keyFlag;
         Boolean displayedKey;
         Boolean goBack;
@@ -84,7 +85,7 @@ extern "C" {
 
         Boolean sendI2C; // i2c command prepped for transmission
         Boolean gotI2C; // i2c command was received
-
+        Boolean I2CDone;
         Boolean updateLEDFlag;
         char lastCards;
         char readCard;  // flag indicating which card slot needs to be read

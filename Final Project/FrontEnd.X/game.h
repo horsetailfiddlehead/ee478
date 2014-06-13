@@ -60,7 +60,7 @@ int receiveScore(void);
 
 // Game Display Prototypes
 void printGame(GlobalState* globalData);
-void printSelect(GlobalState* globalData);
+int printSelect(GlobalState* globalData);
 void printAttackMenu(GlobalState* globalData, Monster* card);
 void printResults(void);
 Move getMoveFromList(char id);

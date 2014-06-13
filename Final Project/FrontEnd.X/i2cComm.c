@@ -117,6 +117,7 @@ void processI2C() {
             globalData.dataSlotNum = i2cData.dataIn[1]; // get the clot number
             globalData.dataBlockNum = i2cData.dataIn[2]; // get the block number
             strncpy(&globalData.dataBlock[0], &i2cData.dataIn[3], 8); // copy the blcok data
+            globalData.myRequestStatus++;
             break;
         case INVALID_COMMAND:
 

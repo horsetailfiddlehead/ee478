@@ -277,7 +277,7 @@ void main() {
             keypad(&globalData);
         }
 
-        if (globalData.keyFlag && !globalData.displayedKey) {
+        if (globalData.keyFlag && !globalData.displayedKey || globalData.myRequestStatus != 0) {
             globalData.keyFlag = FALSE;
             globalData.displayedKey = TRUE;
 
@@ -545,7 +545,7 @@ void systemSetup(GlobalState *data) {
 #else
     LEDSetup();
 #endif
-
+    data->myRequestStatus = 0;
     data->displayPage = 0;
     data->keyFlag = FALSE;
     data->displayedKey = FALSE;
